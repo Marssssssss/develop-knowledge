@@ -18,8 +18,13 @@
 - [Unreal/](./Unreal/)
 - [Godot/](./Godot/)
 
+## 已完成 demo
+
+- [x] ECS（Entity Component System）— 见 [ECS/](./ECS/)：sparse set 存储 + swap-remove + 最小集合查询，C / Python / Go
+
 ## 待研究
 
-- [ ] Unity DOTS / ECS
+- [ ] Unity DOTS 官方包细节（Job System / Burst 与 ECS 的协作）
 - [ ] Unreal Nanite / Lumen 原理
 - [ ] Godot 4 新特性（GDScript 2.0）
+- [ ] archetype 存储 demo（与 sparse set 对比实现）

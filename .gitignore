@@ -1,0 +1,32 @@
+# WorkBuddy / Agent 内部状态(不推送到公共仓库)
+.workbuddy/
+
+# 操作系统临时文件
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+ehthumbs.db
+
+# IDE 配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# 日志/缓存(若未来出现)
+*.log
+*.tmp
+__pycache__/
+*.pyc
+node_modules/
+target/
+build/
+dist/
+
+# Python venv(若未来在 demo 里使用)
+.venv/
+venv/
+env/

@@ -60,12 +60,13 @@
 | 006 | `01-游戏开发/03-UI/文本渲染/SDF/` | SDF 文本渲染(有符号距离场 + 双线性重建 + smoothstep AA) | C / Python / Go | 2026-09-11 |
 | 007 | `01-游戏开发/04-游戏引擎/ECS/` | ECS 架构(sparse set 存储 + swap-remove + 最小集合查询) | C / Python / Go | 2026-09-11 |
 | 008 | `01-游戏开发/05-物理/碰撞检测/GJK/` | GJK 碰撞检测算法(Minkowski 差 + support 函数 + simplex 演化) | C / Python / Go | 2026-09-11 |
+| 009 | `01-游戏开发/06-AI/寻路算法/A-star/` | A* 启发式搜索(f=g+h + 可采纳性 + Dijkstra/A*/Greedy 三模式对比) | C / Python / Go | 2026-09-11 |
 
 ## 三、本轮状态
 
 ```
-next_index     : 5     # 下次巡检从索引 5 开始（即游戏 AI 领域）
-last_run       : 2026-09-11 04:45:00
+next_index     : 6     # 下次巡检从索引 6 开始（即游戏音频领域）
+last_run       : 2026-09-11 05:55:00
 skipped        : []
 failed_attempts: []
 ```
@@ -84,6 +85,7 @@ failed_attempts: []
 | 2026-09-11 02:31 | 2 | M=SDF 文本渲染 demo(权威资料:Valve SIGGRAPH2007 论文(要点经交叉验证,PDF 镜像均空)/libgdx 官方 wiki 全文/msdfgen 作者 Chlumsky 的 README 与 SE 回答) + S3=索引同步(03-UI 与 01-游戏开发 README 补全) | OK | C/Python/Go;最近邻 vs 二值双线性 vs SDF 双线性三路对比 + 阴影描边特效;新建 文本渲染/ 主题目录 |
 | 2026-09-11 03:41 | 3 | M=ECS demo(权威资料:Sander Mertens ECS FAQ 全文/Bevy 0.5 ECS v2 设计文/EnTT README/Unity DOTS 官方页) | OK | C/Python/Go;sparse set + swap-remove + 最小集合查询;archetype/sparse/bitset/reactive 四路线对比;游戏引擎领域首个 demo,next_index → 4 |
 | 2026-09-11 04:45 | 4 | M=GJK demo(权威资料:dyn4j GJK 教程全文+评论区勘误/arXiv 2007.12045 算法推导/Inferensys 综述) | OK | C/Python/Go;Minkowski 差 + support + simplex 演化 + Voronoi 区域测试;物理领域首个 demo,next_index → 5 |
+| 2026-09-11 05:55 | 5 | M=A* demo(权威资料:Red Blob Games introduction 全文+implementation 章节快照/Wikipedia(IPFS 镜像)/Mastering Algorithms) + S=索引同步(06-AI README) | OK | C/Python/Go;f=g+h+曼哈顿启发式+Dijkstra/A*/Greedy 三模式同图对比(最优代价 39 vs Greedy 45);游戏 AI 领域首个 demo,next_index → 6 |
 
 ---
 

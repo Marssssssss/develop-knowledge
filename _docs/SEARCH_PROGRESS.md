@@ -71,6 +71,7 @@ failed_attempts: []
 | 2026-09-11 00:30 | 0 | 创建 select demo | OK | C/Python/Go 三语言 |
 | 2026-09-11 00:35 | 34 | 新建 09-语言学习 + 装饰器 demo | OK | 按语言组织的新维度,首个 Python demo |
 | 2026-09-11 00:45 | — | 制定 SCHEDULE_QUOTA.md | OK | 1 主 + ≤1 副 区间配额;失败重试 3 次后跳过;周 7 / 月 25 demo 下限 |
+| 2026-09-11 01:00 | — | 初始化 git + 首次 push + 写 GIT_SYNC.md | OK | main 分支跟踪 origin;`.workbuddy/` 不跟踪;每轮末尾自动 sync |
 
 ---
 

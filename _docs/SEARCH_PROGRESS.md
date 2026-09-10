@@ -56,12 +56,13 @@
 | 002 | `09-语言学习/Python/装饰器/` | Python · 装饰器(基础 + 带参数) | Python | 2026-09-11 |
 | 003 | `01-游戏开发/01-服务端/网络编程/IO多路复用/epoll/` | IO 多路复用 · `epoll`(LT/ET) | C / Python / Go | 2026-09-11 |
 | 004 | `07-数据存储/04-搜索引擎/elasticsearch/` | Elasticsearch · 倒排索引与 NRT(REST API) | Python / Go | 2026-09-11 |
+| 005 | `01-游戏开发/02-渲染/图形管线/深度缓冲/` | Z-Buffer 与 Z-Fighting(1/z 深度模型 + 量化精度) | C / Python / Go | 2026-09-11 |
 
 ## 三、本轮状态
 
 ```
-next_index     : 1     # 下次巡检从索引 1 开始（即游戏渲染领域）
-last_run       : 2026-09-11 00:47:00
+next_index     : 2     # 下次巡检从索引 2 开始（即游戏 UI 领域）
+last_run       : 2026-09-11 01:31:00
 skipped        : []
 failed_attempts: []
 ```
@@ -76,6 +77,7 @@ failed_attempts: []
 | 2026-09-11 01:00 | — | 初始化 git + 首次 push + 写 GIT_SYNC.md | OK | main 分支跟踪 origin;`.workbuddy/` 不跟踪;每轮末尾自动 sync |
 | 2026-09-11 00:47 | 0 | M=epoll demo(权威资料:epoll(7)/epoll_ctl(2)/Python docs/Go netpoll源码) + S3=索引同步 | OK | C/Python/Go;首个按新"内容来源铁律"产出的 demo |
 | 2026-09-11 00:56 | 30 | M=elasticsearch demo(用户指定条目;权威资料:Elastic 官方 index-basics/NRT/match query/Definitive Guide) | OK | Python/Go 标准库 REST 实现;演示倒排索引+text/keyword+NRT refresh |
+| 2026-09-11 01:31 | 1 | M=z-buffer demo(权威资料:Khronos OpenGL Wiki Depth Buffer Precision/Marburg 讲义/UBC CPSC414 讲义/Wikipedia) | OK | C/Python/Go 软件光栅化;画家算法 vs Z-Buffer + 16/24-bit Z-Fighting 条带 + 精度表 |
 
 ---
 

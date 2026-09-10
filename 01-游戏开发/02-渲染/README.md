@@ -10,6 +10,10 @@
 | [着色器/](./着色器/) | GLSL / HLSL / WGSL、Shadertoy 风格 |
 | [光照与阴影/](./光照与阴影/) | PBR、光照模型、Shadow Map、SSAO |
 
+## demo 索引
+
+- ✅ [图形管线/深度缓冲/](./图形管线/深度缓冲/) — Z-Buffer 与 Z-Fighting（C / Python / Go）
+
 ## 待研究知识点
 
 - [ ] 现代渲染管线（Forward+ / Deferred / Forward Clustered）

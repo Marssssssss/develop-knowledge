@@ -12,6 +12,10 @@ CPU 端组织渲染指令（DrawCall），GPU 端按顶点/几何/片元阶段�
 - **前向渲染（Forward）**：逐物体逐光源计算
 - **Tile-Based GPU 架构**：移动端必须考虑
 
+## demo 索引
+
+- ✅ [深度缓冲/](./深度缓冲/) — Z-Buffer 与 Z-Fighting：C / Python / Go 三语言软件光栅化（依据 Khronos OpenGL Wiki / Marburg 讲义）
+
 ## 待研究
 
 - [ ] Forward vs Deferred vs Forward+ 选型

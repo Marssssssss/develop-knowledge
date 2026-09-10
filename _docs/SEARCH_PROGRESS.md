@@ -55,6 +55,7 @@
 | 001 | `01-游戏开发/01-服务端/网络编程/IO多路复用/select/` | IO 多路复用 · `select` | C / Python / Go | 2026-09-11 |
 | 002 | `09-语言学习/Python/装饰器/` | Python · 装饰器(基础 + 带参数) | Python | 2026-09-11 |
 | 003 | `01-游戏开发/01-服务端/网络编程/IO多路复用/epoll/` | IO 多路复用 · `epoll`(LT/ET) | C / Python / Go | 2026-09-11 |
+| 004 | `07-数据存储/04-搜索引擎/elasticsearch/` | Elasticsearch · 倒排索引与 NRT(REST API) | Python / Go | 2026-09-11 |
 
 ## 三、本轮状态
 
@@ -74,6 +75,7 @@ failed_attempts: []
 | 2026-09-11 00:45 | — | 制定 SCHEDULE_QUOTA.md | OK | 1 主 + ≤1 副 区间配额;失败重试 3 次后跳过;周 7 / 月 25 demo 下限 |
 | 2026-09-11 01:00 | — | 初始化 git + 首次 push + 写 GIT_SYNC.md | OK | main 分支跟踪 origin;`.workbuddy/` 不跟踪;每轮末尾自动 sync |
 | 2026-09-11 00:47 | 0 | M=epoll demo(权威资料:epoll(7)/epoll_ctl(2)/Python docs/Go netpoll源码) + S3=索引同步 | OK | C/Python/Go;首个按新"内容来源铁律"产出的 demo |
+| 2026-09-11 00:56 | 30 | M=elasticsearch demo(用户指定条目;权威资料:Elastic 官方 index-basics/NRT/match query/Definitive Guide) | OK | Python/Go 标准库 REST 实现;演示倒排索引+text/keyword+NRT refresh |
 
 ---
 

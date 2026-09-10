@@ -54,12 +54,13 @@
 | --- | --- | --- | --- | --- |
 | 001 | `01-游戏开发/01-服务端/网络编程/IO多路复用/select/` | IO 多路复用 · `select` | C / Python / Go | 2026-09-11 |
 | 002 | `09-语言学习/Python/装饰器/` | Python · 装饰器(基础 + 带参数) | Python | 2026-09-11 |
+| 003 | `01-游戏开发/01-服务端/网络编程/IO多路复用/epoll/` | IO 多路复用 · `epoll`(LT/ET) | C / Python / Go | 2026-09-11 |
 
 ## 三、本轮状态
 
 ```
-next_index     : 0     # 下次巡检从索引 0 开始（即游戏服务端领域）
-last_run       : 2026-09-11 00:30:00
+next_index     : 1     # 下次巡检从索引 1 开始（即游戏渲染领域）
+last_run       : 2026-09-11 00:47:00
 skipped        : []
 failed_attempts: []
 ```
@@ -72,6 +73,7 @@ failed_attempts: []
 | 2026-09-11 00:35 | 34 | 新建 09-语言学习 + 装饰器 demo | OK | 按语言组织的新维度,首个 Python demo |
 | 2026-09-11 00:45 | — | 制定 SCHEDULE_QUOTA.md | OK | 1 主 + ≤1 副 区间配额;失败重试 3 次后跳过;周 7 / 月 25 demo 下限 |
 | 2026-09-11 01:00 | — | 初始化 git + 首次 push + 写 GIT_SYNC.md | OK | main 分支跟踪 origin;`.workbuddy/` 不跟踪;每轮末尾自动 sync |
+| 2026-09-11 00:47 | 0 | M=epoll demo(权威资料:epoll(7)/epoll_ctl(2)/Python docs/Go netpoll源码) + S3=索引同步 | OK | C/Python/Go;首个按新"内容来源铁律"产出的 demo |
 
 ---
 

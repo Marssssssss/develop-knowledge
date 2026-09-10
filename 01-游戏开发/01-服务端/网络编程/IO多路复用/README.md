@@ -15,6 +15,7 @@
 ## demo 索引
 
 - ✅ [select/](./select/) — C / Python / Go 三语言最小实现
+- ✅ [epoll/](./epoll/) — C / Python / Go 三语言（LT 模式 + ET 语义详解，依据 man7 手册）
 
 ## 选型建议
 

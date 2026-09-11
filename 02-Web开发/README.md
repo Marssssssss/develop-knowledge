@@ -16,6 +16,7 @@
 - [x] [01-前端框架/Vue/reactive/](./01-前端框架/Vue/reactive/) — Vue 3 Proxy 响应式最小实现 (TS + JS)
 - [x] [02-后端/Node.js/Event-Loop/](./02-后端/Node.js/Event-Loop/) — Node.js 6 阶段 Event Loop + nextTick/Promise 微任务 (JS + TS)
 - [x] [03-数据库/B+树索引/](./03-数据库/B+树索引/) — B+ 树索引原理 (M-way + 叶子兄弟链 + copy-up/push-up 分裂 + borrow/merge 重平衡) (C + Python + Go)
+- [x] [04-API设计/WebSocket/握手协议/](./04-API设计/WebSocket/握手协议/) — WebSocket 握手协议 RFC 6455 §4 (HTTP Upgrade + SHA-1+GUID → Sec-WebSocket-Accept + 101 Switching Protocols) (C + Python + Go)
 
 ## 状态
 

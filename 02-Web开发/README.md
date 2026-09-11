@@ -14,8 +14,10 @@
 ## 已完成 demo
 
 - [x] [01-前端框架/Vue/reactive/](./01-前端框架/Vue/reactive/) — Vue 3 Proxy 响应式最小实现 (TS + JS)
+- [x] [02-后端/Node.js/Event-Loop/](./02-后端/Node.js/Event-Loop/) — Node.js 6 阶段 Event Loop + nextTick/Promise 微任务 (JS + TS)
 
 ## 状态
 
 - 前端：Web 生态碎片化严重，优先沉淀**原理级** demo（虚拟 DOM、Diff 算法、Reactive 原理）
 - 后端：每种语言写一个**最小 HTTP 服务 + 简单 CRUD**，便于对比
+  - 进程/运行时模型先各做一个底层原理 demo（Event Loop / Goroutine 调度 / JVM 线程模型），再上框架

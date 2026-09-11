@@ -64,12 +64,13 @@
 | 010 | `01-游戏开发/07-音频/音频压缩/IMA-ADPCM/` | IMA ADPCM(自适应差分 + 4-bit 量化 + 步长双查表 + 块随机访问) | C / Python / Go | 2026-09-11 |
 | 011 | `01-游戏开发/08-动画/IK算法/FABRIK/` | FABRIK 启发式 IK(位置空间反向/正向两阶段 + 不可达目标退化) | C / Python / Go | 2026-09-11 |
 | 012 | `02-Web开发/01-前端框架/Vue/reactive/` | Vue 3 Proxy 响应式最小实现(reactive/ref/effect/track/trigger + lazy 嵌套代理 + cleanup + effect 栈) | TypeScript / JavaScript | 2026-09-11 |
+| 013 | `02-Web开发/02-后端/Node.js/Event-Loop/` | Node.js Event Loop(6 阶段 + nextTick/Promise 微任务 + libuv 1.45.0 行为变化 + I/O 中 setImmediate 必早于 setTimeout) | JavaScript / TypeScript | 2026-09-11 |
 
 ## 三、本轮状态
 
 ```
-next_index     : 9     # 下次巡检从索引 9 开始（即 02-Web开发/后端 领域）
-last_run       : 2026-09-11 09:20:18
+next_index     : 10    # 下次巡检从索引 10 开始（即 02-Web开发/数据库 领域）
+last_run       : 2026-09-11 10:30:30
 skipped        : []
 failed_attempts: []
 ```
@@ -92,6 +93,7 @@ failed_attempts: []
 | 2026-09-11 07:05 | 6 | M=IMA ADPCM demo(权威资料:Digital Technical Journal Vol.5 No.2 Pan93 论文全文(经 PDF 文本提取实际阅读)/RFC 3551 §4.5.1 全文) | OK | C/Python/Go;流式 4:1 编解码+nibble 篡改抗误码演示+块头随机访问解码;游戏音频领域首个 demo,新建 音频压缩/ 主题目录;发现论文步长表索引 84(22358)与标准实现(22385)分歧,已注明;next_index → 7 |
 | 2026-09-11 08:07 | 7 | M=FABRIK IK demo(权威资料:Aristidou & Lasenby 2011 Graphical Models 73(5):243-260 全文/Khronos Vulkan-Site 教程全文/Aristidou 项目页) | OK | C/Python/Go;backward+forward 两阶段位置求解;可达 14 轮收敛 1e-9,不可达沿 root->t 拉直;Go slice 拷贝要点(append(nil, p0...));单 backward 后根被拉离、forward 再钉回;新建 IK算法/ 主题目录;next_index → 8 |
 | 2026-09-11 09:20 | 8 | M=Vue 3 Proxy 响应式最小实现 demo(权威资料:cn.vuejs.org/guide/extras/reactivity-in-depth.html 全文 + MDN Proxy/WeakMap) | OK | TypeScript + JavaScript;reactive Proxy + ref getter/setter + effect 栈 + cleanup + lazy 嵌套代理;6 个 demo 覆盖 基本响应式 / 嵌套 / ref / 多 effect 去重 / cleanup / 嵌套 effect;新建 reactive/ 主题目录;next_index → 9 |
+| 2026-09-11 10:30 | 9 | M=Node.js Event Loop demo(权威资料:nodejs.org 官方 Learn 全文 + MDN JavaScript execution model) | OK | JavaScript + TypeScript;6 阶段(timers/pending/idle/poll/check/close)+ nextTick/Promise 微任务层级 + libuv 1.45.0 timers-after-poll 变化 + I/O 回调里 setImmediate 必早于 setTimeout;5 个 demo 覆盖基础顺序 / nextTick 插队 / I/O 中稳定顺序 / await vs nextTick / libuv 行为变化;Node.js 后端首个 demo;next_index → 10 |
 
 ---
 

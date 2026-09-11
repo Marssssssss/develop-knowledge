@@ -70,11 +70,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
+| 2026-09-12 03:35 | 22 | Sobel 边缘检测 + Hough 直线检测 + IoU 与 NMS 三件套 | +3 |
 | 2026-09-12 00:57 | 20 | Q-Learning 表格方法 + REINFORCE 策略梯度 + PPO 近端策略优化 三件套 | +3 |
 | 2026-09-11 23:34 | 19 | 反向传播 BP + 2D 卷积 im2col + 多头自注意力 三件套 | +3 |
 | 2026-09-11 22:30 | 18 | React Native Bridge vs JSI + Flutter 三棵树 + KMP expect/actual 三件套 | +3 |
 | 2026-09-11 21:22 | 17 | Android Handler/Looper + Activity launchMode + Compose 重组 三件套 | +3 |
-| 2026-09-11 20:16 | 16 | Swift/ObjC ARC + GCD 同步原语 + RunLoop 三件套 | +3 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

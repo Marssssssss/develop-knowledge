@@ -52,8 +52,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 16    # 下次从索引 16 开始(即 04-移动开发/iOS)
-last_run       : 2026-09-11 19:00
+next_index     : 17    # 下次从索引 17 开始(即 04-移动开发/Android)
+last_run       : 2026-09-11 20:16
 skipped        : []
 failed_attempts: []
 ```
@@ -62,11 +62,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
+| 2026-09-11 20:16 | 16 | Swift/ObjC ARC + GCD 同步原语 + RunLoop 三件套 | +3 |
 | 2026-09-11 19:00 | 15 | mmap + ext4 JBD2 + Page Cache 三件套 | +3 |
 | 2026-09-11 18:00 | 14 | bump-allocator + slab-allocator + gc-tri-color 三件套 | +3 |
 | 2026-09-11 16:14 | 13 | 哲学家就餐(Dijkstra 1965 + Resource Hierarchy + Tanenbaum) | +1 |
 | 2026-09-11 15:02 | 12 | Nagle 算法 vs `TCP_NODELAY`(RFC 896) | +1 |
-| 2026-09-11 13:55 | 11 | WebSocket 握手协议(RFC 6455 §4) | +1 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

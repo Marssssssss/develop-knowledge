@@ -53,6 +53,7 @@
 38 : 11-性能分析/应用级剖析
 39 : 05-AI与机器学习/经典机器学习   # 2026-09-12 巡检类目拓展新增(S2)
 40 : 05-AI与机器学习/语音与多模态   # 2026-09-12 巡检类目拓展新增(S2)
+41 : 06-DevOps/IaC与配置管理       # 2026-09-12 巡检类目拓展新增(S2)
 ```
 
 > **索引表可动态增长**（2026-09-12 起）：巡检副任务自动拓展子类目时，在表末尾顺延编号追加（35、36…），`next_index` 取模基数以实际行数为准。类目拓展规则见 `AGENT_RULES.md` §一.5。
@@ -60,8 +61,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 22    # 下次从索引 22 开始(即 05-AI与机器学习/计算机视觉)
-last_run       : 2026-09-12 02:20
+next_index     : 24    # 下次从索引 24 开始(即 06-DevOps/CI-CD);索引表现 42 行,取模基数 42
+last_run       : 2026-09-12 04:55
 skipped        : []
 failed_attempts: []
 ```
@@ -70,11 +71,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
+| 2026-09-12 04:55 | 23 | Namespace 隔离 + Cgroups v2 + OCI 镜像格式 三件套(容器三基石) | +3 |
 | 2026-09-12 03:35 | 22 | Sobel 边缘检测 + Hough 直线检测 + IoU 与 NMS 三件套 | +3 |
 | 2026-09-12 00:57 | 20 | Q-Learning 表格方法 + REINFORCE 策略梯度 + PPO 近端策略优化 三件套 | +3 |
 | 2026-09-11 23:34 | 19 | 反向传播 BP + 2D 卷积 im2col + 多头自注意力 三件套 | +3 |
 | 2026-09-11 22:30 | 18 | React Native Bridge vs JSI + Flutter 三棵树 + KMP expect/actual 三件套 | +3 |
-| 2026-09-11 21:22 | 17 | Android Handler/Looper + Activity launchMode + Compose 重组 三件套 | +3 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

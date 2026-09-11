@@ -7,8 +7,13 @@
 - **Morph Target**：表情融合
 - **程序化动画**：Inverse Kinematics（IK）
 
+## 子主题
+
+- [x] [IK 算法 — FABRIK](./IK算法/FABRIK/) — 位置空间启发式 IK（Aristidou & Lasenby 2011），3-10 轮收敛
+
 ## 待研究
 
-- [ ] FABRIK IK 算法
-- [ ] Animation State Machine
-- [ ] 蒙皮数学（Skinned Mesh）
+- [ ] CCD IK 算法（与 FABRIK 对比）
+- [ ] 蒙皮数学（Skinned Mesh，骨骼权重 + 矩阵混合）
+- [ ] Animation State Machine（动画状态机）
+- [ ] Morph Target / BlendShape

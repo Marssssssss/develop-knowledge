@@ -22,6 +22,10 @@
 - [x] Z-Buffer 与 Z-Fighting — 见 [02-渲染/图形管线/深度缓冲/](./02-渲染/图形管线/深度缓冲/)
 - [x] SDF 文本渲染 — 见 [03-UI/文本渲染/SDF/](./03-UI/文本渲染/SDF/)
 - [x] ECS（Entity Component System）— 见 [04-游戏引擎/ECS/](./04-游戏引擎/ECS/)
+- [x] GJK 碰撞检测 — 见 [05-物理/碰撞检测/GJK/](./05-物理/碰撞检测/GJK/)
+- [x] A\* 寻路 — 见 [06-AI/寻路算法/A-star/](./06-AI/寻路算法/A-star/)
+- [x] IMA ADPCM 音频压缩 — 见 [07-音频/音频压缩/IMA-ADPCM/](./07-音频/音频压缩/IMA-ADPCM/)
+- [x] FABRIK IK 算法 — 见 [08-动画/IK算法/FABRIK/](./08-动画/IK算法/FABRIK/)
 
 ## 与其他领域的重叠
 

@@ -19,3 +19,6 @@ IO 多路复用、协程等通用机制在游戏服务端也是基石。通用 d
 ## 已完成 demo
 
 - ✅ IO 多路复用 · `select` — 见 [01-游戏开发/01-服务端/网络编程/IO多路复用/select/](../01-游戏开发/01-服务端/网络编程/IO多路复用/select/)
+- ✅ IO 多路复用 · `epoll` — 见 [01-游戏开发/01-服务端/网络编程/IO多路复用/epoll/](../01-游戏开发/01-服务端/网络编程/IO多路复用/epoll/)
+- ✅ WebSocket 握手协议 — 见 [02-Web开发/04-API设计/WebSocket/握手协议/](../02-Web开发/04-API设计/WebSocket/握手协议/)
+- ✅ Nagle 算法 vs `TCP_NODELAY` — 见 [03-系统编程/01-网络编程/Socket基础/Nagle算法/](01-网络编程/Socket基础/Nagle算法/)

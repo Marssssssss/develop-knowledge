@@ -14,6 +14,7 @@
 | 2026-09-11 20:16 | 16 | Swift/ObjC ARC + GCD 同步原语 + RunLoop 三 demo | OK | +3 | 26 | Swift/Objective-C 双语 ×3 demo;权威来源 5 源;本机无 Swift/ObjC 工具链走人工代码审查;next → 17 |
 | 2026-09-11 21:22 | 17 | Android Handler/Looper + Activity launchMode + Compose 重组 三 demo | OK | +3 | 29 | Kotlin/Java 双语 ×2 demo + Kotlin ×1 demo;权威来源 5 源;本机无 Kotlin/Android SDK 走人工代码审查;next → 18 |
 | 2026-09-11 22:30 | 18 | RN Bridge vs JSI + Flutter 三棵树 + KMP expect/actual 三 demo | OK | +3 | 32 | TS+JS / Dart / Kotlin 三 demo = 12 源文件 + 3 README;权威来源 3 源全 WebFetch 全文命中;纯 Node.js 可运行 RN 部分;Flutter/KMP 走人工代码审查;next → 19 |
+| 2026-09-11 23:34 | 19 | 反向传播 + 2D 卷积 im2col + 多头自注意力 三 demo | OK | +3 | 35 | Python ×3 demo = 3 源文件 + 3 README;权威来源 3 源全 WebFetch 全文命中(d2l.ai §5.3 / arXiv 2408.12561 Eq 3-5 / Vaswani 2017 §3.2 公式 1-3);Python py_compile 干净;pip install numpy 卡死 11 分钟未完成,数值梯度实测留给用户执行;next → 20 |
 
 ---
 > 写入规则:每轮结束 append 一行(7 列)。监控:行数 > 30 或 大小 > 20 KB → 触发 rotate(见 STATE.md §4)。

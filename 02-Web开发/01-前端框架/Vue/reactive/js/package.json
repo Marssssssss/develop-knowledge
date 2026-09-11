@@ -1,0 +1,7 @@
+{
+  "name": "vue3-reactive-mini",
+  "version": "1.0.0",
+  "description": "Vue 3 Proxy 响应式最小实现 (JS 版 demo)",
+  "type": "module",
+  "private": true
+}

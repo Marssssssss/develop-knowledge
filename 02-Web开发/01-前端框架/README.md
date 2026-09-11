@@ -7,8 +7,11 @@
 - [构建工具/](./构建工具/) — Vite / Webpack / Turbopack
 - [状态管理/](./状态管理/) — Redux / Pinia / Zustand / Jotai
 
+## 已完成 demo
+
+- [x] [Vue/reactive/](./Vue/reactive/) — Vue 3 Proxy 响应式最小实现 (TS + JS)
+
 ## 待研究
 
 - [ ] React Fiber 调度原理
-- [ ] Vue 3 Proxy 响应式
 - [ ] Vite 冷启动优化（esbuild + Rollup）

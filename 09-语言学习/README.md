@@ -44,4 +44,4 @@ Python/
 
 ## 进度
 
-由 `_docs/SEARCH_PROGRESS.md` 统一追踪。
+由 [`_docs/STATE.md`](../_docs/STATE.md)(主,≤ 5 KB)+ [`archive/`](../_docs/archive/)(历史回溯)统一追踪。

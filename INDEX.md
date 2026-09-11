@@ -33,7 +33,10 @@ D:\开发研究\
 ├── 07-数据存储/             # 关系型/NoSQL/缓存/搜索
 ├── 08-安全/                 # 密码学、Web 安全、网络安全
 ├── 09-语言学习/             # 按编程语言组织(装饰器/GIL/async 等),与按领域的 01-08 互补
-├── _docs/                   # 规则文档（SKILL/AGENT/优化/搜索进度）
+├── _docs/                   # 规则文档 + 自动化状态
+│   ├── STATE.md             # 巡检主状态文件(≤ 5 KB,永久恒定)
+│   ├── archive/             # 历史归档(completed/schedule,默认不进 hot path)
+│   └── *.md                 # 规则:SKILL/AGENT/OPTIMIZATION/SCHEDULE_QUOTA/GIT_SYNC/WECOM_NOTIFY/DEMO_TEMPLATE
 └── .workbuddy/memory/       # 项目级 daily log + MEMORY.md
 ```
 
@@ -51,9 +54,9 @@ D:\开发研究\
 ## 自动化
 
 - 频率：**每 2 小时**（由 `automation_update` 注册的定时任务驱动）
-- 单次行为：选择一个未深挖领域 → 搜索新知识点 → 创建/补全目录 → 写入 README → 更新 `_docs/SEARCH_PROGRESS.md`
-- 通知：重大发现（涉及底层系统原理或新框架）写入 `.workbuddy/memory/YYYY-MM-DD.md`
+- 单次行为：选择一个未深挖领域 → 搜索新知识点 → 创建/补全目录 → 写入 README → 更新 `_docs/STATE.md`(滚动窗口) + append 到 `_docs/archive/{completed,schedule}.md`
+- 通知：重大发现(涉及底层系统原理或新框架)写入 `.workbuddy/memory/YYYY-MM-DD.md`
 
 ## 当前活跃领域
 
-> 由 `_docs/SEARCH_PROGRESS.md` 维护。
+> 由 `_docs/STATE.md` 维护(next_index、last_run、最近 5 轮)。

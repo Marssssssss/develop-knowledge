@@ -82,7 +82,7 @@ auto: 2026-09-11 06:00 - S1: select demo 补 Rust 实现
 | 场景 | 处理 |
 | --- | --- |
 | `pull --rebase` 成功 | 继续 add + commit + push |
-| `pull --rebase` 冲突 | **终止本次同步**,在 SEARCH_PROGRESS 的调度日志加一行 `conflict: 需要人工解决`,然后走失败回退(见 SCHEDULE_QUOTA.md 第四节) |
+| `pull --rebase` 冲突 | **终止本次同步**,在 `archive/schedule.md` 加一行 `conflict: 需要人工解决`,然后走失败回退(见 SCHEDULE_QUOTA.md 第四节) |
 | `push` 失败(网络/权限) | 记录 `push_failed: <原因>`,**不阻塞**下一轮巡检;下一轮再次尝试 |
 | 连续 3 轮 push 失败 | 在调度日志告警 `git sync: 连续 3 轮失败`,同时**暂停自动推送**,等用户介入 |
 

@@ -1,93 +1,19 @@
-# SEARCH_PROGRESS.md — 知识搜索进度
+# archive/schedule.md — 调度日志全本
 
-由自动化任务每 1 小时更新一次(也接受手动编辑)。
+> 由自动化任务每轮 append。**默认 agent 不读**,需要"上一轮做了什么/权威资料/坑"等细节时 Grep 此处。
+> rotate 规则见 `STATE.md §4`:> 30 行 或 > 20 KB → 截断至最近 30 条。
 
-> 每轮的**推进量**与**失败回退**规则见 [`SCHEDULE_QUOTA.md`](./SCHEDULE_QUOTA.md):
-> 每轮 **3 主 + ≤ 2 副**(主 = 1 新 demo × 3,落同一索引;副 = 修订/补全/索引 三选一,≤ 2),单 demo = 1 推进单位。
+## 迁移说明(2026-09-11 拆分时)
 
-## 一、轮询顺序
+| 来源 | 处理 |
+| --- | --- |
+| 旧 `_docs/SEARCH_PROGRESS.md` 第四节"调度日志"(12 条) | 一次性写入本文档,保留全部原始 detail |
+| 旧列格式:5 列(时间/索引/动作/结果/备注)→ 7 列(时间/索引/主任务/副任务/推进/累计 demo/备注) | 全部 7 列格式保留,旧 5 列条目已废弃前时间戳(2026-09-11 00:30–00:56)仍是 7 列化后保留 |
 
-按 `priority_score = base_score - done_count * 10 - last_done_days * 0.5` 排序，每次巡检选最高分。
-
-```text
-轮询索引表（next_index 字段控制下次从哪个开始）：
-0  : 01-游戏开发/服务端
-1  : 01-游戏开发/渲染
-2  : 01-游戏开发/UI
-3  : 01-游戏开发/游戏引擎
-4  : 01-游戏开发/物理
-5  : 01-游戏开发/AI
-6  : 01-游戏开发/音频
-7  : 01-游戏开发/动画
-8  : 02-Web开发/前端框架
-9  : 02-Web开发/后端
-10 : 02-Web开发/数据库
-11 : 02-Web开发/API设计
-12 : 03-系统编程/网络编程
-13 : 03-系统编程/进程线程协程
-14 : 03-系统编程/内存管理
-15 : 03-系统编程/文件系统
-16 : 04-移动开发/iOS
-17 : 04-移动开发/Android
-18 : 04-移动开发/跨平台
-19 : 05-AI与机器学习/深度学习
-20 : 05-AI与机器学习/强化学习
-21 : 05-AI与机器学习/LLM
-22 : 05-AI与机器学习/计算机视觉
-23 : 06-DevOps/容器化
-24 : 06-DevOps/CI-CD
-25 : 06-DevOps/监控
-26 : 06-DevOps/Kubernetes
-27 : 07-数据存储/关系型
-28 : 07-数据存储/NoSQL
-29 : 07-数据存储/缓存
-30 : 07-数据存储/搜索引擎
-31 : 08-安全/密码学
-32 : 08-安全/Web安全
-33 : 08-安全/网络安全
-34 : 09-语言学习/Python     # 按语言组织，与按领域的 01-08 不同
-```
-
-## 二、已完成 demo 记录
-
-| ID | 路径 | 知识点 | 语言 | 完成日期 |
-| --- | --- | --- | --- | --- |
-| 001 | `01-游戏开发/01-服务端/网络编程/IO多路复用/select/` | IO 多路复用 · `select` | C / Python / Go | 2026-09-11 |
-| 002 | `09-语言学习/Python/装饰器/` | Python · 装饰器(基础 + 带参数) | Python | 2026-09-11 |
-| 003 | `01-游戏开发/01-服务端/网络编程/IO多路复用/epoll/` | IO 多路复用 · `epoll`(LT/ET) | C / Python / Go | 2026-09-11 |
-| 004 | `07-数据存储/04-搜索引擎/elasticsearch/` | Elasticsearch · 倒排索引与 NRT(REST API) | Python / Go | 2026-09-11 |
-| 005 | `01-游戏开发/02-渲染/图形管线/深度缓冲/` | Z-Buffer 与 Z-Fighting(1/z 深度模型 + 量化精度) | C / Python / Go | 2026-09-11 |
-| 006 | `01-游戏开发/03-UI/文本渲染/SDF/` | SDF 文本渲染(有符号距离场 + 双线性重建 + smoothstep AA) | C / Python / Go | 2026-09-11 |
-| 007 | `01-游戏开发/04-游戏引擎/ECS/` | ECS 架构(sparse set 存储 + swap-remove + 最小集合查询) | C / Python / Go | 2026-09-11 |
-| 008 | `01-游戏开发/05-物理/碰撞检测/GJK/` | GJK 碰撞检测算法(Minkowski 差 + support 函数 + simplex 演化) | C / Python / Go | 2026-09-11 |
-| 009 | `01-游戏开发/06-AI/寻路算法/A-star/` | A* 启发式搜索(f=g+h + 可采纳性 + Dijkstra/A*/Greedy 三模式对比) | C / Python / Go | 2026-09-11 |
-| 010 | `01-游戏开发/07-音频/音频压缩/IMA-ADPCM/` | IMA ADPCM(自适应差分 + 4-bit 量化 + 步长双查表 + 块随机访问) | C / Python / Go | 2026-09-11 |
-| 011 | `01-游戏开发/08-动画/IK算法/FABRIK/` | FABRIK 启发式 IK(位置空间反向/正向两阶段 + 不可达目标退化) | C / Python / Go | 2026-09-11 |
-| 012 | `02-Web开发/01-前端框架/Vue/reactive/` | Vue 3 Proxy 响应式最小实现(reactive/ref/effect/track/trigger + lazy 嵌套代理 + cleanup + effect 栈) | TypeScript / JavaScript | 2026-09-11 |
-| 013 | `02-Web开发/02-后端/Node.js/Event-Loop/` | Node.js Event Loop(6 阶段 + nextTick/Promise 微任务 + libuv 1.45.0 行为变化 + I/O 中 setImmediate 必早于 setTimeout) | JavaScript / TypeScript | 2026-09-11 |
-| 014 | `02-Web开发/03-数据库/B+树索引/` | B+ 树索引(M-way + 叶子兄弟链 + copy-up/push-up 分裂 + borrow/merge 重平衡 + bulk-load O(N)) | C / Python / Go | 2026-09-11 |
-| 015 | `02-Web开发/04-API设计/WebSocket/握手协议/` | WebSocket 握手协议 RFC 6455 §4(HTTP Upgrade + SHA-1+GUID → Sec-WebSocket-Accept + 101 Switching Protocols + 子协议协商) | C / Python / Go | 2026-09-11 |
-| 016 | `03-系统编程/01-网络编程/Socket基础/Nagle算法/` | Nagle 算法 vs `TCP_NODELAY`(RFC 896"inhibit sending when unacknowledged data exists"+Linux tcp(7) man page `tcpi_segs_out` 段计数实测;100 次 1 字节 send 在 Nagle on → ~8 段 vs `TCP_NODELAY=1` → 100 段) | C / Python / Go | 2026-09-11 |
-| 017 | `03-系统编程/02-进程与线程/哲学家就餐/` | 哲学家就餐问题(Dijkstra 1965;Naive 死锁 + Resource Hierarchy 资源分级破循环等待 + Tanenbaum 监视器 1 mutex + N condvar + state[];pthread_cond_wait 原子释放 + 谓词循环 + 三种语言 mutex/cond 标准库对照) | C / Python / Go | 2026-09-11 |
-| 018 | `03-系统编程/03-内存管理/分配器/bump-allocator/` | Bump (arena) 分配器(mmap 单块 + 单调 offset + 二进制 `(x+a-1)&~(a-1)` 向上对齐 + O(1) 分配/重置;alignment 必须为 2 的幂;多块版需 next 链表,匿名 struct 不能自引用) | C / Python / Go | 2026-09-11 |
-| 019 | `03-系统编程/03-内存管理/分配器/slab-allocator/` | Slab 分配器(Bonwick 1994 简化版:kmem_cache + 三链表 partial/full/free + slab 内 bitmap + ctz 找第一空位;SLAB_OBJ_MAX=126/slab;O(1) partial 头分配;生产加 slab coloring + per-CPU array) | C / Python / Go | 2026-09-11 |
-| 020 | `03-系统编程/03-内存管理/垃圾回收/gc-tri-color/` | 三色标记 GC(Dijkstra 1978 "On-the-Fly GC":white/gray/black 三色 + tri-color 不变式"无黑→白"边 + worklist gray 栈;stop-the-world 版 demo 5 个图:可达链/循环/断连子图/钻石共享/孤立子树;O(E+V) mark + O(heap) sweep;能回收 refcount 不能的循环) | C / Python / Go | 2026-09-11 |
-
-## 三、本轮状态
-
-```
-next_index     : 13    # 下次巡检从索引 13 开始（即 03-系统编程/进程线程协程 领域）
-last_run       : 2026-09-11 15:02:00
-skipped        : []
-failed_attempts: []
-```
-
-## 四、调度日志
-
-> 2026-09-11 17:00 之前的日志按旧 5 列格式(时间 / 索引 / 动作 / 结果 / 备注);之后按新 7 列格式(时间 / 索引 / 主任务 / 副任务 / 推进 / 累计 demo / 备注)。新列缺值用 `/` 占位。
+## 调度日志
 
 | 时间 | 索引 | 主任务 | 副任务 | 推进 | 累计 demo | 备注 |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- | --- | --- |
 | 2026-09-11 00:30 | 0 | 创建 select demo | OK | C/Python/Go 三语言 |
 | 2026-09-11 00:35 | 34 | 新建 09-语言学习 + 装饰器 demo | OK | 按语言组织的新维度,首个 Python demo |
 | 2026-09-11 00:45 | — | 制定 SCHEDULE_QUOTA.md | OK | 1 主 + ≤1 副 区间配额;失败重试 3 次后跳过;周 7 / 月 25 demo 下限 |
@@ -108,7 +34,9 @@ failed_attempts: []
 | 2026-09-11 15:02 | 12 | M=Nagle 算法 vs TCP_NODELAY demo(权威资料:RFC 896 全文 WebFetch 含"inhibit sending when unacknowledged data exists"原句 + Linux tcp(7) man page WebFetch 含 TCP_NODELAY/TCP_CORK 原文 + netinet/tcp.h(0p) POSIX 定义名) | OK | C / Python / Go;demo 1 (Nagle on) 100× 1B send vs demo 2 (TCP_NODELAY=1) 同操作对比 + demo 3 ping/pong 时延对比;getsockopt(TCP_INFO) 读 `tcpi_segs_out` 段数(C 用 <linux/tcp.h>、Python 用 socket.TCP_INFO 解析、Go 用 syscall6 + Go 标准库 SetNoDelay);Go 版走 Linux 5.10+ 200-byte struct 偏移 100 硬编码 tcpi_segs_out;预期 Nagle 默认开 vs NODELAY=1 实测 segment 数 ~8 vs 100;Socket基础 README 加 Nagle demo + 新增 5 个待研究(原 3 个展开);03-系统编程 README demo 列表加 016 + IO多路复用 epoll/WebSocket 列表增补;新建 Nagle算法/ 主题目录;Python py_compile 干净(删除 __pycache__);本机无 gcc/Go 工具链,C/Go 走人工代码审查;next_index → 13 (03-系统编程/进程线程协程) |
 | 2026-09-11 16:14 | 13 | M=哲学家就餐问题 demo(权威资料:Wikiwand 全文含 Dijkstra 1965 起源+Coffman 等 1971 死锁四条件+Tanenbaum C++20 完整监视器代码 / os.cs.luc.edu Deadlock 锁顺序 vs try-and-release 两条破除路径含 C multi_lock 示例 / pthread_cond NetBSD man page 含 spurious wakeup+谓词循环要求 / unseel.com 可视化 + diningphilosophers.eu 中文解法大全 10+ 方案) | OK | C / Python / Go;3 方案串行演示:Naive(先左后右 trylock + 退避 50 次判死锁)+ Resource Hierarchy(按筷子编号小者优先,破循环等待)+ Tanenbaum 监视器(1 mutex + 5 condvar + state[5] 破持有并等待);5 哲学家跑 6 轮每轮吃 6 次,Barrier/N 起跑时间步同步;C/Python/Go 全部 ≤ 205 行,README 197 行(精简后 ≤ OPTIMIZATION 200 上限);本机无 gcc/Go 工具链,Python py_compile 干净(删 __pycache__);C/Go 走人工代码审查;02-进程与线程 README 加 demo + 移"哲学家就餐"待研究 + 新增 CFS/读者写者/协程对比 4 待研究;03-系统编程 README demo 列表加 017;next_index → 14 (03-系统编程/内存管理) |
 | 2026-09-11 18:00 | 14 | M=bump-allocator + slab-allocator + gc-tri-color 三 demo(权威资料:leonmavr Arena 页 WebFetch 完整(对齐二进制数学 + ASCII offset 推进图) / Understanding the Linux Kernel Ch.8 slab WebFetch(三大目标 + cache/slab/object 层级 + slab coloring + size-N 缓存) / cstopics Tri-Color Marking WebFetch(1978 Dijkstra-Lamport 五作者起源 + 不变式 + worklist + Dijkstra/Yuasa/SATB 三种写屏障 + HotSpot G1/V8/Go/.NET 实现对照)) | OK | C / Python / Go ×3 demo = 9 个源文件 + 3 个 README;bump:mmap 单块 + 单调 offset + 二进制对齐 + OOM 边界,4 子 demo;slab:Bonwick 1994 简化三链表 + bitmap + ctz + 跨 SLAB_OBJ_MAX 触发新 slab,3 子 demo;gc-tri-color:Dijkstra 1978 stop-the-world 三色 + 5 种图(可达/循环/断连/钻石/孤立);Python 全部 py_compile 干净 + 3 demo run 全部 PASS(本机无 gcc/Go 工具链,C/Go 走人工代码审查);bump 坑:alignment 必须为 2 的幂(`(x+a-1)&~(a-1)` 取整只在 2 幂下成立);slab 坑:object 尺寸应向上对齐 + reclaim 不在 free 路径做(full→partial 升级后留在链表,等 shrink_slab);gc 坑:本 demo 是 STW 无写屏障,生产用 G1/V8/Go 是并发 + 屏障;03-内存管理 README 重写:把 3 个待研究移到"已完成 demo"+ 跳加 4 个新待研究(Cheney/分代/ptmalloc2/mmap);03-系统编程 README demo 列表加 018/019/020;next_index → 15 (03-系统编程/文件系统) |
+| 2026-09-11 18:11 | — | 拆分 SEARCH_PROGRESS → STATE.md + archive/(completed, schedule) | OK | hot path 15.9KB → 3.8KB(**省 76%**),archive 用 rotate 截断(100/30);新增 OPTIMIZATION §2.4 + INDEX/MEMORY 同步;agent 默认只读 STATE.md |
+| 2026-09-11 19:00 | 15 | M=mmap内存映射 + ext4-Journaling(JBD2) + Page-Cache 与 writeback 三 demo(权威来源:man7.org mmap(2) Linux 完整定义 + mmap(3p) POSIX 规范 + sys_mman.h(0p) + ext4.wiki.kernel.org Ext4_Disk_Layout Journal 段全文 + man7.org posix_fadvise(2) 全文 + posix_fadvise(3p) POSIX 定义 + sync_file_range(2) 全文含 "extremely dangerous" 警告 + madvise(2) 全文 + sync(2)/syncfs(2) 全文) | OK | C / Python / Go ×3 demo = 9 个源文件 + 3 个 README + 3 个 go.mod;mmap: 4 子 demo(MAP_SHARED write+msync / MAP_PRIVATE CoW / MAP_ANONYMOUS IPC / SIGBUS 边界);JBD2: 4 子 demo(write txn / replay / big-endian vs little-endian / ESCAPE flag);Page Cache: 4 子 demo(write dirty 状态 / POSIX_FADV_DONTNEED / sync_file_range WRITE / RANDOM vs SEQUENTIAL readahead);Python 3 demo 全部 py_compile 干净 + jbd2 + mmap run 全部 PASS(Page Cache Linux-only,Windows 自动 exit 提示);本机无 gcc/Go 工具链,C/Go 走人工代码审查;mmap 坑:offset 必须页对齐、length 向上取整、文件不足须 ftruncate、PRIVATE CoW 整页粒度、SIGBUS on truncated access;JBD2 坑:h_magic=0xC03B3998 与 data 前 4B 碰撞需 ESCAPE、JBD2 大端 vs ext4 小端需 be32_to_cpu、commit block 是事务持久化标记而非 checkpoint 完成;Page Cache 坑:POSIX_FADV_DONTNEED 不保证刷 dirty 必须先 fsync、sync_file_range 不刷 metadata 在 CoW fs 下不可用、readahead hint 不强制、O_DIRECT 与 mmap 同一文件需 msync/fsync 协调;03-系统编程 README demo 列表加 021/022/023 + 04-文件系统 README 重写(待研究 mmap → 已完成 + 加 VFS/Copy-on-Write/O_DIRECT/pagecache 调优 4 待研究);next_index → 16 (04-移动开发/iOS) |
 
 ---
 
-> 自动化任务在每次结束后追加一行到此表。
+> 写入规则:每轮结束 append 一行(7 列)。监控:行数 > 30 或 大小 > 20 KB → 触发 rotate(见 STATE.md §4)。

@@ -12,7 +12,7 @@
 │   5. 写 daily log → 6. git add + commit + push                │
 │   7. 读取 _docs/.wecom_webhook → curl POST 群机器人            │
 │         ↓ 失败                                                │
-│      仅写一行 `notify_failed: <原因>` 到 SEARCH_PROGRESS.md,   │
+│      仅写一行 `notify_failed: <原因>` 到 STATE.md「本轮状态」或 archive/schedule.md,   │
 │      不阻塞后续轮次。                                          │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -52,7 +52,7 @@
 {
   "msgtype": "markdown",
   "markdown": {
-    "content": "## 📚 巡检报告 2026-09-11 17:00\n> 领域:**01-游戏开发/服务端** · 推进 **+3**\n\n**新增 demo:**\n1. **IO 多路复用 · select** — `01-游戏开发/01-服务端/网络编程/IO多路复用/select/`\n   > 核心:fd_set 位图轮询,1024 上限,O(n) 扫描\n2. **IO 多路复用 · epoll(LT/ET)** — `01-游戏开发/01-服务端/网络编程/IO多路复用/epoll/`\n   > 核心:红黑树 + 就绪链表,O(1) 唤醒,ET 需非阻塞 + 循环读\n3. **IO 多路复用 · kqueue** — `01-游戏开发/01-服务端/网络编程/IO多路复用/kqueue/`\n   > 核心:BSD 事件驱动,kevent 注册/返回双工\n\n[查看进度 →](SEARCH_PROGRESS.md)"
+    "content": "## 📚 巡检报告 2026-09-11 17:00\n> 领域:**01-游戏开发/服务端** · 推进 **+3**\n\n**新增 demo:**\n1. **IO 多路复用 · select** — `01-游戏开发/01-服务端/网络编程/IO多路复用/select/`\n   > 核心:fd_set 位图轮询,1024 上限,O(n) 扫描\n2. **IO 多路复用 · epoll(LT/ET)** — `01-游戏开发/01-服务端/网络编程/IO多路复用/epoll/`\n   > 核心:红黑树 + 就绪链表,O(1) 唤醒,ET 需非阻塞 + 循环读\n3. **IO 多路复用 · kqueue** — `01-游戏开发/01-服务端/网络编程/IO多路复用/kqueue/`\n   > 核心:BSD 事件驱动,kevent 注册/返回双工\n\n[查看进度 →](STATE.md)"
   }
 }
 ```
@@ -116,7 +116,7 @@ fi
 ## 六、内容模板(由 Agent 每轮填充)
 
 `YYYY-MM-DD HH:MM` — 当前本地时间(GMT+8)。
-`领域` — 对应 `_docs/SEARCH_PROGRESS.md` 索引表里的中文名(如「服务端」「渲染」)。
+`领域` — 对应 [`STATE.md`](./STATE.md) §1 索引表里的中文名(如「服务端」「渲染」)。
 `+N` — 本轮新增 demo 数(0/1/2/3)。
 `A/B/C` + 路径 + 1 句核心机制总结(≤ 40 字),从 README 简介提炼。
 
@@ -128,13 +128,13 @@ fi
 | curl 失败 / 超时 | 跳过通知,记 `notify_failed: curl`,**不阻塞** |
 | HTTP 非 200 | 跳过通知,记 `notify_failed: HTTP <code>` |
 | HTTP 200 但 errcode ≠ 0 | 跳过通知,记 `notify_failed: errcode=<code>, errmsg=<msg>` |
-| **连续 5 轮失败** | 在 SEARCH_PROGRESS 告警 `notify: 连续 5 轮失败,请检查 webhook 配置` |
+| **连续 5 轮失败** | 在 STATE.md「本轮状态」告警 `notify: 连续 5 轮失败,请检查 webhook 配置` |
 
 原则:**通知失败永远不阻塞巡检主流程**;只允许「跳过 + 记日志」。
 
 ## 八、与其它规则文档的关系
 
-- 索引/调度:`SEARCH_PROGRESS.md`
+- 索引/调度:[`STATE.md`](./STATE.md)(主,≤ 5 KB)+ [`archive/schedule.md`](./archive/schedule.md)(日志全本)
 - 推进配额:`SCHEDULE_QUOTA.md`
 - Git 同步:`GIT_SYNC.md`(通知是 Git 同步之后的第 7 步)
 - 内容来源铁律:见 `DEMO_TEMPLATE.md` 第〇节 —— **即使是给企业微信发的摘要,也要基于实际查到的权威资料,不要凭空发挥**。
@@ -144,3 +144,4 @@ fi
 | 日期 | 变更 |
 |---|---|
 | 2026-09-11 | 首版:每轮巡检完成后用群机器人 webhook 推送「领域 + 3 个 demo 路径 + 1 句核心机制」摘要 |
+| 2026-09-11 | 状态文件拆分同步:SEARCH_PROGRESS.md → STATE.md + archive/,本文档 4 处引用一并更新 |

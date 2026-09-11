@@ -2,8 +2,8 @@
 
 > 本文件定义每 1 小时一轮的自动巡检**「推进多少」**的定量规则。
 > 配套文档:
-> - `SEARCH_PROGRESS.md` — 轮询索引与状态
-> - `OPTIMIZATION.md` — 资源硬约束(搜索次数、token 预算)
+> - `STATE.md` — 轮询索引与状态(主状态文件,≤ 5 KB 永久恒定)
+> - `OPTIMIZATION.md` — 资源硬约束(搜索次数、token 预算)+ §2.4 状态文件瘦身
 > - `AGENT_RULES.md` — Agent 行为规范
 
 ## 一、度量单位
@@ -14,7 +14,7 @@
 
 **为什么用 demo 数**:
 - 与项目主目标「按领域沉淀原理级 demo」直接对齐
-- 衡量直观(看 SEARCH_PROGRESS 的 demo 表即可)
+- 衡量直观(看 `archive/completed.md` 的 demo 表即可)
 - 不会出现「凑 KB/凑动作数」的反向激励
 
 ## 二、每轮结构:3 主 + ≤ 2 副
@@ -30,7 +30,7 @@
 | --- | --- | --- |
 | S1 · 已有 demo 增强 | 上一轮写过同一领域,且有可补的 | `select/` demo 补 Rust 实现 |
 | S2 · 目录结构补全 | 准备下一轮深挖,先把骨架建好 | 新建 `02-Web开发/02-后端/Node.js/` 子目录 + README |
-| S3 · 索引/记忆同步 | 阶段收尾,补全索引 | 更新 SEARCH_PROGRESS、daily log 摘要 |
+| S3 · 索引/记忆同步 | 阶段收尾,补全索引 | 更新 STATE.md(第三节)+ 追加到 `archive/{completed,schedule}.md`、daily log 摘要 |
 
 **主任务实施细则**(2026-09-11 新增):
 - 3 个 demo 全部落在同一次选中的索引(如索引 12 → 全部写在 `03-系统编程/01-网络编程/` 下)
@@ -52,7 +52,7 @@
 连续跳过 5 个索引 → 暂停自动巡检,发出告警,等用户决策
 ```
 
-所有重试 / 跳过都写入 `SEARCH_PROGRESS.md` 的「本轮状态」和「调度日志」。
+所有重试 / 跳过都写入 [`STATE.md`](./STATE.md)「本轮状态」+ [`archive/schedule.md`](./archive/schedule.md) 调度日志。
 
 ## 五、长周期目标(已移除,2026-09-11)
 
@@ -87,3 +87,4 @@
 | --- | --- |
 | 2026-09-11 | 首版定义 |
 | 2026-09-11 | 配额上调:每轮 1 主 + ≤1 副 → 3 主 + ≤2 副,总动作 ≤2 → ≤5;删除「长周期目标」整节(产能远高于旧下限,保留无意义);硬约束同步放宽至 ≤3 agentic_search / ≤9 WebSearch / ≤6 WebFetch / ≤3 新 demo;调度频率从 2 小时改为 1 小时 |
+| 2026-09-11 | **状态文件瘦身**:拆分 `_docs/SEARCH_PROGRESS.md` → `STATE.md` (≤ 5 KB) + `archive/{completed,schedule}.md`(rotate 100/30);本规范内 SEARCH_PROGRESS 引用同步更新 |

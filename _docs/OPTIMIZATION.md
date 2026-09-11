@@ -45,10 +45,10 @@
 
 ### 2.3 自动化任务的 Agent 配置
 
-由 `automation_update` 创建的巡检任务，prompt 中显式约束：
+由 `automation_update` 创建的巡检任务,prompt 中显式约束:
 - 不展开调研综述类问题
-- 单轮最多调用 1 次 `agentic_search`
-- 单轮最多调用 3 次 `WebSearch` + 2 次 `WebFetch`
+- 单轮最多调用 3 次 `agentic_search`(与 SCHEDULE_QUOTA「3 主/轮」配额对齐)
+- 单轮最多调用 9 次 `WebSearch` + 6 次 `WebFetch`(与「3 主 + ≤2 副」总动作对齐)
 
 ## 三、提示词与记忆优化
 

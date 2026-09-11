@@ -15,6 +15,7 @@
 | 2026-09-11 21:22 | 17 | Android Handler/Looper + Activity launchMode + Compose 重组 三 demo | OK | +3 | 29 | Kotlin/Java 双语 ×2 demo + Kotlin ×1 demo;权威来源 5 源;本机无 Kotlin/Android SDK 走人工代码审查;next → 18 |
 | 2026-09-11 22:30 | 18 | RN Bridge vs JSI + Flutter 三棵树 + KMP expect/actual 三 demo | OK | +3 | 32 | TS+JS / Dart / Kotlin 三 demo = 12 源文件 + 3 README;权威来源 3 源全 WebFetch 全文命中;纯 Node.js 可运行 RN 部分;Flutter/KMP 走人工代码审查;next → 19 |
 | 2026-09-11 23:34 | 19 | 反向传播 + 2D 卷积 im2col + 多头自注意力 三 demo | OK | +3 | 35 | Python ×3 demo = 3 源文件 + 3 README;权威来源 3 源全 WebFetch 全文命中(d2l.ai §5.3 / arXiv 2408.12561 Eq 3-5 / Vaswani 2017 §3.2 公式 1-3);Python py_compile 干净;pip install numpy 卡死 11 分钟未完成,数值梯度实测留给用户执行;next → 20 |
+| 2026-09-12 00:57 | 20 | Q-Learning 表格 + REINFORCE 策略梯度 + PPO 近端策略优化 三 demo | OK | +3 | 38 | Python ×3 demo = 3 源文件 + 3 README;纯标准库无依赖(避免 numpy 安装卡死);权威来源 3 WebSearch + 2 WebFetch 全文命中(d2l.ai §17.3 Q-Learning 全文 + Spinning Up VPG/REINFORCE 全文 + arXiv 1707.06347 PPO 原文 + arXiv 2307.04964 GAE+PPO 公式 7-17);Python py_compile 干净 + 3 demo run 全 PASS(Q-Learning 89% 成功 / REINFORCE 98% / PPO 100%);next → 21 |
 
 ---
 > 写入规则:每轮结束 append 一行(7 列)。监控:行数 > 30 或 大小 > 20 KB → 触发 rotate(见 STATE.md §4)。

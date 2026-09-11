@@ -16,10 +16,12 @@
 | 目录 | demo |
 | --- | --- |
 | [01-深度学习/](./01-深度学习/) | 033 反向传播 · 034 2D 卷积 · 035 多头自注意力 |
+| [02-强化学习/](./02-强化学习/) | 036 Q-Learning 表格方法 · 037 REINFORCE 策略梯度 · 038 PPO 近端策略优化 |
 
 ## 待研究
 
 - [ ] DQN 算法
+- [ ] Actor-Critic / A2C / A3C
 - [ ] CLIP 原理
 - [ ] LSTM / GRU 门控机制
 - [ ] BatchNorm / LayerNorm

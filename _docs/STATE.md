@@ -52,8 +52,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 20    # 下次从索引 20 开始(即 05-AI与机器学习/强化学习)
-last_run       : 2026-09-11 23:34
+next_index     : 21    # 下次从索引 21 开始(即 05-AI与机器学习/LLM)
+last_run       : 2026-09-12 00:57
 skipped        : []
 failed_attempts: []
 ```
@@ -62,11 +62,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
+| 2026-09-12 00:57 | 20 | Q-Learning 表格方法 + REINFORCE 策略梯度 + PPO 近端策略优化 三件套 | +3 |
 | 2026-09-11 23:34 | 19 | 反向传播 BP + 2D 卷积 im2col + 多头自注意力 三件套 | +3 |
 | 2026-09-11 22:30 | 18 | React Native Bridge vs JSI + Flutter 三棵树 + KMP expect/actual 三件套 | +3 |
 | 2026-09-11 21:22 | 17 | Android Handler/Looper + Activity launchMode + Compose 重组 三件套 | +3 |
 | 2026-09-11 20:16 | 16 | Swift/ObjC ARC + GCD 同步原语 + RunLoop 三件套 | +3 |
-| 2026-09-11 19:00 | 15 | mmap + ext4 JBD2 + Page Cache 三件套 | +3 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

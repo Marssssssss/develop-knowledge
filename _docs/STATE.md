@@ -68,8 +68,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 32    # 下次从索引 32 开始(即 08-安全/Web安全);索引表现 46 行,取模基数 46
-last_run       : 2026-09-12 14:30
+next_index     : 33    # 下次从索引 33 开始(即 08-安全/网络安全);索引表现 46 行,取模基数 46
+last_run       : 2026-09-12 18:24
 skipped        : []
 failed_attempts: []
 ```
@@ -78,11 +78,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
+| 2026-09-12 18:24 | 32 | XSS 三类型+上下文转义+nonce + CSRF 同步器令牌+Signed Double Submit+SameSite + Fetch Metadata 同源检测+ Origin/Referer 兜底 + SQL 参数化查询+UNION/时间盲注+白名单+least privilege + JWT HS256 验证+RFC 7519 附录 A 向量+Algorithm Confusion 防御 + Same-Origin 三元组+CORS Simple/Preflight+凭据请求+多头合并 五 demo | +5 |
 | 2026-09-12 14:30 | 31 | AES-GCM 认证加密(GHASH over GF(2^128) + GCTR + AEAD) + RSA-PSS 概率签名(RSASP1 + EMSA-PSS + MGF1) + Ed25519(Curve25519 twisted Edwards a=-1 + SHA-512 域分离 + Montgomery ladder) 三 demo | +3 |
 | 2026-09-12 13:20 | 30 | BM25 评分算法(k1=1.2, b=0.75, tf 饱和, 长度归一化) + HNSW 多层近似近邻(Malkov 2016, O(log N), Search-Layer) + Lucene 段合并(TieredMergePolicy, floor_segment 2MB, 20MB/s 节流) 三 demo | +3 |
 | 2026-09-12 12:15 | 29 | Redis 持久化(RDB/AOF/Fork+CoW) + Redis Cluster(16384 哈希槽+CRC16+Gossip+故障转移) + 缓存淘汰(Memcached 精确 LRU vs Redis 近似 LRU) 三 demo | +3 |
 | 2026-09-12 11:04 | 28 | Dynamo 一致性哈希+VectorClock+Hinted Handoff + Cassandra CL/Paxos/Merkle + MongoDB WC/RC/oplog 三 demo | +3 |
-| 2026-09-12 09:39 | 27 | MVCC 多版本并发控制 + WAL 预写日志 + ARIES 恢复 + 两阶段锁 2PL + 死锁检测 三 demo | +3 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

@@ -15,10 +15,15 @@
 | `01-密码学/对称加密/AES-GCM/` | AES-GCM 认证加密(NIST SP 800-38D,GHASH + GCTR + AEAD) |
 | `01-密码学/非对称加密/RSA-PSS/` | RSA-PSS 概率签名(RFC 8017 §8.1 + MGF1) |
 | `01-密码学/签名/Ed25519/` | Ed25519 签名(RFC 8032,Curve25519 twisted Edwards) |
+| `01-Web安全/XSS与CSP/` | XSS 三类型 + 5 大上下文编码 + CSP nonce 机制 |
+| `01-Web安全/CSRF-Token/` | CSRF Token 同步器令牌(Signed Double Submit + SameSite + Fetch Metadata) |
+| `01-Web安全/SQL注入与预编译/` | SQL 注入与参数化查询(sqlite3 prepared statements) |
+| `01-Web安全/JWT验证/` | JWT HS256 验证(RFC 7519 §A.1 示例向量 + RFC 8725 Algorithm Confusion 防御) |
+| `01-Web安全/Same-Origin与CORS/` | 同源策略 + CORS(Simple Request + Preflight + 凭据请求) |
 
 ## 待研究
 
-- [ ] AES / RSA / Ed25519 实现原理 ✓ (08-安全/01-密码学 首批已完成)
-- [ ] TLS 1.3 握手
-- [ ] XSS 与 CSP
-- [ ] OAuth 2.0 流程
+- [x] AES / RSA / Ed25519 实现原理 ✓ (08-安全/01-密码学 首批已完成)
+- [x] TLS 1.3 握手
+- [x] XSS 与 CSP
+- [x] OAuth 2.0 流程

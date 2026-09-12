@@ -15,6 +15,9 @@
 - [x] MVCC 多版本并发控制 — 见 [01-关系型/MVCC/](./01-关系型/MVCC/)（C / Python / Go）
 - [x] WAL 预写日志 + ARIES 恢复 — 见 [01-关系型/WAL/](./01-关系型/WAL/)（C / Python / Go）
 - [x] 两阶段锁 2PL + 死锁检测 — 见 [01-关系型/2PL/](./01-关系型/2PL/)（C / Python / Go）
+- [x] Dynamo 风格存储(一致哈希 + vector clock + sloppy quorum + hinted handoff)— 见 [02-NoSQL/Dynamo风格/](./02-NoSQL/Dynamo风格/)(C / Python / Go)
+- [x] Cassandra 一致性级别(CL 决策 + read repair + LWT/Paxos + anti-entropy)— 见 [02-NoSQL/Cassandra一致性/](./02-NoSQL/Cassandra一致性/)(C / Python / Go)
+- [x] MongoDB 副本集 writeConcern / readConcern(oplog pull + 隐式 WC + 因果一致性)— 见 [02-NoSQL/MongoDB写关注/](./02-NoSQL/MongoDB写关注/)(C / Python / Go)
 
 ## 待研究
 
@@ -23,3 +26,4 @@
 - [ ] Redis 持久化（RDB / AOF）
 - [ ] ES BM25 评分算法细节
 - [ ] 隔离级别与幻读防（next-key lock / SSI）
+- [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

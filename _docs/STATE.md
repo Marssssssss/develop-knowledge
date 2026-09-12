@@ -64,8 +64,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 28    # 下次从索引 28 开始(即 07-数据存储/NoSQL);索引表现 45 行,取模基数 45
-last_run       : 2026-09-12 09:39
+next_index     : 29    # 下次从索引 29 开始(即 07-数据存储/缓存);索引表现 45 行,取模基数 45
+last_run       : 2026-09-12 11:04
 skipped        : []
 failed_attempts: []
 ```
@@ -74,12 +74,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
+| 2026-09-12 11:04 | 28 | Dynamo 一致性哈希+VectorClock+Hinted Handoff + Cassandra CL/Paxos/Merkle + MongoDB WC/RC/oplog 三 demo | +3 |
 | 2026-09-12 09:39 | 27 | MVCC 多版本并发控制 + WAL 预写日志 + ARIES 恢复 + 两阶段锁 2PL + 死锁检测 三 demo | +3 |
 | 2026-09-12 08:29 | 26 | Pod 生命周期+重启策略 / kube-proxy IPVS 调度 / Controller Reconciler 三件套 | +3 |
 | 2026-09-12 07:07 | 25 | Prometheus 指标模型 + 分布式追踪与 TraceContext + 直方图分位数估算 三件套 | +3 |
 | 2026-09-12 04:55 | 23 | Namespace 隔离 + Cgroups v2 + OCI 镜像格式 三件套(容器三基石) | +3 |
-| 2026-09-12 03:35 | 22 | Sobel 边缘检测 + Hough 直线检测 + IoU 与 NMS 三件套 | +3 |
-| 2026-09-12 00:57 | 20 | Q-Learning 表格方法 + REINFORCE 策略梯度 + PPO 近端策略优化 三件套 | +3 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

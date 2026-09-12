@@ -18,6 +18,9 @@
 - [x] Dynamo 风格存储(一致哈希 + vector clock + sloppy quorum + hinted handoff)— 见 [02-NoSQL/Dynamo风格/](./02-NoSQL/Dynamo风格/)(C / Python / Go)
 - [x] Cassandra 一致性级别(CL 决策 + read repair + LWT/Paxos + anti-entropy)— 见 [02-NoSQL/Cassandra一致性/](./02-NoSQL/Cassandra一致性/)(C / Python / Go)
 - [x] MongoDB 副本集 writeConcern / readConcern(oplog pull + 隐式 WC + 因果一致性)— 见 [02-NoSQL/MongoDB写关注/](./02-NoSQL/MongoDB写关注/)(C / Python / Go)
+- [x] Redis 持久化（RDB 快照 + AOF 日志 + Fork 写时复制）— 见 [03-缓存/RedisPersistence/](./03-缓存/RedisPersistence/)(C / Python / Go)
+- [x] Redis Cluster（16384 哈希槽 + CRC16/XMODEM + Gossip + 故障转移）— 见 [03-缓存/RedisCluster/](./03-缓存/RedisCluster/)(C / Python / Go)
+- [x] 缓存淘汰算法（Memcached 精确 LRU vs Redis 近似 LRU + 候选池）— 见 [03-缓存/LRUEviction/](./03-缓存/LRUEviction/)(C / Python / Go)
 
 ## 待研究
 
@@ -26,4 +29,7 @@
 - [ ] Redis 持久化（RDB / AOF）
 - [ ] ES BM25 评分算法细节
 - [ ] 隔离级别与幻读防（next-key lock / SSI）
+- [ ] Redis Sentinel 高可用
+- [ ] Memcached vs Redis 业务选型对比（03-缓存 已部分覆盖；缓存目录仍待深挖）
+- [ ] 图数据库 Neo4j / Cypher / 属性图模型（已在 `05-图数据库/` 占位，2026-09-12 类目拓展）
 - [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

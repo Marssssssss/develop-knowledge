@@ -57,6 +57,7 @@
 42 : 06-DevOps/SRE与可靠性工程     # 2026-09-12 巡检类目拓展新增(S2)
 43 : 06-DevOps/DevSecOps           # 2026-09-12 巡检类目拓展新增(S2,07-DevSecOps 目录)
 44 : 09-语言学习/Golang             # 2026-09-12 巡检类目拓展新增(S2)
+45 : 07-数据存储/图数据库             # 2026-09-12 巡检类目拓展新增(S2,Neo4j/Cypher/属性图占位)
 ```
 
 > **索引表可动态增长**（2026-09-12 起）：巡检副任务自动拓展子类目时，在表末尾顺延编号追加（35、36…），`next_index` 取模基数以实际行数为准。类目拓展规则见 `AGENT_RULES.md` §一.5。
@@ -64,8 +65,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 29    # 下次从索引 29 开始(即 07-数据存储/缓存);索引表现 45 行,取模基数 45
-last_run       : 2026-09-12 11:04
+next_index     : 30    # 下次从索引 30 开始(即 07-数据存储/搜索引擎);索引表现 46 行,取模基数 46
+last_run       : 2026-09-12 12:15
 skipped        : []
 failed_attempts: []
 ```
@@ -74,11 +75,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
+| 2026-09-12 12:15 | 29 | Redis 持久化(RDB/AOF/Fork+CoW) + Redis Cluster(16384 哈希槽+CRC16+Gossip+故障转移) + 缓存淘汰(Memcached 精确 LRU vs Redis 近似 LRU) 三 demo | +3 |
 | 2026-09-12 11:04 | 28 | Dynamo 一致性哈希+VectorClock+Hinted Handoff + Cassandra CL/Paxos/Merkle + MongoDB WC/RC/oplog 三 demo | +3 |
 | 2026-09-12 09:39 | 27 | MVCC 多版本并发控制 + WAL 预写日志 + ARIES 恢复 + 两阶段锁 2PL + 死锁检测 三 demo | +3 |
 | 2026-09-12 08:29 | 26 | Pod 生命周期+重启策略 / kube-proxy IPVS 调度 / Controller Reconciler 三件套 | +3 |
 | 2026-09-12 07:07 | 25 | Prometheus 指标模型 + 分布式追踪与 TraceContext + 直方图分位数估算 三件套 | +3 |
-| 2026-09-12 04:55 | 23 | Namespace 隔离 + Cgroups v2 + OCI 镜像格式 三件套(容器三基石) | +3 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

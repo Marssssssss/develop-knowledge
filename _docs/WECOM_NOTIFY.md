@@ -145,3 +145,50 @@ fi
 |---|---|
 | 2026-09-11 | 首版:每轮巡检完成后用群机器人 webhook 推送「领域 + 3 个 demo 路径 + 1 句核心机制」摘要 |
 | 2026-09-11 | 状态文件拆分同步:SEARCH_PROGRESS.md → STATE.md + archive/,本文档 4 处引用一并更新 |
+| 2026-09-12 | 新增第十节「状态回写硬约束」:`notify` 字段改为三态枚举(`ok` / `failed <reason>` / `skipped <reason>`),禁止写「待发」 |
+
+## 十、状态回写硬约束(2026-09-12 起强制)
+
+> 适用范围:每一轮定时巡检的 notify 步骤,**无例外**。这是与第七节「失败回退」并列的硬约束——第七节规定 curl 怎么处理,本节规定状态怎么记。
+
+### 10.1 三态枚举(唯三合法值)
+
+notify 字段在 `archive/schedule.md` 备注列尾和 `daily log`(`.workbuddy/memory/YYYY-MM-DD.md`)对应行的写法,**只能**是下列三种之一:
+
+| 枚举值 | 格式 | 何时使用 |
+|---|---|---|
+| `notify: ok` | 固定字面量 | curl HTTP 200 且响应 `errcode == 0` |
+| `notify: failed <reason>` | `<reason>` 必填,见 10.3 | curl 失败 / HTTP 非 200 / `errcode != 0` |
+| `notify: skipped <reason>` | `<reason>` 必填,见 10.3 | 凭据文件缺失 / `webhook_url` 为空等明确跳过场景 |
+
+### 10.2 禁止值(以下写法全部非法)
+
+- ❌ `notify 待发` / `notify: pending` / `notify: TODO` —— 含糊占位符
+- ❌ `notify:` 后留空
+- ❌ `notify` 字段整段省略(漏写等同于「待发」)
+- ❌ 任何不在 10.1 表内的字符串
+
+### 10.3 `<reason>` 取值约定
+
+`<reason>` 取自第七节失败回退表的实际原因,**保持短小可机读**:
+
+| 触发条件 | `<reason>` 字面量 |
+|---|---|
+| `_docs/.wecom_webhook` 不存在 | `no_credential_file` |
+| `webhook_url` 为空或 `null` | `empty_webhook_url` |
+| curl 命令报错 / 超时 | `curl_error` 或 `curl_timeout` |
+| HTTP 非 200 | `http_<code>`,如 `http_500` |
+| HTTP 200 但 `errcode != 0` | `errcode_<code>`,如 `errcode_40001`;若响应有 `errmsg` 可追加 `; errmsg=<errmsg>` |
+
+### 10.4 回写位置与时机
+
+| 文件 | 位置 | 时机 |
+|---|---|---|
+| `_docs/archive/schedule.md` | 当轮新增行的「备注」列末尾(逗号或空格分隔) | notify 步骤结束**立即**(无论 ok/failed/skipped) |
+| `.workbuddy/memory/YYYY-MM-DD.md` | 当轮日志行末尾 | 同上,与 schedule.md **同一轮**写入 |
+
+### 10.5 违规处理
+
+- 任何一轮两文件中任一文件出现「待发」/空字段/枚举外值 → 该轮 notify 步骤视为**未完成**,下一轮首件事是补执行 notify 并正确回写
+- 连续 3 轮违规 → 在 STATE.md「本轮状态」告警 `notify_status: 连续 3 轮未回写,违反 §十 硬约束`
+- 修复历史 backlog 时:对 09:39 / 11:04 / 12:15 / 13:20 四轮的 `notify 待发` 占位逐个回填实际 curl 结果(查 git log 同批 commit 的 stdout / 企业微信群历史)

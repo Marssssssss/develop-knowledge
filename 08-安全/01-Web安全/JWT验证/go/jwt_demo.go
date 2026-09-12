@@ -191,15 +191,11 @@ func demoAlgConfusion() {
 	fmt.Println("[Demo 4] ⚠️ Algorithm Confusion 攻击演示 + 防御")
 	fmt.Println(strings.Repeat("─", 65))
 	fmt.Println("  攻击场景:服务端用 RSA 公钥验签,但库按 header.alg 选算法")
-	fmt.Println("  攻击者改 header.alg=HS256,用公钥当 HMAC secret 伪造签名")
-	fmt.Println()
+	fmt.Println("  攻击者改 header.alg=HS256,用公钥当 HMAC secret 伪造签名\n")
 
-	// 模拟"RSA 公钥"
 	fakePublicKey := []byte(`-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
 -----END PUBLIC KEY-----`)
-
-	// 攻击者构造 token
 	attackerToken, _ := jwtEncodeHS256(
 		map[string]any{"typ": "JWT", "alg": "HS256"},
 		map[string]any{"sub": "admin", "exp": float64(time.Now().Add(time.Hour).Unix())},
@@ -207,24 +203,20 @@ MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
 	)
 	fmt.Printf("  攻击 token: %s...\n", attackerToken[:80])
 
-	// ❌ 不安全:服务端按 header 选算法 + 误用公钥当 HS256 secret
 	fmt.Println("  [不安全] 服务端误用公钥当 HS256 secret:")
 	_, err := jwtDecodeHS256(attackerToken, fakePublicKey, []string{"HS256"}, time.Now())
 	if err == nil {
 		fmt.Println("    ⚠️ 攻击成功!")
 	} else {
-		fmt.Printf("    %s: %v\n", "阻断", err)
+		fmt.Printf("    阻断: %v\n", err)
 	}
 
-	// ✅ 安全:服务端用真实共享 secret
 	fmt.Println("  [安全]   服务端用真实共享 secret 验签:")
 	_, err = jwtDecodeHS256(attackerToken, secret, []string{"HS256"}, time.Now())
 	if errors.Is(err, ErrInvalidSignature) {
 		fmt.Printf("    🛑 攻击被阻断: %v\n", err)
 	}
-	fmt.Println()
-	fmt.Println("  RFC 8725 §3.1 BCP:服务端不按 header 选算法;按业务决定 alg 并检查 alg↔key 类型匹配")
-	fmt.Println()
+	fmt.Println("\n  RFC 8725 §3.1 BCP:服务端不按 header 选算法;按业务决定 alg + 检查 alg↔key 类型匹配")
 }
 
 func demoRFC7519AppendixA() {

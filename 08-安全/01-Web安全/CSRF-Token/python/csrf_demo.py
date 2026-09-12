@@ -284,12 +284,9 @@ def demo_origin_verify():
     for origin, referer, ctx in cases:
         ok, reason = verify_origin(origin, referer, allowed)
         marker = '✅ ALLOW' if ok else '🛑 BLOCK'
-        print(f'  {marker}  {ctx}')
-        print(f'        {reason}')
-    print()
-    print('  关键:必须用 == 精确匹配,而不是 startswith/endswith')
+        print(f'  {marker}  {ctx}\n        {reason}')
+    print('\n  关键:必须用 == 精确匹配,而不是 startswith/endswith')
     print('  否则 example.org.attacker.com 可通过 .example.com 前缀匹配')
-    print()
 
 
 # ─────────────── main ───────────────

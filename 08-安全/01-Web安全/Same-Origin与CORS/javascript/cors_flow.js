@@ -229,8 +229,6 @@ function demoSameOrigin() {
   console.log();
 }
 
-// ───────────── Demo 2: Simple Request vs Preflight ─────────────
-
 function demoSimpleVsPreflight() {
   console.log('─'.repeat(65));
   console.log('[Demo 2] 触发预检的 4 类场景');

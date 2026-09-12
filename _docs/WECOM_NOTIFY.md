@@ -76,6 +76,8 @@
 
 ## 五、curl 模板
 
+> ⚠️ **2026-09-12 修订(防重复推送)**:旧模板用 `-o /tmp/wecom_resp.json` 写响应体,在 Git Bash 下 `/tmp` 写入有 quirk(curl exit 23),导致"服务端已收到、本地误判失败 → 重试 → 群里重复推送"。现改为**命令替换直接捕获响应体,不落任何临时文件**。
+
 ```bash
 WEBHOOK_FILE="D:/开发研究/_docs/.wecom_webhook"
 if [ ! -s "$WEBHOOK_FILE" ]; then
@@ -96,23 +98,30 @@ PAYLOAD=$(cat <<'EOF'
 EOF
 )
 
-# 3) POST(超时 10 秒,失败不阻塞主流程)
-HTTP_CODE=$(curl -sS -o /tmp/wecom_resp.json -w "%{http_code}" \
+# 3) POST:响应体与 HTTP 状态码一起用命令替换捕获(禁止 -o 写文件!)
+#    每轮 curl 只调用【一次】,任何结果都不重试(见 §七「重试禁令」)
+RAW=$(curl -sS -w $'\n%{http_code}' \
   -X POST "$WEBHOOK_URL" \
   -H "Content-Type: application/json; charset=utf-8" \
   -d "$PAYLOAD" \
-  --max-time 10 2>&1) || {
-    echo "notify_failed: curl error"
-    exit 0
-}
+  --max-time 10 2>&1)
+CURL_EXIT=$?
 
-# 4) 检查响应
+if [ $CURL_EXIT -ne 0 ]; then
+  echo "notify_failed: curl_error(exit=$CURL_EXIT)"
+  exit 0
+fi
+
+# 4) 拆分:最后一行是 http_code,前面是响应体
+HTTP_CODE=$(printf '%s' "$RAW" | tail -n1)
+RESP_BODY=$(printf '%s' "$RAW" | sed '$d')
+
 if [ "$HTTP_CODE" = "200" ]; then
-  ERRCODE=$(jq -r '.errcode' /tmp/wecom_resp.json 2>/dev/null || echo "-1")
+  ERRCODE=$(printf '%s' "$RESP_BODY" | jq -r '.errcode' 2>/dev/null || echo "-1")
   if [ "$ERRCODE" = "0" ]; then
     echo "notify_ok: HTTP 200, errcode=0"
   else
-    echo "notify_failed: HTTP 200, errcode=$ERRCODE, errmsg=$(jq -r '.errmsg' /tmp/wecom_resp.json)"
+    echo "notify_failed: HTTP 200, errcode=$ERRCODE, errmsg=$(printf '%s' "$RESP_BODY" | jq -r '.errmsg' 2>/dev/null)"
   fi
 else
   echo "notify_failed: HTTP $HTTP_CODE"
@@ -140,6 +149,8 @@ fi
 
 原则:**通知失败永远不阻塞巡检主流程**;只允许「跳过 + 记日志」。
 
+**重试禁令(2026-09-12 起强制)**:群机器人 webhook **没有幂等键**,重试 = 群里重复消息。因此每轮 curl **只调用一次**,无论结果是 curl 报错、超时、HTTP 非 200 还是 errcode ≠ 0,都**禁止重发**;宁可漏发一轮(记 `notify_failed`),不可重发一条。漏发由下一轮正常推送覆盖,不影响主流程。
+
 ## 八、与其它规则文档的关系
 
 - 索引/调度:[`STATE.md`](./STATE.md)(主,≤ 5 KB)+ [`archive/schedule.md`](./archive/schedule.md)(日志全本)
@@ -156,6 +167,7 @@ fi
 | 2026-09-12 | 第十节「状态回写硬约束」:`notify` 字段改为三态枚举(`ok` / `failed <reason>` / `skipped <reason>`),禁止写「待发」 |
 | 2026-09-12 | 第四节消息体格式铁律:核心机制从「列表项 + 子缩进引用(`\n   > 核心:...`)」改为「列表项尾部拼接(`· 核心:...`)」,消除企业微信 markdown 渲染器跨客户端(Android/iOS/PC)的二级缩进与空白异常 |
 | 2026-09-12 | 配额上调 3→5 demo/轮:第三节流程图「写 3 个 demo」→「写 5 个 demo」;第四节示例消息体改为 5 demo;第六节「+N」范围 0/1/2/3 → 0-5;全文「每 1 小时」→「每 1.5 小时」 |
+| 2026-09-12 | **防重复推送专项治理**(用户反馈"巡检报告重复发"):① §五 curl 模板废弃 `-o /tmp/...` 写文件(Git Bash /tmp quirk exit 23 致误判失败重试),改命令替换捕获响应体;② §七 新增「重试禁令」:webhook 无幂等键,curl 每轮仅一次;③ §10.5 修订:状态回写违规只补回写、禁止补推;④ 新增 §十一 幂等防线(发送前查 schedule.md 已有 `notify: ok` 则跳过 + `last_run` < 80 分钟本轮直接退出 + 开局即更新 `last_run` 当占位锁) |
 
 ## 十、状态回写硬约束(2026-09-12 起强制)
 
@@ -197,8 +209,33 @@ notify 字段在 `archive/schedule.md` 备注列尾和 `daily log`(`.workbuddy/m
 | `_docs/archive/schedule.md` | 当轮新增行的「备注」列末尾(逗号或空格分隔) | notify 步骤结束**立即**(无论 ok/failed/skipped) |
 | `.workbuddy/memory/YYYY-MM-DD.md` | 当轮日志行末尾 | 同上,与 schedule.md **同一轮**写入 |
 
-### 10.5 违规处理
+### 10.5 违规处理(2026-09-12 修订:禁止补推)
 
-- 任何一轮两文件中任一文件出现「待发」/空字段/枚举外值 → 该轮 notify 步骤视为**未完成**,下一轮首件事是补执行 notify 并正确回写
+- 任何一轮两文件中任一文件出现「待发」/空字段/枚举外值 → 该轮视为**状态回写违规**,下一轮首件事是**只补回写状态,禁止补推消息**——无法确认该轮是否真的没发出去时,一律按"已发过"处理,宁可群里少一条,不可多一条(重试禁令,见 §七)
 - 连续 3 轮违规 → 在 STATE.md「本轮状态」告警 `notify_status: 连续 3 轮未回写,违反 §十 硬约束`
-- 修复历史 backlog 时:对 09:39 / 11:04 / 12:15 / 13:20 四轮的 `notify 待发` 占位逐个回填实际 curl 结果(查 git log 同批 commit 的 stdout / 企业微信群历史)
+- 历史 backlog(09:39 / 11:04 / 12:15 / 13:20 四轮的 `notify 待发` 占位)已于 2026-09-12 确认实际均已推送成功,统一回填 `notify: ok`,**不再补推**
+
+## 十一、防重复推送(幂等,2026-09-12 起强制)
+
+> 背景:2026-09-12 群里出现同轮报告重复推送,根因有三——①双任务(A/B)并发重叠各自推了一遍;②curl `/tmp` 写入 quirk(exit 23)被误判失败引发重试;③旧 §10.5「补执行 notify」规则把"状态没回写"当成"没推送"又推了一遍。本节是硬性防线。
+
+### 11.1 发送前检查(每轮 notify 步骤必做)
+
+curl 之前,先 Grep `_docs/archive/schedule.md` 末尾:
+
+- 若**本轮对应行**(时间 + 索引匹配)已含 `notify: ok` → 说明已由本任务或并发任务推送过 → **跳过 curl**,本轮 notify 步骤直接结束
+- 若 schedule.md 末行是上一轮/上上几轮的行且已含 `notify: ok`,但内容与本轮 demo 完全一致(并发任务已代发) → 同样**跳过 curl**,本轮只补写自己的状态行
+
+### 11.2 并发防护(巡检任务开局必做,与 §十 并列)
+
+每轮起手读 `STATE.md` 第二节的 `last_run`:
+
+- 距当前时间 **< 80 分钟** → 上一轮可能还在执行(5 demo 轮常耗时 60+ 分钟)→ **本轮直接退出**,不写任何文件、不发任何通知
+- ≥ 80 分钟 → 正常执行;并在第 1 步(定位领域)后**立即**把 `last_run` 更新为当前时间并 `git commit`(占位锁),让并发的另一个任务读到后退出
+- 若执行中发现目标子目录已被并发任务部分/全部完成 → 不重复写 demo、**不再发通知**,只做索引衔接(S3),notify 记 `skipped concurrent_run`
+
+### 11.3 三不原则(速记)
+
+1. **不重试**:curl 每轮一次,失败只记日志(§七 重试禁令)
+2. **不补推**:状态回写断了只补状态,不补消息(§10.5)
+3. **不并发推**:`last_run` < 80 分钟直接退出;发送前查 schedule.md 已有 `notify: ok` 则跳过(§11.1/§11.2)

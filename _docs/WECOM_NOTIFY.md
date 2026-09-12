@@ -85,8 +85,8 @@ if [ ! -s "$WEBHOOK_FILE" ]; then
   exit 0
 fi
 
-# 1) 读 webhook_url(用 jq 提取;若系统无 jq,用 sed/awk 替代)
-WEBHOOK_URL=$(jq -r '.webhook_url' "$WEBHOOK_FILE")
+# 1) 读 webhook_url(统一用 sed 提取;本机无 jq,2026-09-13 实测 jq 缺失会 exit 127)
+WEBHOOK_URL=$(sed -n 's/.*"webhook_url":"\([^"]*\)".*/\1/p' "$WEBHOOK_FILE")
 [ -z "$WEBHOOK_URL" ] || [ "$WEBHOOK_URL" = "null" ] && {
   echo "notify_skipped: webhook_url 为空"
   exit 0
@@ -117,11 +117,11 @@ HTTP_CODE=$(printf '%s' "$RAW" | tail -n1)
 RESP_BODY=$(printf '%s' "$RAW" | sed '$d')
 
 if [ "$HTTP_CODE" = "200" ]; then
-  ERRCODE=$(printf '%s' "$RESP_BODY" | jq -r '.errcode' 2>/dev/null || echo "-1")
+  ERRCODE=$(printf '%s' "$RESP_BODY" | sed -n 's/.*"errcode":\([0-9]*\).*/\1/p')
   if [ "$ERRCODE" = "0" ]; then
     echo "notify_ok: HTTP 200, errcode=0"
   else
-    echo "notify_failed: HTTP 200, errcode=$ERRCODE, errmsg=$(printf '%s' "$RESP_BODY" | jq -r '.errmsg' 2>/dev/null)"
+    echo "notify_failed: HTTP 200, errcode=$ERRCODE, body=$RESP_BODY"
   fi
 else
   echo "notify_failed: HTTP $HTTP_CODE"
@@ -167,6 +167,7 @@ fi
 | 2026-09-12 | 第十节「状态回写硬约束」:`notify` 字段改为三态枚举(`ok` / `failed <reason>` / `skipped <reason>`),禁止写「待发」 |
 | 2026-09-12 | 第四节消息体格式铁律:核心机制从「列表项 + 子缩进引用(`\n   > 核心:...`)」改为「列表项尾部拼接(`· 核心:...`)」,消除企业微信 markdown 渲染器跨客户端(Android/iOS/PC)的二级缩进与空白异常 |
 | 2026-09-12 | 配额上调 3→5 demo/轮:第三节流程图「写 3 个 demo」→「写 5 个 demo」;第四节示例消息体改为 5 demo;第六节「+N」范围 0/1/2/3 → 0-5;全文「每 1 小时」→「每 1.5 小时」 |
+| 2026-09-13 | §五 模板去除 jq 依赖(本机 Git Bash 无 jq,实测 exit 127 致 WEBHOOK_URL 为空),统一 sed 提取 |
 | 2026-09-12 | **防重复推送专项治理**(用户反馈"巡检报告重复发"):① §五 curl 模板废弃 `-o /tmp/...` 写文件(Git Bash /tmp quirk exit 23 致误判失败重试),改命令替换捕获响应体;② §七 新增「重试禁令」:webhook 无幂等键,curl 每轮仅一次;③ §10.5 修订:状态回写违规只补回写、禁止补推;④ 新增 §十一 幂等防线(发送前查 schedule.md 已有 `notify: ok` 则跳过 + `last_run` < 80 分钟本轮直接退出 + 开局即更新 `last_run` 当占位锁) |
 
 ## 十、状态回写硬约束(2026-09-12 起强制)

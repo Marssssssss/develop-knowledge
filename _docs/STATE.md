@@ -70,7 +70,7 @@
 ## 二、本轮状态
 
 ```
-next_index     : 34    # 下次从索引 34 开始(即 09-语言学习/Python);索引表现 46 行,取模基数 46
+next_index     : 35    # 下次从索引 35 开始(即 10-逆向工程/二进制逆向);索引表现 46 行,取模基数 46
 last_run       : 2026-09-13 00:29
 last_top       : 09-语言学习   # 本轮顶层大类(大类轮换约束用,见 §一)
 skipped        : []
@@ -81,11 +81,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
+| 2026-09-13 00:29 | 34 | 生成器 yield 表达式(挂起/恢复语义 + send/throw/close + yield from 委派 + 异步生成器 PEP 525) + 上下文管理器(__enter__/__exit__ 协议 + @contextmanager + ExitStack 动态组合 + suppress/closing/nullcontext + @asynccontextmanager) + 描述符协议(数据/非数据描述符优先级链 data > instance dict > non-data + property/staticmethod/classmethod 的 __get__ 实现 + Validator + ORM Field + __set_name__ PEP 487 自动获知属性名) + 协程与 asyncio(async def + 三种 awaitable coroutine/Task/Future + gather/TaskGroup/wait/as_completed 对比 + asyncio.timeout + to_thread) + 元类与 __init_subclass__(type 三参数 + metaclass= 关键字 + __prepare__/__new__/__init__ 三钩子 + __init_subclass__ 插件注册 + __set_name__ + 元类 vs __init_subclass__ vs 类装饰器) 五 demo | +5 |
 | 2026-09-12 21:39 | 33 | TLS 1.3 1-RTT 握手(X25519 ECDHE+HKDF-Expand-Label 派生 handshake_secret/traffic_secret,AES-128-GCM 加密 EncryptedExtensions/Cert/CertVerify/Finished,CertificateVerify 防 downgrade)+ SYN Cookie 防 SYN Flood(32bit ISN = t 5bit|mss 3bit|HMAC-SHA1 24bit,不分配 TCB 至 ACK 校验后才分配)+ eBPF/XDP 包过滤(SEC("xdp") 早期 hook 26Mpps 单核,XDP_DROP/PASS/TX/REDIRECT 5 action,BPF_MAP_TYPE_HASH blacklist)+ IKEv2-ESP 协商(RFC 7296 2 轮 4 消息,SKEYSEED→prf+ 派生 7 把密钥,SK_d→Child SA keymat,ESP 隧道 SPI/SeqNo/IV/ICV+anti-replay+MOBIKE)+ DNSSEC 链式信任(RFC 4033 Chain of Trust `DNSKEY->[DS->DNSKEY]*->RRset`,4 RR 类型,Secure/Insecure/Bogus/Indeterminate,KSK vs ZSK 分层,DS=SHA-256(KSK 公钥 wire),Ed25519 Test 2 命中) 五 demo | +5 |
 | 2026-09-12 18:36 | 32 | XSS 三类型(Reflected/Stored/DOM)+HTML Entity 编码+CSP nonce+黑名单失败案例 + CSRF Synchronizer Token+Signed Double Submit+SameSite Lax/Strict/None+Fetch Metadata cross-site 拒绝+Origin 精确校验 + SQL 注入字符串拼接 vs ? 占位符+UNION 阻断+时间盲注+表名白名单+Second-order+Least Privilege 视图 + Same-Origin 三元组+CORS Simple vs Preflight+凭据请求 ACAO=* 硬约束+Vary: Origin 防 CDN 串味 + JWT HS256 签发验签+RFC 7515 Appendix A.1 向量验证(JWK 64 字节 key 命中)+Algorithm Confusion 防御+alg:none/篡改/错 secret 检测 五 demo | +5 |
 | 2026-09-12 14:30 | 31 | AES-GCM 认证加密(NIST SP 800-38D §7.1/§7.2,J0 = IV || 0x00000001,GHASH over GF(2^128) x^128+x^7+x^2+x+1 0xe1<<120,GCTR CTR + AAD/lenA/lenC 长度块,GCM tag 16B)+ RSA-PSS 概率签名(RFC 8017 §8.1 + §9.1 EMSA-PSS-ENCODE M' = 8B零 || mHash || salt,MGF1(H, emLen-hLen-1) 掩码,EM = maskedDB || H || 0xbc,salt = hLen 32B SHA-256,RFC 8017 §10 probabilistic salt 防 Bleichenbacher 攻击)+ Ed25519 签名(RFC 8032 扭曲爱德华兹 -x²+y² = 1+d·x²y² a=-1,d=-121665/121666,基点 B_y = 4/5 mod p B_x 由 y 恢复,§5.1.5 KeyGen SHA-512(seed)[:32] clamp + mod L + [a]B,§5.1.6 Sign r = SHA-512(prefix || M) mod L 确定性,R = [r]B,s = (r + SHA-512(R || A || M)·a) mod L,§5.1.7 Verify k = SHA-512(R || A || M) mod L,[s]B = R + [k]A 简化公式完整 [8][s]B = [8]R + [8][k]A cofactor 防 small-subgroup 攻击)三 demo | +3 |
 | 2026-09-12 13:20 | 30 | BM25 评分算法(k1=1.2, b=0.75, tf 饱和, 长度归一化) + HNSW 多层近似近邻(Malkov 2016, O(log N), Search-Layer) + Lucene 段合并(TieredMergePolicy, floor_segment 2MB, 20MB/s 节流) 三 demo | +3 |
-| 2026-09-12 12:15 | 29 | Redis 持久化(RDB/AOF/Fork+CoW) + Redis Cluster(16384 哈希槽+CRC16+Gossip+故障转移) + 缓存淘汰(Memcached 精确 LRU vs Redis 近似 LRU) 三 demo | +3 |
 | 2026-09-12 11:04 | 28 | Dynamo 一致性哈希+VectorClock+Hinted Handoff + Cassandra CL/Paxos/Merkle + MongoDB WC/RC/oplog 三 demo | +3 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。

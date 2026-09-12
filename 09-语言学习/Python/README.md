@@ -44,19 +44,24 @@
 | 主题 | 路径 |
 | --- | --- |
 | 装饰器 | [装饰器/](./装饰器/) |
+| 生成器与 yield | [生成器/](./生成器/) |
+| 上下文管理器 | [上下文管理器/](./上下文管理器/) |
+| 描述符协议 | [描述符/](./描述符/) |
+| 协程与 asyncio | [协程与asyncio/](./协程与asyncio/) |
+| 元类与 `__init_subclass__` | [元类/](./元类/) |
 
 ## 四、待研究清单(按"教学价值"排序)
 
-1. 生成器与 `yield from`
-2. 上下文管理器(`contextlib`)
+1. ~~生成器与 `yield from`~~ ✅
+2. ~~上下文管理器(`contextlib`)~~ ✅
 3. 异常链(`raise from`)与 `except*`(Python 3.11+)
 4. 类型提示(`typing` / `Protocol` / `Generic`)
-5. 描述符与 `property`
+5. ~~描述符与 `property`~~ ✅
 6. `dataclasses` 与 `attrs`
-7. `async`/`await` 与 asyncio
+7. ~~`async`/`await` 与 asyncio~~ ✅
 8. GIL、多进程与 `concurrent.futures`
 9. 迭代器协议与 `itertools`
-10. 元类(ORM 怎么用)
+10. ~~元类(ORM 怎么用)~~ ✅
 
 ## 五、参考资料
 

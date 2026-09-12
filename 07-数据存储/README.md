@@ -12,6 +12,9 @@
 ## 已完成 demo
 
 - [x] Elasticsearch 倒排索引与近实时搜索 — 见 [04-搜索引擎/elasticsearch/](./04-搜索引擎/elasticsearch/)（Python / Go）
+- [x] BM25 评分算法（Lucene/ES 默认相关性，k1=1.2 / b=0.75 / tf 饱和 / 长度归一化） — 见 [04-搜索引擎/BM25评分/](./04-搜索引擎/BM25评分/)（Python / Go）
+- [x] HNSW 近似最近邻检索（Malkov 2016，多层可导航小世界图，O(log N) 查询复杂度） — 见 [04-搜索引擎/HNSW向量检索/](./04-搜索引擎/HNSW向量检索/)（Python / Go）
+- [x] Lucene 段合并与删除回收（TieredMergePolicy + 20 MB/s 节流 + forceMerge） — 见 [04-搜索引擎/段合并策略/](./04-搜索引擎/段合并策略/)（Python / Go）
 - [x] MVCC 多版本并发控制 — 见 [01-关系型/MVCC/](./01-关系型/MVCC/)（C / Python / Go）
 - [x] WAL 预写日志 + ARIES 恢复 — 见 [01-关系型/WAL/](./01-关系型/WAL/)（C / Python / Go）
 - [x] 两阶段锁 2PL + 死锁检测 — 见 [01-关系型/2PL/](./01-关系型/2PL/)（C / Python / Go）
@@ -26,10 +29,11 @@
 
 - [ ] MySQL InnoDB B+ 树索引（已迁到 `02-Web开发/03-数据库/B+树索引/`）
 - [ ] MVCC 多版本并发控制（已在 `01-关系型/MVCC/` 完成）
-- [ ] Redis 持久化（RDB / AOF）
-- [ ] ES BM25 评分算法细节
+- [ ] Redis 持久化（RDB / AOF）（已在 `03-缓存/RedisPersistence/` 完成）
+- [x] ES BM25 评分算法细节（已在 `04-搜索引擎/BM25评分/`）
 - [ ] 隔离级别与幻读防（next-key lock / SSI）
 - [ ] Redis Sentinel 高可用
 - [ ] Memcached vs Redis 业务选型对比（03-缓存 已部分覆盖；缓存目录仍待深挖）
+- [ ] 中文 IK 分词器与 BM25 协同（影响 avgdl / length normalization）
 - [ ] 图数据库 Neo4j / Cypher / 属性图模型（已在 `05-图数据库/` 占位，2026-09-12 类目拓展）
 - [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

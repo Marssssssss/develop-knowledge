@@ -63,8 +63,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 26    # 下次从索引 26 开始(即 06-DevOps/Kubernetes);索引表现 44 行,取模基数 44
-last_run       : 2026-09-12 07:07
+next_index     : 27    # 下次从索引 27 开始(即 07-数据存储/关系型);索引表现 44 行,取模基数 44
+last_run       : 2026-09-12 08:29
 skipped        : []
 failed_attempts: []
 ```
@@ -73,8 +73,8 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
+| 2026-09-12 08:29 | 26 | Pod 生命周期+重启策略 / kube-proxy IPVS 调度 / Controller Reconciler 三件套 | +3 |
 | 2026-09-12 07:07 | 25 | Prometheus 指标模型 + 分布式追踪与 TraceContext + 直方图分位数估算 三件套 | +3 |
-| 2026-09-12 06:00 | 24 | DAG 流水线调度 + 内容寻址缓存 + 蓝绿与金丝雀发布 三件套 | +3 |
 | 2026-09-12 04:55 | 23 | Namespace 隔离 + Cgroups v2 + OCI 镜像格式 三件套(容器三基石) | +3 |
 | 2026-09-12 03:35 | 22 | Sobel 边缘检测 + Hough 直线检测 + IoU 与 NMS 三件套 | +3 |
 | 2026-09-12 00:57 | 20 | Q-Learning 表格方法 + REINFORCE 策略梯度 + PPO 近端策略优化 三件套 | +3 |

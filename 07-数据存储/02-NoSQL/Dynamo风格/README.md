@@ -149,12 +149,17 @@ gcc -O2 -Wall -Wextra -pedantic c/dynamo.c -o c/dynamo
 ### Python
 
 ```bash
-python3 python/dynamo.py
+cd python
+python3 dynamo_demos.py
 # 4 个 demo 涵盖:
 #   1) preference list 路由
 #   2) sloppy quorum 计算
 #   3) vector clock dominates / sibling
 #   4) put/get 完整数据流
+#
+# 文件结构:
+#   dynamo.py         (数据/算法层, ~144 行)
+#   dynamo_demos.py   (demo 入口, ~104 行)
 ```
 
 ### Go

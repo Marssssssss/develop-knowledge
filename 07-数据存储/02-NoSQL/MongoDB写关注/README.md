@@ -183,13 +183,18 @@ gcc -O2 -Wall -Wextra -pedantic c/mongo_wc.c -o c/mongo_wc
 ### Python
 
 ```bash
-python3 python/mongo_wc.py
+cd python
+python3 mongo_wc_demos.py
 # 5 个 demo:
 #   1) 默认 WC 公式(含 P-S-A trap)
 #   2) 不同 wc 写入(w:1 / w:'majority' / w:3 超时)
 #   3) readConcern 5 级语义
 #   4) 故障切换 + 回滚
 #   5) 因果一致性 session
+#
+# 文件结构:
+#   mongo_wc.py         (数据/算法层, ~181 行)
+#   mongo_wc_demos.py   (demo 入口, ~84 行)
 ```
 
 ### Go

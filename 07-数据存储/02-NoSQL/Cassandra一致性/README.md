@@ -157,8 +157,13 @@ gcc -O2 -Wall -Wextra -pedantic c/cassandra_cl.c -o c/cassandra_cl
 ### Python
 
 ```bash
-python3 python/cassandra_cl.py
+cd python
+python3 cassandra_cl_demos.py
 # 5 个 demo: CL 表头 / W+R>RF / 写读 + read repair / LWT / Anti-Entropy Repair
+#
+# 文件结构:
+#   cassandra_cl.py        (数据/集群模型, ~216 行)
+#   cassandra_cl_demos.py  (demo 入口, ~112 行)
 ```
 
 ### Go

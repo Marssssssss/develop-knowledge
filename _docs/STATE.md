@@ -69,7 +69,7 @@
 
 ```
 next_index     : 33    # 下次从索引 33 开始(即 08-安全/网络安全);索引表现 46 行,取模基数 46
-last_run       : 2026-09-12 18:24
+last_run       : 2026-09-12 18:36
 skipped        : []
 failed_attempts: []
 ```
@@ -78,8 +78,8 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题 | demo |
 | --- | --- | --- | --- |
-| 2026-09-12 18:24 | 32 | XSS 三类型+上下文转义+nonce + CSRF 同步器令牌+Signed Double Submit+SameSite + Fetch Metadata 同源检测+ Origin/Referer 兜底 + SQL 参数化查询+UNION/时间盲注+白名单+least privilege + JWT HS256 验证+RFC 7519 附录 A 向量+Algorithm Confusion 防御 + Same-Origin 三元组+CORS Simple/Preflight+凭据请求+多头合并 五 demo | +5 |
-| 2026-09-12 14:30 | 31 | AES-GCM 认证加密(GHASH over GF(2^128) + GCTR + AEAD) + RSA-PSS 概率签名(RSASP1 + EMSA-PSS + MGF1) + Ed25519(Curve25519 twisted Edwards a=-1 + SHA-512 域分离 + Montgomery ladder) 三 demo | +3 |
+| 2026-09-12 18:36 | 32 | XSS 三类型(Reflected/Stored/DOM)+HTML Entity 编码+CSP nonce+黑名单失败案例 + CSRF Synchronizer Token+Signed Double Submit+SameSite Lax/Strict/None+Fetch Metadata cross-site 拒绝+Origin 精确校验 + SQL 注入字符串拼接 vs ? 占位符+UNION 阻断+时间盲注+表名白名单+Second-order+Least Privilege 视图 + Same-Origin 三元组+CORS Simple vs Preflight+凭据请求 ACAO=* 硬约束+Vary: Origin 防 CDN 串味 + JWT HS256 签发验签+RFC 7515 Appendix A.1 向量验证(JWK 64 字节 key 命中)+Algorithm Confusion 防御+alg:none/篡改/错 secret 检测 五 demo | +5 |
+| 2026-09-12 14:30 | 31 | AES-GCM 认证加密(NIST SP 800-38D §7.1/§7.2,J0 = IV || 0x00000001,GHASH over GF(2^128) x^128+x^7+x^2+x+1 0xe1<<120,GCTR CTR + AAD/lenA/lenC 长度块,GCM tag 16B)+ RSA-PSS 概率签名(RFC 8017 §8.1 + §9.1 EMSA-PSS-ENCODE M' = 8B零 || mHash || salt,MGF1(H, emLen-hLen-1) 掩码,EM = maskedDB || H || 0xbc,salt = hLen 32B SHA-256,RFC 8017 §10 probabilistic salt 防 Bleichenbacher 攻击)+ Ed25519 签名(RFC 8032 扭曲爱德华兹 -x²+y² = 1+d·x²y² a=-1,d=-121665/121666,基点 B_y = 4/5 mod p B_x 由 y 恢复,§5.1.5 KeyGen SHA-512(seed)[:32] clamp + mod L + [a]B,§5.1.6 Sign r = SHA-512(prefix || M) mod L 确定性,R = [r]B,s = (r + SHA-512(R || A || M)·a) mod L,§5.1.7 Verify k = SHA-512(R || A || M) mod L,[s]B = R + [k]A 简化公式完整 [8][s]B = [8]R + [8][k]A cofactor 防 small-subgroup 攻击)三 demo | +3 |
 | 2026-09-12 13:20 | 30 | BM25 评分算法(k1=1.2, b=0.75, tf 饱和, 长度归一化) + HNSW 多层近似近邻(Malkov 2016, O(log N), Search-Layer) + Lucene 段合并(TieredMergePolicy, floor_segment 2MB, 20MB/s 节流) 三 demo | +3 |
 | 2026-09-12 12:15 | 29 | Redis 持久化(RDB/AOF/Fork+CoW) + Redis Cluster(16384 哈希槽+CRC16+Gossip+故障转移) + 缓存淘汰(Memcached 精确 LRU vs Redis 近似 LRU) 三 demo | +3 |
 | 2026-09-12 11:04 | 28 | Dynamo 一致性哈希+VectorClock+Hinted Handoff + Cassandra CL/Paxos/Merkle + MongoDB WC/RC/oplog 三 demo | +3 |

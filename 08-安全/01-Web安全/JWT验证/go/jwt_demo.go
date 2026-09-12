@@ -221,30 +221,40 @@ MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
 
 func demoRFC7519AppendixA() {
 	fmt.Println(strings.Repeat("─", 65))
-	fmt.Println("[Demo 5] RFC 7519 §A.1 HS256 示例向量验证")
+	fmt.Println("[Demo 5] RFC 7515 Appendix A.1 HS256 示例向量验证")
 	fmt.Println(strings.Repeat("─", 65))
 
-	headerB64 := "eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9"
-	payloadB64 := "eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ"
-	expectedSigB64 := "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"
-	rfcSecret := []byte{
-		3, 35, 53, 75, 43, 15, 165, 188, 131, 126, 6, 101, 119, 123, 166,
-		143, 90, 179, 40, 230, 240, 84, 201, 40, 169, 15, 132, 178, 210, 80, 46,
-		191, 211, 251, 90, 146, 210, 6, 71, 239, 150, 138, 180, 195, 119,
+	// RFC 7515 Appendix A.1 JWK 形式 key(64 字节)
+	jwkK := "AyM1SysPpbyDfgZld3umj1qzKObwVMkoqQ-EstJQLr_T-1qS0gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr1Z9CAow"
+	rfcSecret, _ := b64urlDecode(jwkK)
+
+	// RFC §A.1.1 Header(30 字节)+ Payload(80 字节)原始字节数组
+	headerBytes := []byte{
+		123, 34, 116, 121, 112, 34, 58, 34, 74, 87, 84, 34, 44, 13, 10, 32,
+		34, 97, 108, 103, 34, 58, 34, 72, 83, 50, 53, 54, 34, 125,
 	}
-	hJSON, _ := b64urlDecode(headerB64)
-	pJSON, _ := b64urlDecode(payloadB64)
-	hCRLF := b64urlEncode([]byte(strings.ReplaceAll(string(hJSON), "\n", "\r\n")))
-	pCRLF := b64urlEncode([]byte(strings.ReplaceAll(string(pJSON), "\n", "\r\n")))
+	payloadBytes := []byte{
+		123, 34, 105, 115, 115, 34, 58, 34, 106, 111, 101, 34, 44, 13, 10,
+		32, 34, 101, 120, 112, 34, 58, 49, 51, 48, 48, 56, 49, 57, 51, 56,
+		48, 44, 13, 10, 32, 34, 104, 116, 116, 112, 58, 47, 47, 101, 120,
+		97, 109, 112, 108, 101, 46, 99, 111, 109, 47, 105, 115, 95, 114,
+		111, 111, 116, 34, 58, 116, 114, 117, 101, 125,
+	}
+	hB64 := b64urlEncode(headerBytes)
+	pB64 := b64urlEncode(payloadBytes)
+	expectedSigB64 := "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"
 
 	mac := hmac.New(sha256.New, rfcSecret)
-	mac.Write([]byte(hCRLF + "." + pCRLF))
+	mac.Write([]byte(hB64 + "." + pB64))
 	computed := b64urlEncode(mac.Sum(nil))
 
+	fmt.Printf("  JWK k 字段(原文):    %s\n", jwkK)
+	fmt.Printf("  解码得到 HMAC key:   %d bytes\n", len(rfcSecret))
 	fmt.Printf("  计算: %s\n  RFC:  %s\n  匹配: %s\n",
 		computed, expectedSigB64,
 		map[bool]string{true: "✅", false: "❌"}[computed == expectedSigB64])
-	fmt.Println()
+	fmt.Println("\n  → 关键:JSON 必须保留 CRLF 行结束符(RFC §A.1.1 用 13,10)")
+	fmt.Println("  → 现代库用 json.Marshal 无 CRLF,不可与 RFC 直接对照")
 }
 
 func demoTampering() {
@@ -299,8 +309,6 @@ func main() {
 	demoAlgConfusion()
 	demoRFC7519AppendixA()
 	demoTampering()
-
-	fmt.Println(strings.Repeat("─", 65))
 	fmt.Println("编译运行: cd JWT验证/go && go run jwt_demo.go")
-	fmt.Println(strings.Repeat("─", 65))
+}
 

@@ -195,27 +195,24 @@ def cors_response_ok(req_origin: str, acao: str, acac: str) -> bool:
 ```
 
 ## 性能与边界
-
-- **预检缓存**(`Access-Control-Max-Age`):Chrome 默认上限 7200s(2h),Firefox 86400s(24h)。生产可设 86400s 减 OPTIONS 量。
-- **Vary: Origin** 增加缓存键基数,CDN 命中率下降;生产常用子集(只列已知源)。
-- **CORS 错误信息**对 JS 不可见(只 `console.error`),调试只能看 Network 面板。
+- **预检缓存**(`Access-Control-Max-Age`):Chrome 默认上限 7200s(2h),Firefox 86400s。生产可设 86400s
+- **Vary: Origin** 增加缓存键基数,CDN 命中率下降;生产常用子集
+- **CORS 错误信息**对 JS 不可见(只 `console.error`),调试只能看 Network 面板
 
 ## 注意事项与常见坑
-
 | 现象 | 原因 | 规避 |
 | --- | --- | --- |
-| `Access-Control-Allow-Origin: *` + `credentials: 'include'` 被拒绝 | 浏览器硬性约束 | 凭据请求必须具体源 |
-| 动态 Origin(任意允许)反射 → 漏洞 | 服务端读 `request.headers['Origin']` 直接回写 | **白名单** + 精确匹配 |
-| `Set-Cookie` 不生效 | `Access-Control-Allow-Origin: *` 时浏览器丢弃 | 改为具体 origin + `SameSite=None; Secure` |
+| `ACAO: *` + `credentials: 'include'` 被拒绝 | 浏览器硬性约束 | 凭据请求必须具体源 |
+| 动态 Origin 反射 → 漏洞 | 服务端读 Origin 直接回写 | **白名单** + 精确匹配 |
+| `Set-Cookie` 不生效 | `ACAO: *` 时浏览器丢弃 | 改为具体 origin + `SameSite=None; Secure` |
 | CDN 缓存串味 | 响应未带 `Vary: Origin` | 动态源必须加 `Vary: Origin` |
 | 预检请求 404 | OPTIONS 路由没注册 | 显式 `app.options('*', ...)` 或中间件 |
-| 跨域后端 `Authorization` 头丢失 | CORS 不在 safelist | 显式 `Access-Control-Allow-Headers: Authorization` |
-| `application/json` POST 触发预检 | `Content-Type: application/json` 不在 safelist(只有 form/多部分/text/plain) | 接受预检开销 或用 `text/plain` + 服务端解析 |
+| 跨域 `Authorization` 头丢失 | 不在 CORS safelist | 显式 `Access-Control-Allow-Headers: Authorization` |
+| `application/json` POST 触发预检 | 不在 safelist(只有 form/多部分/text/plain) | 接受预检开销 或用 `text/plain` + 服务端解析 |
 
 ## 参考资料(实际阅读)
-
 - [MDN Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS) — 完整规范与浏览器实现
-- [MDN Cross-Origin Resource Sharing (CORS) Headers 列表](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) — 每个响应头完整定义
+- [MDN CORS Headers 列表](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) — 每个响应头完整定义
 - [Fetch Standard CORS 协议](https://fetch.spec.whatwg.org/#http-cors-protocol) — W3C/IETF 现行规范
-- [WHATWG Fetch CORS Protocol 章节](https://fetch.spec.whatwg.org/#cors-protocol) — 凭据请求 + 预检流程权威定义
+- [WHATWG Fetch CORS Protocol 章节](https://fetch.spec.whatwg.org/#cors-protocol) — 凭据请求 + 预检流程
 - [OWASP HTML5 Security Cheat Sheet(CORS)](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#cross-origin-resource-sharing) — 漏洞模式 + 安全配置

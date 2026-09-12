@@ -187,36 +187,46 @@ def demo_alg_confusion():
 
 def demo_rfc7519_appendix_a():
     print('─' * 65)
-    print('[Demo 5] RFC 7519 §A.1 HS256 示例向量验证')
+    print('[Demo 5] RFC 7515 Appendix A.1 HS256 示例向量验证')
     print('─' * 65)
-    # RFC 7519 Appendix A.1 给出的 HS256 示例
-    # https://datatracker.ietf.org/doc/html/rfc7519#appendix-A.1
-    header_b64 = 'eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9'
-    payload_b64 = 'eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ'
-    # 注:RFC 7519 文本换行用 CRLF(\r\n),签发前需还原
-    secret = bytes([
-        3, 35, 53, 75, 43, 15, 165, 188, 131, 126, 6, 101, 119, 123, 166,
-        143, 90, 179, 40, 230, 240, 84, 201, 40, 169, 15, 132, 178, 210, 80, 46,
-        191, 211, 251, 90, 146, 210, 6, 71, 239, 150, 138, 180, 195, 119,
+    # RFC 7515 Appendix A.1 (JWS 标准,与 RFC 7519 §3.1 同源示例)
+    # https://datatracker.ietf.org/doc/html/rfc7515#appendix-A.1
+    # JWK 形式的 64 字节 HMAC key(来自 RFC 7515 原文)
+    jwk_k = 'AyM1SysPpbyDfgZld3umj1qzKObwVMkoqQ-EstJQLr_T-1qS0gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr1Z9CAow'
+    secret = b64url_decode(jwk_k)   # 64 字节
+    # RFC §A.1.1 Header 的原始字节数组(30 字节)
+    header_bytes = bytes([
+        123, 34, 116, 121, 112, 34, 58, 34, 74, 87, 84, 34, 44, 13, 10, 32,
+        34, 97, 108, 103, 34, 58, 34, 72, 83, 50, 53, 54, 34, 125,
     ])
-    # 还原 RFC CRLF
-    header_json = b64url_decode(header_b64).replace(b'\n', b'\r\n')
-    payload_json = b64url_decode(payload_b64).replace(b'\n', b'\r\n')
-    h_b64_re = b64url_encode(header_json)
-    p_b64_re = b64url_encode(payload_json)
-    signing_input = f'{h_b64_re}.{p_b64_re}'.encode()
-    sig = hmac.new(secret, signing_input, hashlib.sha256).digest()
-    sig_b64 = b64url_encode(sig)
+    # RFC §A.1.1 Payload 的原始字节数组(80 字节)
+    payload_bytes = bytes([
+        123, 34, 105, 115, 115, 34, 58, 34, 106, 111, 101, 34, 44, 13, 10,
+        32, 34, 101, 120, 112, 34, 58, 49, 51, 48, 48, 56, 49, 57, 51, 56,
+        48, 44, 13, 10, 32, 34, 104, 116, 116, 112, 58, 47, 47, 101, 120,
+        97, 109, 112, 108, 101, 46, 99, 111, 109, 47, 105, 115, 95, 114,
+        111, 111, 116, 34, 58, 116, 114, 117, 101, 125,
+    ])
+    # base64url 编码 header 和 payload(得到 RFC 原文的 b64 串)
+    h_b64 = b64url_encode(header_bytes)
+    p_b64 = b64url_encode(payload_bytes)
     expected_sig_b64 = 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk'
 
-    print(f'  还原 header (含 CRLF): {header_json!r}')
-    print(f'  还原 payload(含 CRLF): {payload_json!r}')
-    print(f'  计算签名 b64url:       {sig_b64}')
-    print(f'  RFC 期望签名 b64url:   {expected_sig_b64}')
+    # 计算签名
+    signing_input = f'{h_b64}.{p_b64}'.encode()
+    sig = hmac.new(secret, signing_input, hashlib.sha256).digest()
+    sig_b64 = b64url_encode(sig)
+
+    print(f'  JWK k 字段(原文):     {jwk_k}')
+    print(f'  解码得到 HMAC key:    {len(secret)} bytes')
+    print(f'  header b64url:        {h_b64}')
+    print(f'  payload b64url:       {p_b64}')
+    print(f'  计算签名 b64url:      {sig_b64}')
+    print(f'  RFC 期望 b64url:      {expected_sig_b64}')
     print(f'  匹配: {"✅" if sig_b64 == expected_sig_b64 else "❌"}')
     print()
-    print('  → 关键:JSON 必须保留 RFC CRLF,否则签名不一致')
-    print('  → 现代库用 json.dumps(separators=(",", ":")) 紧凑格式,RFC 文本示例为可读格式')
+    print('  → 关键:JSON 必须保留 CRLF 行结束符(RFC 7515 §A.1.1 用 13,10)')
+    print('  → 现代库用 json.dumps(separators=(,,:)) 紧凑格式,无 CRLF,不可与 RFC 直接对照')
     print()
 
 

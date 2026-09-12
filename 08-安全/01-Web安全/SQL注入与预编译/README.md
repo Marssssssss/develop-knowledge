@@ -202,32 +202,27 @@ safe_result  = login_safe(conn,  "' OR '1'='1")        # ← 返回空(name 字�
 ```
 
 ## 性能与边界
-
-- **Prepared Statement 缓存**:服务端第一次 PREPARE 后缓存执行计划,后续 EXECUTE 跳过解析。MySQL 默认 `prepared_statement_count` 缓存 16k statements。
-- **占位符限制**:MySQL 5.7 之前不支持 `LIMIT ?` 占位符(MySQL 5.5+ 才允许),需用 `LIMIT %d` 整数插值(已验证为整数才安全)。
-- **批量插入**:PostgreSQL `execute_values` 比逐条 EXECUTE 快 10-100x。
-- **Hibernate HQL**:命名参数 + `setParameter()` 编译时类型校验,优于字符串拼接。
+- **Prepared Statement 缓存**:服务端 PREPARE 后缓存执行计划,后续 EXECUTE 跳过解析(MySQL 默认缓存 16k statements)
+- **占位符限制**:MySQL 5.5- 不支持 `LIMIT ?`,需用 `LIMIT %d` 整数插值
+- **批量插入**:PostgreSQL `execute_values` 比逐条 EXECUTE 快 10-100x
+- **Hibernate HQL**:命名参数 + `setParameter()` 编译时类型校验,优于字符串拼接
 
 ## 注意事项与常见坑
-
 | 现象 | 原因 | 规避 |
 | --- | --- | --- |
-| `PreparedStatement` 内拼字符串 | 开发者以为"用了 PreparedStatement 就是安全的" | 占位符必须**真用于用户数据**;任何拼接仍可注入 |
-| 表名/列名用户输入 | 这些**无法**用占位符 | Allow-list 验证(`switch-case` 映射常量) |
-| `ORDER BY name ASC/DESC` 接收用户输入 | 同上 | 转布尔值 → 枚举常量 |
+| `PreparedStatement` 内拼字符串 | 用了 Prepare 仍可拼接 | 占位符必须真用于用户数据 |
+| 表名/列名用户输入 | 这些**无法**用占位符 | Allow-list 验证(`switch-case` 映射) |
+| `ORDER BY ... ASC/DESC` 接收用户输入 | 同上 | 转布尔值 → 枚举常量 |
 | `LIMIT ?` 在 MySQL 5.5- | 不支持占位符 | `int()` 转 int 后 f-string,或 MySQL 5.5+ |
-| `LIKE '%${input}%'` 拼接 | `%` 仍然逃逸不出占位符的保护 | `LIKE ?` 绑定 `'%' + input + '%'` |
-| Second-order SQLi | 输入已转义入库,**再次读出**时拼接 | 每次输出都再次走参数化或转义 |
-| ORM `User.objects.raw(f"SELECT * FROM users WHERE id={input}")` | ORM raw 退化为拼接 | `User.objects.raw("SELECT * FROM users WHERE id=%s", [input])` |
-| `cursor.execute(query, params)` 仍被注入 | 参数传成 `params={'name': name}` 时 MySQL 仍按 `%name` 占位符 | `params=(name,)` 元组,确认占位符 `?` 已用 |
+| `LIKE '%${input}%'` 拼接 | `%` 仍逃逸不出占位符保护 | `LIKE ?` 绑定 `'%' + input + '%'` |
+| Second-order SQLi | 入库安全,再次读出时拼接 | 每次输出都再次走参数化 |
+| ORM `raw(f"SELECT ... {input}")` | raw 退化为拼接 | `raw("... WHERE id=%s", [input])` |
 
 ## 参考资料(实际阅读)
-
-- [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html) — Parameterised Query / Stored Procedure / Whitelist / Least Privilege 四选项
-- [OWASP Top 10 2017 A1 Injection](https://owasp.org/www-project-top-ten/2017/A1_2017-Injection) — 攻击场景 + 防御优先级
-- [OWASP Top 10 2025 A03 Injection](https://owasp.org/Top10/2025/A05_2025-Injection) — 2025 最新分类(CWE-89 占 14k CVEs)
-- [OWASP Query Parameterization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html) — 跨语言占位符语法汇总
+- [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html) — Parameterised Query / Stored Procedure / Whitelist / Least Privilege
+- [OWASP Top 10 2025 A03 Injection](https://owasp.org/Top10/2025/A05_2025-Injection) — 最新分类(CWE-89 占 14k CVEs)
+- [OWASP Query Parameterization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html) — 跨语言占位符语法
 - [OWASP Injection Prevention in Java](https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_in_Java.html) — Java 专项
-- [bobby-tables.com](http://bobby-tables.com/) — 跨语言参数化查询示例集
+- [bobby-tables.com](http://bobby-tables.com/) — 跨语言参数化查询示例
 - [CWE-89: SQL Injection](https://cwe.mitre.org/data/definitions/89.html) — 漏洞定义
 - [PortSwigger Web Security Academy - SQL injection](https://portswigger.net/web-security/sql-injection) — 教学互动实验

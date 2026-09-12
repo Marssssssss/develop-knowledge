@@ -71,7 +71,6 @@ def demo_sync_token():
     SESSIONS.clear()
     SESSIONS['sess_alice'] = {'user': 'alice'}
 
-    # 1) 合法表单渲染
     print('  [Step 1] 合法 GET /transfer → 服务端生成 token,渲染表单')
     print(issue_form_with_token('sess_alice')[:200], '...')
     token = SESSIONS['sess_alice']['csrf']
@@ -84,17 +83,14 @@ def demo_sync_token():
     print(f'  {"✅ PASS" if ok else "🛑 FAIL"}  {reason}')
     print()
 
-    # 3) CSRF 攻击:攻击者构造表单但无 token
     print('  [Step 3] CSRF 攻击(无 token)')
     ok, reason = validate_sync_token('sess_alice', {'to': 'evil', 'amount': '999'})
     print(f'  {"✅ PASS" if ok else "🛑 BLOCK"}  {reason}')
     print()
 
-    # 4) Token 篡改
     print('  [Step 4] Token 篡改(攻击者猜 token)')
     ok, reason = validate_sync_token('sess_alice', {'to': 'evil', 'amount': '999', 'csrf_token': 'fakeToken123'})
     print(f'  {"✅ PASS" if ok else "🛑 BLOCK"}  {reason}')
-    print()
 
 
 # ─────────────── 3. Signed Double-Submit Cookie ───────────────

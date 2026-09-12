@@ -188,23 +188,21 @@ ok = hmac.compare_digest(session_token, submitted_token)
 - **HMAC token 签名**:32 字节输入 SHA-256 约 1 μs(Python hmac)
 
 ## 注意事项与常见坑
-
 | 现象 | 原因 | 规避 |
 | --- | --- | --- |
-| `<script>fetch('/api/transfer', {credentials:'include'})</script>` 绕过 token | XSS 偷到 cookie 同时读 DOM 上的 token | **XSS 是 CSRF 防御的前提** — 先防 XSS |
-| `<a href="https://app.com/logout">logout</a>` 跨站点击,`Strict` cookie 不发 | Strict 太过严格,影响外链 UX | 注销/退出常用 GET 用 `Strict`,其他场景用 `Lax` |
-| `Domain=.example.com` cookie 被 `evil.example.com` 写覆盖 | Domain 设置过宽 | 用 `__Host-` 前缀(必须 `path=/` + `Secure` + 无 `Domain`) |
-| `Origin: null` 被允许 | 旧版 Chrome 在某些 sandbox iframe 发送 null Origin | 仅在 sandbox/redirect 场景白名单 null |
-| Per-request token 失败 | 用户点"上一页"按钮,旧 token 已失效 | 用 per-session;per-request 仅在金融级场景 |
-| `Sec-Fetch-Site: same-site` 信任 | 兄弟子域可能受攻击者控制 | 同站策略必须**显式列白名单子域**,默认拒绝 |
+| `<script>fetch('/api/transfer', ...)</script>` 绕过 token | XSS 偷到 cookie 同时读 DOM 上的 token | **XSS 是 CSRF 防御的前提** |
+| `<a href=".../logout">` 跨站点击,`Strict` cookie 不发 | Strict 太过严格,影响外链 UX | 注销用 `Strict`,其他场景用 `Lax` |
+| `Domain=.example.com` cookie 被 evil 子域写覆盖 | Domain 设置过宽 | 用 `__Host-` 前缀(`path=/` + `Secure` + 无 `Domain`) |
+| `Origin: null` 被允许 | 旧 Chrome 在 sandbox iframe 发送 null | 仅 sandbox/redirect 场景白名单 null |
+| Per-request token 失败 | 用户点"上一页",旧 token 失效 | 用 per-session;per-request 仅金融级 |
+| `Sec-Fetch-Site: same-site` 信任 | 兄弟子域可能受攻击者控制 | 同站策略**显式列白名单子域**,默认拒绝 |
 
 ## 参考资料(实际阅读)
-
-- [OWASP Cross-Site Request Forgery Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) — Synchronizer / Double-Submit / Origin / Fetch Metadata 全策略
-- [OWASP Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf) — 攻击模型 + 失败方案列表(secret cookie / only-POST 等)
-- [OWASP SameSite Cookie Attribute](https://owasp.org/www-community/SameSite) — Strict/Lax/None 浏览器实际行为对照表
-- [OWASP Anti CSRF Tokens ASP.NET](https://owasp.org/www-community/Anti_CRSF_Tokens_ASP-NET) — token 生成 + 校验 + 集成示例
+- [OWASP CSRF Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) — Synchronizer / Double-Submit / Origin / Fetch Metadata 全策略
+- [OWASP CSRF 攻击](https://owasp.org/www-community/attacks/csrf) — 攻击模型 + 失败方案列表
+- [OWASP SameSite Cookie](https://owasp.org/www-community/SameSite) — Strict/Lax/None 浏览器实际行为
+- [OWASP Anti CSRF Tokens ASP.NET](https://owasp.org/www-community/Anti_CRSF_Tokens_ASP-NET) — token 生成 + 集成
 - [MDN SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) — 浏览器支持矩阵
-- [MDN Sec-Fetch-Site header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site) — 取值 + 浏览器支持
-- [W3C Fetch Metadata Request Headers](https://www.w3.org/TR/fetch-metadata/) — 标准规范
-- [Stanford CSRF Robust Defenses](https://seclab.stanford.edu/websec/csrf/csrf.pdf) — 学术论文,SameSite Origin 起源
+- [MDN Sec-Fetch-Site](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site) — 取值 + 浏览器支持
+- [W3C Fetch Metadata](https://www.w3.org/TR/fetch-metadata/) — 标准规范
+- [Stanford CSRF Robust Defenses](https://seclab.stanford.edu/websec/csrf/csrf.pdf) — 学术论文

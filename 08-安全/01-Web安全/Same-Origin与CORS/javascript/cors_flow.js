@@ -227,7 +227,6 @@ function demoSimpleVsPreflight() {
   console.log('─'.repeat(65));
   console.log('[Demo 2] 触发预检的 4 类场景');
   console.log('─'.repeat(65));
-
   const browser = new Browser();
   const cases = [
     { method: 'GET',  headers: {},                              label: 'GET 无自定义头 → SIMPLE' },
@@ -238,11 +237,8 @@ function demoSimpleVsPreflight() {
     { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' },                label: 'POST multipart → SIMPLE' },
   ];
   for (const c of cases) {
-    const need = browser._needsPreflight(c);
-    const marker = need ? '🔄 PREFLIGHT' : '✈️ SIMPLE  ';
-    console.log(`  ${marker}  ${c.label}`);
+    console.log(`  ${browser._needsPreflight(c) ? '🔄 PREFLIGHT' : '✈️ SIMPLE  '}  ${c.label}`);
   }
-  console.log();
 }
 
 // ───────────── Demo 3 + 4: 漏洞 + 合法配置(精简合并) ─────────────
@@ -251,12 +247,10 @@ async function demoReflectAndFix() {
   console.log('─'.repeat(65));
   console.log('[Demo 3+4] ⚠️ 漏洞:Origin 反射 + ✅ 修复:具体 origin 白名单');
   console.log('─'.repeat(65));
-
   const browser = new Browser();
   browser.origin = 'https://app.example.com';
   const server = new FakeServer();
   browser._server = server;
-
   const runFetch = async (label, serverCfg, evilOrigin) => {
     Object.assign(server, serverCfg);
     if (evilOrigin) browser.origin = evilOrigin;
@@ -288,12 +282,10 @@ function demoVaryOrigin() {
   console.log('─'.repeat(65));
   console.log('[Demo 5] Vary: Origin 防 CDN 缓存串味');
   console.log('─'.repeat(65));
-  console.log('  请求 1: app-a.com GET /api/data');
-  console.log('    响应: ACAO: https://app-a.com + Vary: Origin');
+  console.log('  请求 1: app-a.com GET /api/data → 响应 ACAO + Vary: Origin');
   console.log('    CDN 缓存键:(url=/api/data, Origin=app-a.com)');
   console.log('  请求 2: app-b.com GET /api/data → cache MISS → 重新生成 ACAO');
   console.log('  ❌ 不写 Vary:Origin → CDN 缓存串味 → CORS 错误');
-  console.log();
 }
 
 async function main() {

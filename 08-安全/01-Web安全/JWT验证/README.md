@@ -200,32 +200,28 @@ def jwt_verify_hs256(token: str, secret: bytes) -> dict:
 ```
 
 ## 性能与边界
-
 - **HMAC-SHA256 签名/验签**:单次 ~1 μs(Python hmac)
-- **JWT 长度**:header ~36 chars + payload 变长 + signature 43 chars = 通常 150-300 chars
+- **JWT 长度**:header ~36 + payload 变长 + signature 43 = 通常 150-300 chars
 - **Token 大小限制**:HTTP Header 单行 8KB,实际建议 ≤ 1KB
-- **验签 O(n)**:n = token 长度,与 header/payload 大小无关
+- **验签 O(n)**:n = token 长度
 
 ## 注意事项与常见坑
-
 | 现象 | 原因 | 规避 |
 | --- | --- | --- |
 | `alg: none` 被接受 | 库默认允许 | **显式 algorithms 白名单**(`['HS256']`) |
-| 算法替换(HS256 → RS256) | 服务端按 header 选算法 + 用公钥当 HMAC secret | 强制 alg 与密钥类型匹配 |
-| 弱 HMAC secret | `secret="password123"` | secret ≥ 32 bytes 随机;或用 RS256(私钥签名) |
+| 算法替换(HS256 → RS256) | 服务端按 header 选算法 | 强制 alg 与密钥类型匹配 |
+| 弱 HMAC secret | `secret="password123"` | secret ≥ 32 bytes 随机;或用 RS256 |
 | 过期 token 仍可用 | 没校验 `exp` | 校验时 `if exp < now: raise` |
-| 时钟偏差导致误拒 | 服务端与签发方时钟差 1 分钟 | exp 加 ±60s 容忍(但不要过大) |
-| 重放攻击 | 偷到 token 可重用 | 短 exp(15min) + jti 黑名单 + refresh token |
-| payload 含敏感数据 | JWT payload 仅 base64url 编码,不加密**绝不**写密码 | 用 JWE 加密 或仅放用户 ID |
-| `sub` 用 email / UUID | 泄露 PII | 用内部 ID,或 hash(email) |
+| 时钟偏差导致误拒 | 服务端与签发方时钟差 | exp 加 ±60s 容忍 |
+| 重放攻击 | 偷到 token 可重用 | 短 exp(15min) + jti 黑名单 + refresh |
+| payload 含敏感数据 | JWT payload 仅编码,不加密 | 用 JWE 加密 或仅放用户 ID |
 | `kid` 信任 header 值 | `jku: https://attacker.com/keys.json` | 强制 kid 白名单 + HTTPS |
 
 ## 参考资料(实际阅读)
-
 - [RFC 7519 — JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519) — JWT 标准,7 个注册声明
-- [RFC 7515 — JSON Web Signature (JWS)](https://datatracker.ietf.org/doc/html/rfc7515) — 签名结构与 base64url
-- [RFC 8725 — JSON Web Token Best Current Practices](https://datatracker.ietf.org/doc/html/rfc8725) — BCP 安全建议
+- [RFC 7515 — JSON Web Signature (JWS)](https://datatracker.ietf.org/doc/html/rfc7515) — 签名结构 + base64url
+- [RFC 8725 — JWT Best Current Practices](https://datatracker.ietf.org/doc/html/rfc8725) — BCP 安全建议
 - [RFC 7517 — JSON Web Key (JWK)](https://datatracker.ietf.org/doc/html/rfc7517) — 公钥 JSON 表示
-- [OWASP JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html) — 实战安全建议
-- [Auth0 JWT 库历史漏洞](https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/) — CVE-2015-9235 `alg:none` 复盘
-- [PortSwigger Web Security Academy - JWT attacks](https://portswigger.net/web-security/jwt) — 互动实验
+- [OWASP JWT Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html) — 实战安全建议
+- [Auth0 JWT 漏洞复盘](https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/) — CVE-2015-9235 `alg:none`
+- [PortSwigger JWT attacks](https://portswigger.net/web-security/jwt) — 互动实验

@@ -18,11 +18,13 @@
 
 - [ ] USE 方法：对每个资源检查 Utilization / Saturation / Errors
 - [ ] "Linux 性能分析 60 秒"：事故排查最先执行的 10 条命令
-- [ ] on-CPU vs Off-CPU 分析的区别与适用场景
-- [ ] 火焰图读法：宽 = 热路径，平 = 调用栈深
+- [x] on-CPU vs Off-CPU 分析的区别与适用场景（[01-系统级剖析/Off-CPU分析/](./01-系统级剖析/Off-CPU分析/)，2026-09-13）
+- [x] 火焰图读法：宽 = 热路径，平 = 调用栈深（[01-系统级剖析/火焰图生成/](./01-系统级剖析/火焰图生成/)，2026-09-13）
 - [ ] Load Average 的真正含义（含不可中断睡眠）
+- [x] 采样剖析原理与 perf_events 工具链（[01-系统级剖析/采样剖析原理/](./01-系统级剖析/采样剖析原理/) + [perf_events剖析/](./01-系统级剖析/perf_events剖析/)，2026-09-13）
 
 ## 参考资料（已读）
 
 - [Brendan Gregg — Linux Performance（工具图谱与方法论权威入口）](https://www.brendangregg.com/linuxperf.html)
 - [Go 官方博客 — Profiling Go Programs（pprof 采集与分析）](https://go.dev/blog/pprof)
+- [Brendan Gregg — Flame Graphs / CPU / Off-CPU / perf 四页 + flamegraph.pl 源码 + man7 getitimer(2)/ptrace(2)]（2026-09-13 首批 5 demo 的资料，详见 [01-系统级剖析/README.md](./01-系统级剖析/README.md)）

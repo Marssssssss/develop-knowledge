@@ -1,7 +1,4 @@
 // Same-Origin 与 CORS - 浏览器 fetch 流程模拟(Node.js)
-// 演示浏览器内部对 CORS 的处理:预检 → 凭据检查 → 响应校验
-
-// ───────────── 模拟浏览器 fetch 引擎 ─────────────
 
 class CORSError extends Error {
   constructor(message, phase) {
@@ -105,7 +102,6 @@ class Browser {
 }
 
 // ───────────── 模拟服务端 ─────────────
-
 class FakeServer {
   constructor() {
     this.allowOrigin = null;       // null = 根据 Origin 反射(高危!)
@@ -209,8 +205,6 @@ function demoSameOrigin() {
   console.log('─'.repeat(65));
   const browser = new Browser();
   browser.origin = 'https://app.example.com';
-
-  // 直接模拟同源 vs 跨源(无 CORS 头也能读)
   const tests = [
     ['https://app.example.com/api/data', 'https://app.example.com (同源)'],
     ['https://api.example.com/api/data', 'https://api.example.com (跨源 host)'],

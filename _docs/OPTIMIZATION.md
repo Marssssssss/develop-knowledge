@@ -45,10 +45,10 @@
 
 ### 2.3 自动化任务的 Agent 配置
 
-由 `automation_update` 创建的巡检任务,prompt 中显式约束:
+由 `automation_update` 创建的巡检任务,prompt 中显式约束(2026-09-12 与「5 主/轮」配额同步放宽):
 - 不展开调研综述类问题
-- 单轮最多调用 3 次 `agentic_search`(与 SCHEDULE_QUOTA「3 主/轮」配额对齐)
-- 单轮最多调用 9 次 `WebSearch` + 6 次 `WebFetch`(与「3 主 + ≤2 副」总动作对齐)
+- 单轮最多调用 5 次 `agentic_search`(与 SCHEDULE_QUOTA「5 主/轮」配额对齐)
+- 单轮最多调用 15 次 `WebSearch` + 10 次 `WebFetch`(与「5 主 + ≤2 副」总动作对齐)
 
 ### 2.4 状态文件瘦身(每轮 Read 的成本控制)
 
@@ -89,3 +89,10 @@
 - [ ] 当天 `.workbuddy/memory/YYYY-MM-DD.md` 已追加一行
 - [ ] 总目录数 / 总大小未超预算
 - [ ] 没有引入新的 npm/Gradle/Maven 依赖未记录
+
+## 五、变更记录
+
+| 日期 | 变更 |
+| --- | --- |
+| 2026-09-11 | 首版定义 |
+| 2026-09-12 | §2.3 硬约束同步放宽:`3→5` agentic_search / `9→15` WebSearch / `6→10` WebFetch / `3→5` 新 demo,与 SCHEDULE_QUOTA §二「5 主/轮」配额匹配 |

@@ -33,10 +33,10 @@ Agent（包括自动化巡检、手动对话）在 `D:\开发研究\` 下操作�
 
 ## 四、自动化执行规则
 
-由 `automation_update` 创建的每 1 小时一次的任务:
+由 `automation_update` 创建的每 1.5 小时一次的任务(由两个错开 1.5 小时的 HOURLY 任务合成全天 16 次;详见 `SCHEDULE_QUOTA.md` 顶部说明):
 
 1. **轮询领域**:按 [`STATE.md`](./STATE.md) 第二节"本轮状态"中的 `next_index` 选下一个待研究领域(状态文件 ≤ 5 KB,默认 always-read 即可)。
-2. **单次最多产出 3 个新 demo**:与 `SCHEDULE_QUOTA.md`「3 主/轮」配额对齐;叠加副任务单轮 ≤ 5 动作。
+2. **单次最多产出 5 个新 demo**:与 `SCHEDULE_QUOTA.md`「5 主/轮」配额对齐;叠加副任务单轮 ≤ 7 动作。
 3. **不主动执行 demo**:README 里只写"如何运行",Agent 不实际跑代码。
 4. **失败重试上限 2 次**:连续失败则跳过本轮,记入 STATE.md 的 `failed_attempts` 字段(见 STATE.md §2 + §4)。
 5. **进度日志**:每轮结束

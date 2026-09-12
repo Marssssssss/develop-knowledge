@@ -3,6 +3,9 @@
 > 每轮结束由自动化任务追加/滚动。**永远 ≤ 5 KB,不再随 demo 数线性增长**。
 > 历史全本见 `_docs/archive/`(默认不进 hot path,按需 Grep)。
 
+> **调度频率**:每 1.5 小时一次(全天 24h,**无下午屏蔽**),由两个错开 1.5 小时的 `HOURLY;INTERVAL=3` 任务合成;全天 16 个触发点(00:00/01:30/03:00/.../22:30)。详见 [`SCHEDULE_QUOTA.md`](./SCHEDULE_QUOTA.md) 顶部说明。
+> **每轮配额**:5 主 + ≤2 副;硬约束 ≤5 agentic_search / ≤15 WebSearch / ≤10 WebFetch / ≤5 新 demo。
+
 > 推进配额与失败回退:见 [`SCHEDULE_QUOTA.md`](./SCHEDULE_QUOTA.md)
 > Token 控制细节:见 [`OPTIMIZATION.md` §2.4](./OPTIMIZATION.md)
 

@@ -37,11 +37,11 @@
 
 ## 三、待研究清单(按"教学价值"排序)
 
-1. **goroutine 与 channel** — `07-...?` 待规划; CSP 模型 + buffered/unbuffered + select 多路复用
-2. **slice 底层机制** — `09-语言学习/Golang/slice底层机制/` 目录已建, 等填充
-3. **error 处理与错误包装** — `09-语言学习/Golang/error处理/` 目录已建, 等填充
-4. **defer / panic / recover** — 异常路径与栈展开
-5. **map 底层实现** — hash bucket / 增量扩容(等量扩容避免 stw)
+1. **goroutine 与 channel** ✅ `09-语言学习/Golang/goroutine与channel/` — CSP 模型 + buffered/unbuffered + select 多路复用 + close 广播
+2. **slice 底层机制** ✅ `09-语言学习/Golang/slice底层机制/` — 三字头结构、growslice 1.18+ 1.25x+192 几何增长、共享底层数组陷阱
+3. **error 处理与错误包装** ✅ `09-语言学习/Golang/error处理/` — error 接口 + fmt.Errorf %w + errors.Is/As/Unwrap + errors.Join (Go 1.20)
+4. **defer / panic / recover** ✅ `09-语言学习/Golang/defer与panic-recover/` — defer LIFO、参数立即求值、recover 硬性规则、Go 1.14+ 开放编码 defer
+5. **map 底层实现** ✅ `09-语言学习/Golang/map底层实现/` — hmap + bmap + 装载因子 6.5 + 渐进式扩容 + Swiss Table (Go 1.24+)
 6. **interface 与 itab** — 鸭子类型 + type assertion + type switch
 7. **GPM 调度模型** — goroutine / processor / machine 三层 + work-stealing
 8. **GC 三色标记 + 写屏障** — 1.5+ 引入并发标记, 1.8+ 引入混合写屏障

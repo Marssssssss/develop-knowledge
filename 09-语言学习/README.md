@@ -15,7 +15,7 @@
 | 语言 | 状态 | 路径 |
 | --- | --- | --- |
 | Python | ✅ 启动 | [Python/](./Python/) |
-| Golang | ✅ 已建子目录 | [Golang/](./Golang/) |
+| Golang | ✅ 启动 | [Golang/](./Golang/) |
 
 ## 目录内约定
 

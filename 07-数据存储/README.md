@@ -8,6 +8,7 @@
 | [02-NoSQL/](./02-NoSQL/) | MongoDB / Cassandra / DynamoDB |
 | [03-缓存/](./03-缓存/) | Redis / Memcached |
 | [04-搜索引擎/](./04-搜索引擎/) | Elasticsearch / Meilisearch |
+| [05-图数据库/](./05-图数据库/) | Neo4j / Cypher / 属性图模型 |
 
 ## 已完成 demo
 
@@ -35,5 +36,5 @@
 - [ ] Redis Sentinel 高可用
 - [ ] Memcached vs Redis 业务选型对比（03-缓存 已部分覆盖；缓存目录仍待深挖）
 - [ ] 中文 IK 分词器与 BM25 协同（影响 avgdl / length normalization）
-- [ ] 图数据库 Neo4j / Cypher / 属性图模型（已在 `05-图数据库/` 占位，2026-09-12 类目拓展）
+- [x] 图数据库 Neo4j / Cypher / 属性图模型（已在 `05-图数据库/` 完成首批 5 demo：PropertyGraphModel / CypherParser / GraphTraversal / PageRank / Neo4jStorage）
 - [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

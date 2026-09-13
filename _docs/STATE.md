@@ -63,7 +63,7 @@
 ## 二、本轮状态
 
 ```
-next_index     : 45    # 本轮 42 同大类(06-DevOps)顺延至 44 09-语言学习/Golang(大类轮换 ✓ 09-语言学习);next → 45
+next_index     : 0     # 索引表 46 行,已轮完一整轮;next_index 回到 0 继续 01-游戏开发/服务端
 last_run       : 2026-09-13 18:15
 last_top       : 07-数据存储     # 本轮顶层大类(大类轮换约束用,见 §一) — 本轮 45 07-数据存储/图数据库 ✓ ≠ 09-语言学习
 skipped        : []
@@ -74,6 +74,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题(细节见 archive/schedule.md) | demo |
 | --- | --- | --- | --- |
+| 2026-09-13 18:15 | 45 | 属性图模型(LPG:节点+关系+标签+属性,双向链表出/入链)+Cypher只读子集递归下降解析器(MATCH/WHERE/RETURN/ORDER BY/SKIP/LIMIT 词法+AST+单节点执行器)+图遍历 BFS+DFS+Dijkstra(7节点Wikipedia经典图,brute最小堆O((V+E)logV))+PageRank幂迭代(经典4节点示例,13轮max\|Δ\|=3.39e-7,sum=1.0)+Neo4j存储层(15B NodeRecord+34B RelRecord+双向链表遍历NULL=0xFFFFFFFF标记避免与合法rid=0冲突) | +5 |
 | 2026-09-13 16:04 | 44 | goroutine+channel+select(CSP)+slice三字头+growslice+error+%w+Is/As/Join+defer LIFO+panic/recover+map hmap+bmap+渐进式扩容 | +5 |
 | 2026-09-13 13:46 | 41 | HCL 解析器(lexer + 递归下降 attribute/block/字符串字面量/嵌套 object)+ Terraform 资源依赖图 Kahn 拓扑分层 + parallelism=10 切片 + 环检测 + Ansible 幂等模块 file/package/service(desired-state 检查 + --check dry-run)+ Jinja2 模板引擎 {{ var }} / {% for/if %} / 过滤器链 + Terraform State v4 字段级 diff 产生 +/~/- plan + drift detection | +5 |
 | 2026-09-13 10:05 | 39 | 线性回归(OLS normal eq+Ridge 抗共线性+GD+复杂度 O(n·p²))+ 逻辑回归(sigmoid+交叉熵+L2+数值梯度验证+OvR)+ 决策树 CART(基尼/熵+贪心穷举+预剪枝+grid 调优)+ KNN(brute+KD-Tree 17x 加速+距离度量+k 偏差-方差)+ K-Means(Lloyd+k-means++ 概率 D²/ΣD² 初始化+多次重启取最优+肘部法+假设演示) | +5 |

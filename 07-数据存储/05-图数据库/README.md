@@ -33,7 +33,11 @@
 
 ## 已完成 demo
 
-（暂无）
+- [x] 属性图模型(LPG: 节点/关系/标签/属性, 双向链表出/入链) — 见 [PropertyGraphModel/](./PropertyGraphModel/)（Python / Go）
+- [x] Cypher 只读子集(MATCH/WHERE/RETURN/ORDER BY/SKIP/LIMIT)递归下降解析器 — 见 [CypherParser/](./CypherParser/)（Python / Go）
+- [x] 图遍历 BFS / DFS / Dijkstra(邻接表 + 队列/栈/堆) — 见 [GraphTraversal/](./GraphTraversal/)（C / Python / Go）
+- [x] PageRank 幂迭代(d=0.85 阻尼 + 悬挂节点贡献) — 见 [PageRank/](./PageRank/)（Python / Go）
+- [x] Neo4j 存储层(15 B NodeRecord + 34 B RelRecord + 双向链表) — 见 [Neo4jStorage/](./Neo4jStorage/)（C / Python）
 
 ## 待研究（细化）
 

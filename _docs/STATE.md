@@ -74,6 +74,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题(细节见 archive/schedule.md) | demo |
 | --- | --- | --- | --- |
+| 2026-09-13 13:46 | 41 | HCL 解析器(lexer + 递归下降 attribute/block/字符串字面量/嵌套 object)+ Terraform 资源依赖图 Kahn 拓扑分层 + parallelism=10 切片 + 环检测 + Ansible 幂等模块 file/package/service(desired-state 检查 + --check dry-run)+ Jinja2 模板引擎 {{ var }} / {% for/if %} / 过滤器链 + Terraform State v4 字段级 diff 产生 +/~/- plan + drift detection | +5 |
 | 2026-09-13 10:05 | 39 | 线性回归(OLS normal eq+Ridge 抗共线性+GD+复杂度 O(n·p²))+ 逻辑回归(sigmoid+交叉熵+L2+数值梯度验证+OvR)+ 决策树 CART(基尼/熵+贪心穷举+预剪枝+grid 调优)+ KNN(brute+KD-Tree 17x 加速+距离度量+k 偏差-方差)+ K-Means(Lloyd+k-means++ 概率 D²/ΣD² 初始化+多次重启取最优+肘部法+假设演示) | +5 |
 | 2026-09-13 06:43 | 37 | 采样剖析原理(ITIMER_PROF/SIGPROF/99Hz)+ 火焰图生成(folded→SVG,flamegraph.pl 复现)+ perf_events(三模式/IPC/-F vs -c)+ strace与ptrace(TRACESYSGOOD/enter-exit 配对/Yama)+ Off-CPU分析(offcputime 记账/时间膨胀/--state=2) | +5 |
 | 2026-09-13 03:28 | 35 | ELF 文件解析(elf(5))+ PE 文件解析(MS 官方规范)+ x64 调用约定(psABI)+ GOT/PLT 延迟绑定(Taylor)+ YARA 静态特征匹配 | +5 |

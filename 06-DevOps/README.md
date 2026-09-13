@@ -20,6 +20,7 @@
 | 048-050 | [02-CI-CD/](./02-CI-CD/) | DAG 流水线调度 / 内容寻址缓存 / 蓝绿与金丝雀发布 | C/Python/Go |
 | 051-053 | [03-监控与可观测性/](./03-监控与可观测性/) | Prometheus 指标模型 / W3C Trace Context / histogram_quantile | C/Python/Go |
 | 054-056 | [04-Kubernetes/](./04-Kubernetes/) | Pod 生命周期+重启策略 / kube-proxy IPVS 调度 / Controller Reconciler | C/Python/Go |
+| 102-106 | [05-IaC与配置管理/](./05-IaC与配置管理/) | HCL 解析器 / Terraform 资源依赖图+Kahn 拓扑 / Ansible 幂等模块 / Jinja2 模板引擎 / Terraform State diff & Plan (IaC 主干五件套) | C/Python/Go / Python+JS |
 
 ## 待研究
 
@@ -27,4 +28,4 @@
 - [ ] GitHub Actions 工作流
 - [ ] OpenTelemetry 三大支柱（Trace/Metric/Log）
 - [ ] K8s Operator 实战模式(见 04-Kubernetes/README)
-- [ ] Terraform 状态管理与 drift(见 05-IaC与配置管理/README)
+- [x] Terraform 状态管理与 drift(见 05-IaC与配置管理/README) ✓ demo 102-106

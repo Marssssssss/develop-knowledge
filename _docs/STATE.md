@@ -74,11 +74,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | demo |
 | --- | --- | --- | --- |
+| 2026-09-13 22:42 | 8 | 前端框架:React Fiber 链表 + Hooks dispatcher/环链表 + Zustand vanilla store + Vite ESM/预构建/HMR + 虚拟 DOM Diff 双端 + LIS | +5 |
 | 2026-09-13 20:34 | 0 | 服务端网络栈:kqueue BSD/macOS IO 多路复用 + Schmidt 1995 Reactor 模式 + TCP 长度前缀帧定界 + Protobuf wire format + sendfile(2) 零拷贝 | +5 |
 | 2026-09-13 18:15 | 45 | 图数据库:属性图 LPG + Cypher 只读解析 + BFS/DFS/Dijkstra + PageRank + Neo4j 定长记录 | +5 |
 | 2026-09-13 16:04 | 44 | Go 语言:goroutine+channel+select + slice+growslice + error %w+Is/As/Join + defer+panic+recover + map hmap+bmap+渐进式扩容 | +5 |
 | 2026-09-13 13:46 | 41 | IaC:HCL 解析器 + Terraform 依赖图 Kahn + Ansible 幂等 + Jinja2 模板 + State diff & Plan | +5 |
-| 2026-09-13 10:05 | 39 | 经典 ML:线性回归 OLS/Ridge + 逻辑回归 + 决策树 CART + KNN brute+KD-Tree 17x + K-Means k-means++ | +5 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

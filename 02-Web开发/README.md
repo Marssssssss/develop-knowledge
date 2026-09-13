@@ -14,6 +14,11 @@
 ## 已完成 demo
 
 - [x] [01-前端框架/Vue/reactive/](./01-前端框架/Vue/reactive/) — Vue 3 Proxy 响应式最小实现 (TS + JS)
+- [x] [01-前端框架/React/Fiber/](./01-前端框架/React/Fiber/) — Fiber 链表 + 双缓冲 + render/commit 两阶段(JS + TS)
+- [x] [01-前端框架/React/Hooks/](./01-前端框架/React/Hooks/) — Hook 链表 + dispatcher + setState 环链表(JS + TS)
+- [x] [01-前端框架/React/VirtualDOM-Diff/](./01-前端框架/React/VirtualDOM-Diff/) — 双端指针 + key 哈希 + LIS 乱序最小移动(JS + TS)
+- [x] [01-前端框架/状态管理/Zustand/](./01-前端框架/状态管理/Zustand/) — 极简 vanilla store + useStore selector(JS + TS)
+- [x] [01-前端框架/构建工具/Vite/](./01-前端框架/构建工具/Vite/) — ESM 冷启动 + 依赖预构建 + on-demand transform + HMR(JS + TS)
 - [x] [02-后端/Node.js/Event-Loop/](./02-后端/Node.js/Event-Loop/) — Node.js 6 阶段 Event Loop + nextTick/Promise 微任务 (JS + TS)
 - [x] [03-数据库/B+树索引/](./03-数据库/B+树索引/) — B+ 树索引原理 (M-way + 叶子兄弟链 + copy-up/push-up 分裂 + borrow/merge 重平衡) (C + Python + Go)
 - [x] [04-API设计/WebSocket/握手协议/](./04-API设计/WebSocket/握手协议/) — WebSocket 握手协议 RFC 6455 §4 (HTTP Upgrade + SHA-1+GUID → Sec-WebSocket-Accept + 101 Switching Protocols) (C + Python + Go)

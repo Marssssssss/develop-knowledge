@@ -33,7 +33,7 @@ Agent（包括自动化巡检、手动对话）在 `D:\开发研究\` 下操作�
 
 ## 四、自动化执行规则
 
-由 `automation_update` 创建的每 1.5 小时一次的任务(由两个错开 1.5 小时的 HOURLY 任务合成全天 16 次;详见 `SCHEDULE_QUOTA.md` 顶部说明):
+由 `automation_update` 创建的每 **2 小时**一次的任务(单条 `FREQ=HOURLY;INTERVAL=2` RRULE,详见 `SCHEDULE_QUOTA.md` 顶部说明;全天 12 个触发点 `00:00 02:00 ... 22:00`):
 
 1. **轮询领域**:按 [`STATE.md`](./STATE.md) 第二节"本轮状态"中的 `next_index` 选下一个待研究领域(状态文件 ≤ 5 KB,默认 always-read 即可)。
 2. **单次最多产出 5 个新 demo**:与 `SCHEDULE_QUOTA.md`「5 主/轮」配额对齐;叠加副任务单轮 ≤ 7 动作。

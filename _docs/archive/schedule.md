@@ -1,4 +1,3 @@
-# archive/schedule.md — 调度日志全本
 
 > 由自动化任务每轮 append。**默认 agent 不读**,需要"上一轮做了什么/权威资料/坑"等细节时 Grep 此处。
 > rotate 规则见 `STATE.md §4`:> 30 行 或 > 20 KB → 截断至最近 30 条。

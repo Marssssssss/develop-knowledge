@@ -63,7 +63,7 @@
 ## 二、本轮状态
 
 ```
-next_index     : 40    # 本轮 38 同大类(11-性能分析)顺延至 39 05-经典机器学习;next → 40(05-语音与多模态)
+next_index     : 40    # 本轮 38 同大类(11-性能分析)顺延至 39 05-经典机器学习(大类轮换 ✓);next → 40(05-语音与多模态)
 last_run       : 2026-09-13 10:05
 last_top       : 05-AI与机器学习   # 本轮顶层大类(大类轮换约束用,见 §一)
 skipped        : []
@@ -74,11 +74,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题(细节见 archive/schedule.md) | demo |
 | --- | --- | --- | --- |
+| 2026-09-13 10:05 | 39 | 线性回归(OLS normal eq+Ridge 抗共线性+GD+复杂度 O(n·p²))+ 逻辑回归(sigmoid+交叉熵+L2+数值梯度验证+OvR)+ 决策树 CART(基尼/熵+贪心穷举+预剪枝+grid 调优)+ KNN(brute+KD-Tree 17x 加速+距离度量+k 偏差-方差)+ K-Means(Lloyd+k-means++ 概率 D²/ΣD² 初始化+多次重启取最优+肘部法+假设演示) | +5 |
 | 2026-09-13 06:43 | 37 | 采样剖析原理(ITIMER_PROF/SIGPROF/99Hz)+ 火焰图生成(folded→SVG,flamegraph.pl 复现)+ perf_events(三模式/IPC/-F vs -c)+ strace与ptrace(TRACESYSGOOD/enter-exit 配对/Yama)+ Off-CPU分析(offcputime 记账/时间膨胀/--state=2) | +5 |
 | 2026-09-13 03:28 | 35 | ELF 文件解析(elf(5))+ PE 文件解析(MS 官方规范)+ x64 调用约定(psABI)+ GOT/PLT 延迟绑定(Taylor)+ YARA 静态特征匹配 | +5 |
 | 2026-09-13 00:29 | 34 | Python 五大语言机制:生成器 yield / 上下文管理器 / 描述符协议 / 协程与 asyncio / 元类与 __init_subclass__ | +5 |
 | 2026-09-12 21:39 | 33 | TLS 1.3 握手 + SYN Cookie 防 SYN Flood + eBPF/XDP 包过滤 + IKEv2-ESP 协商 + DNSSEC 链式信任 | +5 |
-| 2026-09-12 18:36 | 32 | XSS 与 CSP + CSRF Token + SQL 注入与预编译 + JWT 验证 + Same-Origin 与 CORS | +5 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

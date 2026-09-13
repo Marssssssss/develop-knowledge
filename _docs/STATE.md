@@ -63,9 +63,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 42    # 本轮 40 同大类(05-AI)顺延至 41 06-IaC与配置管理(大类轮换 ✓);next → 42
-last_run       : 2026-09-13 13:46
-last_top       : 06-DevOps         # 本轮顶层大类(大类轮换约束用,见 §一)
+next_index     : 45    # 本轮 42 同大类(06-DevOps)顺延至 44 09-语言学习/Golang(大类轮换 ✓ 09-语言学习);next → 45
+last_run       : 2026-09-13 16:04
+last_top       : 09-语言学习     # 本轮顶层大类(大类轮换约束用,见 §一)
 skipped        : []
 failed_attempts: []
 ```

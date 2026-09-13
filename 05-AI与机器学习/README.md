@@ -17,7 +17,7 @@
 
 | 目录 | demo |
 | --- | --- |
-| [01-深度学习/](./01-深度学习/) | 033 反向传播 · 034 2D 卷积 · 035 多头自注意力 |
+| [01-深度学习/](./01-深度学习/) | 033 反向传播 · 034 2D 卷积 · 035 多头自注意力 · 137 权重初始化 Xavier/He · 138 Dropout · 139 BatchNorm · 140 Adam 优化器 · 141 LSTM |
 | [02-强化学习/](./02-强化学习/) | 036 Q-Learning 表格方法 · 037 REINFORCE 策略梯度 · 038 PPO 近端策略优化 |
 | [03-LLM/](./03-LLM/) | 039 BPE 分词器 · 040 KV Cache 与自回归解码 · 041 解码采样策略 |
 | [04-计算机视觉/](./04-计算机视觉/) | 042 Sobel 边缘检测 · 043 Hough 直线检测 · 044 IoU 与 NMS |
@@ -28,6 +28,5 @@
 - [ ] DQN 算法
 - [ ] Actor-Critic / A2C / A3C
 - [ ] CLIP 原理
-- [ ] LSTM / GRU 门控机制
-- [ ] BatchNorm / LayerNorm
-- [ ] Adam 优化器
+- [ ] LayerNorm / RMSNorm
+- [ ] GRU 门控机制

@@ -63,8 +63,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 12    # 本轮选 12(03-系统编程/网络编程)≠ 02-Web开发 ✓(同大类 02 跳过 9-11);占位锁
-last_run       : 2026-09-14 00:59   # 本轮占位锁(2026-09-13 22:42 距今 137 分钟 > 80 ✓)
+next_index     : 13    # 本轮选 12(03-系统编程/网络编程)≠ 02-Web开发 ✓;本轮完成 12,推进 12 → 13
+last_run       : 2026-09-14 01:15   # 本轮占位锁 + 主轮结束时间
 last_top       : 03-系统编程       # 本轮顶层大类 — 选 12 ✓ ≠ 上轮 02-Web开发
 skipped        : []
 failed_attempts: []
@@ -74,11 +74,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | demo |
 | --- | --- | --- | --- |
+| 2026-09-14 01:15 | 12 | 网络编程:最小 TCP Echo Server + TCP Keepalive 四件套 + SO_REUSEADDR/REUSEPORT/TIME_WAIT 三组实验 + HTTP/1.1 状态机解析器 + TLV 编解码器(简化版 ASN.1 BER) | +5 |
 | 2026-09-13 22:42 | 8 | 前端框架:React Fiber 链表 + Hooks dispatcher/环链表 + Zustand vanilla store + Vite ESM/预构建/HMR + 虚拟 DOM Diff 双端 + LIS | +5 |
 | 2026-09-13 20:34 | 0 | 服务端网络栈:kqueue BSD/macOS IO 多路复用 + Schmidt 1995 Reactor 模式 + TCP 长度前缀帧定界 + Protobuf wire format + sendfile(2) 零拷贝 | +5 |
 | 2026-09-13 18:15 | 45 | 图数据库:属性图 LPG + Cypher 只读解析 + BFS/DFS/Dijkstra + PageRank + Neo4j 定长记录 | +5 |
 | 2026-09-13 16:04 | 44 | Go 语言:goroutine+channel+select + slice+growslice + error %w+Is/As/Join + defer+panic+recover + map hmap+bmap+渐进式扩容 | +5 |
-| 2026-09-13 13:46 | 41 | IaC:HCL 解析器 + Terraform 依赖图 Kahn + Ansible 幂等 + Jinja2 模板 + State diff & Plan | +5 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

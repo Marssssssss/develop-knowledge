@@ -15,11 +15,15 @@
 | 知识点 | 状态 | 路径 |
 | --- | --- | --- |
 | IO 多路复用 · `select` | ✅ 已完成 | [网络编程/IO多路复用/select/](./网络编程/IO多路复用/select/) |
-| IO 多路复用 · `epoll` | ⏳ 待研究 | — |
-| IO 多路复用 · `kqueue` | ⏳ 待研究 | — |
-| Reactor 模式 | ⏳ 待研究 | — |
+| IO 多路复用 · `epoll` | ✅ 已完成 | [网络编程/IO多路复用/epoll/](./网络编程/IO多路复用/epoll/) |
+| IO 多路复用 · `kqueue` | ✅ 已完成 | [网络编程/IO多路复用/kqueue/](./网络编程/IO多路复用/kqueue/) |
+| Reactor 单线程模式 | ✅ 已完成 | [网络编程/Reactor模式/](./网络编程/Reactor模式/) |
+| TCP 粘包/拆包 · TLV 帧定界 | ✅ 已完成 | [网络编程/协议设计/TCP粘包拆包/](./网络编程/协议设计/TCP粘包拆包/) |
+| Protobuf 序列化 wire format | ✅ 已完成 | [网络编程/协议设计/Protobuf序列化/](./网络编程/协议设计/Protobuf序列化/) |
+| 零拷贝 sendfile(2) | ✅ 已完成 | [网络编程/零拷贝/sendfile/](./网络编程/零拷贝/sendfile/) |
 | Protobuf vs FlatBuffers | ⏳ 待研究 | — |
-| TCP 粘包/拆包 | ⏳ 待研究 | — |
+| 协议压缩(Snappy / zstd) | ⏳ 待研究 | — |
+| 应用层 ack / 心跳 / 重连 | ⏳ 待研究 | — |
 
 ## 与系统编程的关系
 

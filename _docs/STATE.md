@@ -63,9 +63,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 23    # 本轮选 23(06-DevOps/容器化)≠ 05-AI ✓;20-22 同大类顺延跳过不记 skip;完成 23,推进 23 → 24
+next_index     : 24    # 本轮选 23(06-DevOps/容器化)≠ 05-AI ✓;20-22 同大类顺延跳过不记 skip;完成 23,推进 23 → 24
 last_run       : 2026-09-14 08:03   # 本轮占位锁 + 主轮结束时间
-last_top       : 05-AI与机器学习     # 本轮顶层大类 — 选 23 ✓ ≠ 上轮 05-AI
+last_top       : 06-DevOps     # 本轮顶层大类 — 选 23 ✓ ≠ 上轮 05-AI
 skipped        : []
 failed_attempts: []
 ```
@@ -74,11 +74,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | demo |
 | --- | --- | --- | --- |
+| 2026-09-14 08:03 | 23 | 容器化第二批:OverlayFS upper/lower/work/copy-up/whiteout/opaque + Capabilities 5 集合+41 cap+文件 cap + Seccomp-BPF struct sock_filter+seccomp_data+7 RET 值 + veth pair+bridge+iptables MASQUERADE + OCI Runtime Spec config.json+4 状态机+Linux mounts+maskedPaths | +5 |
 | 2026-09-14 05:37 | 19 | 深度学习第二批:权重初始化 Xavier/He 方差守恒 + Dropout 原始/inverted + BatchNorm 前向反向/EMA + Adam 优化器谱系/偏差校正 + LSTM 五式/BPTT/∏f_t 梯度流 | +5 |
 | 2026-09-14 03:16 | 16 | iOS 运行时与内存管理:AutoreleasePoolPage 双向链表 + weak/SideTable 实现 + objc_msgSend 三段式 + KVO isa-swizzling + Category 前插合并与关联对象 | +5 |
 | 2026-09-14 01:15 | 12 | 网络编程:最小 TCP Echo Server + TCP Keepalive 四件套 + SO_REUSEADDR/REUSEPORT/TIME_WAIT 三组实验 + HTTP/1.1 状态机解析器 + TLV 编解码器(简化版 ASN.1 BER) | +5 |
 | 2026-09-13 22:42 | 8 | 前端框架:React Fiber 链表 + Hooks dispatcher/环链表 + Zustand vanilla store + Vite ESM/预构建/HMR + 虚拟 DOM Diff 双端 + LIS | +5 |
-| 2026-09-13 20:34 | 0 | 服务端网络栈:kqueue BSD/macOS IO 多路复用 + Schmidt 1995 Reactor 模式 + TCP 长度前缀帧定界 + Protobuf wire format + sendfile(2) 零拷贝 | +5 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

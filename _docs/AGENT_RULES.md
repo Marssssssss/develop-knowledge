@@ -33,7 +33,7 @@ Agent（包括自动化巡检、手动对话）在 `D:\开发研究\` 下操作�
 
 ## 四、自动化执行规则
 
-由 `automation_update` 创建的每 **2 小时**一次的任务(单条 `FREQ=HOURLY;INTERVAL=2` RRULE,详见 `SCHEDULE_QUOTA.md` 顶部说明;全天 12 个触发点 `00:00 02:00 ... 22:00`):
+由 `automation_update` 创建的**12 条定点任务**（每条 `FREQ=DAILY;INTERVAL=1;BYHOUR=<H>;BYMINUTE=0`，覆盖全天 `00:00 02:00 … 22:00`，每天各触发一次、锁定整点、不漂移）。**完整流程以 [`AUTOMATION_PROMPT.md`](./AUTOMATION_PROMPT.md) 为唯一权威**（含调度模型说明、轮间保险 45 分钟、配额、归档、通知、自检），定量规范见 `SCHEDULE_QUOTA.md`：
 
 1. **轮询领域**:按 [`STATE.md`](./STATE.md) 第二节"本轮状态"中的 `next_index` 选下一个待研究领域(状态文件 ≤ 5 KB,默认 always-read 即可)。
 2. **单次最多产出 5 个新 demo**:与 `SCHEDULE_QUOTA.md`「5 主/轮」配额对齐;叠加副任务单轮 ≤ 7 动作。
@@ -44,6 +44,8 @@ Agent（包括自动化巡检、手动对话）在 `D:\开发研究\` 下操作�
    - 在 `archive/completed.md` append 一行(每 demo 完成后)
    - 在 `archive/schedule.md` append 一行(每轮末尾)
    - 在 `.workbuddy/memory/YYYY-MM-DD.md` append 一行(当日累计)
+6. **时间戳铁律(2026-09-14 新增)**:一切时间戳(commit 消息、`last_run`、archive 行首、daily log)必须取自 shell `date` 的**实际输出**;禁止推算(如 `last_run + 2h`)、禁止沿用上一轮/上一日/记忆里出现过的时间串。事故:2026-09-14 一轮把真实 12:56 记为 `14:30`,导致下一槽误判重入而白丢一轮。
+7. **轮间保险**:开局先看 `STATE.md.last_run`,距现在 **< 45 分钟 → 立即退出**(不写文件、不推送、不通知);≥45 分钟则正常执行并**立即**写占位锁。阈值依据见 `AUTOMATION_PROMPT.md` §二。
 
 ## 五、与其他规则文档的关系
 

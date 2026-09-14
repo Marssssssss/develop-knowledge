@@ -1,7 +1,7 @@
 # 经典机器学习
 
 > 2026-09-12 类目自动拓展新增(深度学习之前的统计学习基础,与 01-深度学习互补)。
-> 2026-09-13 首批 5 demo 完成。
+> 2026-09-13 首批 5 demo 完成;2026-09-14 第二批 5 demo 完成(覆盖面闭合)。
 
 ## 简介
 
@@ -16,6 +16,11 @@
 | [决策树/](./决策树/) | CART 二叉树 + 基尼/熵 + 贪心穷举 (feature, threshold) + 预剪枝 + Grid 调优 + 标签噪声演示 | 5 算法对比 ID3/C4.5/C5.0/CART |
 | [K近邻/](./K近邻/) | Brute force + KD-Tree 加速 + uniform/distance 加权投票 + 距离度量对比 + k 偏差-方差权衡 | 4 algorithm 对比 + KD-Tree 17x 加速 |
 | [K均值聚类/](./K均值聚类/) | Lloyd 三步迭代 + k-means++ 概率初始化 + 多次重启 + 肘部法 + 假设演示(球形 vs 同心圆) | sklearn n_init='auto' + Arthur 2007 |
+| [朴素贝叶斯/](./朴素贝叶斯/) | 高斯/多项式/伯努利三变体 + 对数域 logsumexp + Laplace/Lidstone 平滑 + 未平滑的 −inf 灾难 + 0×(−inf)=NaN | sklearn `_joint_log_likelihood` 对齐 |
+| [支持向量机/](./支持向量机/) | 对偶 + KKT + 箱约束 [L,H] + 解析牛顿步 + WSS1 最大违反对 + 核技巧(linear/poly/rbf/sigmoid) + b 区间精化 | Platt 1998 SMO + Fan/Chen/Lin 2005 WSS1 |
+| [随机森林/](./随机森林/) | 自助采样 + OOB 估计 + margin/strength 与泛化界 + 排列重要性 vs 基尼重要性 + 单次排序前缀扫描切分 | Breiman 2001 原论文 |
+| [提升算法/](./提升算法/) | AdaBoost.SAMME(`α=lr·(log((1−err)/err)+log(K−1))`) + 指数权重更新与归一 + 加权投票 + GBDT 残差拟合 + shrinkage/subsample | sklearn `_weight_boosting.py` 源码 + Friedman 2001/2002 |
+| [模型评估/](./模型评估/) | K 折/分层折下标 + 混淆矩阵(行=真实) + P/R/F_β 四口径 + ROC 与 AUC 三算法(梯形/秩和/Bamber 恒等) + Gini + 多分类 OvR macro/micro | sklearn metrics/CV/roc_auc_score + Bamber 1975 |
 
 ## 核心知识点(待研究清单)
 
@@ -24,10 +29,10 @@
 - [x] **决策树 CART**:基尼/熵 / 贪心穷举 / 预剪枝 / ccp_alpha 路径 (2026-09-13)
 - [x] **K 近邻**:brute / KD-Tree / Ball-Tree / 距离度量 / k 权衡 (2026-09-13)
 - [x] **K-Means**:Lloyd / k-means++ / inertia / n_init / 肘部法 (2026-09-13)
-- [ ] **朴素贝叶斯**:条件独立性假设;文本分类基线;拉普拉斯平滑。
-- [ ] **支持向量机(SVM)**:最大间隔超平面;核技巧(隐式高维映射);软间隔与 C 参数;对偶问题与 SMO。
-- [ ] **集成学习**:Bagging(随机森林 = 决策树 + 自助采样 + 随机特征子集)vs Boosting(AdaBoost / GBDT / XGBoost:序列拟合残差);偏差-方差分解视角。
-- [ ] **模型评估**:交叉验证(K 折 / 分层);混淆矩阵、精确率/召回率/F1、ROC-AUC;过拟合诊断(学习曲线)。
+- [x] **朴素贝叶斯**:条件独立性假设;文本分类基线;拉普拉斯平滑。(2026-09-14)
+- [x] **支持向量机(SVM)**:最大间隔超平面;核技巧(隐式高维映射);软间隔与 C 参数;对偶问题与 SMO。(2026-09-14)
+- [x] **集成学习**:Bagging(随机森林 = 决策树 + 自助采样 + 随机特征子集)vs Boosting(AdaBoost / GBDT,XGBoost 为其工程实现);偏差-方差分解视角。(2026-09-14)
+- [x] **模型评估**:交叉验证(K 折 / 分层);混淆矩阵、精确率/召回率/F1、ROC-AUC;过拟合诊断(学习曲线)。(2026-09-14)
 
 ## 参考资料(实际阅读过的权威来源)
 
@@ -37,5 +42,19 @@
 - [scikit-learn Nearest Neighbors §1.6](https://scikit-learn.org/stable/modules/neighbors.html) — brute/KDTree/BallTree + 平票警告
 - [scikit-learn KMeans API](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html) — n_init='auto' + algorithm='lloyd'
 - [scikit-learn Clustering §2.3](https://scikit-learn.org/stable/modules/clustering.html) — Lloyd + k-means++ + inertia 缺陷
+- [scikit-learn Naive Bayes §1.9](https://scikit-learn.org/stable/modules/naive_bayes.html) — 三变体公式 + θ̂yi=(Nyi+α)/(Ny+αn) + "decent classifier but a bad estimator" + `_joint_log_likelihood`
+- [scikit-learn SVM §1.4](https://scikit-learn.org/stable/modules/svm.html) — 对偶/KKT/核函数表/`C` 与 `gamma` 量纲 + libsvm 的 `Platt scaling`
+- [scikit-learn Ensemble §1.11](https://scikit-learn.org/stable/modules/ensemble.html) — 随机森林(bootstrap/OOB/max_features)+ AdaBoost.SAMME + GBDT(加性模型/负梯度/shrinkage/subsample)
+- [`sklearn/ensemble/_weight_boosting.py`(源码)](https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/ensemble/_weight_boosting.py) — `α = lr·(log((1−err)/err)+log(K−1))`、`exp(log(w)+α·incorrect·(w>0))`、`err≤0` 早停、`err≥1−1/K` 丢弃
+- [scikit-learn Metrics §3.3](https://scikit-learn.org/stable/modules/model_evaluation.html) — 混淆矩阵"行=真实类" + P/R/F_β + micro/macro/weighted/samples 四口径
+- [scikit-learn Cross-validation §3.1](https://scikit-learn.org/stable/modules/cross_validation.html) — KFold `[n·i/k, n·(i+1)/k)` 切分 + **默认 shuffle=False** + StratifiedKFold
+- [scikit-learn `roc_auc_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html) — 多分类 OvR macro/micro 公式
+- [scikit-learn 示例 `plot_roc`](https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html) — ROC 绘制 + 多分类 OvR/OvO
+- Breiman, *Random Forests*, Machine Learning 45(1), 2001 — margin 函数、strength、泛化误差界 `PE* ≤ ρ̄(1−s²)/s²`、OOB 估计
+- Platt, *Sequential Minimal Optimization*, 1998 — SMO 的解析两步与启发式遍历
+- Fan, Chen, Lin, *Working Set Selection Using Second Order Information*, JMLR 2005 — WSS1/WSS2 与 `m(α) ≤ M(α)` 停机判据
+- Zhu, Zou, Rosset, Hastie, *Multi-class AdaBoost*, 2009 — SAMME 与 `log(K−1)` 项、eq.(15) 概率
+- Friedman, *Greedy Function Approximation* 2001 / *Stochastic Gradient Boosting* 2002 — 函数空间梯度下降与 subsample
+- Bamber, *The Area Above the Ordinal Dominance Graph…*, J. Math. Psychol. 1975 — AUC = 有序对胜率(秩和等价)
+- Hastie, Tibshirani, Friedman《The Elements of Statistical Learning》Ch.3-13 — 统计学习视角
 - Bishop《Pattern Recognition and Machine Learning》Ch.3-9 — 经典 ML 数学基础
-- Friedman, Hastie, Tibshirani《Elements of Statistical Learning》Ch.3-13 — 统计学习视角

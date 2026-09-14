@@ -30,10 +30,10 @@
 | map | ✅ | hash table, 不支持并发读写 |
 | for-range | ✅ | 唯一循环关键字 |
 | struct 值/指针接收者 | ✅ | 影响是否修改原对象 |
-| goroutine 调度器(GPM) | 进阶 | M:N 调度, work-stealing |
-| panic/recover | 进阶 | 类异常机制但语义不同 |
-| context 包 | 进阶 | cancellation / timeout / value |
-| type parameter(Go 1.18+)| ⏳ 计划 | 泛型 |
+| GPM 调度模型(GPM)| ✅ | M:N 调度, work-stealing |
+| panic/recover | ✅ | 类异常机制但语义不同 |
+| context 包 | ✅ | cancellation tree, value 传递 |
+| type parameter(Go 1.18+)| ✅ | 泛型, type sets + constraints |
 
 ## 三、待研究清单(按"教学价值"排序)
 
@@ -42,11 +42,11 @@
 3. **error 处理与错误包装** ✅ `09-语言学习/Golang/error处理/` — error 接口 + fmt.Errorf %w + errors.Is/As/Unwrap + errors.Join (Go 1.20)
 4. **defer / panic / recover** ✅ `09-语言学习/Golang/defer与panic-recover/` — defer LIFO、参数立即求值、recover 硬性规则、Go 1.14+ 开放编码 defer
 5. **map 底层实现** ✅ `09-语言学习/Golang/map底层实现/` — hmap + bmap + 装载因子 6.5 + 渐进式扩容 + Swiss Table (Go 1.24+)
-6. **interface 与 itab** — 鸭子类型 + type assertion + type switch
-7. **GPM 调度模型** — goroutine / processor / machine 三层 + work-stealing
-8. **GC 三色标记 + 写屏障** — 1.5+ 引入并发标记, 1.8+ 引入混合写屏障
-9. **context 包** — cancellation tree, value 传递
-10. **type parameter(Go 1.18+ 泛型)** — type sets + constraints 包
+6. **interface 与 itab** ✅ `09-语言学习/Golang/interface与itab/` — 双字对 + itable 生成/缓存 + 方法集 T/*T + type assertion/switch + typed-nil 陷阱
+7. **GPM 调度模型** ✅ `09-语言学习/Golang/GPM调度模型/` — G/M/P 三层 + LRQ/GRQ + work-stealing 偷一半 + 1/61 规则 + M-P 解绑
+8. **GC 三色标记 + 写屏障** ✅ `09-语言学习/Golang/GC三色标记与写屏障/` — 三色抽象 + 混合写屏障(1.8)+ 弱三色不变式 + GOGC/Pacer
+9. **context 包** ✅ `09-语言学习/Golang/context包/` — 取消树 + WithTimeout + select 取消模式 + WithValue
+10. **type parameter(Go 1.18+ 泛型)** ✅ `09-语言学习/Golang/type-parameter泛型/` — 类型参数 + type sets + ~ 底层类型 + 两种类型推断
 
 ## 四、权威来源(本 README 主要依据)
 
@@ -56,6 +56,16 @@
 - [《A Tour of Go》Concurrency chapter](https://go.dev/tour/concurrency/1) — 标准入门课程, buffered/unbuffered channel、select、default 文段。
 - [runtime 包注释](https://pkg.go.dev/runtime) — `GOMAXPROCS`、`Gosched`、`Goexit`、`NumGoroutine` 等运行时 API。
 - [go.dev / ref 文档](https://pkg.go.dev/) — 标准库权威 API 索引。
+
+第二批(2026-09-15,demo 182-186)新增:
+
+- [Go Data Structures: Interfaces — Russ Cox](https://research.swtch.com/interfaces) — 接口双字对/itable 结构与 O(ni+nt) 生成算法。
+- [Scheduling In Go : Part II — Ardan Labs](https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part2.html) — G/M/P、work stealing、两类阻塞的 M/P 处置。
+- [Eliminate STW stack re-scanning(proposal 17503)](https://github.com/golang/proposal/blob/master/design/17503-eliminate-rescan.md) — 混合写屏障完整伪代码与弱三色不变式。
+- [Getting to Go: The Journey of Go's GC — go.dev/blog](https://go.dev/blog/ismmkeynote) — 各版本 STW 演进数字与 Pacer。
+- [A Guide to the Go Garbage Collector](https://go.dev/doc/gc-guide) — GOGC 公式、GOMEMLIMIT、mark assist。
+- [Go Concurrency Patterns: Context — go.dev/blog](https://go.dev/blog/context) — Context 接口与派生树语义。
+- [An Introduction To Generics — go.dev/blog](https://go.dev/blog/intro-generics) — 类型参数/type sets/两种类型推断。
 
 ## 五、与已有 demo 的边界
 

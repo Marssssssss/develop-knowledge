@@ -44,7 +44,7 @@
 
 ```
 next_index     : 45    # 44 本轮 09-语言学习/Golang(42/43 同大类 06-DevOps 顺延,不记 skip)
-last_run       : 2026-09-15 02:02
+last_run       : 2026-09-15 02:27
 last_top       : 09-语言学习   # ≠ 上轮 06-DevOps
 skipped        : []
 failed_attempts: []
@@ -54,11 +54,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-15 02:27 | 44 | Golang 第二批:interface 双字对/itable O(ni+nt)/typed-nil、GPM(偷一半+1/61+M-P 解绑)、GC 三色+混合写屏障+GOGC/Pacer、context 取消树+select 模式、泛型 type sets+~+两种推断;S3=索引同步+rotate | +5 | 186 |
 | 2026-09-15 00:14 | 41 | IaC 与配置管理第二批:Terraform 远程后端与 state 锁(条件写 CAS+nonce+`.tflock`)、Ansible 变量优先级 22 级(小数偏移编码"更具体者胜")、Ansible-Vault(PBKDF2→32/32/16 + AES-256-CTR + HMAC-over-ciphertext)、Pulumi 三组件与 preview unknown 传播、GitOps 调和(SSA managedFields 字段所有权);S2=+1(索引 50) | +5 | 181 |
 | 2026-09-14 22:02 | 39 | 经典机器学习第二批:朴素贝叶斯(三变体+logsumexp+平滑)、SMO(KKT+箱约束+WSS1+核)、随机森林(bootstrap/OOB/margin)、AdaBoost.SAMME+GBDT、模型评估(CV+混淆矩阵+AUC 三算法恒等);S2=+2(索引 48/49) | +5 | 176 |
 | 2026-09-14 20:16 | 37 | 系统级剖析第二批:eBPF 指令编码+验证器、ftrace nop 补丁与 function_graph self/inclusive、PMU 多路复用缩放、loadavg 定点 EMA 与 PSI trigger、页缺失与 PSS 均摊;S2=+1(索引 47) | +5 | 171 |
 | 2026-09-14 18:01 | 35 | 二进制逆向第二批:x86-64 变长编码与 REX/ModRM/SIB、ptrace 断点四步、ROP 与 CET、Mach-O 8B 对齐、CFG 支配树与 follow 节点;S2=+1(索引 46) | +5 | 166 |
-| 2026-09-14 17:11 | 34 | Python 运行时:字节码与 PEP 659 专用化、模式匹配 PEP 634、分代 GC 与 PEP 442、导入 PEP 451/420、GIL 与 PEP 703 | +5 | 161 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

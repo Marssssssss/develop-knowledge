@@ -21,6 +21,7 @@
 | 051-053 | [03-监控与可观测性/](./03-监控与可观测性/) | Prometheus 指标模型 / W3C Trace Context / histogram_quantile | C/Python/Go |
 | 054-056 | [04-Kubernetes/](./04-Kubernetes/) | Pod 生命周期+重启策略 / kube-proxy IPVS 调度 / Controller Reconciler | C/Python/Go |
 | 102-106 | [05-IaC与配置管理/](./05-IaC与配置管理/) | HCL 解析器 / Terraform 资源依赖图+Kahn 拓扑 / Ansible 幂等模块 / Jinja2 模板引擎 / Terraform State diff & Plan (IaC 主干五件套) | C/Python/Go / Python+JS |
+| 107-111 | [05-IaC与配置管理/](./05-IaC与配置管理/) | Terraform 远程后端与 state 锁(条件写+nonce) / Ansible 变量优先级 22 级 / Ansible-Vault 格式(AES-256-CTR+HMAC) / Pulumi 资源注册与 Preview / GitOps 调和与漂移检测(SSA 字段所有权) | C/Python/Go |
 
 ## 待研究
 
@@ -28,4 +29,4 @@
 - [ ] GitHub Actions 工作流
 - [ ] OpenTelemetry 三大支柱（Trace/Metric/Log）
 - [ ] K8s Operator 实战模式(见 04-Kubernetes/README)
-- [x] Terraform 状态管理与 drift(见 05-IaC与配置管理/README) ✓ demo 102-106
+- [x] Terraform 状态管理与 drift(见 05-IaC与配置管理/README) ✓ demo 102-111

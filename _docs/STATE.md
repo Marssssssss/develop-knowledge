@@ -43,9 +43,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 46    # 45 本轮 07-数据存储/图数据库第二批
+next_index     : 47    # 46 本轮 10-逆向工程/协议逆向第一批
 last_run       : 2026-09-15 06:00
-last_top       : 09-语言学习   # ≠ 上轮 06-DevOps
+last_top       : 10-逆向工程   # ≠ 上轮 07-数据存储
 skipped        : []
 failed_attempts: []
 ```
@@ -54,11 +54,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
-| 2026-09-15 04:31 | 45 | 图数据库第二批:量化路径{1,3}并集展开+组变量+关系唯一性+内联剪枝、Bolt 握手 6060B017+chunked+PackStream marker、读已提交丢失更新+实体锁+等待图死锁(等待边须保留)、火山模型算子树(Apply/Join 二元+惰性vs Eager)、MERGE 全属性匹配+并发排他锁二次 MATCH;S3=索引同步+rotate | +5 | 191 |
-| 2026-09-15 02:27 | 44 | Golang 第二批:interface 双字对/itable/typed-nil、GPM(偷一半+1/61+M-P 解绑)、GC 三色+混合写屏障+GOGC、context 取消树、泛型 type sets+~+两种推断;S3=索引同步+rotate | +5 | 186 |
-| 2026-09-15 00:14 | 41 | IaC 第二批:Terraform state 锁(CAS+nonce+tflock)、Ansible 变量 22 级、Vault PBKDF2+AES-CTR+HMAC、Pulumi 三组件+preview unknown、GitOps SSA 字段所有权;S2=+1(索引 50) | +5 | 181 |
-| 2026-09-14 22:02 | 39 | 经典机器学习第二批:朴素贝叶斯(三变体+logsumexp+平滑)、SMO(KKT+箱约束+WSS1+核)、随机森林(bootstrap/OOB/margin)、AdaBoost.SAMME+GBDT、模型评估(CV+混淆矩阵+AUC 三算法恒等);S2=+2(索引 48/49) | +5 | 176 |
-| 2026-09-14 20:16 | 37 | 系统级剖析第二批:eBPF 指令编码+验证器、ftrace nop 补丁、PMU 多路复用缩放、loadavg EMA 与 PSI trigger、页缺失与 PSS 均摊;S2=+1(索引 47) | +5 | 171 |
+| 2026-09-15 06:29 | 46 | 协议逆向第一批:NW/SW 对齐切字段、BinaryInferno 熵边界+单调启发、Veritas P-PSM、JA3/JA4(官方向量复现)、Polyglot 四启发式;S3=索引同步+rotate | +5 | 196 |
+| 2026-09-15 04:31 | 45 | 图数据库第二批:量化路径、Bolt 握手+PackStream、并发控制+等待图死锁、火山模型、MERGE 语义;S3 | +5 | 191 |
+| 2026-09-15 02:27 | 44 | Golang 第二批:interface/itable、GPM、三色 GC+混合屏障、context、泛型推断;S3 | +5 | 186 |
+| 2026-09-15 00:14 | 41 | IaC 第二批:state 锁、Ansible 22 级、Vault 格式、Pulumi 引擎、GitOps SSA;S2=+1 | +5 | 181 |
+| 2026-09-14 22:02 | 39 | 经典 ML 第二批:朴素贝叶斯、SMO、随机森林、AdaBoost+GBDT、模型评估;S2=+2 | +5 | 176 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

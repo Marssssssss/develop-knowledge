@@ -62,13 +62,23 @@ ClientHello 里没有扩展时字段留空（如 `769,4-5-10-9-100-98-3-6-19-18-
 
 **局限与演进**：`salesforce/ja3` 仓库已于 2025-05 归档，维护权移交 FoxIO 的 **JA4**；JA3 本身可被 uTLS 之类的库**伪装**（伪造 ClientHello 形状），GREASE 也会污染朴素实现。到 TLS 1.3 + **ECH（Encrypted Client Hello）**，观察者只剩外层 ClientHello，SNI 被加密，"按 SNI 过滤"与"靠 DNS 检测"同时失效——于是又回到 JA3/JA4 这类**握手形状**指纹。
 
+## 已完成 demo
+
+| ID | Demo | 主题 |
+| --- | --- | --- |
+| 192 | [报文序列对齐/](./报文序列对齐/) | Needleman-Wunsch 全局对齐 + Smith-Waterman 局部对齐 + consensus 字段切分（C/Py/Go 中的 Python/Go） |
+| 193 | [信息熵字段边界检测/](./信息熵字段边界检测/) | BinaryInferno：纵向列熵 + 熵差>1bit 边界 + 滑窗熵 + 单调序列启发式 |
+| 194 | [协议状态机恢复/](./协议状态机恢复/) | Veritas P-PSM：类型标注 → 逐流转移计数 → 剪枝 → 流覆盖率回测 |
+| 195 | [JA3与JA4指纹/](./JA3与JA4指纹/) | ClientHello 解析 + JA3(MD5)/JA4(排序+截断SHA-256) 计算，官方向量回环验证 |
+| 196 | [Polyglot污点启发式/](./Polyglot污点启发式/) | token 表/分隔符三步提取/关键字/方向字段/定长合并（轨迹驱动复刻） |
+
 ## 待研究
 
-- [ ] TCP 报文序列对齐最小实现（Needleman-Wunsch / Smith-Waterman 在协议例子上的对拍）
-- [ ] 用信息熵 / 字节方差从对齐结果中切分字段边界
-- [ ] 从消息类型序列恢复 PFSM（状态合并 + 简化）
-- [ ] JA3 / JA3S 计算器（解析 ClientHello 五字段 → MD5）与 JA4 差异对拍
-- [ ] 动态污点分析视角：Polyglot 三类字段函数（方向字段 / 关键字 / 分隔符）的判定逻辑
+- [x] TCP 报文序列对齐最小实现（Needleman-Wunsch / Smith-Waterman 在协议例子上的对拍）→ 192
+- [x] 用信息熵 / 字节方差从对齐结果中切分字段边界 → 193
+- [x] 从消息类型序列恢复 PFSM（状态合并 + 简化）→ 194
+- [x] JA3 / JA3S 计算器（解析 ClientHello 五字段 → MD5）与 JA4 差异对拍 → 195
+- [x] 动态污点分析视角：Polyglot 三类字段函数（方向字段 / 关键字 / 分隔符）的判定逻辑 → 196
 - [ ] 用 Frida 在加密前/后抓明文的"增强版 Wireshark"路线（与 `02-移动端逆向` 互补）
 - [ ] bit 级字段（bitflag）的切分——现有工具普遍只做字节粒度
 

@@ -43,9 +43,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 42    # 41 本轮 06-DevOps/IaC与配置管理(40 同大类 05-AI 顺延,不记 skip)
-last_run       : 2026-09-15 00:14
-last_top       : 06-DevOps   # ≠ 上轮 05-AI与机器学习
+next_index     : 45    # 44 本轮 09-语言学习/Golang(42/43 同大类 06-DevOps 顺延,不记 skip)
+last_run       : 2026-09-15 02:02
+last_top       : 09-语言学习   # ≠ 上轮 06-DevOps
 skipped        : []
 failed_attempts: []
 ```

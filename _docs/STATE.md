@@ -43,9 +43,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 40    # 39 本轮 05-AI/经典机器学习(38 同大类 11-性能分析 顺延,不记 skip)
-last_run       : 2026-09-14 22:02
-last_top       : 05-AI与机器学习   # ≠ 上轮 11-性能分析
+next_index     : 42    # 41 本轮 06-DevOps/IaC与配置管理(40 同大类 05-AI 顺延,不记 skip)
+last_run       : 2026-09-15 00:01
+last_top       : 06-DevOps   # ≠ 上轮 05-AI与机器学习
 skipped        : []
 failed_attempts: []
 ```

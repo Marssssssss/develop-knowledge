@@ -58,15 +58,15 @@
 46 : 10-逆向工程/协议逆向             # 2026-09-14 巡检类目拓展新增(S2,NetT/ExeT 两族 + JA3/JA4 指纹,目录 03-协议逆向)
 ```
 
-> 索引表可动态增长:副任务拓展子类目时表末尾顺延编号,`next_index` 取模基数以实际行数为准(规则见 `AGENT_RULES.md` §一.5)。
-> 大类轮换(硬约束):每轮顶层大类(`NN-` 前缀)必须 ≠ 上轮(看 §二 `last_top`);同大类则顺延到下一个不同大类索引,`next_index` 推进到选中索引+1,被跳过项不记 skip。
+> 索引表可动态增长:副任务拓展子类目时表末顺延编号,取模基数按实际行数(`AGENT_RULES.md` §一.5)。
+> 大类轮换(硬约束):顶层大类须 ≠ 上轮 `last_top`,同大类顺延;`next_index` 推进到选中索引+1,跳过项不记 skip。
 
 ## 二、本轮状态
 
 ```
-next_index     : 36    # 本轮选 35(10-逆向工程/二进制逆向)≠ 上轮 09-语言学习 ✓;完成 35 → 36
+next_index     : 36    # 35 已完成 → 36
 last_run       : 2026-09-14 18:01   # 占位锁
-last_top       : 10-逆向工程   # 本轮顶层大类 ≠ 上轮 09-语言学习
+last_top       : 10-逆向工程   # ≠ 上轮 09-语言学习
 skipped        : []
 failed_attempts: []
 ```
@@ -75,11 +75,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | demo |
 | --- | --- | --- | --- |
-| 2026-09-14 18:01 | 35 | 二进制逆向第二批(5 主):x86-64 变长指令编码(prefix/REX/ModRM/SIB/RIP 相对) + ptrace 软件断点四步生命周期(0xCC→SIGTRAP→恢复+RIP 回退→单步→重埋) + 栈溢出与 ROP(`ret`=`pop rip`、NX/ASLR 边界、CET SHSTK、16B 对齐) + Mach-O 解析(8 字节对齐、lc_str 相对偏移、节编号从 1 起) + CFG 与结构化反编译(支配树/回边/可归约性/follow 节点);副 S2=新增 `10-逆向工程/03-协议逆向`(登记索引 46)+ S3=索引同步 | +5 |
-| 2026-09-14 17:11 | 34 | Python 运行时层:字节码与自适应解释器(2B 指令/EXTENDED_ARG/CACHE/PEP 659 三态)+ 结构化模式匹配(PEP 634 十类模式)+ 引用计数与分代 GC(immortal/PEP 442 五步/weakref)+ 导入机制(PEP 451/420)+ GIL 与自由线程(PEP 703,线程 1.01x vs 进程 2.58x) | +5 |
-| 2026-09-14 14:30 | 31 | 密码学第二批:SHA-256 64 轮压缩 + HMAC-SHA256(RFC 2104)+ X25519 ECDH(Montgomery ladder + clamping)+ ChaCha20-Poly1305 AEAD + Argon2id | +5 |
-| 2026-09-14 10:26 | 27 | 关系型第二批:4 级隔离 × 4 异常实测矩阵(PG SI vs InnoDB next-key vs SSI)+ InnoDB midpoint LRU 3/8 + WAL-before-data + PG CBO 直方图/DP/GEQO + 2PC recovery + PG 扩展协议 + PgBouncer | +5 |
-| 2026-09-14 08:03 | 23 | 容器化第二批:OverlayFS copy-up/whiteout + Capabilities 5 集合/41 cap + Seccomp-BPF + veth pair/bridge/MASQUERADE + OCI Runtime Spec config.json | +5 |
+| 2026-09-14 18:01 | 35 | 二进制逆向第二批:变长指令编码(prefix/REX/ModRM/SIB/RIP 相对)+ ptrace 断点四步(0xCC→SIGTRAP→恢复+RIP 回退→单步→重埋)+ 栈溢出与 ROP(ret=pop rip/NX 边界/CET SHSTK/16B 对齐)+ Mach-O(8 字节对齐/lc_str 相对偏移/节号从 1 起)+ CFG 与结构化反编译(支配树/回边/follow 节点);S2 新增 `10-逆向工程/03-协议逆向`(索引 46) | +5 |
+| 2026-09-14 17:11 | 34 | Python 运行时:字节码与 PEP 659 专用化 + PEP 634 模式匹配 + 分代 GC/immortal/PEP 442 + 导入机制(PEP 451/420)+ GIL 与自由线程(PEP 703) | +5 |
+| 2026-09-14 14:30 | 31 | 密码学第二批:SHA-256 + HMAC-SHA256 + X25519 ECDH + ChaCha20-Poly1305 AEAD + Argon2id | +5 |
+| 2026-09-14 10:26 | 27 | 关系型第二批:4 级隔离 × 4 异常矩阵 + InnoDB midpoint LRU 3/8 + WAL-before-data + PG CBO(直方图/DP/GEQO)+ 2PC recovery + 扩展协议 + PgBouncer | +5 |
+| 2026-09-14 08:03 | 23 | 容器化第二批:OverlayFS copy-up/whiteout + Capabilities 5 集合/41 cap + Seccomp-BPF + veth pair/bridge/MASQUERADE + OCI Runtime Spec | +5 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 
@@ -87,4 +87,4 @@ failed_attempts: []
 
 - rotate(副任务执行,不耗主配额):completed.md > 100 行 / schedule.md > 30 行 → 截到最近 100/30 行,丢弃部分查 `git log -p _docs/archive/`;写新数据时本文件只动 §三,archive append 即可
 - 某 demo 是否做过 → Grep `completed.md`;上轮权威资料/坑 → Grep `schedule.md`;总数 → 数 completed.md 行数
-- 本文件由巡检任务每轮末尾追加;人工编辑直接 Edit,大改同步 `OPTIMIZATION.md §2.4`。
+- 本文件由巡检任务每轮末尾追加;§三 每行须压到单行 ≤120 字,新增时同步压缩旧行以守住 ≤5 KB;人工编辑直接 Edit,大改同步 `OPTIMIZATION.md §2.4`。

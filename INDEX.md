@@ -40,7 +40,7 @@ D:\开发研究\
 ├── _docs/                   # 规则文档 + 自动化状态
 │   ├── STATE.md             # 巡检主状态文件(≤ 5 KB,永久恒定)
 │   ├── archive/             # 历史归档(completed/schedule,默认不进 hot path)
-│   └── *.md                 # 规则:SKILL/AGENT/OPTIMIZATION/SCHEDULE_QUOTA/GIT_SYNC/WECOM_NOTIFY/DEMO_TEMPLATE
+│   └── *.md                 # 规则:SKILL/AGENT/OPTIMIZATION/SCHEDULE_QUOTA/GIT_SYNC/WECOM_NOTIFY/DEMO_TEMPLATE/AUTOMATION_PROMPT
 └── .workbuddy/memory/       # 项目级 daily log + MEMORY.md
 ```
 

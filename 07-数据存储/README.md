@@ -36,5 +36,5 @@
 - [ ] Redis Sentinel 高可用
 - [ ] Memcached vs Redis 业务选型对比（03-缓存 已部分覆盖；缓存目录仍待深挖）
 - [ ] 中文 IK 分词器与 BM25 协同（影响 avgdl / length normalization）
-- [x] 图数据库 Neo4j / Cypher / 属性图模型（已在 `05-图数据库/` 完成首批 5 demo：PropertyGraphModel / CypherParser / GraphTraversal / PageRank / Neo4jStorage）
+- [x] 图数据库 Neo4j / Cypher / 属性图模型（`05-图数据库/` 两批 10 demo：PropertyGraphModel / CypherParser / GraphTraversal / PageRank / Neo4jStorage + VarLengthPath / BoltProtocol / Neo4jLocks / CypherPipeline / MergeSemantics）
 - [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

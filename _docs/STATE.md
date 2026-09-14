@@ -54,11 +54,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-15 04:31 | 45 | 图数据库第二批:量化路径{1,3}并集展开+组变量+关系唯一性+内联剪枝、Bolt 握手 6060B017+chunked+PackStream marker、读已提交丢失更新+实体锁+等待图死锁(等待边须保留)、火山模型算子树(Apply/Join 二元+惰性vs Eager)、MERGE 全属性匹配+并发排他锁二次 MATCH;S3=索引同步+rotate | +5 | 191 |
 | 2026-09-15 02:27 | 44 | Golang 第二批:interface 双字对/itable O(ni+nt)/typed-nil、GPM(偷一半+1/61+M-P 解绑)、GC 三色+混合写屏障+GOGC/Pacer、context 取消树+select 模式、泛型 type sets+~+两种推断;S3=索引同步+rotate | +5 | 186 |
-| 2026-09-15 00:14 | 41 | IaC 与配置管理第二批:Terraform 远程后端与 state 锁(条件写 CAS+nonce+`.tflock`)、Ansible 变量优先级 22 级(小数偏移编码"更具体者胜")、Ansible-Vault(PBKDF2→32/32/16 + AES-256-CTR + HMAC-over-ciphertext)、Pulumi 三组件与 preview unknown 传播、GitOps 调和(SSA managedFields 字段所有权);S2=+1(索引 50) | +5 | 181 |
+| 2026-09-15 00:14 | 41 | IaC 第二批:Terraform state 锁(CAS+nonce+tflock)、Ansible 变量 22 级、Vault PBKDF2+AES-CTR+HMAC、Pulumi 三组件+preview unknown、GitOps SSA 字段所有权;S2=+1(索引 50) | +5 | 181 |
 | 2026-09-14 22:02 | 39 | 经典机器学习第二批:朴素贝叶斯(三变体+logsumexp+平滑)、SMO(KKT+箱约束+WSS1+核)、随机森林(bootstrap/OOB/margin)、AdaBoost.SAMME+GBDT、模型评估(CV+混淆矩阵+AUC 三算法恒等);S2=+2(索引 48/49) | +5 | 176 |
-| 2026-09-14 20:16 | 37 | 系统级剖析第二批:eBPF 指令编码+验证器、ftrace nop 补丁与 function_graph self/inclusive、PMU 多路复用缩放、loadavg 定点 EMA 与 PSI trigger、页缺失与 PSS 均摊;S2=+1(索引 47) | +5 | 171 |
-| 2026-09-14 18:01 | 35 | 二进制逆向第二批:x86-64 变长编码与 REX/ModRM/SIB、ptrace 断点四步、ROP 与 CET、Mach-O 8B 对齐、CFG 支配树与 follow 节点;S2=+1(索引 46) | +5 | 166 |
+| 2026-09-14 20:16 | 37 | 系统级剖析第二批:eBPF 指令编码+验证器、ftrace nop 补丁与 function_graph、PMU 多路复用缩放、loadavg 定点 EMA 与 PSI trigger、页缺失与 PSS 均摊;S2=+1(索引 47) | +5 | 171 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

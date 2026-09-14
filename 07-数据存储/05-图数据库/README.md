@@ -38,12 +38,23 @@
 - [x] 图遍历 BFS / DFS / Dijkstra(邻接表 + 队列/栈/堆) — 见 [GraphTraversal/](./GraphTraversal/)（C / Python / Go）
 - [x] PageRank 幂迭代(d=0.85 阻尼 + 悬挂节点贡献) — 见 [PageRank/](./PageRank/)（Python / Go）
 - [x] Neo4j 存储层(15 B NodeRecord + 34 B RelRecord + 双向链表) — 见 [Neo4jStorage/](./Neo4jStorage/)（C / Python）
+- [x] 量化路径模式({min,max} 展开为并集 + 组变量列表绑定 + 关系唯一性 + 内联谓词剪枝) — 见 [VarLengthPath/](./VarLengthPath/)（Python / Go）
+- [x] Bolt 协议(握手 60 60 B0 17 + 分块传输 00 00 边界 + PackStream marker 编码) — 见 [BoltProtocol/](./BoltProtocol/)（Python / Go）
+- [x] Neo4j 并发控制(READ_COMMITTED 丢失更新 + 实体锁管理器 + 等待图死锁检测) — 见 [Neo4jLocks/](./Neo4jLocks/)（Python / Go）
+- [x] Cypher 执行计划火山模型(算子树 open/next + Apply/Join 二元 + 惰性 vs Eager) — 见 [CypherPipeline/](./CypherPipeline/)（Python / Go）
+- [x] MERGE 语义(find-or-create 全属性精确匹配 + ON CREATE/ON MATCH + 并发排他锁+二次 MATCH) — 见 [MergeSemantics/](./MergeSemantics/)（Python / Go）
 
 ## 待研究（细化）
 
-- [ ] 属性图模型的最小可读 demo（C / Python / Go）
-- [ ] Cypher 子集解析器：MATCH/RETURN/WHERE 三子句
-- [ ] 图遍历：BFS / DFS / Dijkstra 对比
-- [ ] PageRank 幂迭代实现与收敛阈值讨论
-- [ ] Neo4j 存储层定长记录与链表遍历
+- [x] 属性图模型的最小可读 demo（C / Python / Go）
+- [x] Cypher 子集解析器：MATCH/RETURN/WHERE 三子句
+- [x] 图遍历：BFS / DFS / Dijkstra 对比
+- [x] PageRank 幂迭代实现与收敛阈值讨论
+- [x] Neo4j 存储层定长记录与链表遍历
+- [x] 量化路径模式与可变长度遍历（2026-09-15 第二批）
+- [x] Bolt 二进制协议三层（握手/分块/PackStream）（2026-09-15 第二批）
+- [x] 并发控制：隔离级别/锁/死锁检测（2026-09-15 第二批）
+- [x] 执行计划与火山模型算子树（2026-09-15 第二批）
+- [x] MERGE 语义与并发（2026-09-15 第二批）
 - [ ] GQL 标准概览（ISO/IEC 39075:2024）
+- [ ] Louvain 社区发现（模块度优化）

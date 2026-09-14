@@ -42,8 +42,8 @@
 ## 运行方式
 
 ```bash
-python pipeline.py
-go run pipeline.go
+python pipeline.py            # 算子库在同目录 operators.py
+go run pipeline.go pipeline_ops.go
 ```
 
 按用户约定不实际运行，逻辑经人工代码审查。

@@ -47,8 +47,8 @@ Bolt 消息即 Structure：如 `RUN`（tag `0x10`）= `B3 10 <query> <params> <e
 ## 运行方式
 
 ```bash
-python bolt.py
-go run bolt.go
+python bolt.py                # 单文件实现三层
+go run bolt.go bolt_pack.go   # PackStream 编解码在 bolt_pack.go
 ```
 
 按用户约定不实际运行，逻辑经人工代码审查（含一个真实 bug 的修复：接收方在消息未收全时不得消费缓冲，否则丢已到达的 chunk）。

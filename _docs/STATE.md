@@ -56,6 +56,7 @@
 44 : 09-语言学习/Golang             # 2026-09-12 巡检类目拓展新增(S2)
 45 : 07-数据存储/图数据库             # 2026-09-12 巡检类目拓展新增(S2,Neo4j/Cypher/属性图占位)
 46 : 10-逆向工程/协议逆向             # 2026-09-14 巡检类目拓展新增(S2,NetT/ExeT 两族 + JA3/JA4 指纹,目录 03-协议逆向)
+47 : 11-性能分析/基准测试方法论        # 2026-09-14 巡检类目拓展新增(S2,目录 03-基准测试方法论:微基准陷阱/统计显著性/主动基准测试)
 ```
 
 > 索引表可动态增长:副任务拓展子类目时表末顺延编号,取模基数按实际行数(`AGENT_RULES.md` §一.5)。
@@ -65,7 +66,7 @@
 
 ```
 next_index     : 38    # 37 本轮 11-性能分析(36 同大类 10-逆向工程 顺延,不记 skip)
-last_run       : 2026-09-14 20:01   # 占位锁
+last_run       : 2026-09-14 20:16
 last_top       : 11-性能分析   # ≠ 上轮 10-逆向工程
 skipped        : []
 failed_attempts: []
@@ -75,11 +76,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | demo |
 | --- | --- | --- | --- |
-| 2026-09-14 18:01 | 35 | 二进制逆向第二批:变长指令编码(prefix/REX/ModRM/SIB/RIP 相对)+ ptrace 断点四步(0xCC→SIGTRAP→恢复+RIP 回退→单步→重埋)+ 栈溢出与 ROP(ret=pop rip/NX 边界/CET SHSTK/16B 对齐)+ Mach-O(8 字节对齐/lc_str 相对偏移/节号从 1 起)+ CFG 与结构化反编译(支配树/回边/follow 节点);S2 新增 `10-逆向工程/03-协议逆向`(索引 46) | +5 |
-| 2026-09-14 17:11 | 34 | Python 运行时:字节码与 PEP 659 专用化 + PEP 634 模式匹配 + 分代 GC/immortal/PEP 442 + 导入机制(PEP 451/420)+ GIL 与自由线程(PEP 703) | +5 |
-| 2026-09-14 14:30 | 31 | 密码学第二批:SHA-256 + HMAC-SHA256 + X25519 ECDH + ChaCha20-Poly1305 AEAD + Argon2id | +5 |
-| 2026-09-14 10:26 | 27 | 关系型第二批:4 级隔离 × 4 异常矩阵 + InnoDB midpoint LRU 3/8 + WAL-before-data + PG CBO(直方图/DP/GEQO)+ 2PC recovery + 扩展协议 + PgBouncer | +5 |
-| 2026-09-14 08:03 | 23 | 容器化第二批:OverlayFS copy-up/whiteout + Capabilities 5 集合/41 cap + Seccomp-BPF + veth pair/bridge/MASQUERADE + OCI Runtime Spec | +5 |
+| 2026-09-14 20:16 | 37 | 系统级剖析第二批:eBPF(8B 指令/验证器/int3 补丁)+ftrace(nop 补丁/`{}` 配对/self time)+PMU(组内比值/多路复用缩放 1.7%)+loadavg 定点 EMA 与 PSI trigger+页缺失与 PSS/Massif;S2=+1(11-性能分析/基准测试方法论,索引 47) | +5 | 171 |
+| 2026-09-14 18:01 | 35 | 二进制逆向第二批:变长指令编码/REX/ModRM/SIB+ptrace 断点四步+ROP(NX/CET)+Mach-O(8B 对齐)+CFG(支配树/回边/follow);S2 新增 `10-逆向工程/03-协议逆向`(索引 46) | +5 |
+| 2026-09-14 17:11 | 34 | Python 运行时:字节码/PEP 659+模式匹配 PEP 634+分代 GC/PEP 442+导入 PEP 451/420+GIL PEP 703 | +5 |
+| 2026-09-14 14:30 | 31 | 密码学第二批:SHA-256+HMAC-SHA256+X25519+ChaCha20-Poly1305+Argon2id | +5 |
+| 2026-09-14 10:26 | 27 | 关系型第二批:4 级隔离×4 异常+InnoDB midpoint LRU 3/8+WAL-before-data+PG CBO+2PC+PgBouncer | +5 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

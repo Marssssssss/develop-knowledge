@@ -63,9 +63,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 32    # 本轮(占位锁)拟选 34(09-语言学习/Python)≠ 上轮 08-安全 ✓;32/33 同大类顺延跳过不记 skip;结束回写 34 → 35
-last_run       : 2026-09-14 16:58   # 本轮占位锁 + 主轮结束时间
-last_top       : 08-安全   # 本轮顶层大类 — 选 31 ✓ ≠ 上轮 07-数据存储
+next_index     : 35    # 本轮选 34(09-语言学习/Python)≠ 上轮 08-安全 ✓;32/33 同大类顺延跳过不记 skip;完成 34 → 35
+last_run       : 2026-09-14 17:11   # 占位锁 + 主轮结束
+last_top       : 09-语言学习   # 本轮顶层大类 ≠ 上轮 08-安全
 skipped        : []
 failed_attempts: []
 ```
@@ -74,11 +74,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | demo |
 | --- | --- | --- | --- |
-| 2026-09-14 14:30 | 31 | 密码学第二批:SHA-256 64 轮压缩 + HMAC-SHA256 RFC 2104 双层嵌套 + X25519 ECDH Montgomery ladder + clamping + ChaCha20-Poly1305 AEAD + Argon2id 内存硬密码哈希 | +5 |
-| 2026-09-14 10:26 | 27 | 关系型第二批:4 级隔离 × 4 异常实测矩阵(PG SI vs InnoDB next-key vs SSI) + InnoDB midpoint LRU 3/8 子表+clock sweep+WAL-before-data + PG CBO 直方图+DP/GEQO + 2PC 协调者 fsync 后崩溃 → 阻塞 → recovery + PG 扩展协议+PgBouncer max_prepared_statements | +5 |
-| 2026-09-14 08:03 | 23 | 容器化第二批:OverlayFS upper/lower/work/copy-up/whiteout/opaque + Capabilities 5 集合+41 cap+文件 cap + Seccomp-BPF struct sock_filter+seccomp_data+7 RET 值 + veth pair+bridge+iptables MASQUERADE + OCI Runtime Spec config.json+4 状态机+Linux mounts+maskedPaths | +5 |
-| 2026-09-14 05:37 | 19 | 深度学习第二批:权重初始化 Xavier/He 方差守恒 + Dropout 原始/inverted + BatchNorm 前向反向/EMA + Adam 优化器谱系/偏差校正 + LSTM 五式/BPTT/∏f_t 梯度流 | +5 |
-| 2026-09-14 03:16 | 16 | iOS 运行时与内存管理:AutoreleasePoolPage 双向链表 + weak/SideTable 实现 + objc_msgSend 三段式 + KVO isa-swizzling + Category 前插合并与关联对象 | +5 |
+| 2026-09-14 17:11 | 34 | Python 运行时层:字节码与自适应解释器(2B 指令/EXTENDED_ARG/CACHE/PEP 659 三态)+ 结构化模式匹配(PEP 634 十类模式)+ 引用计数与分代 GC(immortal/PEP 442 五步/weakref)+ 导入机制(PEP 451/420)+ GIL 与自由线程(PEP 703,线程 1.01x vs 进程 2.58x) | +5 |
+| 2026-09-14 14:30 | 31 | 密码学第二批:SHA-256 64 轮压缩 + HMAC-SHA256(RFC 2104)+ X25519 ECDH(Montgomery ladder + clamping)+ ChaCha20-Poly1305 AEAD + Argon2id | +5 |
+| 2026-09-14 10:26 | 27 | 关系型第二批:4 级隔离 × 4 异常实测矩阵(PG SI vs InnoDB next-key vs SSI)+ InnoDB midpoint LRU 3/8 + WAL-before-data + PG CBO 直方图/DP/GEQO + 2PC recovery + PG 扩展协议 + PgBouncer | +5 |
+| 2026-09-14 08:03 | 23 | 容器化第二批:OverlayFS copy-up/whiteout + Capabilities 5 集合/41 cap + Seccomp-BPF + veth pair/bridge/MASQUERADE + OCI Runtime Spec config.json | +5 |
+| 2026-09-14 05:37 | 19 | 深度学习第二批:权重初始化 Xavier/He 方差守恒 + Dropout 原始/inverted + BatchNorm 前向反向/EMA + Adam 偏差校正 + LSTM 五式/BPTT/∏f_t | +5 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

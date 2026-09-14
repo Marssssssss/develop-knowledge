@@ -29,14 +29,17 @@
 | 切片(slice) | ✅ | `a[1:5:2]` 步长语法 |
 | 解包(unpacking) | ✅ | `a, b, *rest = lst` |
 | 上下文管理器(`with`) | ✅ | 资源自动释放 |
-| 装饰器(`@decorator`) | ✅ | **本目录第一个 demo** |
-| 生成器(`yield`) | ⏳ 计划 | 惰性序列 |
+| 装饰器(`@decorator`) | ✅ | 见 [装饰器/](./装饰器/) |
+| 生成器(`yield`) | ✅ | 见 [生成器/](./生成器/) |
 | 异常处理(`try/except/else/finally`) | ✅ | 支持 `else` 和 `finally` |
+| 结构化模式匹配(`match`/`case`) | ✅ | 见 [结构化模式匹配/](./结构化模式匹配/) |
 | 类型提示(`typing`) | ⏳ 计划 | 大型项目必学 |
-| 描述符(`__get__`) | 进阶 | 理解 `@property` / ORM |
-| 元类(`metaclass`) | 高阶 | ORM / 框架常用 |
-| `async` / `await` | ⏳ 计划 | asyncio 模型 |
-| GIL 与多进程 | ⏳ 计划 | CPU 密集场景 |
+| 描述符(`__get__`) | ✅ | 见 [描述符/](./描述符/) |
+| 元类(`metaclass`) | ✅ | 见 [元类/](./元类/) |
+| `async` / `await` | ✅ | 见 [协程与asyncio/](./协程与asyncio/) |
+| GIL 与多进程 | ✅ | 见 [GIL与自由线程/](./GIL与自由线程/) |
+| 引用计数与 GC | ✅ | 见 [引用计数与GC/](./引用计数与GC/) |
+| 导入机制(`importlib`) | ✅ | 见 [导入机制/](./导入机制/) |
 | 协变逆变 / `Protocol` | 进阶 | typing 高级用法 |
 
 ## 三、已完成的 demo
@@ -49,19 +52,30 @@
 | 描述符协议 | [描述符/](./描述符/) |
 | 协程与 asyncio | [协程与asyncio/](./协程与asyncio/) |
 | 元类与 `__init_subclass__` | [元类/](./元类/) |
+| 字节码与自适应解释器(PEP 659) | [字节码与自适应解释器/](./字节码与自适应解释器/) |
+| 结构化模式匹配(`match`/`case`) | [结构化模式匹配/](./结构化模式匹配/) |
+| 引用计数、分代 GC 与 weakref | [引用计数与GC/](./引用计数与GC/) |
+| 导入机制(`importlib` / `sys.meta_path`) | [导入机制/](./导入机制/) |
+| GIL 与自由线程(PEP 703) | [GIL与自由线程/](./GIL与自由线程/) |
 
 ## 四、待研究清单(按"教学价值"排序)
 
 1. ~~生成器与 `yield from`~~ ✅
 2. ~~上下文管理器(`contextlib`)~~ ✅
 3. 异常链(`raise from`)与 `except*`(Python 3.11+)
-4. 类型提示(`typing` / `Protocol` / `Generic`)
+4. 类型提示(`typing` / `Protocol` / `Generic` / PEP 695)
 5. ~~描述符与 `property`~~ ✅
-6. `dataclasses` 与 `attrs`
+6. `dataclasses` / `attrs` / `__slots__` 与对象内存布局
 7. ~~`async`/`await` 与 asyncio~~ ✅
-8. GIL、多进程与 `concurrent.futures`
-9. 迭代器协议与 `itertools`
+8. ~~GIL、多进程与 `concurrent.futures`~~ ✅
+9. 迭代器协议与 `itertools` / `functools`
 10. ~~元类(ORM 怎么用)~~ ✅
+11. ~~字节码、`dis` 与自适应解释器(PEP 659)~~ ✅
+12. ~~结构化模式匹配(PEP 634)~~ ✅
+13. ~~引用计数、分代 GC 与 `weakref`~~ ✅
+14. ~~导入系统(module spec / `sys.meta_path` / 命名空间包)~~ ✅
+15. 字符串与编码(PEP 393 柔性表示 / UTF-8 模式)
+16. 数值类型与 `decimal` / `fractions` 的精度模型
 
 ## 五、参考资料
 

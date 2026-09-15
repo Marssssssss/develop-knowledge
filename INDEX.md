@@ -57,9 +57,10 @@ D:\开发研究\
 
 ## 自动化
 
-- 频率：**每 2 小时**（由 `automation_update` 注册的定时任务驱动）
+- 频率：**每天 12 个定点槽**（`00:00 / 02:00 / … / 22:00`，各触发一次、锁定整点不漂移；由 12 条 `automation_update` 定时任务驱动，规范见 `_docs/AUTOMATION_PROMPT.md` §〇）
+- 单次配额：**5 个新 demo + ≤2 个副任务**
 - 单次行为：选择一个未深挖领域 → 搜索新知识点 → 创建/补全目录 → 写入 README → 更新 `_docs/STATE.md`(滚动窗口) + append 到 `_docs/archive/{completed,schedule}.md`
-- 通知：重大发现(涉及底层系统原理或新框架)写入 `.workbuddy/memory/YYYY-MM-DD.md`
+- 通知：本轮摘要推送企业微信群机器人（`_docs/WECOM_NOTIFY.md`）；重大发现另写入 `.workbuddy/memory/YYYY-MM-DD.md`
 
 ## 当前活跃领域
 

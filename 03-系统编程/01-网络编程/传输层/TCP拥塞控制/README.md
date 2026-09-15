@@ -121,17 +121,17 @@ W_max |          ,---------..____ platform（增速触底，贴着饱和点走�
 python3 main.py
 ```
 
-### C
+### C（模型在 `cc_impl.h`，由 `main.c` 原地 `#include`：仍是同一个翻译单元，只编译 `main.c`）
 
 ```bash
 gcc -O2 -Wall -Wextra -pedantic main.c -o cubic_demo -lm
 ./cubic_demo
 ```
 
-### Go
+### Go（同包多文件：main.go + cc_model.go，用 `.` 让 go 收全包）
 
 ```bash
-go run main.go
+go run .
 ```
 
 ## 关键代码片段
@@ -148,19 +148,9 @@ def on_loss(self, timeout):            # 拥塞事件：先定 W_max，再乘性
         self.w_max = self.cwnd * (1 + BETA_CUBIC) / 2     # §4.7 fast convergence
     else:
         self.w_max = self.cwnd
-    self.cwnd *= BETA_CUBIC                                # §4.6 注意是 0.7 不是 0.5
-    self.cwnd_epoch = self.cwnd
-    self.k = cubic_k(self.w_max, self.cwnd_epoch)
-    self.w_est = self.cwnd                                 # §4.3 Reno-friendly 重置
-
-def on_round(self, loss):              # 拥塞避免：cubic 与 W_est 取大者
-    elapsed = self.t - self.t_epoch
-    target = min(w_cubic(elapsed, self.k, self.w_max), 1.5 * self.cwnd)
-    self.cwnd = max(self.cwnd, target)
-    self.w_est += self.alpha
-    if self.w_est >= self.cwnd_prior:
-        self.alpha = 1.0
-    self.cwnd = max(self.cwnd, self.w_est)
+    self.cwnd *= BETA_CUBIC                # §4.6 注意是 0.7，不是 Reno 的 0.5
+    self.k = cubic_k(self.w_max, self.cwnd)
+    self.w_est = self.cwnd                 # §4.3 Reno-friendly 重置
 ```
 
 ## 性能与边界

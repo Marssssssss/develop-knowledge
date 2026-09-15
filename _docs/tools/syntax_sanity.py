@@ -18,6 +18,7 @@ import ast
 import glob
 import re
 import sys
+from pathlib import Path
 
 BLOCK_COMMENT = re.compile(r"/\*.*?\*/", re.S)
 LINE_COMMENT = re.compile(r"//[^\n]*")
@@ -51,12 +52,42 @@ def check_c_like(path: str) -> list[str]:
         if d:
             problems.append(f"{open_c}{close_c} 不平衡: {d:+d}")
 
-    # 顶层函数定义数量做一次"看起来是否完整"的粗判（每个 .c/.go 至少要有 main）
-    if "func main(" not in src and path.endswith(".go"):
-        problems.append("Go 源码缺少 func main(")
-    if path.endswith(".c") and "int main(" not in src and "main(void)" not in src:
-        problems.append("C 源码缺少 main 函数")
+    # 顶层函数定义数量做一次"看起来是否完整"的粗判（入口文件必须要有 main）
+    base = Path(path).name
+    if base == "main.go" and "func main(" not in src:
+        problems.append("Go 入口文件缺少 func main(")
+    if base == "main.c" and "int main(" not in src and "main(void)" not in src:
+        problems.append("C 入口文件缺少 main 函数")
+
+    # 本地 #include "x.h" 必须真的存在 —— 把源文件拆成多个文件后，
+    # 最容易犯的错就是 include 名字写错，而本机没有编译器能发现它。
+    for inc in re.findall(r'#\s*include\s+"([^"]+)"', src):
+        if not (Path(path).parent / inc).exists():
+            problems.append(f'#include "{inc}" 指向的文件不存在')
+
+    # Go 的未使用 import 是**编译错误**（不是警告），拆文件时必须查
+    if path.endswith(".go"):
+        for pkg in go_imports(src):
+            name = pkg.rsplit("/", 1)[-1]
+            if not re.search(rf"\b{re.escape(name)}\s*\.", src):
+                problems.append(f"import {name} 未被使用（Go 编译错误）")
     return problems
+
+
+GO_IMPORT_BLOCK = re.compile(r"^import\s*\(([^)]*)\)", re.M)
+GO_IMPORT_SINGLE = re.compile(r'^import\s+(?:\w+\s+)?"([^"]+)"', re.M)
+
+
+def go_imports(src: str) -> list[str]:
+    """取出 Go 文件 import 的包路径（支持块式与单行两种写法）。"""
+    pkgs: list[str] = []
+    for block in GO_IMPORT_BLOCK.findall(src):
+        for line in block.splitlines():
+            line = line.split("//")[0].strip()
+            if line.startswith('"') and line.endswith('"'):
+                pkgs.append(line.strip('"'))
+    pkgs.extend(GO_IMPORT_SINGLE.findall(src))
+    return pkgs
 
 
 def check_python(path: str) -> list[str]:

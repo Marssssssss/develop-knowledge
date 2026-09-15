@@ -6,7 +6,7 @@
 
 | 子目录 | 说明 |
 | --- | --- |
-| [01-网络编程/](./01-网络编程/) | Socket、IO 多路复用、协议 |
+| [01-网络编程/](./01-网络编程/) | Socket、IO 多路复用、协议、拥塞控制、零拷贝、连接管理、Unix socket |
 | [02-进程与线程/](./02-进程与线程/) | 进程/线程同步、信号、调度 |
 | [02-协程/](./02-协程/) | 用户态协程（C++20 / Go / Lua） |
 | [03-内存管理/](./03-内存管理/) | 虚拟内存、分配器、垃圾回收 |
@@ -29,3 +29,9 @@ IO 多路复用、协程等通用机制在游戏服务端也是基石。通用 d
 - ✅ mmap 内存映射 — 见 [03-系统编程/04-文件系统/mmap内存映射/](03-系统编程/04-文件系统/mmap内存映射/)（MAP_SHARED/PRIVATE/ANONYMOUS + msync + CoW + SIGBUS 边界;C / Python / Go）
 - ✅ ext4 Journaling (JBD2) — 见 [03-系统编程/04-文件系统/ext4-Journaling/](03-系统编程/04-文件系统/ext4-Journaling/)（descriptor/data/commit 块结构 + recovery 重放 + 大端/JBD2 vs 小端/ext4 + ESCAPE flag;C / Python / Go）
 - ✅ Page Cache 与 writeback — 见 [03-系统编程/04-文件系统/Page-Cache/](03-系统编程/04-文件系统/Page-Cache/)（`posix_fadvise` 6 advice + `sync_file_range` 精细 writeback + readahead 调优;Linux-only demo）
+- ✅ 网络编程 · 传输层 5 个（2026-09-15 18:00 槽）— 见 [01-网络编程/](./01-网络编程/) 的「已完成 demo」表：
+  - TCP 拥塞控制 Reno vs CUBIC（RFC 5681 / RFC 9438）— [传输层/TCP拥塞控制/](01-网络编程/传输层/TCP拥塞控制/)
+  - 零拷贝 sendfile / splice — [零拷贝/sendfile-splice/](01-网络编程/零拷贝/sendfile-splice/)
+  - backlog 与 SYN 队列 — [连接管理/backlog与SYN队列/](01-网络编程/连接管理/backlog与SYN队列/)
+  - scatter-gather IO（readv / writev / TCP_CORK）— [IO模型/scatter-gather/](01-网络编程/IO模型/scatter-gather/)
+  - SCM_RIGHTS 传文件描述符 — [进程间通信/SCM-RIGHTS-fd传递/](01-网络编程/进程间通信/SCM-RIGHTS-fd传递/)

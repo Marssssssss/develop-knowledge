@@ -1,0 +1,105 @@
+[
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/传输层/TCP拥塞控制/c/main.c",
+    "start": 38, "end": 216,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/传输层/TCP拥塞控制/c/cc_impl.h",
+    "preamble": "/* cc_impl.h — CUBIC 数学 + Reno/CUBIC 状态机 + 模拟驱动（实现头）。\n *\n * 由 main.c 在原来那段代码的位置 #include 进来：文本级包含，所有函数仍是\n * 同一个翻译单元里的 static 定义，因此**不需要改 static、不需要写原型**，\n * 零链接风险（本机没有 C 工具链，这一步很重要）。\n *\n * 数值断言的**可跑**版本在 ../python/cc_model.py + ../python/main.py。\n */\n",
+    "insert_text": "#include \"cc_impl.h\""
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/连接管理/backlog与SYN队列/c/main.c",
+    "start": 40, "end": 203,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/连接管理/backlog与SYN队列/c/backlog_impl.h",
+    "preamble": "/* backlog_impl.h — 监听套接字状态机 + 离散事件日历（实现头）。\n *\n * 由 main.c 在原地 #include：文本级包含，保住同一个翻译单元，\n * 所有 static 定义与原型关系原样不变。\n *\n * 数值断言的可跑版本在 ../python/backlog_model.py + ../python/main.py。\n */\n",
+    "insert_text": "#include \"backlog_impl.h\""
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/零拷贝/sendfile-splice/c/main.c",
+    "start": 78, "end": 227,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/零拷贝/sendfile-splice/c/transfer_impl.h",
+    "preamble": "/* transfer_impl.h — 回环测试夹具 + 四种搬运路径（实现头）。\n *\n * 由 main.c 在原地 #include：文本级包含，同一个翻译单元，零链接风险。\n * 之所以拆出来，是因为 300 行上限（_docs/OPTIMIZATION.md §1.1）。\n */\n",
+    "insert_text": "#include \"transfer_impl.h\""
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/IO模型/scatter-gather/c/main.c",
+    "start": 101, "end": 249,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/IO模型/scatter-gather/c/scatter_impl.h",
+    "preamble": "/* scatter_impl.h — TCP_INFO 统计 + 四种写策略 + readv 语义验证（实现头）。\n *\n * 由 main.c 在原地 #include：文本级包含，同一个翻译单元，零链接风险。\n */\n",
+    "insert_text": "#include \"scatter_impl.h\""
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/c/main.c",
+    "start": 322, "end": 408,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/c/scenarios_impl.h",
+    "preamble": "/* scenarios_impl.h — 场景函数（实现头）。\n *\n * 由 main.c 在原地 #include：文本级包含，同一个翻译单元。\n * scenarios_impl.h 里有两段：屏障/CMSG_CLOEXEC 场景与 OFD 身份/SCM_MAX_FD\n * 场景 —— 都是纯函数定义，包头顺序不影响语义。\n */\n",
+    "insert_text": ""
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/c/main.c",
+    "start": 134, "end": 267,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/c/scenarios_impl.h",
+    "append": true,
+    "insert_text": "#include \"scenarios_impl.h\""
+  },
+
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/传输层/TCP拥塞控制/python/main.py",
+    "start": 1, "end": 247,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/传输层/TCP拥塞控制/python/cc_model.py",
+    "insert_text": "#!/usr/bin/env python3\n\"\"\"TCP 拥塞控制自检：场景编排与断言（模型在 cc_model.py）。\n\n运行：python3 main.py      （自带断言自检，失败即非零退出）\n\"\"\"\n\nfrom __future__ import annotations\n\nimport sys\nfrom pathlib import Path\n\nsys.path.insert(0, str(Path(__file__).resolve().parent))\n\nfrom cc_model import *  # noqa: E402,F401,F403"
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/IO模型/scatter-gather/python/main.py",
+    "start": 1, "end": 225,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/IO模型/scatter-gather/python/sg_model.py",
+    "insert_text": "#!/usr/bin/env python3\n\"\"\"scatter-gather IO 自检：场景编排与断言（模型在 sg_model.py）。\n\n运行：python3 main.py      （自带断言自检，失败即非零退出）\n\"\"\"\n\nfrom __future__ import annotations\n\nimport os\nimport struct\nimport sys\nimport time\nfrom pathlib import Path\n\nsys.path.insert(0, str(Path(__file__).resolve().parent))\n\nfrom sg_model import *  # noqa: E402,F401,F403"
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/零拷贝/sendfile-splice/python/main.py",
+    "start": 1, "end": 173,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/零拷贝/sendfile-splice/python/zerocopy_model.py",
+    "insert_text": "#!/usr/bin/env python3\n\"\"\"零拷贝发送路径自检：场景编排与断言（模型在 zerocopy_model.py）。\n\n运行：python3 main.py      （自带断言自检，失败即非零退出）\n\"\"\"\n\nfrom __future__ import annotations\n\nimport sys\nimport time\nfrom dataclasses import dataclass, field\nfrom pathlib import Path\n\nsys.path.insert(0, str(Path(__file__).resolve().parent))\n\nfrom zerocopy_model import *  # noqa: E402,F401,F403"
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/连接管理/backlog与SYN队列/python/main.py",
+    "start": 1, "end": 189,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/连接管理/backlog与SYN队列/python/backlog_model.py",
+    "insert_text": "#!/usr/bin/env python3\n\"\"\"backlog / SYN 队列自检：场景编排与断言（模型在 backlog_model.py）。\n\n运行：python3 main.py      （自带断言自检，失败即非零退出）\n\"\"\"\n\nfrom __future__ import annotations\n\nimport sys\nfrom dataclasses import dataclass, field\nfrom pathlib import Path\n\nsys.path.insert(0, str(Path(__file__).resolve().parent))\n\nfrom backlog_model import *  # noqa: E402,F401,F403"
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/python/scm_model.py",
+    "start": 20, "end": 88,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/python/cmsg.py",
+    "preamble": "#!/usr/bin/env python3\n\"\"\"cmsg 尺寸算术与常量（从 scm_model.py 拆出）。\n\nCMSG_ALIGN / CMSG_LEN / CMSG_SPACE 这三个名字的差别是本 demo 最容易踩的坑：\nCMSG_LEN 是「写进 cmsg_len 的值」（不含尾部填充），CMSG_SPACE 是「要预留的\n缓冲字节数」（含填充）。1 个 fd 时两者相差 4 字节，按 CMSG_LEN 预留缓冲就会\n一个 fd 都收不到。\n\"\"\"\n\nfrom __future__ import annotations\n\n",
+    "insert_text": "from cmsg import *  # noqa: F401,F403  ← 常量与 cmsg 尺寸算术"
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/python/main.py",
+    "start": 23, "end": 49,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/python/harness.py",
+    "preamble": "#!/usr/bin/env python3\n\"\"\"自检脚手架：计数器 + check() + 两个构造小工具（从 main.py 拆出）。\n\n拆出来是因为 main.py 逼近 300 行上限（_docs/OPTIMIZATION.md §1.1），\n而且这套脚手架与 C 版本里的 CHECK 宏是同一个角色。\n\"\"\"\n\nfrom __future__ import annotations\n\nimport sys\nfrom pathlib import Path\n\nsys.path.insert(0, str(Path(__file__).resolve().parent))\n\nfrom scm_model import FdTable, OpenFileDescription, UnixSocket  # noqa: E402\n\n",
+    "insert_text": "from harness import check, open_file, pair, summary  # noqa: E402"
+  },
+
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/传输层/TCP拥塞控制/go/main.go",
+    "start": 16, "end": 196,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/传输层/TCP拥塞控制/go/cc_model.go",
+    "preamble": "// cc_model.go — 常量、自检脚手架与 Reno/CUBIC 状态机（从 main.go 拆出）。\n//\n// 与 main.go 同属 package main：Go 里同包多文件共享命名空间，\n// 搬运不改变任何语义，也不需要 import 对方。\npackage main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\n",
+    "insert_text": ""
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/连接管理/backlog与SYN队列/go/main.go",
+    "start": 23, "end": 209,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/连接管理/backlog与SYN队列/go/backlog_model.go",
+    "preamble": "// backlog_model.go — 常量、自检脚手架与监听套接字状态机（从 main.go 拆出）。\n//\n// 与 main.go 同属 package main，同包多文件共享命名空间，搬运零语义变化。\n// 只用到 fmt；os/exec/runtime 那些是 main.go 里活体检查用的，不要抄过来\n// —— Go 的未使用 import 是**编译错误**。\npackage main\n\nimport \"fmt\"\n\n",
+    "insert_text": ""
+  },
+  {
+    "src": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/go/main.go",
+    "start": 70, "end": 153,
+    "dst": "D:/开发研究/03-系统编程/01-网络编程/进程间通信/SCM-RIGHTS-fd传递/go/real_identity.go",
+    "preamble": "// real_identity.go — 场景 1：证明传的是 open file description 的引用（从 main.go 拆出）。\n//\n// 同 package main，零语义变化。用法与 main.go 里的注释一致：\n// go run main.go cc_model.go real_identity.go ……（本包所有文件）。\npackage main\n\nimport (\n\t\"fmt\"\n\t\"os\"\n\t\"syscall\"\n)\n\n",
+    "insert_text": ""
+  }
+]

@@ -111,10 +111,13 @@ gcc -O2 -Wall -Wextra main.c -o zerocopy_demo
 ./zerocopy_demo 64        # 参数为文件大小（MiB），默认 64
 ```
 
+> 夹具与四种搬运路径在 `transfer_impl.h` 里，由 `main.c` 在原地 `#include`：
+> 仍是同一个翻译单元，编译命令只列 `main.c` 即可。
+
 ### Go（`io.Copy` 快速路径 vs 用户态拷贝）
 
 ```bash
-go run main.go
+go run .        # 同包多文件，用 . 让 go 收全包
 ```
 
 ## 关键代码片段

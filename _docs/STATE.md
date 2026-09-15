@@ -45,9 +45,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 9    # 下轮起点(本轮 8 完成 5 demo;9-11 同属 02-Web开发,下轮将顺延)
-last_run       : 2026-09-15 16:24
-last_top       : 02-Web开发   # 上轮 01-游戏开发
+next_index     : 13   # 下轮起点(本轮 12 完成 5 demo;9-11 同属 02-Web开发 已顺延跳过)
+last_run       : 2026-09-15 18:01
+last_top       : 03-系统编程   # 上轮 02-Web开发
 skipped        : []
 failed_attempts: []
 ```

@@ -43,9 +43,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 51    # 下轮起点(50 09-语言学习/Rust 已完成 5 demo;49 因同大类顺延)
-last_run       : 2026-09-15 12:11
-last_top       : 09-语言学习   # ≠ 上轮 05-AI与机器学习
+next_index     : 1    # 下轮起点(0 01-游戏开发/服务端 本轮完成 5 demo)
+last_run       : 2026-09-15 14:02
+last_top       : 01-游戏开发   # ≠ 上轮 09-语言学习
 skipped        : []
 failed_attempts: []
 ```

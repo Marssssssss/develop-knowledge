@@ -1,0 +1,10 @@
+[package]
+name = "copy-and-drop"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "copy-and-drop"
+path = "main.rs"
+
+[dependencies]

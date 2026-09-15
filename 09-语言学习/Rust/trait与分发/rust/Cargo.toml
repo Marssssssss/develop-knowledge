@@ -1,0 +1,10 @@
+[package]
+name = "trait-and-dispatch"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "trait-and-dispatch"
+path = "main.rs"
+
+[dependencies]

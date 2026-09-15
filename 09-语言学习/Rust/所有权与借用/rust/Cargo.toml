@@ -1,0 +1,11 @@
+[package]
+name = "ownership-and-borrowing"
+version = "0.1.0"
+edition = "2021"
+
+# 单文件 demo：显式指定 bin 路径，避免再套一层 src/
+[[bin]]
+name = "ownership-and-borrowing"
+path = "main.rs"
+
+[dependencies]

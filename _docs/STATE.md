@@ -62,11 +62,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
-| 2026-09-16 06:26 | 34 | Python 第二批 5 个:异常链+except*(3134/654)、typing Protocol+PEP 695、__slots__ 内存布局、PEP 393 字符串、decimal/fractions;50 断言 | +5 | 256 |
+| 2026-09-16 06:26 | 34 | Python 第二批 5 个:异常链/except*、typing、__slots__、PEP 393 字符串、decimal/fractions;50 断言 | +5 | 256 |
 | 2026-09-16 04:26 | 31 | 密码学第二批 5 个:SHA-3/HKDF/ECDSA+6979/TOTP/PBKDF2;向量全 PASS | +5 | 251 |
 | 2026-09-16 02:14 | 27 | 关系型第二批 5 个:binlog/CDC/Join/物化视图/在线DDL | +5 | 246 |
-| 2026-09-16 00:10 | 23 | 容器化第二批 5 个:层缓存/多阶段/UID映射/rootless/cgroup v2;157 断言 | +5 | 241 |
-| 2026-09-15 22:22 | 19 | 深度学习第二批 5 个:Norm/Softmax/残差/LR 调度/混合精度;131 断言 | +5 | 236 |
+| 2026-09-16 00:10 | 23 | 容器化第二批 5 个:层缓存/多阶段/UID/rootless/cgroup v2;157 断言 | +5 | 241 |
+| 2026-09-15 22:22 | 19 | 深度学习第二批 5 个:Norm/Softmax/残差/LR/混合精度;131 断言 | +5 | 236 |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

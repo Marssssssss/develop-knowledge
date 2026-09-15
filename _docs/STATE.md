@@ -3,12 +3,18 @@
 > 每轮结束追加/滚动,**永远 ≤ 5 KB**;历史全本见 `_docs/archive/`。
 > 调度(**12 条定点任务**:每日 `00:00 02:00 … 22:00` 整点各触发一次,永不漂移,见 [`AUTOMATION_PROMPT.md` §〇](./AUTOMATION_PROMPT.md))、配额(5 主 + ≤2 副)、失败回退:[`SCHEDULE_QUOTA.md`](./SCHEDULE_QUOTA.md);Token 控制:[`OPTIMIZATION.md` §2.4](./OPTIMIZATION.md)
 
-## 一、轮询顺序
+## 一、轮询顺序(2026-09-16 起:大类严格轮转)
 
-按 `priority_score = base_score - done_count * 10 - last_done_days * 0.5`,每轮取最高分。
+**旧机制已废**:**禁止**按 priority_score/偏好挑领域;原「仅 ≠ 上轮大类」规则允许 A→B→A 横跳且表尾条目(05/06/09)被系统性多抓(21 次选取 09 占 4、01 仅 1),一并删除。
+
+**大类循环**(固定顺序,每轮取一个,取后指针 +1,回绕):
+`01-游戏开发 → 02-Web开发 → 03-系统编程 → 04-移动开发 → 05-AI与机器学习 → 06-DevOps → 07-数据存储 → 08-安全 → 09-语言学习 → 10-逆向工程 → 11-性能分析`
+每轮大类 = 循环[§二 `top_pos`],**11 大类各占 1/11 轮次,与子类目数量无关**。
+
+**大类内子类目轮转**:取该大类在索引表的全部条目(表序)第 `sub_pos[大类]` 个;完成后指针 +1 mod 条目数。新子类目只追加表尾,自动纳入。
 
 ```text
-轮询索引表(next_index 控制下次起点):
+轮询索引表(仅供大类内子类目轮转取条目):
 0: 01-游戏开发/服务端  1: 01-游戏开发/渲染
 2: 01-游戏开发/UI  3: 01-游戏开发/游戏引擎
 4: 01-游戏开发/物理  5: 01-游戏开发/AI
@@ -40,14 +46,15 @@
 ```
 
 > 39-54 为类目自动拓展新增(2026-09-12 起 S2);表尾编号即行数,新子类目顺延 55 起。
-> 取模基数按实际行数(`AGENT_RULES` §一.5);大类轮换:顶层大类须 ≠ 上轮 `last_top`,同大类顺延不记 skip;`next_index` = 选中索引+1。
+> 条目数:01:8 02:4 03:4 04:3 05:9 06:8 07:5 08:4 09:4 10:3 11:3(计 55);表变动后按实数重算。
 
 ## 二、本轮状态
 
 ```
-next_index     : 24
+top_pos        : 6        # 本轮大类 = 循环第 6 位 → 07-数据存储
+sub_pos        : 01:0 02:1 03:1 04:1 05:1 06:1 07:0 08:0 09:0 10:0 11:0  # 各大类内子类目指针
 last_run       : 2026-09-16 00:10
-last_top       : 06-DevOps
+last_top       : 06-DevOps  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -56,11 +63,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
-| 2026-09-16 00:10 | 23 | 容器化第二批 5 个:Docker 层缓存(链式键、COPY 元数据校验和且 mtime 除外、RUN 只看命令串;好行序 4/2 vs 坏行序 2/3)、多阶段构建(814MB→14MB、BuildKit 只建依赖阶段 3 vs legacy 4、mode=max 导中间层)、UID 映射(只能写一次、340 行与一页互挤、overflow 65534、subuid 231072:65536)、rootless(subuid≥65536、驱动白名单、cgroup 默认只委派 memory+pids 致 --cpus 静默失效)、cgroup+eBPF(subtree_control 四规则、no internal process、BPF token 四项委派+ns_capable);157 断言全绿 | +5 | 241 |
-| 2026-09-15 22:22 | 19 | 深度学习第二批 5 个:LayerNorm/RMSNorm(per-sample 统计量、Pre/Post-LN 梯度比 3.58 vs 0.67)、Softmax+CE(∂ℓ/∂x=p−y、mean 除数是 Σw)、残差连接(退化复现、首末梯度比 93.9→3.3)、学习率调度(公式 3 相交、SGDR 0/10/30/70)、混合精度(2^-25 归零 20.75%、FP16 权重 20000 步不动);131 断言全绿 | +5 | 236 |
-| 2026-09-15 20:30 | 16 | iOS 第三批:Cassowary 求解、SwiftUI Observation、Swift 并发(job 树/actor 可重入)、dyld pre-main、CA 渲染管线;119 断言全绿 | +5 | 231 |
-| 2026-09-15 18:26 | 12 | 网络编程 5 个:TCP 拥塞控制(Reno/CUBIC)、零拷贝、backlog/SYN 队列、scatter-gather、SCM_RIGHTS;76 断言全绿;S1=拆 15 处超限文件 | +5 | 226 |
-| 2026-09-15 16:22 | 8 | 前端框架 5 个:React Concurrent(Lane/切片)、Vue 编译器优化、Signals、SSR-Hydration、Turbopack(读时依赖/内容相等短路);186 断言全绿;S1+S2 类目+2 | +5 | 221 |
+| 2026-09-16 00:10 | 23 | 容器化第二批 5 个:层缓存失效、多阶段构建、UID 映射、rootless、cgroup v2+eBPF;157 断言 | +5 | 241 |
+| 2026-09-15 22:22 | 19 | 深度学习第二批 5 个:LayerNorm/RMSNorm、Softmax+CE、残差、LR 调度、混合精度;131 断言全绿 | +5 | 236 |
+| 2026-09-15 20:30 | 16 | iOS 第三批:Cassowary/Observation/Swift 并发/dyld pre-main/CA 渲染;119 断言全绿 | +5 | 231 |
+| 2026-09-15 18:26 | 12 | 网络编程 5 个:拥塞控制、零拷贝、backlog/SYN 队列、scatter-gather、SCM_RIGHTS;76 断言;S1=拆超限 | +5 | 226 |
+| 2026-09-15 16:22 | 8 | 前端框架:React Concurrent/Vue 编译器/Signals/Hydration/Turbopack;186 断言;S1+S2 类目+2 | +5 | 221 |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

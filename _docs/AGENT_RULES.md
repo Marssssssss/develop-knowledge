@@ -35,7 +35,7 @@ Agent（包括自动化巡检、手动对话）在 `D:\开发研究\` 下操作�
 
 由 `automation_update` 创建的**12 条定点任务**（每条 `FREQ=DAILY;INTERVAL=1;BYHOUR=<H>;BYMINUTE=0`，覆盖全天 `00:00 02:00 … 22:00`，每天各触发一次、锁定整点、不漂移）。**完整流程以 [`AUTOMATION_PROMPT.md`](./AUTOMATION_PROMPT.md) 为唯一权威**（含调度模型说明、轮间保险 45 分钟、配额、归档、通知、自检），定量规范见 `SCHEDULE_QUOTA.md`：
 
-1. **轮询领域**:按 [`STATE.md`](./STATE.md) 第二节"本轮状态"中的 `next_index` 选下一个待研究领域(状态文件 ≤ 5 KB,默认 always-read 即可)。
+1. **轮询领域**:按 [`STATE.md`](./STATE.md) §一 大类循环 + §二 `top_pos`/`sub_pos` **严格轮转**(11 大类各 1/11 轮次,大类内子类目轮转;禁止按 priority_score/done_count/临时偏好挑领域;状态文件 ≤ 5 KB,默认 always-read 即可)。
 2. **单次最多产出 5 个新 demo**:与 `SCHEDULE_QUOTA.md`「5 主/轮」配额对齐;叠加副任务单轮 ≤ 7 动作。
 3. **不主动执行 demo**:README 里只写"如何运行",Agent 不实际跑代码。
 4. **失败重试上限 2 次**:连续失败则跳过本轮,记入 STATE.md 的 `failed_attempts` 字段(见 STATE.md §2 + §4)。

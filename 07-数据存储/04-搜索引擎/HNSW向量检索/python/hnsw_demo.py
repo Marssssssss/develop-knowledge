@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""HNSW (Hierarchical Navigable Small World) 向量近似近邻搜索演示 —— 纯标准库。
+r"""HNSW (Hierarchical Navigable Small World) 向量近似近邻搜索演示 —— 纯标准库。
 
 权威来源：Malkov & Yashunin, *Efficient and robust approximate nearest neighbor
 search using Hierarchical Navigable Small World graphs*, arXiv:1603.09320v4 (2018)

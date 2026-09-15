@@ -15,13 +15,6 @@ import (
 	"sort"
 )
 
-import (
-	"fmt"
-	"math"
-	"math/rand"
-	"sort"
-)
-
 func sigmoid(z float64) float64 {
 	if z < -35 {
 		return 0

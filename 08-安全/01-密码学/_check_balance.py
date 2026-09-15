@@ -10,6 +10,8 @@ FILES = [
     r"签名/ECDSA-P256/ecdsa.h", r"签名/ECDSA-P256/ecdsa_test.c",
     r"签名/ECDSA-P256/bn256.c", r"签名/ECDSA-P256/bn256.h",
     r"签名/ECDSA-P256/hmacsha256.c", r"签名/ECDSA-P256/hmacsha256.h",
+    r"消息认证/HOTP-TOTP/hotp_totp.go", r"消息认证/HOTP-TOTP/hotp_totp.c",
+    r"密码派生/PBKDF2/pbkdf2.go", r"密码派生/PBKDF2/pbkdf2.c",
 ]
 
 def strip_literals(src):

@@ -57,15 +57,20 @@
 | 引用计数、分代 GC 与 weakref | [引用计数与GC/](./引用计数与GC/) |
 | 导入机制(`importlib` / `sys.meta_path`) | [导入机制/](./导入机制/) |
 | GIL 与自由线程(PEP 703) | [GIL与自由线程/](./GIL与自由线程/) |
+| 异常链(`raise from`)与异常组(`except*`) | [异常链与异常组/](./异常链与异常组/) |
+| `typing` / `Protocol` / PEP 695 类型参数语法 | [typing与Protocol/](./typing与Protocol/) |
+| `__slots__` 与对象内存布局 | [slots与内存布局/](./slots与内存布局/) |
+| 字符串柔性表示(PEP 393)与编码 | [字符串与编码/](./字符串与编码/) |
+| 数值精度:`decimal` / `fractions` | [decimal与fractions/](./decimal与fractions/) |
 
 ## 四、待研究清单(按"教学价值"排序)
 
 1. ~~生成器与 `yield from`~~ ✅
 2. ~~上下文管理器(`contextlib`)~~ ✅
-3. 异常链(`raise from`)与 `except*`(Python 3.11+)
-4. 类型提示(`typing` / `Protocol` / `Generic` / PEP 695)
+3. ~~异常链(`raise from`)与 `except*`(Python 3.11+)~~ ✅
+4. ~~类型提示(`typing` / `Protocol` / `Generic` / PEP 695)~~ ✅
 5. ~~描述符与 `property`~~ ✅
-6. `dataclasses` / `attrs` / `__slots__` 与对象内存布局
+6. ~~`dataclasses` / `attrs` / `__slots__` 与对象内存布局~~ ✅
 7. ~~`async`/`await` 与 asyncio~~ ✅
 8. ~~GIL、多进程与 `concurrent.futures`~~ ✅
 9. 迭代器协议与 `itertools` / `functools`
@@ -74,8 +79,8 @@
 12. ~~结构化模式匹配(PEP 634)~~ ✅
 13. ~~引用计数、分代 GC 与 `weakref`~~ ✅
 14. ~~导入系统(module spec / `sys.meta_path` / 命名空间包)~~ ✅
-15. 字符串与编码(PEP 393 柔性表示 / UTF-8 模式)
-16. 数值类型与 `decimal` / `fractions` 的精度模型
+15. ~~字符串与编码(PEP 393 柔性表示 / UTF-8 模式)~~ ✅
+16. ~~数值类型与 `decimal` / `fractions` 的精度模型~~ ✅
 
 ## 五、参考资料
 

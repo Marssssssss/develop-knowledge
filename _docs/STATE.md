@@ -45,9 +45,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 24   # 下轮起点(00:00 槽索引 20/21/22 同 05-AI与机器学习顺延到 23=06-DevOps/容器化)
-last_run       : 2026-09-16 00:00
-last_top       : 06-DevOps   # 上轮 05-AI与机器学习
+next_index     : 24
+last_run       : 2026-09-16 00:10
+last_top       : 06-DevOps
 skipped        : []
 failed_attempts: []
 ```
@@ -56,11 +56,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-16 00:10 | 23 | 容器化第二批 5 个:Docker 层缓存(链式键、COPY 元数据校验和且 mtime 除外、RUN 只看命令串;好行序 4/2 vs 坏行序 2/3)、多阶段构建(814MB→14MB、BuildKit 只建依赖阶段 3 vs legacy 4、mode=max 导中间层)、UID 映射(只能写一次、340 行与一页互挤、overflow 65534、subuid 231072:65536)、rootless(subuid≥65536、驱动白名单、cgroup 默认只委派 memory+pids 致 --cpus 静默失效)、cgroup+eBPF(subtree_control 四规则、no internal process、BPF token 四项委派+ns_capable);157 断言全绿 | +5 | 241 |
 | 2026-09-15 22:22 | 19 | 深度学习第二批 5 个:LayerNorm/RMSNorm(per-sample 统计量、Pre/Post-LN 梯度比 3.58 vs 0.67)、Softmax+CE(∂ℓ/∂x=p−y、mean 除数是 Σw)、残差连接(退化复现、首末梯度比 93.9→3.3)、学习率调度(公式 3 相交、SGDR 0/10/30/70)、混合精度(2^-25 归零 20.75%、FP16 权重 20000 步不动);131 断言全绿 | +5 | 236 |
-| 2026-09-15 20:30 | 16 | iOS 第三批 5 个:Cassowary 约束求解、SwiftUI Observation(按属性/one-shot)、Swift 并发(job 树/actor 可重入)、dyld pre-main(+load vs +initialize)、CA 渲染管线(VSync deadline);119 断言全绿 | +5 | 231 |
-| 2026-09-15 18:26 | 12 | 网络编程 5 个:TCP 拥塞控制(Reno vs CUBIC)、零拷贝(sendfile/splice)、backlog 与 SYN 队列、scatter-gather(writev/TCP_CORK)、SCM_RIGHTS(fd 是 OFD 引用);76 断言全绿;S1=拆 15 处超限文件 | +5 | 226 |
-| 2026-09-15 16:22 | 8 | 前端框架 5 个:React Concurrent(Lane/切片/饥饿防护)、Vue 编译器优化、Signals(四状态机/glitch-free)、SSR-Hydration(选择性水合)、Turbopack(读时依赖/内容相等短路);186 断言全绿;S1+S2 类目+2 | +5 | 221 |
-| 2026-09-15 14:23 | 0 | 游戏服务端架构 5 个:AOI 九宫格(广播降 99.16%)、帧同步、客户端预测与回滚、网关(一致性哈希重映射 88.88% vs 11.85%)、匹配系统(Elo/TrueSkill/质量 0.480) | +5 | 216 |
+| 2026-09-15 20:30 | 16 | iOS 第三批:Cassowary 求解、SwiftUI Observation、Swift 并发(job 树/actor 可重入)、dyld pre-main、CA 渲染管线;119 断言全绿 | +5 | 231 |
+| 2026-09-15 18:26 | 12 | 网络编程 5 个:TCP 拥塞控制(Reno/CUBIC)、零拷贝、backlog/SYN 队列、scatter-gather、SCM_RIGHTS;76 断言全绿;S1=拆 15 处超限文件 | +5 | 226 |
+| 2026-09-15 16:22 | 8 | 前端框架 5 个:React Concurrent(Lane/切片)、Vue 编译器优化、Signals、SSR-Hydration、Turbopack(读时依赖/内容相等短路);186 断言全绿;S1+S2 类目+2 | +5 | 221 |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

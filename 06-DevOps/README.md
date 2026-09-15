@@ -23,9 +23,13 @@
 | 102-106 | [05-IaC与配置管理/](./05-IaC与配置管理/) | HCL 解析器 / Terraform 资源依赖图+Kahn 拓扑 / Ansible 幂等模块 / Jinja2 模板引擎 / Terraform State diff & Plan (IaC 主干五件套) | C/Python/Go / Python+JS |
 | 107-111 | [05-IaC与配置管理/](./05-IaC与配置管理/) | Terraform 远程后端与 state 锁(条件写+nonce) / Ansible 变量优先级 22 级 / Ansible-Vault 格式(AES-256-CTR+HMAC) / Pulumi 资源注册与 Preview / GitOps 调和与漂移检测(SSA 字段所有权) | C/Python/Go |
 
+| 152-156 | [01-容器化/](./01-容器化/) | OverlayFS 联合挂载 / Capabilities 权限分割 / Seccomp-BPF 过滤 / veth pair 网络 / OCI Runtime Spec | C/Python/Go |
+| 237-241 | [01-容器化/](./01-容器化/) | Docker 层缓存失效(缓存键链+COPY 校验和) / 多阶段构建与镜像瘦身 / user namespace UID 映射 / rootless 容器 / cgroup v2 + eBPF 附加与 BPF token | Python/Go / Python/Go/C |
+
 ## 待研究
 
-- [ ] Dockerfile 最佳实践（多阶段构建）
+- [x] Dockerfile 最佳实践（多阶段构建）→ 已建于 `01-容器化/多阶段构建/`
+- [ ] 镜像签名与供应链（cosign / SLSA provenance）
 - [ ] GitHub Actions 工作流
 - [ ] OpenTelemetry 三大支柱（Trace/Metric/Log）
 - [ ] K8s Operator 实战模式(见 04-Kubernetes/README)

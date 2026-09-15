@@ -14,12 +14,16 @@
 | 154 | [Seccomp-BPF-系统调用过滤/](./Seccomp-BPF-系统调用过滤/) | BPF filter + seccomp_data、7 RET 值(KILL/TRAP/ERRNO/USER_NOTIF/LOG/ALLOW)、arch 校验、PR_SET_NO_NEW_PRIVS | C / Python / Go |
 | 155 | [veth-pair-网络设备/](./veth-pair-网络设备/) | pair 跨 netns 移动、bridge L2 转发、FDB、netns exec、iptables MASQUERADE | C / Python / Go |
 | 156 | [OCI-Runtime-Spec/](./OCI-Runtime-Spec/) | config.json schema、4 状态机 create/start/kill/delete、Linux 必需 mounts、maskedPaths、默认 14 cap | C / Python / Go |
+| 237 | [Docker层缓存失效/](./Docker层缓存失效/) | BuildKit 缓存键链、COPY 元数据校验和(mtime 除外)、RUN 只看命令串、失效级联、构建密钥不入缓存 | Python / Go |
+| 238 | [多阶段构建/](./多阶段构建/) | 阶段命名与 `COPY --from`、`--target`、BuildKit 只构建依赖阶段、`--cache-to` min/max 与攻击面 | Python / Go |
+| 239 | [UserNamespace-UID映射/](./UserNamespace-UID映射/) | uid_map 行格式与第二字段歧义、只能写一次、340 行/一页上限、overflow 65534、subuid+newuidmap、嵌套 32 层 | C / Python / Go |
+| 240 | [Rootless容器/](./Rootless容器/) | RootlessKit+userns、subuid≥65536、存储驱动白名单、cgroup 仅 v2+systemd 且默认只委派 memory/pids、官方报错→根因 | Python / Go |
+| 241 | [Cgroup-eBPF附加/](./Cgroup-eBPF附加/) | cgroup v2 subtree_control 四规则与 no-internal-process、BPF_PROG_TYPE_CGROUP_* 与 attach type、BPF token 四项委派与 ns_capable 语义 | C / Python / Go |
 
 ## 待研究
 
-- [ ] Docker 镜像层与缓存(构建缓存命中机制、COPY 指令与层失效)
-- [ ] 多阶段构建减小镜像体积
 - [ ] Podman / containerd 替代(docker CLI 兼容层、rootless)
-- [ ] cgroup v2 eBPF 程序附加(5.12+ BPF token)
-- [ ] user namespace + rootless 容器
-- [ ] Podman rootless(无特权创建容器的现状)
+- [ ] 镜像签名与供应链(cosign / SBOM / SLSA provenance)
+- [ ] cgroup v2 的 threaded 模式与 cpuset 硬绑定
+- [ ] 容器网络 CNI 插件模型(IPAM / 链式插件)
+- [ ] 运行时安全(LSM 叠加:AppArmor/SELinux 与 seccomp 的关系)

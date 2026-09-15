@@ -44,9 +44,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 1    # 下轮起点(0 01-游戏开发/服务端 本轮完成 5 demo)
-last_run       : 2026-09-15 14:23
-last_top       : 01-游戏开发   # ≠ 上轮 09-语言学习
+next_index     : 9    # 下轮起点(8 02-Web开发/前端框架 本轮完成 5 demo)
+last_run       : 2026-09-15 16:01
+last_top       : 02-Web开发   # ≠ 上轮 01-游戏开发(索引 1-7 同大类顺延,不记 skip)
 skipped        : []
 failed_attempts: []
 ```

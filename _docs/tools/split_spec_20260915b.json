@@ -1,0 +1,29 @@
+[
+  {
+    "src": "D:/开发研究/04-移动开发/01-iOS/UI框架/AutoLayout约束求解/python/cassowary_check.py",
+    "start": 28,
+    "end": 266,
+    "dst": "D:/开发研究/04-移动开发/01-iOS/UI框架/AutoLayout约束求解/python/solver_core.py",
+    "mode": "cut",
+    "preamble": "\"\"\"Cassowary 型线性约束求解内核:表格式两阶段单纯形 + 误差变量。\n\n被 cassowary_check.py(场景自检)引用。拆分只为守住「单源文件 ≤300 行」硬约束,\n被搬运的代码逐字节未改;权威依据与实际读过的来源见同目录 README 的「参考资料」。\n\"\"\"\n\nfrom __future__ import annotations\n\nTOL = 1e-9\n",
+    "insert_text": "from solver_core import (  # noqa: E402 —— 必须在模块文档字符串之后\n    MEDIUM,\n    REQUIRED,\n    STRONG,\n    WEAK,\n    Constraint,\n    E,\n    Infeasible,\n    Solver,\n    Var,\n    apple,\n    invert,\n    residual,\n    strength,\n)"
+  },
+  {
+    "src": "D:/开发研究/04-移动开发/01-iOS/UI框架/AutoLayout约束求解/swift/SwiftLayoutSolver.swift",
+    "start": 32,
+    "end": 220,
+    "dst": "D:/开发研究/04-移动开发/01-iOS/UI框架/AutoLayout约束求解/swift/SwiftSimplex.swift",
+    "mode": "cut",
+    "preamble": "import Foundation\n\n// Swift 版求解内核:强度刻度 + 表格式两阶段单纯形 + 建模层(Solver/Constraint)。\n// 被 main.swift 引用;拆分只为守住「单源文件 ≤300 行」硬约束,代码逐字节未改。\n// 权威依据见同目录 README 的「参考资料」。\n",
+    "insert_text": ""
+  },
+  {
+    "src": "D:/开发研究/04-移动开发/01-iOS/UI框架/AutoLayout约束求解/objc/ObjCLayoutSolver.m",
+    "start": 19,
+    "end": 283,
+    "dst": "D:/开发研究/04-移动开发/01-iOS/UI框架/AutoLayout约束求解/objc/LALayoutSolver.h",
+    "mode": "cut",
+    "preamble": "#import <Foundation/Foundation.h>\n\n// ObjC 版求解内核:强度常量 + 稠密单纯形 + 两个建模类(LALayoutConstraint /\n// LALayoutSolver),由 ObjCLayoutScenarios.m 以 #import 文本包含 ——\n// 与 C 侧「实现头文件」同一套路:本机无 ObjC 工具链,拆成两个翻译单元需要同步\n// 维护声明与链接,而文本包含把所有 static 与 @implementation 留在同一个 TU 里,\n// 零链接风险。拆分只为守住「单源文件 ≤300 行」,代码逐字节未改。\n// 权威依据见同目录 README 的「参考资料」。\n",
+    "insert_text": "#import \"LALayoutSolver.h\""
+  }
+]

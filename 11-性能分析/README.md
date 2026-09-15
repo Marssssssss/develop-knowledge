@@ -9,11 +9,21 @@
 | [01-系统级剖析/](./01-系统级剖析/) | perf / Ftrace / eBPF / bpftrace、火焰图、USE 方法、内核观测 |
 | [02-应用级剖析/](./02-应用级剖析/) | Go pprof、Python cProfile/py-spy、Java JFR 等语言级剖析器 |
 | [03-基准测试方法论/](./03-基准测试方法论/) | 微基准陷阱（DCE/常量折叠/循环优化）、统计显著性、主动基准测试 |
+| [04-全链路性能/](./04-全链路性能/) | Core Web Vitals（LCP/INP/CLS）、field vs lab、OpenTelemetry 端到端追踪、延迟预算、扇出放大 |
+| [05-容量规划与性能建模/](./05-容量规划与性能建模/) | Little 定律、M/M/1 拐点、Amdahl vs Gustafson、Universal Scalability Law、容量余量 |
+
+## 已建子类目
+
+- [x] 01-系统级剖析（perf / ftrace / eBPF / 火焰图 / USE，2026-09-12 起）
+- [x] 02-应用级剖析（Go pprof / Python cProfile / Java JFR，2026-09-13）
+- [x] 03-基准测试方法论（微基准陷阱 / 统计显著比较 CI 门禁，2026-09-14 S2 建目录 → 2026-09-15 首批 5 demo）
+- [x] 04-全链路性能（Core Web Vitals / OpenTelemetry / 延迟预算，2026-09-15 S2 建目录）
+- [x] 05-容量规划与性能建模（排队论 / 扩展性定律 / 余量论证，2026-09-15 S2 建目录）
 
 ## 待拓展子类目（由自动巡检按类目拓展规则逐步补建）
 
-- [ ] 04-全链路性能（前端 Web Vitals / Lighthouse、APM、延迟预算）
-- [ ] 05-容量规划与性能建模（排队论、Amdahl/Gustafson 上限、Little 定律）
+- [ ] 06-数据库性能（执行计划、索引选择率、连接池、慢查询归因）
+- [ ] 07-网络与传输性能（拥塞控制、RTT/BDP、TLS 握手开销、QUIC）
 
 ## 待研究
 
@@ -28,13 +38,18 @@
 - [x] PMU 多路复用与缩放估算误差（[01-系统级剖析/PMU硬件计数器/](./01-系统级剖析/PMU硬件计数器/)，2026-09-14）
 - [x] 页缺失口径与 PSS/RSS 差异、堆剖析抽样（[01-系统级剖析/页缺失与内存剖析/](./01-系统级剖析/页缺失与内存剖析/)，2026-09-14）
 - [x] 采样剖析原理与 perf_events 工具链（[01-系统级剖析/采样剖析原理/](./01-系统级剖析/采样剖析原理/) + [perf_events剖析/](./01-系统级剖析/perf_events剖析/)，2026-09-13）
+- [x] `benchstat`、`-prof perfnorm`、统计检验选择、CI 回归门禁、主动基准测试清单（[03-基准测试方法论/](./03-基准测试方法论/)，2026-09-15 首批 5 demo 收官）
 - [ ] 容器性能分析（cgroup v2 级资源压力归因）
-- [ ] CI 性能回归门禁（基准结果做成趋势而非单次断言）
+- [x] CI 性能回归门禁（基准结果做成趋势而非单次断言）（[03-基准测试方法论/CI性能回归门禁/](./03-基准测试方法论/CI性能回归门禁/)，2026-09-15）
+- [ ] 延迟预算拆分：SLO → 每跳预算的下发策略
+- [ ] USL 参数拟合（从实测 (N, X) 点估 α、β、γ 并定位 Nmax）
 
 ## 参考资料（已读）
 
 - [Brendan Gregg — Linux Performance（工具图谱与方法论权威入口）](https://www.brendangregg.com/linuxperf.html)
 - [Go 官方博客 — Profiling Go Programs（pprof 采集与分析）](https://go.dev/blog/pprof)
-- [Brendan Gregg — Flame Graphs / CPU / Off-CPU / perf 四页 + flamegraph.pl 源码 + man7 getitimer(2)/ptrace(2)]（2026-09-13 首批 5 demo 的资料，详见 [01-系统级剖析/README.md](./01-系统级剖析/README.md)）
-- [ebpf.io / Kprobes / BPF ISA / Ftrace / PSI / perf_event_open(2) / proc(5) / Valgrind Massif / Linux Load Averages]（2026-09-14 第二批 5 demo 的权威来源，详见 [01-系统级剖析/README.md](./01-系统级剖析/README.md)）
-- [Oracle《Avoiding Benchmarking Pitfalls on the JVM》+ CodSpeed JMH 指南 + openjdk/jmh 样例解读 + hyperfine 官方仓库与 4 篇用法指南]（2026-09-14 新增 [03-基准测试方法论/](./03-基准测试方法论/)，逐条链接见该目录 README）
+- Brendan Gregg — Flame Graphs / CPU / Off-CPU / perf 四页 + flamegraph.pl 源码 + man7 `getitimer(2)`/`ptrace(2)`（2026-09-13 首批 5 demo 的资料，逐条链接详见 [01-系统级剖析/README.md](./01-系统级剖析/README.md)）
+- ebpf.io / Kprobes / BPF ISA / Ftrace / PSI / `perf_event_open(2)` / `proc(5)` / Valgrind Massif / Linux Load Averages（2026-09-14 第二批 5 demo 的权威来源，逐条链接详见 [01-系统级剖析/README.md](./01-系统级剖析/README.md)）
+- Oracle《Avoiding Benchmarking Pitfalls on the JVM》+ CodSpeed JMH 指南 + openjdk/jmh 样例解读 + hyperfine 官方仓库与 4 篇用法指南（2026-09-14 新增 [03-基准测试方法论/](./03-基准测试方法论/)，逐条链接见该目录 README）
+- pkg.go.dev `benchstat` + golang/perf `utest.go` 源码 + JMH `LinuxPerfNormProfiler.java` + jmh-dev 邮件列表 + NIST/Skis/Dropbox 等 20 条来源（2026-09-15 首批 5 demo，逐条链接见 [03-基准测试方法论/README.md](./03-基准测试方法论/README.md)）
+- web.dev Core Web Vitals 阈值定义（含 p75 选型论证）+ Google Search Console 官方报告口径 + OpenTelemetry Traces 文档 + Neil Gunther USL 原文 + Cornell/UVA/HPC101 三条 Amdahl-Gustafson 讲解 + Semicolony 容量规划手册（2026-09-15 新增 [04-全链路性能/](./04-全链路性能/) 与 [05-容量规划与性能建模/](./05-容量规划与性能建模/)，逐条链接见两目录 README）

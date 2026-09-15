@@ -43,8 +43,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 48    # 47 本轮 11-性能分析/基准测试方法论(占位锁,执行中)
-last_run       : 2026-09-15 08:00
+next_index     : 48    # 47 本轮 11-性能分析/基准测试方法论(已完成)
+last_run       : 2026-09-15 08:14
 last_top       : 11-性能分析   # ≠ 上轮 10-逆向工程
 skipped        : []
 failed_attempts: []
@@ -54,11 +54,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-15 08:14 | 47 | 基准测试方法论首批 5 demo:benchstat 非参数比较(中位数 CI + U 检验)、JMH perfnorm 硬件归因(22 事件)、统计检验选择(Welch/ARE)、CI 回归门禁(step fit + 多重比较)、Gregg 主动基准 7 清单;S2=+2 子类目(04-全链路/05-容量规划) | +5 | 201 |
 | 2026-09-15 06:29 | 46 | 协议逆向第一批:NW/SW 对齐切字段、BinaryInferno 熵边界+单调启发、Veritas P-PSM、JA3/JA4(官方向量复现)、Polyglot 四启发式;S3=索引同步+rotate | +5 | 196 |
 | 2026-09-15 04:31 | 45 | 图数据库第二批:量化路径、Bolt 握手+PackStream、并发控制+等待图死锁、火山模型、MERGE 语义;S3 | +5 | 191 |
 | 2026-09-15 02:27 | 44 | Golang 第二批:interface/itable、GPM、三色 GC+混合屏障、context、泛型推断;S3 | +5 | 186 |
 | 2026-09-15 00:14 | 41 | IaC 第二批:state 锁、Ansible 22 级、Vault 格式、Pulumi 引擎、GitOps SSA;S2=+1 | +5 | 181 |
-| 2026-09-14 22:02 | 39 | 经典 ML 第二批:朴素贝叶斯、SMO、随机森林、AdaBoost+GBDT、模型评估;S2=+2 | +5 | 176 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

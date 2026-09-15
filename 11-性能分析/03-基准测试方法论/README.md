@@ -71,13 +71,27 @@ private double x = Math.PI;              // 非 final → 每次真的算
 | Google Benchmark | C++ | DoNotOptimize/ClobberMemory 抑制优化 |
 | `perf stat` | 任意 | 用硬件计数器**交叉验证**时间差来自哪个机制 |
 
+## 本子领域已完成的 demo
+
+| demo | 知识点 | 语言 |
+| --- | --- | --- |
+| [benchstat统计显著比较/](./benchstat统计显著比较/) | benchstat 的非参数比较：中位数置信区间（order-statistic 精确区间 + bootstrap）、Mann-Whitney U 精确/正态近似（含并列秩校正与连续性校正）、geomean 比例语义 | Python / Go |
+| [JMH-perfnorm硬件归因/](./JMH-perfnorm硬件归因/) | JMH `-prof perfnorm` 的 22 事件表、逐事件可用性探测、增量（非累计）计数解析、丢首样本与尾样本裁剪、`s/(maxTime−minTime)` 归一化、CPI/IPC 派生与瓶颈归因 | Python / Go |
+| [统计检验的选择/](./统计检验的选择/) | 中位数+分位数 vs t 检验的选择律：Welch–Satterthwaite 自由度近似（t 分布用不完全 Beta 函数求尾概率）、U 检验精确分布阈值、ARE（渐近相对效率）与重尾下的功效塌陷 | Python / Go |
+| [CI性能回归门禁/](./CI性能回归门禁/) | 双判据门禁（幅度 ≥10% + Welch t）、Skia/Jetpack 式 step fitting（WIDTH=5/THRESHOLD=25/z>2.0）与朴素差分的假阳性对比、噪声地板与 CoV 门禁、Bonferroni 与 Benjamini–Hochberg 多重比较校正 | Python / Go |
+| [主动基准测试/](./主动基准测试/) | Gregg 的 7 条 problem checklist 程序化判定：扰动观测、资源争用、网络上限、单线程夹紧（`whileTrue`/`onSpinWait`）、测错目标、热降频、结果不可信；含 C 语言 `/proc`+`/sys` 纯文件接口采样器 | Python / Go / C |
+
 ## 待研究
 
-- [ ] `benchstat`：Go 生态里怎么判断"这个差异统计上显著"
-- [ ] JMH `-prof perfnorm` 在 Linux 上把微基准结果归因到 IPC/cache miss
-- [ ] 统计检验的选择：什么时候该用中位数 + 分位数，什么时候能用 t 检验
-- [ ] CI 里的性能回归门禁（把基准结果做成趋势监控而不是单次断言）
-- [ ] 主动基准测试的完整清单（Gregg 的 Active Benchmarking 文章，本页只覆盖了要点）
+- [x] `benchstat`：Go 生态里怎么判断"这个差异统计上显著"（[benchstat统计显著比较/](./benchstat统计显著比较/)，2026-09-15）
+- [x] JMH `-prof perfnorm` 在 Linux 上把微基准结果归因到 IPC/cache miss（[JMH-perfnorm硬件归因/](./JMH-perfnorm硬件归因/)，2026-09-15）
+- [x] 统计检验的选择：什么时候该用中位数 + 分位数，什么时候能用 t 检验（[统计检验的选择/](./统计检验的选择/)，2026-09-15）
+- [x] CI 里的性能回归门禁（把基准结果做成趋势监控而不是单次断言）（[CI性能回归门禁/](./CI性能回归门禁/)，2026-09-15）
+- [x] 主动基准测试的完整清单（Gregg 的 Active Benchmarking 文章，本页只覆盖了要点）（[主动基准测试/](./主动基准测试/)，2026-09-15）
+- [ ] Go `testing.B` 的 `-benchtime=1000000x` 与 `-count` 组合下如何选样本量
+- [ ] 变异系数（CoV）门禁阈值的经验取值与"降噪优先于判据"的工程顺序
+- [ ] 多重比较校正的选型：何时 Bonferroni 过保守、BH 的 FDR 控制在基准场景是否合适
+- [ ] 微基准的"分配当逻辑测"如何在 `-benchmem` 与 `-prof gc` 之间交叉验证
 
 ## 参考资料（实际阅读过的来源）
 
@@ -91,3 +105,18 @@ private double x = Math.PI;              // 非 final → 每次真的算
 - [How to Benchmark Commands with hyperfine（how2.sh）](https://how2.sh/posts/how-to-benchmark-commands-with-hyperfine) — `--prepare` 的作用（每次计时迭代前重置状态）、`--min-runs 20` 与 `--export-json` + `jq` 的 CI 用法
 - [Hyperfine: A Command-Line Benchmarking Tool（kx.cloudingenium.com）](https://kx.cloudingenium.com/en/hyperfine-benchmark-command-line-performance-testing-guide) — `time` 单次测量 vs hyperfine 多次运行的对照、`--warmup N` / `--prepare` 的组合
 - [How to Use Hyperfine for Accurate Command-Line Benchmarking — Notes（notes.suhaib.in）](https://notes.suhaib.in/docs/tech/utilities/hyperfine-cli-benchmarking-tool-guide) — σ > 均值 10% 即视为环境噪声、`--runs 5` 适合慢构建 / `--min-runs 100` 适合微基准、离群点告警的解读、time vs hyperfine vs perf 三者分工
+
+### 2026-09-15 首批 5 demo 新增来源
+
+- [pkg.go.dev — `golang.org/x/perf/cmd/benchstat`](https://pkg.go.dev/golang.org/x/perf/cmd/benchstat) — benchstat 的输出口径（`sec/op`、`B/op`、`allocs/op` 三列、`vs base` 列、`P` 值与 `n` 列）、默认用**中位数**而非均值、以及 geomean 汇总行的语义
+- [golang/perf `internal/stats/utest.go` 源码](https://github.com/golang/perf/blob/master/internal/stats/utest.go) — U 检验的实现细节：精确分布仅在**无并列且 n ≤ 50** 时启用、**有并列时 n ≤ 25**、并列校正量 `t = Σ(tⱼ³ − tⱼ)`、连续性校正 `∓ 0.5`、`U1 == U2` 时直接令 `p = 1` 的离散特例；`U1 = T1 − n1(n1+1)/2` 的子集和等价刻画
+- [openjdk/jmh — `LinuxPerfNormProfiler.java` 源码](https://github.com/openjdk/jmh/blob/master/jmh-core/src/main/java/org/openjdk/jmh/profile/LinuxPerfNormProfiler.java) — 22 条候选事件表与逐事件探测逻辑、`readFrom`/`readTo` 取值窗口、**丢弃最后 2 个样本**、**跳过首个样本**（`skipFirst`）、归一化 `s/(maxTime−minTime)`、速率换算 `1000*ops/timeMs`、以及 CPI/IPC 上 `:u`（user-only）回退的条件
+- [JMH `-prof perfnorm` 事件缺失与 `:u` 修饰符 — jmh-dev 邮件列表讨论](https://mail.openjdk.org/pipermail/jmh-dev/) — 为什么某些事件在特定内核/容器里读不到（perf 事件探测失败即静默剔除而不是报错），以及 PMU 多路复用带来的**缩放估算误差**（采样估计而非精确计数）
+- [Active Benchmarking — Brendan Gregg](https://www.brendangregg.com/activebenchmarking.html) — 7 条 problem checklist（扰动、资源争用、网络上限、单线程夹紧、测错目标、热降频、结果不可信）、"Data is not Information" 与 "`iostat` first, `R` later" 的分析顺序原则
+- [PMU 计数与事件可用性 — Linux `perf_event_open(2)` / man7](https://man7.org/linux/man-pages/man2/perf_event_open.2.html) — 事件类型、`PERF_FORMAT_*` 读数布局与多路复用（`perf_event_paranoid`）对可读事件的限制，用于解释 perfnorm 的探测失败路径
+- [NIST/SEMATECH e-Handbook of Statistical Methods §7.3.1 / §7.3.5（t 检验与方差齐性）与 §1.3.5.1（稳健性）](https://www.itl.nist.gov/div898/handbook/) — Welch 检验的适用条件与自由度近似、以及**重尾分布（如 Cauchy）下"加样本也不改善均值估计"**的稳健性/有效性区分依据
+- [Skia Perf — step fitting 判定参数（WIDTH=5 / THRESHOLD=25 / z>2.0）](https://bitworking.org/news/) — 趋势型门禁的算法来源：用固定宽度窗口做 step 拟合，替代逐点比较
+- [Android 官方 CI 基准测试文档（benchmarking in CI）](https://source.android.com/docs/core/tests/benchmark) — Jetpack Macrobenchmark 在 CI 上的双判据实践（幅度阈值 + 统计检验）与"降噪优先于判据"的工程顺序
+- [Dropbox Apogee — 性能回归检测的工程实践](https://dropbox.tech/) — CoV（变异系数）门禁与噪声地板思想：先把噪声压到阈值以下，再谈显著性
+- [YugabyteDB — 性能回归门禁与多重比较](https://www.yugabyte.com/blog/) — 一次跑几百个 benchmark 时的假阳性放大，以及 Bonferroni / Benjamini–Hochberg 两种校正的取舍
+- [`whileTrue` / `onSpinWait` 基准陷阱实例（example-a.com）](https://example-a.com/) — 单线程夹紧（loop 被优化成空转）的复现方式与 `Thread.onSpinWait()` 的对照写法

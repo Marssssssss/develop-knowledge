@@ -114,7 +114,7 @@ gw1 下线: 断开 10 条连接, 会话记录作废; 剩余网关 [gw0, gw2, gw3
 
 | 语言 | 文件 | 要点 |
 | --- | --- | --- |
-| Python | `python/gateway.py` | 参考实现;`bisect` 做环上查找,`dict` 直接当会话表 |
+| Python | `python/gateway.py` + `python/hashring.py` | 参考实现;`bisect` 做环上查找,`dict` 直接当会话表 |
 | C | `c/gateway.c` + `c/hashring.{h,c}` | 手动数组管理环与二分查找;会话/连接用定长数组 + 交换删除 |
 | Go | `go/hashring.go` + `go/gateway.go` + `go/selftest.go` | `sort.Search` 等价于 Python 的 `bisect_left`;`map[int]bool` 表连接集合 |
 

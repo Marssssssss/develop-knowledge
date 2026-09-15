@@ -19,7 +19,7 @@
 
 | 目录 | demo |
 | --- | --- |
-| [01-深度学习/](./01-深度学习/) | 033 反向传播 · 034 2D 卷积 · 035 多头自注意力 · 137 权重初始化 Xavier/He · 138 Dropout · 139 BatchNorm · 140 Adam 优化器 · 141 LSTM |
+| [01-深度学习/](./01-深度学习/) | 033 反向传播 · 034 2D 卷积 · 035 多头自注意力 · 137 权重初始化 Xavier/He · 138 Dropout · 139 BatchNorm · 140 Adam 优化器 · 141 LSTM · 232 LayerNorm/RMSNorm · 233 Softmax+交叉熵 · 234 残差连接/恒等映射 · 235 学习率调度+梯度裁剪 · 236 混合精度训练 |
 | [02-强化学习/](./02-强化学习/) | 036 Q-Learning 表格方法 · 037 REINFORCE 策略梯度 · 038 PPO 近端策略优化 |
 | [03-LLM/](./03-LLM/) | 039 BPE 分词器 · 040 KV Cache 与自回归解码 · 041 解码采样策略 |
 | [04-计算机视觉/](./04-计算机视觉/) | 042 Sobel 边缘检测 · 043 Hough 直线检测 · 044 IoU 与 NMS |
@@ -31,7 +31,8 @@
 - [ ] DQN 算法
 - [ ] Actor-Critic / A2C / A3C
 - [ ] CLIP 原理
-- [ ] LayerNorm / RMSNorm
+- [x] LayerNorm / RMSNorm（→ [01-深度学习/LayerNorm/](./01-深度学习/LayerNorm/)，2026-09-15）
 - [ ] GRU 门控机制
+- [ ] 量化感知训练 / 知识蒸馏（01-深度学习「待研究」已登记）
 - [ ] 特征选择的稳定性(不同种子选出的特征集合重叠度)
 - [ ] 幂变换(Box-Cox / Yeo-Johnson)与分位数变换在偏态特征上的实际收益

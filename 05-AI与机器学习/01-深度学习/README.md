@@ -14,6 +14,11 @@
 | [BatchNorm/](./BatchNorm/) | Algorithm 1/2 前向推理 + 完整解析反向 + 数值梯度 |
 | [优化器/](./优化器/) | SGD → Momentum → RMSProp → Adam 全谱系 + 病态二次型对比 |
 | [LSTM/](./LSTM/) | 前向 5 式 + 解析 BPTT + 长程梯度流 ∏f_t vs ∏W_hh^T |
+| [LayerNorm/](./LayerNorm/) | LayerNorm / RMSNorm 解析反向 + 不变量 + Pre/Post-LN 梯度剖面 |
+| [Softmax交叉熵/](./Softmax交叉熵/) | log-sum-exp 数值稳定 + ∂ℓ/∂x = p−y 化简 + weight/label smoothing 语义 |
+| [残差连接/](./残差连接/) | 退化问题复现 + 恒等短路的梯度直通 + shortcut 消融 |
+| [学习率调度/](./学习率调度/) | inverse-sqrt warmup / SGDR 余弦退火 / AdamW 解耦 / 梯度裁剪 |
+| [混合精度/](./混合精度/) | FP16 可表示范围 + loss scaling + master weights + FP32 累加 |
 
 ## 已完成 demo
 
@@ -27,11 +32,20 @@
 | 139 | Batch Normalization | Ioffe & Szegedy 2015 Algorithm 1/2,三路径反向 + EMA running stats | Python |
 | 140 | Adam 优化器 | Kingma & Ba 2014 Algorithm 1,一阶/二阶矩 + 偏差校正(1-β^t);病态二次型 166 步 vs SGD 6185 步 | Python |
 | 141 | LSTM | Hochreiter & Schmidhuber 1997,加性细胞状态,∂C_T/∂C_0 = ∏f_t;BPTT 数值梯度 <1e-6 | Python |
+| 232 | LayerNorm / RMSNorm | 统计量取自单样本特征维(batch 无关,实测 max\|Δy\|=0);LN 平移+缩放不变、RMSNorm 只缩放不变;Pre/Post-LN 梯度首尾比 3.58 vs 0.67、量级差 3.9e6 倍 | Python / Go |
+| 233 | Softmax + Cross-Entropy | max-shift 使 200 组大 logits 从 80 组 inf 变全有限;∂ℓ/∂x = p−y(差分验证 3.9e-10);mean 除数是 Σw_{y_n};平滑后梯度零和且 loss ≥ ε·log C | Python / Go |
+| 234 | 残差连接 / Identity Mapping | ∂ε/∂x_l = ∂ε/∂x_L·∏(1+∂F/∂x) 里的「1」:plain 首尾梯度比 93.9 vs residual 3.3;退化问题复现(plain 7.62→9.36 vs residual 4.34→1.50);shortcut 消融恒等 1.50 < 缩放 3.50 | Python / Go |
+| 235 | 学习率调度与梯度裁剪 | 原文公式 3 两分支在 step=warmup 相交(峰值 6.9877e-04);SGDR 重启点 0/10/30/70 且周期倍增;AdamW 衰减强度比 1.000001 vs Adam+L2 1.098;按范数裁剪方向 cos=1、按元素偏 11.59° | Python / Go |
+| 236 | 混合精度训练 | FP16 归零阈值 2^-25(20.75% 梯度静默丢失)、S≥2^18 精度饱和于 2^-11;纯 FP16 权重 20000 步纹丝不动,FP32 master 累计 2e-3;FP16 累加误差 1.06e-2 vs FP32 0 | Python / Go |
 
 ## 待研究
 
 - [ ] GRU 门控机制 / peephole 变体
-- [ ] LayerNorm / RMSNorm(Transformer 归一化)
-- [ ] Softmax + Cross-Entropy 梯度反传推导
+- [x] LayerNorm / RMSNorm(Transformer 归一化)→ [LayerNorm/](./LayerNorm/)
+- [x] Softmax + Cross-Entropy 梯度反传推导 → [Softmax交叉熵/](./Softmax交叉熵/)
 - [ ] Word2Vec / Embedding 负采样
-- [ ] ResNet 残差连接与恒等映射
+- [x] ResNet 残差连接与恒等映射 → [残差连接/](./残差连接/)
+- [ ] 量化感知训练 / PTQ 校准
+- [ ] 知识蒸馏(soft target / KL 温度)
+- [ ] RoPE 旋转位置编码
+- [ ] 卷积变体(DWConv / 空洞卷积 / 转置卷积)

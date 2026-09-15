@@ -24,6 +24,11 @@
 | `01-Web安全/SQL注入与预编译/` | SQL 注入与参数化查询(sqlite3 prepared statements) |
 | `01-Web安全/JWT验证/` | JWT HS256 验证(RFC 7519 §A.1 示例向量 + RFC 8725 Algorithm Confusion 防御) |
 | `01-Web安全/Same-Origin与CORS/` | 同源策略 + CORS(Simple Request + Preflight + 凭据请求) |
+| `01-密码学/哈希/SHA-3-Keccak/` | SHA-3/Keccak-f[1600] 海绵函数(FIPS 202,五步轮函数 + SHAKE XOF) |
+| `01-密码学/密钥派生/HKDF/` | HKDF Extract-and-Expand 密钥派生(RFC 5869,TLS 1.3 秘密树底座) |
+| `01-密码学/签名/ECDSA-P256/` | ECDSA + RFC 6979 确定性签名(P-256 + HMAC-DRBG 消随机数) |
+| `01-密码学/消息认证/HOTP-TOTP/` | HOTP/TOTP 一次性口令(RFC 4226/6238,动态截断 + 30s 时间步) |
+| `01-密码学/密码派生/PBKDF2/` | PBKDF2 口令密钥派生(RFC 8018 + RFC 6070 向量,含 NUL 陷阱) |
 
 ## 待研究
 

@@ -43,9 +43,9 @@
 ## 二、本轮状态
 
 ```
-next_index     : 49    # 49 下轮起点(48 05-AI与机器学习/特征工程与降维 已完成 5 demo)
-last_run       : 2026-09-15 10:52
-last_top       : 05-AI与机器学习   # ≠ 上轮 11-性能分析
+next_index     : 51    # 下轮起点(50 09-语言学习/Rust 本轮进行中;49 因同大类顺延)
+last_run       : 2026-09-15 12:04
+last_top       : 09-语言学习   # ≠ 上轮 05-AI与机器学习
 skipped        : []
 failed_attempts: []
 ```

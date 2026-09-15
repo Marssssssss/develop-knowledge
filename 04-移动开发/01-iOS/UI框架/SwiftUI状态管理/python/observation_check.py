@@ -24,7 +24,6 @@ from __future__ import annotations
 
 from typing import Callable
 
-
 # ---------------------------------------------------------------------------
 # 1. 注册器:Observation 的 ObservationRegistrar 语义
 # ---------------------------------------------------------------------------
@@ -59,7 +58,6 @@ class Registrar:
             self.notify_count += 1
             cb()
 
-
 class Observable:
     """@Observable 的模型:属性读写都过注册器。"""
 
@@ -74,7 +72,6 @@ class Observable:
     def set(self, key: str, value) -> None:
         self._reg.mutation(key)
         self._store[key] = value
-
 
 # ---------------------------------------------------------------------------
 # 2. 两类失效策略:@Observable(细粒度) vs ObservableObject/@Published(粗粒度)
@@ -100,7 +97,6 @@ class View:
     def on_change(self) -> None:
         self.body()                                # 失效 → 重新求值
 
-
 class CoarsePublisher:
     """ObservableObject 的模型:objectWillChange 在**任何**属性变化前广播一次。"""
 
@@ -115,7 +111,6 @@ class CoarsePublisher:
         for cb in list(self.observers):
             self.notify_count += 1
             cb()
-
 
 # ---------------------------------------------------------------------------
 # 3. @State 存储模型
@@ -142,7 +137,6 @@ class StateBox:
     def remove(self, identity: str) -> None:
         self.store.pop(identity, None)
 
-
 class Binding:
     """@Binding:对某个存储槽的可读写投影(`$state`)。"""
 
@@ -155,18 +149,15 @@ class Binding:
     def set(self, v: object) -> None:
         self.box.set(self.identity, v)
 
-
 # ---------------------------------------------------------------------------
 # 4. 自检
 # ---------------------------------------------------------------------------
 PASS: list[str] = []
 FAIL: list[str] = []
 
-
 def check(label: str, ok: bool, detail: str = "") -> None:
     (PASS if ok else FAIL).append(label)
     print(("  [PASS] " if ok else "  [FAIL] ") + label + (f"   {detail}" if detail else ""))
-
 
 def t_tracked_only() -> None:
     """Apple 文档的 Book/BookView 例子:只按读过的属性失效。"""
@@ -191,7 +182,6 @@ def t_tracked_only() -> None:
           title_view.renders == before[0] + 1 and both_view.renders == before[1] + 2,
           f"{title_view.renders}/{both_view.renders}")
 
-
 def t_coarse_vs_fine() -> None:
     """粗粒度整对象失效 vs 细粒度:同一场景下的通知次数对比。"""
     print("[2] 对照:ObservableObject 的 objectWillChange(粗粒度)")
@@ -202,12 +192,8 @@ def t_coarse_vs_fine() -> None:
     fine_view.render(["title"])
 
     pub = CoarsePublisher()
-    coarse_renders = [0]
-
-    def coarse_render() -> None:
-        coarse_renders[0] += 1
-
-    pub.subscribe(coarse_render)
+    coarse = [0]
+    pub.subscribe(lambda: coarse.__setitem__(0, coarse[0] + 1))
     pub.will_change("title")                        # 视图订阅了对象 → 任何变化都通知
     pub.will_change("isAvailable")
     check("粗粒度:改两个属性收到 2 次通知(即使视图没读 isAvailable)",
@@ -217,7 +203,6 @@ def t_coarse_vs_fine() -> None:
           fine_view.renders == 1 and book._reg.notify_count == 0,
           f"renders={fine_view.renders} notify={book._reg.notify_count}")
 
-
 def t_one_shot_tracking() -> None:
     """withObservationTracking 的 onChange 是一次性的:要连续追踪必须重新登记。"""
     print("[3] 追踪的一次性(重复追踪的时机由调用方决定)")
@@ -225,19 +210,15 @@ def t_one_shot_tracking() -> None:
     car.set("name", "Herbie")
     fires = []
 
-    def apply() -> None:
-        _ = car.get("name")
-
-    car._reg.track(apply, lambda: fires.append("changed"))
+    car._reg.track(lambda: car.get("name"), lambda: fires.append("changed"))
     car.set("name", "Lightning")
     check("第一次修改触发 onChange", len(fires) == 1, f"fires={len(fires)}")
     car.set("name", "Sally")
     check("未重新登记时第二次修改不再触发(一次性)",
           len(fires) == 1, f"fires={len(fires)}")
-    car._reg.track(apply, lambda: fires.append("changed"))
+    car._reg.track(lambda: car.get("name"), lambda: fires.append("changed"))
     car.set("name", "Doc")
     check("重新登记后再次触发", len(fires) == 2, f"fires={len(fires)}")
-
 
 def t_state_lifecycle() -> None:
     """@State:默认值每次实例化都求值,但存储由框架管理、跨 body 求值保留。"""
@@ -255,7 +236,6 @@ def t_state_lifecycle() -> None:
     box.make("PlayerView#1", 0)
     check("视图移除后状态销毁,重新回到默认值", box.value("PlayerView#1") == 0)
 
-
 def t_binding() -> None:
     """@Binding:子视图拿到 $state 才能写回父视图的状态。"""
     print("[5] @Binding 读写投影")
@@ -266,7 +246,6 @@ def t_binding() -> None:
     check("子视图通过 Binding 写回父视图状态", box.value("PlayerView#1") is True)
     box.set("PlayerView#1", False)                 # 父视图侧写入同一存储槽
     check("父视图侧写入同样可见", play_button.get() is False)
-
 
 def t_object_in_state_trap() -> None:
     """文档明确警告:ObservableObject 放进 @State,只有引用变化才更新视图。"""
@@ -296,7 +275,6 @@ def t_object_in_state_trap() -> None:
     check("@StateObject 订阅后,属性变化同样能触发更新",
           renders2[0] == 2 and pub.notify_count == 1,
           f"renders={renders2[0]} notify={pub.notify_count}")
-
 
 if __name__ == "__main__":
     for fn in (t_tracked_only, t_coarse_vs_fine, t_one_shot_tracking,

@@ -45,8 +45,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 17   # 下轮起点(20:00 槽索引 16=iOS 完成 5 demo;13-15 属 03-系统编程与上轮同大类,顺延不记 skip)
-last_run       : 2026-09-15 20:01
+next_index     : 17   # 下轮起点(20:00 槽索引 16=iOS;13-15 同大类顺延不记 skip)
+last_run       : 2026-09-15 20:30
 last_top       : 04-移动开发   # 上轮 03-系统编程
 skipped        : []
 failed_attempts: []
@@ -56,11 +56,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-15 20:30 | 16 | iOS 第三批 5 个:Cassowary 约束求解(线性规划/误差变量/strength 加权)、SwiftUI Observation(按属性追踪/one-shot)、Swift 并发(job 树/actor 可重入)、dyld pre-main 四阶段(+load vs +initialize)、CA 渲染管线(VSync deadline/离屏/栅格化);119 断言全绿 | +5 | 231 |
 | 2026-09-15 18:26 | 12 | 网络编程 5 个:TCP 拥塞控制(Reno vs CUBIC,RFC 5681/9438)、零拷贝(sendfile/splice)、backlog 与 SYN 队列、scatter-gather(writev/TCP_CORK)、SCM_RIGHTS(fd 是 OFD 引用);76 断言全绿;S1=拆 15 处超限文件 | +5 | 226 |
 | 2026-09-15 16:22 | 8 | 前端框架 5 个:React Concurrent(Lane 31 位掩码/两级优先级/5ms 切片/饥饿防护/transition 丢弃)、Vue 编译器优化(静态提升/PatchFlags/Block Tree/事件缓存)、Signals(四状态机/glitch-free)、SSR-Hydration(shell 流式/选择性水合/mismatch 三态)、Turbopack(读时依赖/内容相等短路/聚合图/文件系统缓存);186 断言全绿;S1+S2 类目+2 | +5 | 221 |
 | 2026-09-15 14:23 | 0 | 游戏服务端架构 5 个:AOI 九宫格(广播降 99.16%)、帧同步、客户端预测与回滚、网关(一致性哈希重映射 88.88% vs 11.85%)、匹配系统(Elo/TrueSkill/质量 0.480);S1+S2 | +5 | 216 |
 | 2026-09-15 12:11 | 50 | Rust 首批:所有权与借用(E0502 vs NLL)、Copy/Drop 顺序、trait 单态化 vs 胖指针 vtable、智能指针破环、生命周期 7 签名;S1/S2 | +5 | 211 |
-| 2026-09-15 10:52 | 48 | 特征工程与降维:PCA 两路线(κ² 误差放大)、随机化 SVD(1.7e-01→1.4e-13)、t-SNE 幻觉量化、Target 泄漏、Pipeline 折内选择;S1/S2 | +5 | 206 |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

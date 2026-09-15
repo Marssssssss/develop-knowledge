@@ -25,6 +25,11 @@
 - [x] Redis 持久化（RDB 快照 + AOF 日志 + Fork 写时复制）— 见 [03-缓存/RedisPersistence/](./03-缓存/RedisPersistence/)(C / Python / Go)
 - [x] Redis Cluster（16384 哈希槽 + CRC16/XMODEM + Gossip + 故障转移）— 见 [03-缓存/RedisCluster/](./03-缓存/RedisCluster/)(C / Python / Go)
 - [x] 缓存淘汰算法（Memcached 精确 LRU vs Redis 近似 LRU + 候选池）— 见 [03-缓存/LRUEviction/](./03-缓存/LRUEviction/)(C / Python / Go)
+- [x] 主从复制与 binlog（SBR/RBR + GTID + 半同步 AFTER_SYNC/AFTER_COMMIT + 超时降级）— 见 [01-关系型/ReplicationBinlog/](./01-关系型/ReplicationBinlog/)(Python / Go)
+- [x] 逻辑复制与 CDC（logical decoding + slot 持留 WAL + Debezium offset/snapshot）— 见 [01-关系型/LogicalDecodingCDC/](./01-关系型/LogicalDecodingCDC/)(Python / Go)
+- [x] Join 算法（hash/GRACE/sort-merge 成本模型，CMU 15-445）— 见 [01-关系型/JoinAlgorithms/](./01-关系型/JoinAlgorithms/)(Python / Go)
+- [x] 物化视图增量刷新（全量 REFRESH 阻塞 vs CONCURRENTLY diff + 唯一索引）— 见 [01-关系型/MaterializedView/](./01-关系型/MaterializedView/)(Python / Go)
+- [x] 在线 DDL（INSTANT/INPLACE/COPY + MDL 两端独占 + gh-ost binlog 流）— 见 [01-关系型/OnlineDDL/](./01-关系型/OnlineDDL/)(Python / Go)
 
 ## 待研究
 

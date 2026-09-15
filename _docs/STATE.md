@@ -51,10 +51,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 6        # 本轮大类 = 循环第 6 位 → 07-数据存储
-sub_pos        : 01:0 02:1 03:1 04:1 05:1 06:1 07:0 08:0 09:0 10:0 11:0  # 各大类内子类目指针
-last_run       : 2026-09-16 02:00
-last_top       : 06-DevOps  # 信息字段,不参与决策
+top_pos        : 7        # 本轮大类 = 循环第 7 位 → 08-安全
+sub_pos        : 01:0 02:1 03:1 04:1 05:1 06:1 07:1 08:0 09:0 10:0 11:0  # 各大类内子类目指针
+last_run       : 2026-09-16 02:14
+last_top       : 07-数据存储  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -63,11 +63,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-16 02:14 | 27 | 关系型第二批 5 个:主从复制binlog(SBR/RBR+GTID+半同步)、逻辑复制CDC(slot持留WAL+Debezium)、Join算法(hash/GRACE/sort-merge)、物化视图(REFRESH CONCURRENTLY)、在线DDL(INSTANT/INPLACE/COPY+gh-ost);Python 22 断言全绿 | +5 | 246 |
 | 2026-09-16 00:10 | 23 | 容器化第二批 5 个:层缓存失效、多阶段构建、UID 映射、rootless、cgroup v2+eBPF;157 断言 | +5 | 241 |
 | 2026-09-15 22:22 | 19 | 深度学习第二批 5 个:LayerNorm/RMSNorm、Softmax+CE、残差、LR 调度、混合精度;131 断言全绿 | +5 | 236 |
 | 2026-09-15 20:30 | 16 | iOS 第三批:Cassowary/Observation/Swift 并发/dyld pre-main/CA 渲染;119 断言全绿 | +5 | 231 |
 | 2026-09-15 18:26 | 12 | 网络编程 5 个:拥塞控制、零拷贝、backlog/SYN 队列、scatter-gather、SCM_RIGHTS;76 断言;S1=拆超限 | +5 | 226 |
-| 2026-09-15 16:22 | 8 | 前端框架:React Concurrent/Vue 编译器/Signals/Hydration/Turbopack;186 断言;S1+S2 类目+2 | +5 | 221 |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

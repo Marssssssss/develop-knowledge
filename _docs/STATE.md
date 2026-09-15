@@ -43,8 +43,8 @@
 ## 二、本轮状态
 
 ```
-next_index     : 48    # 48 本轮 05-AI与机器学习/特征工程与降维(进行中,占位锁)
-last_run       : 2026-09-15 10:05
+next_index     : 49    # 49 下轮起点(48 05-AI与机器学习/特征工程与降维 已完成 5 demo)
+last_run       : 2026-09-15 10:52
 last_top       : 05-AI与机器学习   # ≠ 上轮 11-性能分析
 skipped        : []
 failed_attempts: []
@@ -54,11 +54,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-15 10:52 | 48 | 特征工程与降维首批 5 demo:PCA 两路线数值对比(条件数 κ²/2:σ=1e-8 误差 2.10e-02/λ_min 负值/nan;只中心化不缩放 f1 占 100%)、随机化 SVD(oversamples 0→20 误差 1.71e-01→1.41e-13;normalizer none 崩 8.12e-01 vs QR 1.06e-14)、t-SNE 与 mini-UMAP 幻觉量化(真实簇比 4x 只呈现 1.75x;P=2 距离相关 +0.055)、Target 编码泄漏(0.937/0.712 vs 基线 0.799/0.787)、Pipeline 防泄漏(折内选择 +0.107;零信号仍刷 0.573);S1/S2 索引同步 | +5 | 206 |
 | 2026-09-15 08:14 | 47 | 基准测试方法论首批 5 demo:benchstat 非参数比较(中位数 CI + U 检验)、JMH perfnorm 硬件归因(22 事件)、统计检验选择(Welch/ARE)、CI 回归门禁(step fit + 多重比较)、Gregg 主动基准 7 清单;S2=+2 子类目(04-全链路/05-容量规划) | +5 | 201 |
 | 2026-09-15 06:29 | 46 | 协议逆向第一批:NW/SW 对齐切字段、BinaryInferno 熵边界+单调启发、Veritas P-PSM、JA3/JA4(官方向量复现)、Polyglot 四启发式;S3=索引同步+rotate | +5 | 196 |
 | 2026-09-15 04:31 | 45 | 图数据库第二批:量化路径、Bolt 握手+PackStream、并发控制+等待图死锁、火山模型、MERGE 语义;S3 | +5 | 191 |
 | 2026-09-15 02:27 | 44 | Golang 第二批:interface/itable、GPM、三色 GC+混合屏障、context、泛型推断;S3 | +5 | 186 |
-| 2026-09-15 00:14 | 41 | IaC 第二批:state 锁、Ansible 22 级、Vault 格式、Pulumi 引擎、GitOps SSA;S2=+1 | +5 | 181 |
 
 > 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

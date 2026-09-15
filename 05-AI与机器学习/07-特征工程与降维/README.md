@@ -56,14 +56,31 @@ sklearn 的 `covariance_eigh` solver 走这条路,`explained_variance_` 直接�
 也可以给 `0 < n_components < 1` 表示"保留这么多比例的方差";或者直接看累计
 `explained_variance_ratio_` 到 95% 的拐点。
 
+## 已完成 demo
+
+| # | demo | 知识点 | 语言 |
+| --- | --- | --- | --- |
+| 1 | [PCA的SVD与协方差路线/](./PCA的SVD与协方差路线/) | PCA 两条路线的数值对比:条件数翻倍(κ vs κ²/2)、大 `p` 内存、只中心化不缩放 | Python / Go / C |
+| 2 | [随机化SVD/](./随机化SVD/) | `n_oversamples` / `n_iter` / `power_iteration_normalizer` 对近似误差与子空间 `sinθ` 的影响 | Python / Go |
+| 3 | [t-SNE与UMAP/](./t-SNE与UMAP/) | 自写 t-SNE(困惑度二分)与 mini-UMAP:簇大小无意义、噪声成团、簇间距可信度、早停形态 | Python / Go |
+| 4 | [Target编码与泄漏/](./Target编码与泄漏/) | 泄漏三层次、平滑、K 折交叉拟合、CatBoost 有序统计;高基数噪声特征上量化泄漏 | Python / Go |
+| 5 | [Pipeline与ColumnTransformer防泄漏/](./Pipeline与ColumnTransformer防泄漏/) | 特征选择/缩放泄漏、`remainder` 三种语义、嵌套 CV | Python / Go |
+
+**这一批的共同主线**:*任何用 `y` 学参数的步骤——选择、编码、缩放、超参搜索——都必须关进
+`Pipeline` 或内层 CV。* 5 个 demo 分别量化了这条规则在 5 个环节上的违反代价。
+
 ## 待研究
 
-- [ ] PCA 的 SVD 与协方差两条路线的数值对比(条件数、大 `p` 下的内存实测)
-- [ ] 随机化 SVD 的 `n_oversamples` / `iterated_power` 对近似误差的影响
-- [ ] t-SNE 与 UMAP 的对比:哪些结论是可信的、哪些是"可视化幻觉"
-- [ ] Target Encoding 的泄漏机理与 K 折内编码 / 平滑
-- [ ] `ColumnTransformer` + `Pipeline` 防止交叉验证泄漏的完整范式
+- [x] PCA 的 SVD 与协方差两条路线的数值对比(条件数、大 `p` 下的内存实测)→ 见 demo 1
+- [x] 随机化 SVD 的 `n_oversamples` / `iterated_power` 对近似误差的影响 → 见 demo 2
+- [x] t-SNE 与 UMAP 的对比:哪些结论是可信的、哪些是"可视化幻觉" → 见 demo 3
+- [x] Target Encoding 的泄漏机理与 K 折内编码 / 平滑 → 见 demo 4
+- [x] `ColumnTransformer` + `Pipeline` 防止交叉验证泄漏的完整范式 → 见 demo 5
 - [ ] 特征选择的稳定性:不同随机种子选出的特征集合能重叠多少
+- [ ] 幂变换(Box-Cox / Yeo-Johnson)与分位数变换在偏态特征上的实际收益
+- [ ] 分箱与样条:等频 vs 等宽 vs 有监督分箱的偏差/方差权衡
+- [ ] 稀疏矩阵路线:`TruncatedSVD` 不中心化的代价,以及 `IncrementalPCA` 的 `partial_fit` 一致性
+- [ ] 时间序列的因果特征:滚动统计量在 CV 里的对齐陷阱
 
 ## 参考资料(实际阅读过的来源)
 
@@ -76,9 +93,29 @@ sklearn 的 `covariance_eigh` solver 走这条路,`explained_variance_` 直接�
   "centers but does not scale"、`explained_variance_` 是 `n_components` 个最大特征值、
   `covariance_eigh` 条件数翻倍的警告、`n_components='mle'` 与 `auto` 的交互、文档中的
   `explained_variance_ratio_ = [0.9924…, 0.0075…]` 数值例子
+- [scikit-learn `randomized_svd` API](https://scikit-learn.org/stable/modules/generated/sklearn.utils.extmath.randomized_svd.html)
+  —— `n_oversamples` / `n_iter` / `power_iteration_normalizer` 的官方语义与取值建议
+  ("Smaller number can improve speed but can negatively impact the quality of approximation"、
+  `n_iter=0 or 1 should even work fine in theory`、`auto` 的 none/LU 切换规则)
+- [scikit-learn §12 Common pitfalls — Data leakage](https://scikit-learn.org/stable/common_pitfalls.html)
+  —— §12.1 两条纪律、§12.2 特征选择泄漏的原始实验设定
+- [scikit-learn §8.1 Pipelines and composite estimators](https://scikit-learn.org/stable/modules/compose.html)
+  —— `Pipeline` 三大用途(含 Safety 原文)、`ColumnTransformer` 与 `remainder` 语义
+- [scikit-learn `sklearn.preprocessing.TargetEncoder` API](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.TargetEncoder.html)
+  —— 本仓库 demo 4 对齐的数值锚点(`target_mean_=44.3`、`encodings_` 示例、`smooth='auto'`)
+- [Distill, *How to Use t-SNE Effectively*](https://distill.pub/2016/misread-tsne/)
+  —— 簇大小/簇间距不可读、低困惑度凭空成团、"没有固定的步数能得到稳定结果"
+- [van der Maaten & Hinton, *Visualizing Data using t-SNE*, JMLR 2008](https://jmlr.org/papers/v9/vandermaaten08a.html)
+  —— t-SNE 原始论文(困惑度、KL 目标、早期夸张)
+- [McInnes, Healy, Melville, *UMAP*, arXiv:1802.03426](https://arxiv.org/abs/1802.03426)
+  —— UMAP 的模糊单纯集与交叉熵目标
+- [UMAP 官方文档 *How UMAP Works*](https://umap-learn.readthedocs.io/en/latest/how_umap_works.html)
+  —— 局部/全局结构权衡的官方表述
 - [Halko, Martinsson, Tropp, *Finding Structure with Randomness*, 2009](https://arxiv.org/abs/0909.4061)
   —— 随机化 SVD 的方法学出处(由上列 sklearn 文档引用)
 - [Minka, *Automatic choice of dimensionality for PCA*, NIPS 2000](https://proceedings.neurips.cc/paper/2000)
   —— `n_components='mle'` 的 MLE 依据
 - [Tipping & Bishop, *Probabilistic PCA*, JRSS-B 1999](http://www.miketipping.com/papers/met-mppca.pdf)
   —— sklearn `score`/`score_samples` 所实现的概率 PCA 模型与 `noise_variance_`
+- [CatBoost 官方文档 — Transforming categorical features to numerical features](https://catboost.ai/docs/concepts/algorithm-main-stages_cat-to-number.html)
+  —— 有序目标统计(经检索确认存在,未逐页通读)

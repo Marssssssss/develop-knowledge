@@ -37,14 +37,14 @@
 50: 09-语言学习/Rust
 ```
 
-> 39-50 为类目自动拓展新增(2026-09-12 起,S2);表尾编号即当前行数,新子类目顺延 51 起。
-> 索引表动态增长:取模基数按实际行数(`AGENT_RULES.md` §一.5);大类轮换(硬约束):顶层大类须 ≠ 上轮 `last_top`,同大类顺延;`next_index` 推进到选中索引+1,跳过项不记 skip。
+> 39-50 为类目自动拓展新增(2026-09-12 起 S2);表尾编号即行数,新子类目顺延 51 起。
+> 取模基数按实际行数(`AGENT_RULES` §一.5);大类轮换:顶层大类须 ≠ 上轮 `last_top`,同大类顺延不记 skip;`next_index` = 选中索引+1。
 
 ## 二、本轮状态
 
 ```
-next_index     : 51    # 下轮起点(50 09-语言学习/Rust 本轮进行中;49 因同大类顺延)
-last_run       : 2026-09-15 12:04
+next_index     : 51    # 下轮起点(50 09-语言学习/Rust 已完成 5 demo;49 因同大类顺延)
+last_run       : 2026-09-15 12:11
 last_top       : 09-语言学习   # ≠ 上轮 05-AI与机器学习
 skipped        : []
 failed_attempts: []
@@ -54,16 +54,16 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
-| 2026-09-15 10:52 | 48 | 特征工程与降维首批 5 demo:PCA 两路线数值对比(条件数 κ²/2:σ=1e-8 误差 2.10e-02/λ_min 负值/nan;只中心化不缩放 f1 占 100%)、随机化 SVD(oversamples 0→20 误差 1.71e-01→1.41e-13;normalizer none 崩 8.12e-01 vs QR 1.06e-14)、t-SNE 与 mini-UMAP 幻觉量化(真实簇比 4x 只呈现 1.75x;P=2 距离相关 +0.055)、Target 编码泄漏(0.937/0.712 vs 基线 0.799/0.787)、Pipeline 防泄漏(折内选择 +0.107;零信号仍刷 0.573);S1/S2 索引同步 | +5 | 206 |
-| 2026-09-15 08:14 | 47 | 基准测试方法论首批 5 demo:benchstat 非参数比较(中位数 CI + U 检验)、JMH perfnorm 硬件归因(22 事件)、统计检验选择(Welch/ARE)、CI 回归门禁(step fit + 多重比较)、Gregg 主动基准 7 清单;S2=+2 子类目(04-全链路/05-容量规划) | +5 | 201 |
-| 2026-09-15 06:29 | 46 | 协议逆向第一批:NW/SW 对齐切字段、BinaryInferno 熵边界+单调启发、Veritas P-PSM、JA3/JA4(官方向量复现)、Polyglot 四启发式;S3=索引同步+rotate | +5 | 196 |
+| 2026-09-15 12:11 | 50 | Rust 首批 5 demo:所有权与借用(E0382/E0499/E0502/E0596/E0106 抽成运行期检查器;词法 vs NLL 区间对比定 E0502 误报)、Copy与Drop(逆声明序/由内向外/字段声明序/数组首尾/模式内逆序 + E0184)、trait与分发(单态化 2 份 0 间接 ↔ 胖指针 16B 查 vtable;孤儿规则四组合)、智能指针(Rc [1,2,3,2]、RefCell BorrowMutError、环 strong 不归零、Weak 破环)、生命周期(7 签名仅 2 个需显式标注);S1/S2 索引同步 | +5 | 211 |
+| 2026-09-15 10:52 | 48 | 特征工程与降维首批:PCA 两路线(σ=1e-8 协方差误差 2.10e-02/λ_min 负值/nan vs SVD 4.20e-06)、随机化 SVD(oversamples 0→20 误差 1.71e-01→1.41e-13)、t-SNE/UMAP 幻觉(真实 4x 只呈现 1.75x)、Target 泄漏(0.937 vs 基线 0.799)、Pipeline 防泄漏(折内选择 +0.107);S1/S2 | +5 | 206 |
+| 2026-09-15 08:14 | 47 | 基准测试方法论首批:benchstat 非参数比较(中位数 CI + U 检验)、JMH perfnorm 硬件归因(22 事件)、统计检验选择(Welch/ARE)、CI 回归门禁(step fit + 多重比较)、Gregg 主动基准 7 清单;S2=+2 子类目 | +5 | 201 |
+| 2026-09-15 06:29 | 46 | 协议逆向第一批:NW/SW 对齐切字段、BinaryInferno 熵边界+单调启发、Veritas P-PSM、JA3/JA4(官方向量复现)、Polyglot 四启发式;S3+rotate | +5 | 196 |
 | 2026-09-15 04:31 | 45 | 图数据库第二批:量化路径、Bolt 握手+PackStream、并发控制+等待图死锁、火山模型、MERGE 语义;S3 | +5 | 191 |
-| 2026-09-15 02:27 | 44 | Golang 第二批:interface/itable、GPM、三色 GC+混合屏障、context、泛型推断;S3 | +5 | 186 |
 
-> 超出 5 轮的细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
+> 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 
 ## 四、rotate 与查找
 
 - rotate(副任务执行,不耗主配额):completed.md > 100 行 / schedule.md > 30 行 → 截到最近 100/30 行,丢弃部分查 `git log -p _docs/archive/`;写新数据时本文件只动 §三,archive append 即可
 - 某 demo 是否做过 → Grep `completed.md`;上轮权威资料/坑 → Grep `schedule.md`;总数 → 数 completed.md 行数
-- 本文件由巡检任务每轮末尾追加;§三 每行须压到单行 ≤120 字,新增时同步压缩旧行以守住 ≤5 KB;人工编辑直接 Edit,大改同步 `OPTIMIZATION.md §2.4`。
+- 本文件每轮末尾追加;§三 每行压到 ≤120 字并同步压缩旧行以守住 ≤5 KB;大改同步 `OPTIMIZATION.md §2.4`。

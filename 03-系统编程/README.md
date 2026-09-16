@@ -35,3 +35,9 @@ IO 多路复用、协程等通用机制在游戏服务端也是基石。通用 d
   - backlog 与 SYN 队列 — [连接管理/backlog与SYN队列/](01-网络编程/连接管理/backlog与SYN队列/)
   - scatter-gather IO（readv / writev / TCP_CORK）— [IO模型/scatter-gather/](01-网络编程/IO模型/scatter-gather/)
   - SCM_RIGHTS 传文件描述符 — [进程间通信/SCM-RIGHTS-fd传递/](01-网络编程/进程间通信/SCM-RIGHTS-fd传递/)
+- ✅ 进程线程协程 5 个（2026-09-17 06:00 槽）：
+  - fork 与僵尸进程（COW/stdio 双份输出/WNOHANG/SIG_IGN→ECHILD）— [02-进程与线程/fork与僵尸进程/](02-进程与线程/fork与僵尸进程/)
+  - 生产者消费者（mutex+condvar while 谓词 vs channel happens-before）— [02-进程与线程/生产者消费者/](02-进程与线程/生产者消费者/)
+  - 读者写者锁（读者/写者偏好双策略、tryrdlock EBUSY、递归读锁）— [02-进程与线程/读者写者锁/](02-进程与线程/读者写者锁/)
+  - 最小有栈协程（ucontext 四件套 + 有栈/无栈对照）— [02-协程/最小有栈协程/](02-协程/最小有栈协程/)
+  - CFS 调度器（vruntime/最左选取/min_vruntime 放置/权重=份额）— [02-进程与线程/CFS调度器/](02-进程与线程/CFS调度器/)

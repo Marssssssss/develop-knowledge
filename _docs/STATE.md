@@ -45,25 +45,23 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 2        # 本轮已取循环第 1 位 → 02-Web开发/02-后端;下一轮取第 2 位 → 03-系统编程
-sub_pos        : 01:1 02:2 03:1 04:1 05:1 06:1 07:1 08:1 09:1 10:1 11:1  # 各大类内子类目指针
-last_run       : 2026-09-17 06:01
-last_top       : 02-Web开发  # 信息字段,不参与决策
+top_pos        : 3        # 本轮已取循环第 2 位 → 03-系统编程/13-进程线程协程;下一轮取第 3 位 → 04-移动开发
+sub_pos        : 01:1 02:2 03:2 04:1 05:1 06:1 07:1 08:1 09:1 10:1 11:1  # 各大类内子类目指针
+last_run       : 2026-09-17 06:24
+last_top       : 03-系统编程  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
-
-> ⚠️ **槽位异常(2026-09-16)**:本轮应为 **14:00** 定点槽,实际于 **23:21** 补跑(偏差约 9 小时)。判定为机器 14:00–22:00 休眠/离线导致整点未唤醒;未记 `slot_mismatch` 中止(会零产出),按「补跑一轮完整巡检」处理,事实记录于 `archive/schedule.md`。
 
 ## 三、最近 5 轮(滚动窗口)
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-17 06:24 | 13 | 进程线程协程第二批 5 个:fork僵尸(COW/stdio双份/低8位/SIG_IGN)、生产者消费者(condvar while谓词 vs channel hb)、读写锁(双偏好策略/TryLock EBUSY)、ucontext 有栈协程(四件套/uc_link)、CFS(vruntime/最左/权重=份额);20 断言 | +5 | 281 |
 | 2026-09-17 05:09 | 9 | 后端 Node.js 首批 5 个:Libuv线程池(吞吐/跨API传染/运行时设置)、Stream背压(write/drain/hwm/pipe)、Cluster与WorkerThreads(SCHED_NONE倾斜/克隆/transfer)、async_hooks与ALS(因果链/六项语义/迷你复刻)、HTTP-Agent(keep-alive复用/maxSockets排队/freeSockets);66 断言 | +5 | 276 |
 | 2026-09-17 02:30 | 0 | 游戏服务端第三批 5 个:FlatBuffers 零拷贝、Snappy 协议压缩、心跳与断线重连、跨服 RPC、全局服务器;102 断言 | +5 | 271 |
 | 2026-09-16 23:21 | 37 | 系统级剖析第三批 5 个:bpftrace 前端 DSL、USE 检查清单、容器 cgroup v2 归因、runqlat/schedstats、中断与软中断;191 断言 | +5 | 266 |
 | 2026-09-16 08:25 | 35 | 二进制逆向第三批 5 个:ARM64、Ghidra 流水线/headless、BinDiff、脚本改名;217 断言 | +5 | 261 |
-| 2026-09-16 06:26 | 34 | Python 第二批 5 个:异常链、typing、__slots__、PEP 393、decimal | +5 | 256 |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

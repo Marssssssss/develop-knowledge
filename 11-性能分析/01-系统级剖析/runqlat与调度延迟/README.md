@@ -118,8 +118,8 @@ M/M/1 平均排队等待时间(以服务时间为单位)`Wq = ρ / (1 - ρ)`:
 # Python(38 项自检,含直方图打印)
 cd python && python runqlat_check.py
 
-# Go
-cd go && go run runqlat_check.go
+# Go(同包两文件:runqlat_check.go + runqlat_hist.go,必须用 go run .)
+cd go && go run .
 
 # C(可加 --real 在 Linux 上读本机 /proc/schedstat)
 cd c && cc -O2 -o runqlat_check runqlat_check.c -lm && ./runqlat_check --real

@@ -45,10 +45,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 1        # 本轮已取循环第 0 位 → 01-游戏开发/服务端;下一轮取第 1 位 → 02-Web开发
-sub_pos        : 01:1 02:1 03:1 04:1 05:1 06:1 07:1 08:1 09:1 10:1 11:1  # 各大类内子类目指针
-last_run       : 2026-09-17 04:03
-last_top       : 01-游戏开发  # 信息字段,不参与决策
+top_pos        : 2        # 本轮已取循环第 1 位 → 02-Web开发/02-后端;下一轮取第 2 位 → 03-系统编程
+sub_pos        : 01:1 02:2 03:1 04:1 05:1 06:1 07:1 08:1 09:1 10:1 11:1  # 各大类内子类目指针
+last_run       : 2026-09-17 05:09
+last_top       : 02-Web开发  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-17 05:09 | 9 | 后端 Node.js 首批 5 个:Libuv线程池(吞吐/跨API传染/运行时设置)、Stream背压(write/drain/hwm/pipe)、Cluster与WorkerThreads(SCHED_NONE倾斜/克隆/transfer)、async_hooks与ALS(因果链/六项语义/迷你复刻)、HTTP-Agent(keep-alive复用/maxSockets排队/freeSockets);66 断言 | +5 | 276 |
 | 2026-09-17 02:30 | 0 | 游戏服务端第三批 5 个:FlatBuffers 零拷贝、Snappy 协议压缩、心跳与断线重连、跨服 RPC、全局服务器;102 断言 | +5 | 271 |
 | 2026-09-16 23:21 | 37 | 系统级剖析第三批 5 个:bpftrace 前端 DSL、USE 检查清单、容器 cgroup v2 归因、runqlat/schedstats、中断与软中断;191 断言 | +5 | 266 |
-| 2026-09-16 08:25 | 35 | 二进制逆向第三批 5 个:ARM64 编码+AAPCS64、Ghidra 流水线/headless、BinDiff 差分、脚本批量改名;217 断言 | +5 | 261 |
-| 2026-09-16 06:26 | 34 | Python 第二批 5 个:异常链/except*、typing、__slots__、PEP 393 字符串、decimal/fractions | +5 | 256 |
-| 2026-09-16 04:26 | 31 | 密码学第二批 5 个:SHA-3/HKDF/ECDSA+6979/TOTP/PBKDF2 | +5 | 251 |
+| 2026-09-16 08:25 | 35 | 二进制逆向第三批 5 个:ARM64、Ghidra 流水线/headless、BinDiff、脚本改名;217 断言 | +5 | 261 |
+| 2026-09-16 06:26 | 34 | Python 第二批 5 个:异常链、typing、__slots__、PEP 393、decimal | +5 | 256 |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

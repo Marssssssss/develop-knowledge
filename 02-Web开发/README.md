@@ -25,6 +25,11 @@
 - [x] [01-前端框架/SSR-Hydration/](./01-前端框架/SSR-Hydration/) — 流式 SSR shell + boundary 标记 + 选择性水合(JS + TS)
 - [x] [01-前端框架/构建工具/Turbopack/](./01-前端框架/构建工具/Turbopack/) — turbo-tasks:value cell + 读时依赖跟踪 + 内容相等短路(JS + TS)
 - [x] [02-后端/Node.js/Event-Loop/](./02-后端/Node.js/Event-Loop/) — Node.js 6 阶段 Event Loop + nextTick/Promise 微任务 (JS + TS)
+- [x] [02-后端/Node.js/Libuv线程池/](./02-后端/Node.js/Libuv线程池/) — 线程池吞吐扩展/跨API传染/运行时设置无效 (JS + TS)
+- [x] [02-后端/Node.js/Stream背压/](./02-后端/Node.js/Stream背压/) — write/drain/hwm 阈值 + pipe 自动背压 + unpipe 反直觉 (JS + TS)
+- [x] [02-后端/Node.js/Cluster与WorkerThreads/](./02-后端/Node.js/Cluster与WorkerThreads/) — SCHED_NONE 倾斜 + disconnect/kill + 结构化克隆 + transfer/SAB (JS + TS)
+- [x] [02-后端/Node.js/async_hooks与AsyncLocalStorage/](./02-后端/Node.js/async_hooks与AsyncLocalStorage/) — hook 事件序 + Promise 因果链 + ALS 六项语义 (JS + TS)
+- [x] [02-后端/Node.js/HTTP-Agent连接复用/](./02-后端/Node.js/HTTP-Agent连接复用/) — keep-alive 复用 + maxSockets 排队 + freeSockets 池化 (JS + TS)
 - [x] [03-数据库/B+树索引/](./03-数据库/B+树索引/) — B+ 树索引原理 (M-way + 叶子兄弟链 + copy-up/push-up 分裂 + borrow/merge 重平衡) (C + Python + Go)
 - [x] [04-API设计/WebSocket/握手协议/](./04-API设计/WebSocket/握手协议/) — WebSocket 握手协议 RFC 6455 §4 (HTTP Upgrade + SHA-1+GUID → Sec-WebSocket-Accept + 101 Switching Protocols) (C + Python + Go)
 

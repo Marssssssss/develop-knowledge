@@ -1,0 +1,29 @@
+[
+  {
+    "src": "D:/开发研究/04-移动开发/02-Android/网络编程/OkHttp拦截器与连接池/python/okhttp_chain_check.py",
+    "start": 19,
+    "end": 265,
+    "dst": "D:/开发研究/04-移动开发/02-Android/网络编程/OkHttp拦截器与连接池/python/okhttp_chain_model.py",
+    "mode": "cut",
+    "preamble": "#!/usr/bin/env python3\n\"\"\"OkHttp 拦截器链与连接池 —— 纯 Python 模型(责任链 + ConnectionPool)。\n\n由 okhttp_chain_check.py 拆分而来(仅做行搬运,代码逐字节不变):本文件提供 Request /\nResponse / ConnectionPool / Chain 与七个拦截器;自检断言见 okhttp_chain_check.py。\n\n运行: python3 okhttp_chain_check.py\n\"\"\"\n\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass, field\n\n",
+    "insert_text": "from okhttp_chain_model import (ApplicationInterceptor, CacheInterceptor, CallServerInterceptor,\n                                ConnectionPool, ConnectInterceptor, DEFAULT_KEEP_ALIVE_MS, Engine,\n                                NetworkInterceptor, Request, Response, build_client, call)\n\n"
+  },
+  {
+    "src": "D:/开发研究/04-移动开发/02-Android/并发编程/WorkManager约束与重试/python/workmanager_check.py",
+    "start": 23,
+    "end": 187,
+    "dst": "D:/开发研究/04-移动开发/02-Android/并发编程/WorkManager约束与重试/python/workmanager_model.py",
+    "mode": "cut",
+    "preamble": "#!/usr/bin/env python3\n\"\"\"WorkManager 教学模型(Constraints / 退避重试 / WorkRequest / Engine)。\n\n由 workmanager_check.py 拆分而来(仅做行搬运,代码逐字节不变);\n自检断言见 workmanager_check.py。\n\n运行: python3 workmanager_check.py\n\"\"\"\n\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\n\n",
+    "insert_text": "from workmanager_model import (Constraints, DEFAULT_BACKOFF_DELAY_MS, Device, Engine, WorkRequest,\n                               backoff_delay_ms, within_execution_window)\n\n"
+  },
+  {
+    "src": "D:/开发研究/04-移动开发/02-Android/组件生命周期/Service三种形态/python/service_state_check.py",
+    "start": 32,
+    "end": 165,
+    "dst": "D:/开发研究/04-移动开发/02-Android/组件生命周期/Service三种形态/python/service_model.py",
+    "mode": "cut",
+    "preamble": "#!/usr/bin/env python3\n\"\"\"Android Service 生命周期模型(三种形态 / stopSelf(startId) / 重启计划)。\n\n由 service_state_check.py 拆分而来(仅做行搬运,代码逐字节不变);\n自检断言见 service_state_check.py。\n\n运行: python3 service_state_check.py\n\"\"\"\n\nfrom __future__ import annotations\n\n",
+    "insert_text": "from service_model import (MAIN_THREAD, START_NOT_STICKY, START_REDELIVER_INTENT, START_STICKY,\n                           START_STICKY_COMPATIBILITY, Service, StopWithDeliveredId,\n                           StopWithLatestId, restart_plan)\n\n"
+  }
+]

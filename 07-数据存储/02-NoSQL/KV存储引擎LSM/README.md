@@ -7,20 +7,17 @@ Python 5 文件 + Go 6 文件,共 64 条断言,全部对应官方文档原文。
 ## 一、简介
 
 LSM-Tree(Log-Structured Merge Tree)是当代 KV 存储的默认答案:LevelDB、RocksDB、Cassandra、
-HBase、TiKV、ScyllaDB 都建立在同一套结构上。它的核心取舍只有一句话:
-
-> **把随机写变成顺序写,代价是读要合并多层、空间要等压缩回收。**
-
-官方对三大基本构件的描述(rocksdb wiki/RocksDB-Overview.md):
+HBase、TiKV、ScyllaDB 都建立在同一套结构上。核心取舍只有一句话:**把随机写变成顺序写,
+代价是读要合并多层、空间要等压缩回收**。官方对三大基本构件的描述
+(rocksdb wiki/RocksDB-Overview.md):
 
 > The three basic constructs of RocksDB are **memtable**, **sstfile** and **logfile**.
 > ... new writes are inserted into the *memtable* and are optionally written to the
-> *logfile* (aka. Write Ahead Log(WAL)). ... When the memtable fills up, it is flushed
+> *logfile* (aka. Write Ahead Log(WAL)). When the memtable fills up, it is flushed
 > to a *sstfile* on storage and the corresponding logfile can be safely deleted.
 
-LevelDB 的实现说明(doc/impl.md)给出了更具体的一套参数:log 文件约 **4MB** 转成 sorted table;
-young(level-0)文件超过 **4 个**就与 L1 重叠文件合并;level-L 超过 **10^L MB** 时向 L+1 下沉;
-每个新 L1 文件 **2MB**。本 demo 把这些数字全部做成可断言的常量。
+LevelDB 另外给了一套具体参数:log 约 **4MB** 转 sorted table;young 文件超过 **4 个**就与 L1
+重叠文件合并;level-L 超过 **10^L MB** 时向 L+1 下沉;每个新 L1 文件 **2MB** —— 全部做成可断言常量。
 
 ## 二、原理详解
 
@@ -47,25 +44,20 @@ young(level-0)文件超过 **4 个**就与 L1 重叠文件合并;level-L 超过 
 1. **"A record never starts within the last six bytes of a block"** —— 不足 7 字节的尾部
    零填充为 trailer,读者必须跳过。
 2. **剩余恰好 7 字节时**,写一条**零字节用户数据的 FIRST** 把 trailing 7 字节填满,
-   数据全部推到后续块。这条 aside 是"块边界 + 定长头部"共同逼出来的边界情况,
-   本 demo 用一条断言专门盯住它。
+   数据全部推到后续块 —— 这条 aside 是"块边界 + 定长头部"逼出来的边界情况。
 
-官方示例可以直接用模型复现:用户记录 A(1000)/B(97270)/C(8000) 依次写入后 —
-A 是第 1 块的 FULL;B 被切成 FIRST(占满第 1 块剩余)/MIDDLE(独占第 2 块)/LAST(第 3 块前缀),
-第 3 块正好空出 **6 字节**当 trailer;C 落到第 4 块的 FULL。断言断言到"trailer == 6"这一位。
+官方示例可以直接用模型复现:记录 A(1000)/B(97270)/C(8000) 依次写入后 —
+A 是第 1 块 FULL;B 切成 FIRST(占满第 1 块剩余)/MIDDLE(独占第 2 块)/LAST(第 3 块前缀),
+第 3 块正好空出 **6 字节**当 trailer;C 落到第 4 块 FULL。断言精确到"trailer == 6"。
 
 ### 2.3 SSTable 文件格式
 
-官方布局:
-
-```
-[data block 1..N][meta block 1..K][metaindex block][index block][Footer]
-```
+官方布局:`[data block 1..N][meta block 1..K][metaindex block][index block][Footer]`
 
 * 所有内部指针叫 **BlockHandle** = `{offset: varint64, size: varint64}`;
-* `index` 块每个 data block 一条:key 是**该块最后一个 key 之后的字符串**,
-  value 是 BlockHandle —— 这是"在层内做二分查找"的前提;
-* **Footer 定长**,`starts at file_size - sizeof(Footer)`,内含 metaindex/index 两个
+* `index` 块每个 data block 一条:key 是**该块最后一个 key 之后的字符串**,value 是
+  BlockHandle —— 这是"层内二分查找"的前提;
+* **Footer 定长**,`starts at file_size - sizeof(Footer)`,含 metaindex/index 两个
   BlockHandle、零填充到 40 字节,末尾是 `fixed64` magic:
 
 ```python
@@ -107,9 +99,9 @@ RocksDB 的写停顿(wiki/Write-Stalls.md)是 LSM 最真实的运维面。三类
 | L0 文件堆积 | ≥ `level0_slowdown_writes_trigger` | ≥ `level0_stop_writes_trigger` |
 | 待压缩字节 | ≥ `soft_pending_compaction_bytes` | ≥ `hard_pending_compaction_bytes` |
 
-两个反直觉点:① `max_write_buffer_number > 3` 时**提前一个**开始 stall(官方的"软刹车");
-② 触发条件是**按列族(column family)计的,但停顿作用于整个 DB** —— 一个列族卡住,全库一起卡。
-阻塞的写线程可用 `WriteOptions.no_slowdown = true` 换取"立刻返回 `Status::Incomplete()`"。
+两个反直觉点:① `max_write_buffer_number > 3` 时**提前一个**开始 stall(官方"软刹车");
+② 触发条件按列族(column family)计,但**停顿作用于整个 DB** —— 一个列族卡住,全库一起卡。
+阻塞的写线程可用 `WriteOptions.no_slowdown = true` 换"立刻返回 `Status::Incomplete()`"。
 
 ### 2.6 删除标记什么时候能丢
 
@@ -176,8 +168,8 @@ merged := CompactEntries(ents, func(k string) bool { return e.CanDropDelete(k, o
   牺牲 1 倍写放大,把多个 L0 小文件合成一个大文件,换取 L0 的读性能。
 - **写停顿不是 bug 而是保护**:不设停顿的话,后果官方写得很直白 ——
   空间放大涨到爆盘、读放大涨到查询超时。
-- **`max_write_buffer_number` 调大的诱饵**:它能减少停顿,但内存占用线性上升,
-  且不可变 memtable 越多、崩溃恢复要重放的 WAL 越多。
+- **`max_write_buffer_number` 调大是诱饵**:停顿变少,但内存线性上升,
+  崩溃恢复要重放的 WAL 也更多。
 
 ## 八、注意事项与常见坑
 
@@ -189,24 +181,19 @@ merged := CompactEntries(ents, func(k string) bool { return e.CanDropDelete(k, o
    远超 `max_bytes_for_level_base`,官方也**不触发**。把"得分 > 1"当成唯一条件是错的。
 4. **动态层级与静态层级的 `num_levels` 语义要统一**,否则官方示例里的
    `0/0/0.276/2.76/27.6/276` 会对不上号(见 2.4 的口径差异说明)。
-5. **文件行数硬约束逼出的拆分方式**:Python 用 mixin(`CompactionMixin`)搬方法,
-   方法体缩进与语义都不变;Go 同包多文件共享符号。**拆分后必须补 import** ——
-   Python 的 `compact_entries` 若排在 `Entry` 之前定义,`List[Entry]` 注解会在
-   **def 执行时**抛 `NameError`,这是纯搬运最容易踩的坑。
-6. **Go 无工具链时的三条人工检查**:① 同包顶层符号不得重名(同名**方法**在不同
-   receiver 上是合法的,别误报);② 未用 import 是硬编译错误;③ 变参断言函数
-   `check(label, cond, detail ...string)` 能规避"实参个数写错"的隐形编译错误。
-7. **`syntax_sanity.py` 不查行数**,拆完要单独 `wc -l` 核一遍。
+5. **拆分后必须补 import**:Python 用 mixin 搬方法、Go 同包多文件共享符号,两者都是
+   零语义改动;但 Python 的 `compact_entries` 若排在 `Entry` 之前定义,`List[Entry]`
+   注解会在 **def 执行时**抛 `NameError` —— 纯搬运最容易踩的坑。
+6. **Go 无工具链时的三条人工检查**:① 同包顶层符号不得重名(同名**方法**在不同 receiver
+   上合法,别误报);② 未用 import 是硬编译错误;③ 变参断言函数 `check(label, cond, detail ...string)`
+   规避"实参个数写错"的隐形编译错误。**`syntax_sanity.py` 不查行数**,拆完单独 `wc -l`。
 
 ## 九、参考资料
 
-- `google/leveldb` 官方文档:`doc/impl.md`(WAL 4MB 阈值、L0 触发 4 个、10^L MB 层级、
-  删除标记丢弃规则、MANIFEST/CURRENT)、`doc/log_format.md`(32KB 块、7 字节头部、
-  FIRST/MIDDLE/LAST、6 字节 trailer、恰好 7 字节的 aside)、`doc/table_format.md`
-  (BlockHandle、index 块 key 语义、footer 定长与 magic、filter 块 base=2KB)
-- `facebook/rocksdb` 官方 wiki:`Leveled-Compaction.md`(L0 触发、得分公式、
-  动态层级与 90% 末层结论、Intra-L0、TTL/periodic compaction)、`Write-Stalls.md`
-  (三类停顿的触发条件与日志原文)、`RocksDB-Overview.md`(memtable/sstfile/logfile
-  三构件、flush 行内 GC、压缩策略与写放大对比)
-- 以上均取自 `github.com/google/leveldb` 与 `github.com/facebook/rocksdb` 的
-  raw 文档源(`doc/*.md`、wiki raw markdown)
+- `google/leveldb`:`doc/impl.md`(4MB 阈值、L0 触发 4 个、10^L MB 层级、删除标记丢弃规则)、
+  `doc/log_format.md`(32KB 块、7 字节头部、FIRST/MIDDLE/LAST、6 字节 trailer、恰好 7 字节 aside)、
+  `doc/table_format.md`(BlockHandle、index 块 key 语义、footer 定长与 magic、filter 块 base=2KB)
+- `facebook/rocksdb` wiki:`Leveled-Compaction.md`(L0 触发、得分公式、动态层级与 90% 末层结论、
+  Intra-L0、TTL/periodic compaction)、`Write-Stalls.md`(三类停顿触发条件与日志原文)、
+  `RocksDB-Overview.md`(memtable/sstfile/logfile 三构件、flush 行内 GC、压缩策略对比)
+- 均为上述两个仓库的 raw 文档源(`doc/*.md`、wiki raw markdown)

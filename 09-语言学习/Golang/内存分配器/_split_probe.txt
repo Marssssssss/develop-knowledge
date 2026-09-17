@@ -1,0 +1,23 @@
+# -*- coding: utf-8 -*-
+"""Go 运行时内存分配器模型（对齐 Go 1.24 官方 size class 表）。
+
+本文件把 runtime 分配器的三件事程序化复刻出来：
+  1. `size class` 表本身（`class_to_size` / `class_to_allocnpages`）与两级快速映射
+     （`size_to_class8` / `siz
+===
+
+
+PAGE_SIZE = 8192
+SMALL_SIZE_DIV = 8          # sizeclasses.go: smallSizeDiv
+SMALL_SIZE_MAX = 1024       # sizeclasses.go: smallSizeMax
+LARGE_SIZE_DIV = 128        # sizeclasses.go: largeSizeDiv
+MAX_SMALL_SIZE = 32768      # gc.MaxSmallSize
+TINY_SIZE = 16              # gc.TinySize（malloc.go: maxTinySize）
+TINY_SIZE_CLASS = 2         # gc.TinySizeClass；源码自断言 SizeClassToSize[2] == 16
+# msize.go 的小对
+===
+# ---------------------------------------------------------------- 官方表数据
+# class_to_size：索引即 size class，class 0 未使用（0 字节）
+CLASS_TO_SIZE = [
+    0, 8, 16, 24, 32, 48, 64, 80, 96, 112,
+    128, 144, 160

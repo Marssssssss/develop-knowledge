@@ -46,10 +46,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 0        # 下一轮取循环第 0 位 → 01-游戏开发(本轮已取第 10 位 = 11-性能分析)
-sub_pos        : 01:1 02:2 03:2 04:2 05:3 06:2 07:2 08:2 09:2 10:2 11:2  # 各大类内子类目指针
-last_run       : 2026-09-18 06:01  # 06:00 槽占位锁(实测 shell date);保险 45 分钟
-last_top       : 11-性能分析  # 信息字段,不参与决策
+top_pos        : 1        # 下一轮取循环第 1 位 → 02-Web开发(本轮已取第 0 位 = 01-游戏开发)
+sub_pos        : 01:2 02:2 03:2 04:2 05:3 06:2 07:2 08:2 09:2 10:2 11:2  # 各大类内子类目指针
+last_run       : 2026-09-18 06:29  # 06:00 槽收尾(实测 shell date);保险 45 分钟
+last_top       : 01-游戏开发  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -58,11 +58,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-18 06:29 | 1 | 渲染·图形管线首批:GBuffer 布局/light volume、Forward+ tile 剔除、实例化、TBDR、CS 执行模型;Py 78 断言 | S3+索引补齐×2 | +5 | 326 | 5 WF+4 WS;槽位 ✓ |
 | 2026-09-18 04:29 | 38 | 应用级剖析首批:pprof 在线采集/top 解读、py-spy、cProfile tottime-cumtime、ReportAllocs;Py 59 断言 | S3+rotate(ID 222..321) | +5 | 321 | 7 WebFetch;槽位 ✓ |
 | 2026-09-18 02:22 | 36 | 移动端逆向首批:Frida Java/Interceptor、APK 签名 v1v2v3、SSL Pinning、Objection;Py 62 断言 | S1+S3 rotate(ID 202..316) | +5 | 316 | 6 WF+2 WS+3 curl;槽位 ✓ |
 | 2026-09-18 00:29 | 44 | Golang 第三批:内存分配器、逃逸内联、内存模型与 sync、反射三定律、unsafe 布局;Py 372 断言 | S1+S3 rotate(ID 212..311) | +5 | 311 | 7 WF+13 curl;槽位 ✓ |
 | 2026-09-17 23:03 | 32 | Web安全第二批:OAuth2 PKCE、Cookie/HSTS、SSRF、IDOR、点击劫持;Py 273+JS 105 断言 | S1+S3 rotate(ID 207..306) | +5 | 306 | 9 WF+5 curl;槽位 ✗(补跑) |
-| 2026-09-17 14:36 | 28 | NoSQL 第二批:MongoDB ESR、DynamoDB 台阶、Cassandra 墓碑、LSM WAL、Protobuf;351 断言 | S1+S3 rotate(ID 197..301) | +5 | 301 | 8 WF+1 WS;槽位 ✓ |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

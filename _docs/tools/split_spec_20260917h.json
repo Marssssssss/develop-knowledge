@@ -1,0 +1,19 @@
+[
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/python/lsm_engine.py",
+    "start": 306,
+    "end": 322,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/python/lsm_core.py",
+    "mode": "cut",
+    "append": true,
+    "preamble": ""
+  },
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/python/lsm_engine.py",
+    "start": 248,
+    "end": 398,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/python/lsm_compact.py",
+    "mode": "cut",
+    "preamble": "# -*- coding: utf-8 -*-\n\"\"\"lsm_compact.py — 分层目标 / 挑层 / 压缩执行 / 放大系数(CompactionMixin)。\n\n以 mixin 形式承载 LSMEngine 的一部分方法:方法体缩进与语义都不变,\n只是换了个文件;宿主类提供 levels / num_levels 等属性。\n权威来源与出处见 lsm_engine.py 文件头。\n\"\"\"\n\nfrom typing import Dict, List, Optional\n\nfrom lsm_core import Entry, SSTable, compact_entries\n\n\nclass CompactionMixin:\n    \"\"\"LSMEngine 的压缩与统计部分。\"\"\"\n\n"
+  }
+]

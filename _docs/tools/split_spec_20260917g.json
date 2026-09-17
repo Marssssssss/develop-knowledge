@@ -1,0 +1,10 @@
+[
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/python/lsm_engine.py",
+    "start": 24,
+    "end": 118,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/python/lsm_core.py",
+    "mode": "cut",
+    "preamble": "# -*- coding: utf-8 -*-\n\"\"\"lsm_core.py — LSM 引擎的基础数据结构:Entry / MemTable / SSTable / 版本合并。\n\n拆文件只为满足单文件 ≤300 行的行数约束;权威来源与出处见 lsm_engine.py 文件头。\n\"\"\"\n\nfrom dataclasses import dataclass\nfrom typing import List, Optional\n\n"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/go/lsm_engine.go",
+    "start": 37,
+    "end": 157,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/go/lsm_types.go",
+    "mode": "cut",
+    "preamble": "// lsm_types.go — 基础数据结构:Entry / MemTable / SSTable(与 lsm_engine.go 同属 package main)\n//\n// 拆文件只为满足单文件 ≤300 行的约束;Go 同包共享符号,零语义改动。\n// 算法出处见 lsm_engine.go 文件头。\npackage main\n\nimport \"sort\"\n\n"
+  },
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/go/lsm_compact.go",
+    "start": 70,
+    "end": 189,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/KV存储引擎LSM/go/lsm_levels.go",
+    "mode": "cut",
+    "preamble": "// lsm_levels.go — 分层目标 / 得分 / 挑层(与 lsm_compact.go 同属 package main)\n//\n// 拆文件只为满足单文件 ≤300 行的约束;Go 同包共享符号,零语义改动。\n// 算法出处见 lsm_compact.go / lsm_engine.go 文件头。\npackage main\n\n"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/Cassandra数据建模与墓碑/go/cassandra_model.go",
+    "start": 287,
+    "end": 387,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/Cassandra数据建模与墓碑/go/cassandra_model_check.go",
+    "mode": "cut",
+    "preamble": "// cassandra_model_check.go — 自检:主键解析、分区规模、墓碑清除条件、压缩策略\n//\n// 与 cassandra_model.go 同属 package main。断言逐条对应 apache/cassandra\n// 文档源文件中的明文规则(出处见 cassandra_model.go 文件头)。\n//\n// 运行: go run cassandra_model.go cassandra_model_check.go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\n"
+  }
+]

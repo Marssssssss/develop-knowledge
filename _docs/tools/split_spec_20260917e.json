@@ -1,0 +1,10 @@
+[
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/DynamoDB单表设计与容量/go/dynamodb_capacity.go",
+    "start": 290,
+    "end": 409,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/DynamoDB单表设计与容量/go/dynamodb_capacity_check.go",
+    "mode": "cut",
+    "preamble": "// dynamodb_capacity_check.go — 自检:容量换算、LSI/GSI 语义、项目集合与分区硬顶\n//\n// 与 dynamodb_capacity.go 同属 package main。标注「官方示例」的断言直接使用 AWS\n// 文档给出的数字。\n//\n// 运行: go run dynamodb_capacity.go dynamodb_capacity_check.go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"os\"\n)\n\n"
+  }
+]

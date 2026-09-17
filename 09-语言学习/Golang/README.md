@@ -48,6 +48,14 @@
 9. **context 包** ✅ `09-语言学习/Golang/context包/` — 取消树 + WithTimeout + select 取消模式 + WithValue
 10. **type parameter(Go 1.18+ 泛型)** ✅ `09-语言学习/Golang/type-parameter泛型/` — 类型参数 + type sets + ~ 底层类型 + 两种类型推断
 
+### 第三批(2026-09-18) — 运行时与编译期内部机制
+
+11. **内存分配器** ✅ `09-语言学习/Golang/内存分配器/` — 68 级 size class + span 布局 + tiny allocator + mcache/mcentral/mheap 三级缓存 + roundupsize
+12. **逃逸分析与内联** ✅ `09-语言学习/Golang/逃逸分析与内联/` — 位置图 + derefs 权重 + parameter tag + 内联预算表(80/57/17/1/80) + `-l` 档位
+13. **内存模型与 sync 原语** ✅ `09-语言学习/Golang/内存模型与sync原语/` — happens-before / DRF-SC + 各原语强度表 + Mutex 正常模式 vs 饥饿模式(1ms 阈值、barge、LIFO 重排、移交)
+14. **反射三定律** ✅ `09-语言学习/Golang/反射三定律/` — interface 对 + `Kind` vs `Type` + flag 位(StickyRO/EmbedRO/Indir/Addr/Method) + `CanSet` 真实边界
+15. **unsafe 与内存布局** ✅ `09-语言学习/Golang/unsafe与内存布局/` — `Sizeof/Alignof/Offsetof` 语义 + pointer bytes + 字段排序五规则 + size class 浪费 + `unsafe.Pointer` 六种合法模式
+
 ## 四、权威来源(本 README 主要依据)
 
 - [Go 语言规范 — The Go Programming Language Specification](https://go.dev/ref/spec) — 语法与语义的权威定义, 含 channel、select、defer、slice 完整规范。
@@ -66,6 +74,19 @@
 - [A Guide to the Go Garbage Collector](https://go.dev/doc/gc-guide) — GOGC 公式、GOMEMLIMIT、mark assist。
 - [Go Concurrency Patterns: Context — go.dev/blog](https://go.dev/blog/context) — Context 接口与派生树语义。
 - [An Introduction To Generics — go.dev/blog](https://go.dev/blog/intro-generics) — 类型参数/type sets/两种类型推断。
+
+第三批(2026-09-18,demo 307-311)新增:
+
+- [The Go Memory Model(2022-06-06 版)](https://go.dev/ref/mem) — Requirement 1~3、synchronized before / happens before、数据竞争与 DRF-SC、各同步原语保证条款。
+- [Internal sync: mutex.go(go1.24.0)](https://raw.githubusercontent.com/golang/go/go1.24.0/src/internal/sync/mutex.go) — 状态位、`starvationThresholdNs = 1e6`、`lockSlow`/`unlockSlow`、`queueLifo` 队首重排与饥饿模式移交。
+- [The Laws of Reflection — Rob Pike](https://go.dev/blog/laws-of-reflection) — 三定律原文、interface 的 `(值, 类型)` 表示、`Kind` 与最大类型 getter、结构体字段可设置性。
+- [reflect/value.go(go1.24.0)](https://raw.githubusercontent.com/golang/go/go1.24.0/src/reflect/value.go) — flag 常量块、`CanSet` 一行判定、`Elem`/`Field` 的权限位掩码与全部 panic 消息格式。
+- [unsafe 包文档](https://pkg.go.dev/unsafe) — `Sizeof/Alignof/Offsetof` 语义、`unsafe.Pointer` 的六种合法模式与 `// INVALID:` 反例。
+- [fieldalignment 分析器](https://pkg.go.dev/golang.org/x/tools/go/analysis/passes/fieldalignment) — `gcSizes` 布局算法、pointer bytes 三例、`optimalOrder` 五条规则、`classSize` 与 false sharing 警告。
+- [runtime/sizeclasses.go(go1.24.0)](https://raw.githubusercontent.com/golang/go/go1.24.0/src/runtime/sizeclasses.go) — 68 级 `class_to_size` 与 span 布局表。
+- 口径说明:本机**无 Go 工具链**,`go/` 目录的代码只做人工审查 + `_docs/tools/` 的
+  结构自检(`bracket_check.py` / `syntax_sanity.py`),不作为"已编译通过"的承诺;
+  Python 侧实现均实跑断言,以它为准。
 
 ## 五、与已有 demo 的边界
 

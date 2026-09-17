@@ -46,10 +46,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 8        # 下一轮取循环第 8 位 → 09-语言学习(本轮已取第 7 位 = 08-安全)
-sub_pos        : 01:1 02:2 03:2 04:2 05:3 06:2 07:2 08:2 09:1 10:1 11:1  # 各大类内子类目指针
-last_run       : 2026-09-18 00:01  # 00:00 槽占位锁(实测 shell date);保险 45 分钟
-last_top       : 08-安全  # 信息字段,不参与决策
+top_pos        : 9        # 下一轮取循环第 9 位 → 10-逆向工程(本轮已取第 8 位 = 09-语言学习)
+sub_pos        : 01:1 02:2 03:2 04:2 05:3 06:2 07:2 08:2 09:2 10:1 11:1  # 各大类内子类目指针
+last_run       : 2026-09-18 00:29  # 00:00 槽收尾(实测 shell date);保险 45 分钟
+last_top       : 09-语言学习  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -58,11 +58,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
-| 2026-09-17 23:03 | 32 | Web安全第二批:OAuth2 PKCE(附B向量/redirect_uri 精确匹配/码单次600s/降级检测/iss 防 mix-up)、Cookie 存储模型(点边界域匹配/400天/前缀大小写不敏感/非安全不得覆盖 Secure)+SameSite 2 分钟例外+HSTS §8、SSRF+WHATWG IPv4(等价写法/解析器分歧/内嵌 v4)、访问控制 RBAC vs ABAC/ReBAC+对象级 CWE-639、点击劫持 XFO 困惑表+CSP frame-ancestors 优先;Py 273+JS 105 断言 | S1+S3 rotate(ID 207..306) | +5 | 306 | 9 WebFetch+5 curl;槽位 ✗ 22:47(应 20:00 补跑) |
-| 2026-09-17 14:36 | 28 | NoSQL 第二批:MongoDB R1~R9+ESR、DynamoDB 台阶取整、Cassandra 墓碑、LSM WAL、Protobuf varint/ZigZag;351 断言 | S1+S3 rotate(ID 197..301) | +5 | 301 | 9 WebFetch,槽位 ✓ |
-| 2026-09-17 12:34 | 24 | CI-CD 第二批:GH Actions 顺序即语义、GitLab rules 首次匹配、Jenkins post 顺序、Argo CD 三态、SemVer+OCI;431 断言 | S1+S3(ID 197..296) | +5 | 296 | 10 WebFetch,槽位 ✓ |
+| 2026-09-18 00:29 | 44 | Golang 第三批 5 demo:内存分配器(68 size class/tiny/三级缓存)、逃逸分析与内联(derefs 权重/预算表)、内存模型与 sync 原语(HB 闭包/Mutex 双模式)、反射三定律(flag 位/CanSet 边界)、unsafe 与内存布局(pointer bytes/六种模式);Py 372 断言全绿 | S1+S3 rotate(ID 212..311) | +5 | 311 | 7 WebFetch+13 curl;槽位 ✓ 00:00 |
+| 2026-09-17 23:03 | 32 | Web安全第二批:OAuth2 PKCE、Cookie/HSTS、SSRF+WHATWG IPv4、访问控制 IDOR、点击劫持 XFO/CSP;Py 273+JS 105 断言 | S1+S3 rotate(ID 207..306) | +5 | 306 | 9 WebFetch+5 curl;槽位 ✗ 22:47(20:00 补跑) |
+| 2026-09-17 14:36 | 28 | NoSQL 第二批:MongoDB ESR、DynamoDB 台阶、Cassandra 墓碑、LSM WAL、Protobuf;351 断言 | S1+S3 rotate(ID 197..301) | +5 | 301 | 8 WebFetch+1 WebSearch;槽位 ✓ |
+| 2026-09-17 12:34 | 24 | CI-CD 第二批:Actions 过滤器/matrix、GitLab rules、Jenkins post、Argo CD 三态、SemVer+OCI;431 断言 | S1+S3 rotate(ID 197..296) | +5 | 296 | 10 WebFetch;槽位 ✓ |
 | 2026-09-17 11:14 | 20 | 强化学习第二批:DQN 回放+目标网络、Double Q、TD(λ)、Actor-Critic+GAE、SAC;68 断言 | +5 | 291 | 全 Python |
-| 2026-09-17 08:23 | 17 | Android 首批:OkHttp 链、协程与 Flow、WorkManager、Fragment/ViewModel、Service;169 断言;补 02-Android 四子域 README | +5 | 286 | 槽位 ✓ |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

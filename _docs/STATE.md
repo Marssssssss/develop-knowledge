@@ -46,10 +46,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 5        # 下一轮取循环第 5 位 → 06-DevOps(本轮已取第 4 位 = 05-AI与机器学习)
-sub_pos        : 01:1 02:2 03:2 04:2 05:3 06:1 07:1 08:1 09:1 10:1 11:1  # 各大类内子类目指针
-last_run       : 2026-09-17 12:03  # 12:00 槽(本轮 06-DevOps/02-CI-CD 第二批)进行中
-last_top       : 05-AI与机器学习  # 信息字段,不参与决策
+top_pos        : 6        # 下一轮取循环第 6 位 → 07-数据存储(本轮已取第 5 位 = 06-DevOps)
+sub_pos        : 01:1 02:2 03:2 04:2 05:3 06:2 07:1 08:1 09:1 10:1 11:1  # 各大类内子类目指针
+last_run       : 2026-09-17 12:34  # 12:00 槽(本轮 06-DevOps/02-CI-CD 第二批)完成
+last_top       : 06-DevOps  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -58,11 +58,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
-| 2026-09-17 11:14 | 20 | 强化学习第二批:DQN 回放+目标网络(同号率 0.732→0.525)、Double Q(Lemma1 充要条件逐行一致)、TD(λ)(前后向精确等价)、Actor-Critic+GAE、SAC(三起点收敛 0.39009);68 断言 | +5 | 291 |
+| 2026-09-17 12:34 | 24 | CI-CD 第二批 5 demo:GH Actions 顺序即语义、GitLab rules 首次匹配、Jenkins post 固定顺序、Argo CD automated 三态+唯一尝试键、SemVer 全序+OCI 内容寻址;Python 431 断言 | S1 索引同步 + S3 rotate(ID 197..296) | +5 | 296 | 10 WebFetch(含镜像实读三份规范),Go 无工具链走结构自检,槽位 ✓ 12:02:45 |
+| 2026-09-17 11:14 | 20 | 强化学习第二批:DQN 回放+目标网络(同号率 0.732→0.525)、Double Q(Lemma1 充要条件逐行一致)、TD(λ)(前后向等价)、Actor-Critic+GAE、SAC(温度自调节收敛);68 断言 | +5 | 291 |
 | 2026-09-17 08:23 | 17 | Android 首批:OkHttp 链与连接池、协程上下文与 Flow、WorkManager、Fragment/ViewModel、Service 三形态;169 断言;补 02-Android 四子域 README | +5 | 286 |
 | 2026-09-17 06:24 | 13 | 进程线程协程第二批:fork僵尸、生产者消费者、读写锁、ucontext 有栈协程、CFS(vruntime/最左=份额);20 断言 | +5 | 281 |
 | 2026-09-17 05:09 | 9 | 后端 Node.js 首批:Libuv 线程池、Stream 背压、Cluster/WorkerThreads、async_hooks/ALS、HTTP-Agent 复用;66 断言 | +5 | 276 |
-| 2026-09-17 02:30 | 0 | 游戏服务端第三批:FlatBuffers 零拷贝、Snappy 压缩、心跳重连、跨服 RPC、全局服务器;102 断言 | +5 | 271 |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

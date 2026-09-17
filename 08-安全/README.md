@@ -29,6 +29,11 @@
 | `01-密码学/签名/ECDSA-P256/` | ECDSA + RFC 6979 确定性签名(P-256 + HMAC-DRBG 消随机数) |
 | `01-密码学/消息认证/HOTP-TOTP/` | HOTP/TOTP 一次性口令(RFC 4226/6238,动态截断 + 30s 时间步) |
 | `01-密码学/密码派生/PBKDF2/` | PBKDF2 口令密钥派生(RFC 8018 + RFC 6070 向量,含 NUL 陷阱) |
+| `01-Web安全/OAuth2-PKCE与授权码/` | 授权码流程 + PKCE(RFC 6749/7636/9700,含 mix-up 与降级防御) |
+| `01-Web安全/Cookie安全属性与SameSite/` | Cookie 存储模型 + SameSite + HSTS(RFC 6265/6265bis/6797) |
+| `01-Web安全/SSRF与URL解析歧义/` | SSRF 防护 + WHATWG IPv4 解析与解析器分歧 |
+| `01-Web安全/访问控制与IDOR/` | 访问控制与对象级授权(RBAC/ABAC/ReBAC + CWE-639) |
+| `01-Web安全/点击劫持与框架嵌入/` | X-Frame-Options + CSP frame-ancestors(HTML §7.7) |
 
 ## 待研究
 

@@ -20,7 +20,7 @@
 ## 待研究
 
 - [x] Ghidra 反编译器原理与脚本化分析 → 258 Ghidra反编译流水线（15 阶段/Heritage）+ 259 Ghidra-headless自动化 + 261 Ghidra脚本化批量重命名
-- [ ] Frida hook 原理（QuickJS 注入 + 双向通信通道）
+- [x] Frida hook 原理（QuickJS 注入 + 双向通信通道）→ 312 Frida-Java层hook + 313 Frida-Interceptor-native-hook + 316 Objection与Frida（02-移动端逆向）
 - [x] ELF 与 PE 文件格式对比 → 087 ELF文件解析 / 088 PE文件解析（对比表见 165 Mach-O README §对比）
 - [x] ARM64 指令集速览 → 257 ARM64指令集与调用约定（01-二进制逆向）
 - [x] Mach-O 文件格式（macOS 侧）→ 165 Mach-O文件解析
@@ -59,3 +59,7 @@
 - [FlatProgramAPI — 官方 Javadoc（261）](https://ghidradocs.com/12.1_PUBLIC/docs/GhidraAPI_javadoc/api/ghidra/program/flatapi/FlatProgramAPI.html)
 - [SourceType — 官方 Javadoc，符号来源优先级链（261）](https://ghidradocs.com/11.0_PUBLIC/docs/GhidraAPI_javadoc/api/ghidra/program/model/symbol/SourceType.html)
 - [Symbol Management — Ghidra 官方文档，Batch Renaming 与命名规则（261）](https://mintlify.wiki/NationalSecurityAgency/ghidra/guide/symbols)
+- [Frida 官方文档 — Android 与 JavaScript API（312/313/316）](https://frida.re/docs/android/)
+- [APK signature scheme v2 / v3 — AOSP 官方中国镜像（314）](https://source.android.google.cn/docs/security/features/apksigning/v2)
+- [MASTG-TECH-0012: Bypassing Certificate Pinning — OWASP MAS（315）](https://mas.owasp.org/MASTG/techniques/android/MASTG-TECH-0012)
+- [objection 官方 README / Wiki / pinning.ts 源码（315/316）](https://github.com/sensepost/objection)

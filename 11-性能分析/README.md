@@ -41,6 +41,7 @@
 - [x] `benchstat`、`-prof perfnorm`、统计检验选择、CI 回归门禁、主动基准测试清单（[03-基准测试方法论/](./03-基准测试方法论/)，2026-09-15 首批 5 demo 收官）
 - [x] 容器性能分析（cgroup v2 级资源压力归因）（[01-系统级剖析/容器性能归因/](./01-系统级剖析/容器性能归因/)，2026-09-16）
 - [x] CI 性能回归门禁（基准结果做成趋势而非单次断言）（[03-基准测试方法论/CI性能回归门禁/](./03-基准测试方法论/CI性能回归门禁/)，2026-09-15）
+- [x] 应用级剖析首批（pprof 在线采集/top 解读、py-spy 采样、cProfile tottime-cumtime、benchmark ReportAllocs）（[02-应用级剖析/](./02-应用级剖析/)，2026-09-18 首批 5 demo）
 - [ ] 延迟预算拆分：SLO → 每跳预算的下发策略
 - [ ] USL 参数拟合（从实测 (N, X) 点估 α、β、γ 并定位 Nmax）
 - [ ] 中断/软中断绑核再平衡（`smp_affinity` 掩码已覆盖，缺实际调优与 RPS/RFS 侧）
@@ -55,3 +56,4 @@
 - pkg.go.dev `benchstat` + golang/perf `utest.go` 源码 + JMH `LinuxPerfNormProfiler.java` + jmh-dev 邮件列表 + NIST/Skis/Dropbox 等 20 条来源（2026-09-15 首批 5 demo，逐条链接见 [03-基准测试方法论/README.md](./03-基准测试方法论/README.md)）
 - web.dev Core Web Vitals 阈值定义（含 p75 选型论证）+ Google Search Console 官方报告口径 + OpenTelemetry Traces 文档 + Neil Gunther USL 原文 + Cornell/UVA/HPC101 三条 Amdahl-Gustafson 讲解 + Semicolony 容量规划手册（2026-09-15 新增 [04-全链路性能/](./04-全链路性能/) 与 [05-容量规划与性能建模/](./05-容量规划与性能建模/)，逐条链接见两目录 README）
 - bpftrace 语言参考/一行式教程/手册页 + Gregg USE Method 原文与 Linux 清单 + kernel iostats + cgroup v2 内核文档 + Gregg DockerCon 2017 容器分析 + runqlat + kernel sched-stats + IRQ affinity/irq-redir + Red Hat 调优指南（2026-09-16 新增 [01-系统级剖析/](./01-系统级剖析/) 第三批 5 demo，逐条链接见该目录 README）
+- pkg.go.dev net/http/pprof、runtime/pprof、testing + golang/go pprof.go 源码 + Go Blog Profiling Go Programs + docs.python.org The Python Profilers + benfred/py-spy README（2026-09-18 新增 [02-应用级剖析/](./02-应用级剖析/) 首批 5 demo，逐条链接见该目录 README）

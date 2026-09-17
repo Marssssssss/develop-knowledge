@@ -46,10 +46,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 10       # 下一轮取循环第 10 位 → 11-性能分析(本轮已取第 9 位 = 10-逆向工程)
-sub_pos        : 01:1 02:2 03:2 04:2 05:3 06:2 07:2 08:2 09:2 10:2 11:1  # 各大类内子类目指针
-last_run       : 2026-09-18 04:00  # 04:00 槽占位锁(实测 shell date);保险 45 分钟
-last_top       : 10-逆向工程  # 信息字段,不参与决策
+top_pos        : 0        # 下一轮取循环第 0 位 → 01-游戏开发(本轮已取第 10 位 = 11-性能分析)
+sub_pos        : 01:1 02:2 03:2 04:2 05:3 06:2 07:2 08:2 09:2 10:2 11:2  # 各大类内子类目指针
+last_run       : 2026-09-18 04:29  # 04:00 槽收尾(实测 shell date);保险 45 分钟
+last_top       : 11-性能分析  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -58,11 +58,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-18 04:29 | 38 | 应用级剖析首批 5 demo:pprof 在线采集(Index 路由/delta/gc 仅 heap)、top 解读(flat=叶子/cum=在栈/100 帧截断保叶子侧)、py-spy(process_vm_readv/back 链/GIL/撕裂读)、cProfile(tottime-cumtime/primitive/递归特殊处理)、ReportAllocs(B-op 整除/ResetTimer/MB-s);Py 59 断言全绿 | S3 索引同步 rotate(ID 222..321) | +5 | 321 | 7 WebFetch;槽位 ✓ 04:00 |
+| 2026-09-18 02:22 | 36 | 移动端逆向首批 5 demo:Frida Java hook+Interceptor+APK 签名 v1v2v3+SSL Pinning+Objection;Py 62 断言 | S1+S3 rotate(ID 202..316) | +5 | 316 | 6 WebFetch+2 WebSearch+3 curl;槽位 ✓ 02:00 |
 | 2026-09-18 00:29 | 44 | Golang 第三批 5 demo:内存分配器(68 size class/tiny/三级缓存)、逃逸分析与内联(derefs 权重/预算表)、内存模型与 sync 原语(HB 闭包/Mutex 双模式)、反射三定律(flag 位/CanSet 边界)、unsafe 与内存布局(pointer bytes/六种模式);Py 372 断言全绿 | S1+S3 rotate(ID 212..311) | +5 | 311 | 7 WebFetch+13 curl;槽位 ✓ 00:00 |
 | 2026-09-17 23:03 | 32 | Web安全第二批:OAuth2 PKCE、Cookie/HSTS、SSRF+WHATWG IPv4、访问控制 IDOR、点击劫持 XFO/CSP;Py 273+JS 105 断言 | S1+S3 rotate(ID 207..306) | +5 | 306 | 9 WebFetch+5 curl;槽位 ✗ 22:47(20:00 补跑) |
 | 2026-09-17 14:36 | 28 | NoSQL 第二批:MongoDB ESR、DynamoDB 台阶、Cassandra 墓碑、LSM WAL、Protobuf;351 断言 | S1+S3 rotate(ID 197..301) | +5 | 301 | 8 WebFetch+1 WebSearch;槽位 ✓ |
-| 2026-09-17 12:34 | 24 | CI-CD 第二批:Actions 过滤器/matrix、GitLab rules、Jenkins post、Argo CD 三态、SemVer+OCI;431 断言 | S1+S3 rotate(ID 197..296) | +5 | 296 | 10 WebFetch;槽位 ✓ |
-| 2026-09-17 11:14 | 20 | 强化学习第二批:DQN 回放+目标网络、Double Q、TD(λ)、Actor-Critic+GAE、SAC;68 断言 | +5 | 291 | 全 Python |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

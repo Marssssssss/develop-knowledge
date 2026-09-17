@@ -190,7 +190,6 @@ def p_or(self):
 - **`'' == 0` 为真、`'abc' == 0` 为假**：空串转数字是 0（官方明确），非 JSON 数字串是 NaN；
   用 `==` 判"非空字符串"时务必小心。
 - 断言优先：本 demo 全部结论都以断言固化，`python/gha_semantics.py` 直接跑即可回归。
-
 ## 参考资料（实际阅读过的权威来源）
 
 - [Workflow syntax for GitHub Actions — GitHub Docs](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)

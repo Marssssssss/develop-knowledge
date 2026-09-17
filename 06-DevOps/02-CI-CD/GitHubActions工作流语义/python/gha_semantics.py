@@ -6,6 +6,7 @@
 
 from __future__ import annotations
 
+import gha_eval as EV
 import gha_expr as E
 import gha_trigger as T
 
@@ -32,7 +33,7 @@ def raises(fn, *a, **kw):
 
 
 def ev(src, ctx=None):
-    return E.evaluate(src, ctx or {})
+    return EV.evaluate(src, ctx or {})
 
 
 # ================================ 1. 触发过滤 ================================
@@ -281,7 +282,6 @@ def test_expr():
     ctx4 = {"__files__": {"a.py": "AAA!", "b.py": "BBB"}}
     check("hashFiles 对内容敏感",
           ev("hashFiles('**.py')", ctx4) != ev("hashFiles('**.py')", ctx3))
-
 
 def main():
     print("GitHub Actions 语义自检")

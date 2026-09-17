@@ -1,0 +1,10 @@
+[
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/MongoDB聚合与查询优化/python/mongo_optimizer.py",
+    "start": 223,
+    "end": 374,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/MongoDB聚合与查询优化/python/mongo_optimizer_coalesce.py",
+    "mode": "cut",
+    "preamble": "\"\"\"\nmongo_optimizer_coalesce.py — 管道合并优化 R5~R9(官方\"coalescence\"阶段)\n\n权威来源:MongoDB manual: Aggregation Pipeline Optimization\n  (https://www.mongodb.com/docs/manual/core/aggregation-pipeline-optimization/)\n官方原文:\"When possible, the optimization phase coalesces a pipeline stage into its\npredecessor. Generally, coalescence occurs *after* any sequence reordering\noptimization.\" —— 故本模块由 mongo_optimizer.optimize() 在重排之后调用。\n\n运行自检: python3 mongo_pipeline_check.py\n\"\"\"\nfrom __future__ import annotations\n\nfrom typing import Any, Dict, List, Tuple\n\nfrom mongo_pipeline import COUNT_CHANGING_STAGES, Stage\n"
+  }
+]

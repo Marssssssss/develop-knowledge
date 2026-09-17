@@ -1,0 +1,26 @@
+[
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/MongoDB聚合与查询优化/go/mongo_pipeline.go",
+    "start": 521,
+    "end": 628,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/MongoDB聚合与查询优化/go/mongo_pipeline_check.go",
+    "mode": "cut",
+    "preamble": "// mongo_pipeline_check.go — 自检:重排/合并规则、ESR 索引选择、结构校验\n//\n// 与 mongo_pipeline.go / mongo_optimizer.go / mongo_esr.go 同属 package main。\n// 断言逐条对应官方文档示例或明文规则(出处见另三个文件的文件头)。\n//\n// 运行: go run mongo_pipeline.go mongo_optimizer.go mongo_esr.go mongo_pipeline_check.go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"os\"\n)\n"
+  },
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/MongoDB聚合与查询优化/go/mongo_pipeline.go",
+    "start": 379,
+    "end": 520,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/MongoDB聚合与查询优化/go/mongo_esr.go",
+    "mode": "cut",
+    "preamble": "// mongo_esr.go — ESR 谓词分类、索引选择与管道结构校验(同包 main)\n//\n// 权威来源:\n//   - MongoDB manual: The ESR (Equality, Sort, Range) Guideline\n//     https://www.mongodb.com/docs/manual/tutorial/equality-sort-range-guideline/\n//     * \"Equality fields must come first.\"\n//     * \"To avoid in-memory sorts, put sort fields before range in the index.\"\n//     * \"$ne or $nin are range operators\" / \"$regex is a range operator\"\n//     * \"$in ... fewer than 201 array elements ... similar to an equality predicate\"\n//   - MongoDB manual: Aggregation Pipeline Limits(1000 阶段上限)\npackage main\n\nimport \"sort\"\n"
+  },
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/MongoDB聚合与查询优化/go/mongo_pipeline.go",
+    "start": 176,
+    "end": 378,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/MongoDB聚合与查询优化/go/mongo_optimizer.go",
+    "mode": "cut",
+    "preamble": "// mongo_optimizer.go — 序列重排 R1/R2/R4 与合并 R5~R8 + Optimize 入口(同包 main)\n//\n// 权威来源:MongoDB manual: Aggregation Pipeline Optimization\n//   https://www.mongodb.com/docs/manual/core/aggregation-pipeline-optimization/\n//   * \"MongoDB moves any filters in the $match stage that do not require values\n//      computed in the projection stage to a new $match stage before the projection.\"\n//   * \"the $match moves before the $sort\" / \"the $skip moves before $project\"\n//   * \"coalesces the $limit into the $sort\"(中间有 $unwind/$group 则不合并)\n//   * \"coalescence occurs after any sequence reordering optimization\"\n// 口径差异:R3($redact+$match)与 R9($lookup+$unwind)仅在 Python 版实现。\npackage main\n\nimport \"sort\"\n"
+  }
+]

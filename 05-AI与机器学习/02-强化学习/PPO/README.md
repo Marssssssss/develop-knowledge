@@ -143,8 +143,10 @@ end for
 ## 运行方式
 
 ```bash
-python3 ppo.py
+python3 ppo.py     # 退出码 0 = 五个 demo 全部跑完
 ```
+
+> 源码分两个文件:`ppo.py`(5 个 demo)+ `ppo_core.py`(GridWorld / softmax 策略 / `ppo_update` / `ppo_train`),拆分只为守住「单源文件 ≤ 300 行」上限(OPTIMIZATION.md §1.1);直接 `python3 ppo.py` 即可。
 
 ## 关键代码片段
 
@@ -169,8 +171,11 @@ V[state] += lr_value * (returns[t] - V[state])
 
 - **时间复杂度**：O(iterations × batch_size × epochs × |A|)，多 epoch 复用是 PPO vs REINFORCE 的核心优势
 - **clip 参数 ε**：ε=0.2 是原论文默认值；ε 过小 → 更新过于保守，收敛慢；ε 过大 → 接近 vanilla PG，可能策略崩溃
-- **clip fraction**：被 clip 的样本比例，通常 10-30% 为健康范围；过高说明学习率太大
-- **策略比率均值**：理想值接近 1.0（新策略 ≈ 旧策略）；偏离 1.0 说明更新过大
+- **实测（`python ppo.py`）**：Demo 1 训练 100 批后成功率 **100.0%**、10 批窗口平均回报 0.353 → **0.972**,
+  贪心策略能沿 `S→` 走到 `G`;Demo 2 的 clip fraction 随 ε 增大反而下降(ε=0.1/0.2/0.3 → **0.25% / 0.10% / 0.02%**)。
+- **稀疏奖励是硬边界**：均匀随机策略下 200 次采样只有 **2 次**能走到目标（其余全落洞，落洞奖励 0），
+  故**零初始化策略采出的单批数据常常整批回报全 0** → 优势全 0 → 梯度为 0,什么也学不到(决定了 Demo 3 的写法)。
+- **策略比率均值**：理想值接近 1.0;lr_policy=0.1 下单批 4 epoch 实测区间仅 **0.9719 ~ 1.0093**,clip 从未触发。
 
 ## 注意事项与常见坑
 
@@ -180,6 +185,12 @@ V[state] += lr_value * (returns[t] - V[state])
 4. **优势函数的归一化**：实践中常对 batch 内优势做标准化 (Â - μ) / σ，加速收敛
 5. **RLHF 中的 PPO 变体**：在 RLHF 微调 LLM 时，PPO 还会加入 pretraining gradients（L^PPO-ptx = L^PPO-clip + λ·L^pretrain），防止模型遗忘语言能力（arXiv:2307.04964 公式 17）
 6. **on-policy 约束**：虽然 PPO 复用数据，但旧数据在 K epoch 后必须丢弃——严格来说 PPO 仍是 on-policy 算法
+7. **「比率恒为 1.000」不是收敛,是信号缺失**（开发期实跑抓到）：`ppo_train` 返回 4 个值
+   `(theta, batch_rewards, stats_history, V)`,早期版本 Demo 4 按 3 个解包直接 `ValueError` 崩溃;Demo 3 用
+   **均匀初始策略**采批时整批回报全 0 → 优势全 0 → `max|Δtheta| == 0.0`,ratio 精确停在 `1.000000`,
+   看着"很稳定"实际啥也没发生。**判据:比率全 1.0 + clip fraction 0 + theta 增量为 0,三者同时出现即信号缺失**,
+   不是"已收敛"。修法:先 `ppo_train(iterations=20)` 让策略离开均匀分布再采批。
+8. **演示脚本也要实跑**:上述两个缺陷（崩溃 + 空转）**光读代码都看不出来** —— 一个错在解包个数,一个错在奖励分布恰好全零。
 
 ## 参考资料（实际阅读过的权威来源）
 

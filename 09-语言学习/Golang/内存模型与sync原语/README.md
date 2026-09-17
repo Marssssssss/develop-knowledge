@@ -20,8 +20,7 @@ Go 的并发正确性建立在两条分开的定义上：**语言规范**给出 
 | read-like / write-like | read/atomic read/lock/recv 与 write/atomic write/unlock/send/close |
 | synchronized before | 同步读 `r` 观察到同步写 `w` ⇒ `w` synchronized before `r` |
 | happens before | `sequenced before` ∪ `synchronized before` 的**传递闭包** |
-| 数据竞争 | 同位置、至少一个非同步、且 HB 不可比 |
-| DRF-SC | 无竞争的程序，行为等价于各 goroutine 的某个顺序交错 |
+| 数据竞争 / DRF-SC | 同位置、至少一个非同步、HB 不可比；无竞争程序等价于某顺序交错 |
 
 历史背景：现行定义（2022-06-06 版）明确采用 Boehm & Adve 在 PLDI 2008 提出的
 C++ 并发内存模型框架；相比 C/C++，Go 对"有竞争的程序"只做有限约束（更接近 Java/JS），
@@ -36,29 +35,20 @@ C++ 并发内存模型框架；相比 C/C++，Go 对"有竞争的程序"只做�
 1. **Requirement 1**：每个 goroutine 内部的操作序列必须与其 `sequenced before`
    （语言规范定义的控制流与表达式求值顺序）相容。
 2. **Requirement 2**：把映射 `W` 限制在同步操作上，必须能由某个**隐式全序**解释。
-3. **Requirement 3**：对普通读 `r`，`W(r)` 必须是一个**可见**的写 `w`——
-   `w` happens before `r`，且不存在另一个 `w'` 也 happens before `r` 而 `w` happens before `w'`。
-
-`visible_write` 的唯一性正是本 demo 里断言的"可见写唯一"。
+3. **Requirement 3**：对普通读 `r`，`W(r)` 必须是一个**可见**的写 `w`——`w` happens
+   before `r`，且不存在另一个 `w'` 也 happens before `r` 而 `w` happens before `w'`。
+   可见写的唯一性正是本 demo 断言的那一条。
 
 ### 2. 各同步原语的强度（规范原文结论）
 
-| 原语 | 保证 |
-| --- | --- |
-| go 语句 | 启动语句 synchronized before 新 goroutine 的执行开始 |
-| goroutine 退出 | **不保证**同步于任何事件（连 `go` 语句都可能被优化掉） |
-| channel send（缓冲） | send synchronized before **对应** receive 完成 |
-| channel close | close synchronized before 收到零值的 receive |
-| unbuffered channel | receive synchronized before **对应 send 完成**（比缓冲强） |
-| channel 容量 C | 第 k 次 receive synchronized before 第 **k+C** 次 send 完成 |
-| Mutex / RWMutex | 第 n 次 Unlock synchronized before 第 m 次 Lock 返回（n < m） |
-| 成功的 TryLock | 等价于 Lock；**失败则完全不建立同步关系** |
-| Once | `f()` 的完成 synchronized before 任何 `once.Do(f)` 的返回 |
-| atomic | 若 A 的效果被 B 观察到，则 A synchronized before B；**所有原子操作有一个 SC 全序** |
-| init | `q` 的 init 完成 → `p` 的 init 开始（p 导入 q）；全部 init → `main.main` |
-| Finalizer | `SetFinalizer(x, f)` synchronized before `f(x)` |
+规范对每条原语给出的保证词强度不同，最反直觉的三条是：
 
-本 demo 把上表每一条都建成了一个执行场景并断言其 HB 关系与竞争结论。
+- goroutine **退出不保证**同步于任何事件（连那条 `go` 语句本身都可能被优化掉）；
+- `TryLock` **成功**等价于 `Lock`，但**失败则完全不建立同步关系**；
+- 所有 atomic 操作共享**一个 SC 全序**，而普通读写没有。
+
+完整的 12 条原语强度表见 [`NOTES.md §1`](./NOTES.md)。本 demo 把表中每一条都建成
+一个执行场景并断言其 HB 关系与竞争结论（B 组、C 组断言）。
 
 ### 3. 为什么"无缓冲先收后发"与"缓冲先收后发"不同
 
@@ -125,41 +115,21 @@ Starvation mode is important to prevent pathological cases of tail latency.*
 
 ## 对比 / 选型
 
-| 维度 | Go（单一 Mutex + 双模式） | Java `ReentrantLock` | C++ `std::mutex` |
-| --- | --- | --- | --- |
-| 公平性 | 自适应（正常/饥饿自动切） | 可选 fair 构造参数 | 实现自定，通常不公平 |
-| 公平代价 | 只在检测到长等待后才付出 | 立即付出（吞吐下降） | — |
-| 状态载体 | 一个 int32 位域 + sema | AQS 内部 state | 平台原语 |
-| 可重入 | **不可重入** | 可重入 | 不可重入 |
-| TryLock 语义 | 成功等价 Lock、失败无同步效果 | `tryLock` 同 | `try_lock` 同 |
+与 Java `ReentrantLock`（构造时二选一公平策略）、C++ `std::mutex`（通常不公平）相比，
+Go 的路线是"**默认最大化吞吐，只在检测到病态长尾时短暂切到公平**"。
+完整对照表见 [`NOTES.md §2`](./NOTES.md)。
 
 ## 环境准备
 
-- 操作系统：任意（模型与平台无关）
-- Python：3.8+（实测 3.13.12）
-- Go：仅 `go/` 目录需要；复现真实竞争检测需 Go 工具链
+任意操作系统（模型与平台无关）；Python 3.8+（实测 3.13.12）；Go 仅 `go/` 目录需要，
+复现真实竞争检测（`-race`）才需 Go 工具链。
 
 ## 运行方式
 
-### Python（含全部断言，推荐先跑这个）
-
 ```bash
-cd python
-python3 main.py     # 54 项断言，退出码 0 表示全绿
-```
-
-### Go
-
-```bash
-cd go
-go run .            # main.go + memory_model.go + mutex.go，同一批断言
-```
-
-### 在真实程序上验证（需要 Go 工具链）
-
-```bash
-go test -race ./...       # 竞争检测器：把本 demo 里的"竞争"场景写成真实程序即可复现
-go run -race main.go
+cd python && python3 main.py    # 推荐先跑：54 项断言，退出码 0 表示全绿
+cd go && go run .               # main.go + memory_model.go + mutex.go，同一批断言
+go test -race ./...             # 有工具链时：把本 demo 的"竞争"场景写成真实程序即可复现
 ```
 
 ## 关键代码片段
@@ -198,13 +168,12 @@ def acquire_handoff(self, gid, now, w):
 
 - **HB 计算复杂度**：本 demo 用 Floyd–Warshall 求闭包，O(n³)。真实程序的操作数巨大，
   所以规范只给**语义**，实际工具（`-race`）用 happens-before 的**增量**维护来做检测。
-- **1ms 阈值**：`starvationThresholdNs = 1e6` 是写死的常量，不是可配置项；它决定
-  "多长的尾延迟才值得牺牲吞吐"。
+- **1ms 阈值写死**：`starvationThresholdNs = 1e6` 不可配置；它决定"多长的尾延迟才值得牺牲吞吐"。
 - **饥饿模式的代价**：原文写明"*Starvation mode is so inefficient, that two goroutines can go
   lock-step infinitely once they switch mutex to starvation mode*"——所以退出条件（最后一个
   等待者 / 等待 < 1ms）必须在**拿到锁时立刻**判定。
-- **本 demo 未覆盖**：`RWMutex` 的 writer 优先规则、`runtime_SemacquireMutex` 的真实实现、
-  内存屏障（`atomic` 的 acquire/release 语义在 x86 与 arm64 上的差异）。
+- **未覆盖范围**：`RWMutex` writer 优先、`runtime_SemacquireMutex` 实现、硬件内存屏障，见
+  [`NOTES.md §3`](./NOTES.md)。
 
 ## 注意事项与常见坑
 
@@ -215,10 +184,11 @@ def acquire_handoff(self, gid, now, w):
 | 相信 `TryLock` 失败也算"同步过" | 规范明写失败**完全无同步效果** | 别用 TryLock 做"检查可见性" |
 | `sync.Mutex` 当可重入锁用 | Go 的 Mutex **不可重入** | 拆成两把锁或改成纯函数 |
 | 复制含 Mutex 的结构体 | `go vet` 会报 copylocks；状态会裂开 | 用指针传递 |
-| 断言里留一个悬空的 `WOKEN` 位 | 源码里 `awoke` 的清除发生在**下一轮循环** | 单趟模型要用入口快照区分"本轮认领"与"上轮被唤醒" |
+
+建模时的实现坑（悬空 `WOKEN` 位、`awoke` 清除时机）见 [`NOTES.md §4`](./NOTES.md)。
 
 ## 参考资料（实际阅读过的权威来源）
 
-- [The Go Memory Model（2022-06-06 版）](https://go.dev/ref/mem) — Requirement 1~3、synchronized before 与 happens before 的定义、数据竞争定义、DRF-SC、Initialization / Goroutine creation / Goroutine destruction / Channel communication / Locks / Once / Atomic Values / Finalizers 全部保证条款。
-- [go1.24.0 `src/internal/sync/mutex.go`](https://raw.githubusercontent.com/golang/go/go1.24.0/src/internal/sync/mutex.go) — 状态位 `mutexLocked/mutexWoken/mutexStarving/mutexWaiterShift`、`starvationThresholdNs = 1e6`、`lockSlow`/`unlockSlow` 全流程、`queueLifo` 队首重排、饥饿模式移交与退出条件。
-- [go1.24.0 `src/sync/mutex.go`](https://raw.githubusercontent.com/golang/go/go1.24.0/src/sync/mutex.go) — `sync.Mutex` 的公开语义与 "the n'th call to Unlock synchronizes before the m'th call to Lock for any n < m"、"A failed call to TryLock does not establish any synchronizes before relation at all"。
+- [The Go Memory Model（2022-06-06 版）](https://go.dev/ref/mem) — Requirement 1~3、synchronized before 与 happens before 的定义、数据竞争定义、DRF-SC，以及 Initialization / Goroutine creation / Goroutine destruction / Channel communication / Locks / Once / Atomic Values / Finalizers 全部保证条款。
+- [go1.24.0 `src/internal/sync/mutex.go`](https://raw.githubusercontent.com/golang/go/go1.24.0/src/internal/sync/mutex.go) — 状态位、`starvationThresholdNs = 1e6`、`lockSlow`/`unlockSlow` 全流程、`queueLifo` 队首重排、饥饿模式移交与退出条件。
+- [go1.24.0 `src/sync/mutex.go`](https://raw.githubusercontent.com/golang/go/go1.24.0/src/sync/mutex.go) — 公开语义："the n'th call to Unlock synchronizes before the m'th call to Lock for any n < m"、"A failed call to TryLock does not establish any synchronizes before relation at all"。

@@ -20,7 +20,7 @@
 | 目录 | demo |
 | --- | --- |
 | [01-深度学习/](./01-深度学习/) | 033 反向传播 · 034 2D 卷积 · 035 多头自注意力 · 137 权重初始化 Xavier/He · 138 Dropout · 139 BatchNorm · 140 Adam 优化器 · 141 LSTM · 232 LayerNorm/RMSNorm · 233 Softmax+交叉熵 · 234 残差连接/恒等映射 · 235 学习率调度+梯度裁剪 · 236 混合精度训练 |
-| [02-强化学习/](./02-强化学习/) | 036 Q-Learning 表格方法 · 037 REINFORCE 策略梯度 · 038 PPO 近端策略优化 |
+| [02-强化学习/](./02-强化学习/) | 036 Q-Learning 表格方法 · 037 REINFORCE 策略梯度 · 038 PPO 近端策略优化 · 287 DQN 经验回放与目标网络 · 288 Double Q-learning 与最大化偏差 · 289 资格迹 TD(λ) · 290 Actor-Critic 与 GAE · 291 SAC 最大熵与温度自调节（2026-09-17 第二批 5 demo，值估计/偏差/信用分配/优势估计/最大熵五条主干补齐） |
 | [03-LLM/](./03-LLM/) | 039 BPE 分词器 · 040 KV Cache 与自回归解码 · 041 解码采样策略 |
 | [04-计算机视觉/](./04-计算机视觉/) | 042 Sobel 边缘检测 · 043 Hough 直线检测 · 044 IoU 与 NMS |
 | [05-经典机器学习/](./05-经典机器学习/) | 097 OLS + Ridge 闭式解 + GD · 098 逻辑回归 sigmoid + L2 + OvR · 099 决策树 CART 基尼 + 预剪枝 · 100 KNN brute + KD-Tree · 101 K-Means Lloyd + k-means++ · 172 朴素贝叶斯三变体 + 平滑 · 173 SMO 二次规划 + 核技巧 · 174 随机森林 bootstrap + OOB · 175 AdaBoost.SAMME + GBDT · 176 交叉验证 + 混淆矩阵 + ROC-AUC |
@@ -28,8 +28,10 @@
 
 ## 待研究
 
-- [ ] DQN 算法
-- [ ] Actor-Critic / A2C / A3C
+- [x] DQN 算法（→ [02-强化学习/DQN经验回放与目标网络/](./02-强化学习/DQN经验回放与目标网络/)，2026-09-17，ID 287）
+- [x] Actor-Critic（→ [02-强化学习/ActorCritic与GAE/](./02-强化学习/ActorCritic与GAE/)，2026-09-17，ID 290）
+- [ ] A2C / A3C 与并行 actor-learner 的同步/异步取舍
+- [ ] 离线 RL / 基于模型的 RL（Dyna 与 MuZero 路线）
 - [ ] CLIP 原理
 - [x] LayerNorm / RMSNorm（→ [01-深度学习/LayerNorm/](./01-深度学习/LayerNorm/)，2026-09-15）
 - [ ] GRU 门控机制

@@ -5,6 +5,8 @@
 ## 子领域
 
 - [IO 多路复用/](./IO多路复用/) — `select` / `poll` / `epoll` / `kqueue` / `IOCP`
+- [协议设计/](./协议设计/) — 粘包拆包、Protobuf、FlatBuffers、Snappy
+- [零拷贝/](./零拷贝/) — sendfile、splice、MSG_ZEROCOPY
 
 ## 为什么单独拎出来
 

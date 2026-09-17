@@ -15,10 +15,14 @@ CPU 端组织渲染指令（DrawCall），GPU 端按顶点/几何/片元阶段�
 ## demo 索引
 
 - ✅ [深度缓冲/](./深度缓冲/) — Z-Buffer 与 Z-Fighting：C / Python / Go 三语言软件光栅化（依据 Khronos OpenGL Wiki / Marburg 讲义）
+- ✅ [延迟渲染GBuffer/](./延迟渲染GBuffer/) — 延迟着色两 pass 与 G-buffer 布局、light volume 半径反解、交叉点：C 无 / Python / Go（依据 LearnOpenGL）
+- ✅ [ForwardPlus分块光源剔除/](./ForwardPlus分块光源剔除/) — tile 视锥四平面、球-视锥+深度区间剔除、opaque/transparent 双列表、clustered 深度切片：Python / Go（依据 3dgep）
+- ✅ [GPU实例化Instancing/](./GPU实例化Instancing/) — draw call 记账、gl_InstanceID、divisor 取数模拟、mat4 四属性拆分：Python / Go（依据 LearnOpenGL）
+- ✅ [TileBasedGPU架构/](./TileBasedGPU架构/) — binning/to-do list、loadOp/storeOp 带宽记账、片上 MSAA resolve：Python / Go（依据 Arm 文档）
+- ✅ [计算着色器执行模型/](./计算着色器执行模型/) — 四系统值标识、cs_5_0/cs_4_x 限制、groupshared 树形归约与屏障、原子指令：Python / Go（依据 Microsoft Learn）
 
 ## 待研究
 
-- [ ] Forward vs Deferred vs Forward+ 选型
-- [ ] GPU Instancing 减少 Draw Call
 - [ ] SRP Batcher（URP）
-- [ ] Compute Shader 的并行任务
+- [ ] 几何着色器与网格着色器（Mesh Shader / meshlet）
+- [ ] GPU-Driven Rendering（间接绘制 + compute 剔除/LOD）

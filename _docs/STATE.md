@@ -5,13 +5,13 @@
 
 ## 一、轮询顺序(2026-09-16 起:大类严格轮转)
 
-**旧机制已废**:**禁止**按 priority_score/偏好挑领域;原「仅 ≠ 上轮大类」允许 A→B→A 横跳且表尾条目被系统性多抓。
+**旧机制已废**:禁止按 priority_score/偏好挑领域(原「仅 ≠ 上轮大类」允许 A→B→A 横跳且表尾被系统性多抓)。
 
 **大类循环**(固定顺序,取后指针 +1,回绕):
 `01-游戏开发 → 02-Web开发 → 03-系统编程 → 04-移动开发 → 05-AI与机器学习 → 06-DevOps → 07-数据存储 → 08-安全 → 09-语言学习 → 10-逆向工程 → 11-性能分析`
 每轮大类 = 循环[§二 `top_pos`],**11 大类各占 1/11 轮次,与子类目数量无关**。
 
-**大类内子类目轮转**:取该大类在索引表的全部条目(表序)第 `sub_pos[大类]` 个;完成后指针 +1 mod 条目数。新子类目只追加表尾,自动纳入。
+**大类内子类目轮转**:取该大类在索引表的全部条目(表序)第 `sub_pos[大类]` 个;完成后 +1 mod 条目数,新子类目只追加表尾。
 
 ```text
 轮询索引表(组内按 | 顺序即索引递增;仅供大类内子类目轮转取条目):
@@ -41,14 +41,14 @@
 55    04-移动开发: 推送与消息(APNs/FCM/厂商通道)
 ```
 
-> 39-55 为类目自动拓展新增(2026-09-12 起 S2);新子类目顺延 56 起。条目数:01:8 02:4 03:4 04:4 05:9 06:8 07:5 08:4 09:4 10:3 11:3(计 56)。
+> 39-55 为类目自动拓展新增(S2);新子类目顺延 56 起。条目数 01:8 02:4 03:4 04:4 05:9 06:8 07:5 08:4 09:4 10:3 11:3 = 56。
 
 ## 二、本轮状态
 
 ```
 top_pos        : 8        # 下一轮取循环第 8 位 → 09-语言学习(本轮已取第 7 位 = 08-安全)
 sub_pos        : 01:1 02:2 03:2 04:2 05:3 06:2 07:2 08:2 09:1 10:1 11:1  # 各大类内子类目指针
-last_run       : 2026-09-17 22:48  # 20:00 槽补跑(22:48 shell date 实测;槽位偏差见 schedule.md);保险阈值 45 分钟
+last_run       : 2026-09-17 23:03  # 20:00 槽补跑(22:47 触发/23:03 收尾实测;偏差见 schedule.md);保险 45 分钟
 last_top       : 08-安全  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
@@ -58,16 +58,16 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
-| 2026-09-17 14:36 | 28 | NoSQL 第二批:MongoDB R1~R9+ESR、DynamoDB 台阶取整+单分区 3000/1000 硬顶、Cassandra 墓碑三条清除、LSM WAL 32KB、Protobuf varint/ZigZag;351 断言 | S1+S3 rotate(ID 197..301) | +5 | 301 | 9 WebFetch,槽位 ✓ 14:00:55 |
-| 2026-09-17 12:34 | 24 | CI-CD 第二批:GH Actions 顺序即语义、GitLab rules 首次匹配、Jenkins post 固定顺序、Argo CD 三态、SemVer+OCI 寻址;431 断言 | S1+S3(ID 197..296) | +5 | 296 | 10 WebFetch,槽位 ✓ 12:02:45 |
-| 2026-09-17 11:14 | 20 | 强化学习第二批:DQN 回放+目标网络、Double Q、TD(λ) 前后向等价、Actor-Critic+GAE、SAC 温度自调节;68 断言 | +5 | 291 | 全 Python |
+| 2026-09-17 23:03 | 32 | Web安全第二批:OAuth2 PKCE(附B向量/redirect_uri 精确匹配/码单次600s/降级检测/iss 防 mix-up)、Cookie 存储模型(点边界域匹配/400天/前缀大小写不敏感/非安全不得覆盖 Secure)+SameSite 2 分钟例外+HSTS §8、SSRF+WHATWG IPv4(等价写法/解析器分歧/内嵌 v4)、访问控制 RBAC vs ABAC/ReBAC+对象级 CWE-639、点击劫持 XFO 困惑表+CSP frame-ancestors 优先;Py 273+JS 105 断言 | S1+S3 rotate(ID 207..306) | +5 | 306 | 9 WebFetch+5 curl;槽位 ✗ 22:47(应 20:00 补跑) |
+| 2026-09-17 14:36 | 28 | NoSQL 第二批:MongoDB R1~R9+ESR、DynamoDB 台阶取整、Cassandra 墓碑、LSM WAL、Protobuf varint/ZigZag;351 断言 | S1+S3 rotate(ID 197..301) | +5 | 301 | 9 WebFetch,槽位 ✓ |
+| 2026-09-17 12:34 | 24 | CI-CD 第二批:GH Actions 顺序即语义、GitLab rules 首次匹配、Jenkins post 顺序、Argo CD 三态、SemVer+OCI;431 断言 | S1+S3(ID 197..296) | +5 | 296 | 10 WebFetch,槽位 ✓ |
+| 2026-09-17 11:14 | 20 | 强化学习第二批:DQN 回放+目标网络、Double Q、TD(λ)、Actor-Critic+GAE、SAC;68 断言 | +5 | 291 | 全 Python |
 | 2026-09-17 08:23 | 17 | Android 首批:OkHttp 链、协程与 Flow、WorkManager、Fragment/ViewModel、Service;169 断言;补 02-Android 四子域 README | +5 | 286 | 槽位 ✓ |
-| 2026-09-17 06:24 | 13 | 进程线程协程第二批:fork 僵尸、生产者消费者、读写锁、ucontext 有栈协程、CFS;20 断言 | +5 | 281 | 槽位 ✓ |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 
 ## 四、rotate 与查找
 
-- rotate(副任务执行,不耗主配额):completed.md > 100 行 / schedule.md > 30 行 → 截到最近 100/30 行,丢弃部分查 `git log -p _docs/archive/`;写新数据时本文件只动 §三,archive append 即可
-- 某 demo 是否做过 → Grep `completed.md`;上轮权威资料/坑 → Grep `schedule.md`;总数 → 数 completed.md 行数
-- 本文件每轮末尾追加;§三 每行压到 ≤120 字并同步压缩旧行以守住 ≤5 KB;大改同步 `OPTIMIZATION.md §2.4`。
+- rotate(副任务,不耗主配额):completed.md > 100 行 / schedule.md > 30 行 → 截到最近 100/30,丢弃部分查 `git log -p _docs/archive/`;本文件只动 §三,archive append 即可
+- 某 demo 是否做过 → Grep `completed.md`;上轮资料/坑 → Grep `schedule.md`;总数 → 数 completed.md 行数
+- 每轮只动 §三且每行 ≤120 字,超 5 KB 时同步压缩旧行;大改同步 `OPTIMIZATION.md §2.4`。

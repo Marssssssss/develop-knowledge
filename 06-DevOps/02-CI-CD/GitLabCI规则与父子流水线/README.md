@@ -13,7 +13,7 @@ GitLab CI 的 `rules` 是整套配置里最"反直觉"的关键字：它既不�
 | --- | --- |
 | `rules` 求值 | 顺序首次匹配、`when: never`、默认属性 `on_success`/`false`、`rules:variables` |
 | `rules:if` | `==`/`!=`/`=~`/`!~`、`&&`/`||` 与括号、正则字面量、**正则内变量不展开** |
-| `rules:changes`/`exists` | 非推送类流水线恒真、新分支恒真、`compare_to` 换基线、50 模式 / 50000 文件上限 |
+| `rules:changes`/`exists` | 非推送类流水线恒真、`compare_to` 换基线、50 模式 / 50000 文件上限 |
 | `include` | 先求值再合并、`.gitlab-ci.yml` 优先、150 个上限（含嵌套与重复）、30 秒预算 |
 | 下游流水线 | 1000 条上限、父子两层、子流水线 3 个配置文件、`$CI_PIPELINE_SOURCE` 取值 |
 
@@ -172,8 +172,7 @@ def select_job(rules: list, ctx: dict):
 
 ## 注意事项与常见坑
 
-- **把 `rules` 当 `if-elif-else` 写**：不是"最后一个兜底"，而是**顺序首次匹配**；把
-  兜底 rule 写在前面会让后面所有 rule 失效。
+- **把 `rules` 当 `if-elif-else` 写**：不是"最后一个兜底"而是**顺序首次匹配**，兜底 rule 写在前面会让后面所有 rule 失效。
 - **以为"没命中就默认加入"**：相反 —— 没有任何 rule 匹配时 job **不加入流水线**；
   且 `rules` 内 `when: manual` 的 `allow_failure` 默认 `false`，job 级关键字默认 `true`。
 - **正则字面量被当变量**：实现里若先把 token 拿去做变量查表，`/^ab.*/` 会变成空串，
@@ -181,8 +180,7 @@ def select_job(rules: list, ctx: dict):
   才暴露）。
 - **用 `fnmatch` / `path.Match` 处理 `**`**：前者让 `cmd/**/*.go` 匹配不上
   `cmd/main.go`，后者完全不支持 `**`。
-- **同时定义 `merged results` 与 `merge request` 流水线**：官方警告会产生**重复流水线**；
-  需要显式用 `workflow:rules` 收敛。
+- **同时定义 `merged results` 与 `merge request` 流水线**：官方警告会产生**重复流水线**，需用 `workflow:rules` 收敛。
 - **`include` 里塞变量**：只有**部分** CI/CD 变量可用于 `include`，且**嵌套 include 段
   完全没有变量**（以公开用户身份求值）。
 - **父流水线早早结束**：生成产物报告的父子流水线必须配 `strategy: depend` 或

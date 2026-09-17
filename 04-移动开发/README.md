@@ -7,6 +7,7 @@
 | [01-iOS/](./01-iOS/) | Swift / Objective-C / SwiftUI / UIKit(ARC、GCD、RunLoop、async-await+actor、Auto Layout、启动优化、Core Animation 渲染管线) |
 | [02-Android/](./02-Android/) | Kotlin / Java / Jetpack Compose(Handler·协程与 Flow·WorkManager、Fragment/Service 生命周期、OkHttp 网络、Compose 重组) |
 | [03-跨平台/](./03-跨平台/) | React Native / Flutter / Kotlin Multiplatform |
+| [04-推送与消息/](./04-推送与消息/) | APNs / FCM / 厂商通道(设备令牌生命周期、离线排队与 TTL、静默推送与后台唤醒)—— 索引已建,原理待补 |
 
 ## 已完成 demo
 

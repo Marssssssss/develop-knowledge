@@ -38,17 +38,18 @@
 52    05-AI与机器学习: RAG与向量检索
 53    09-语言学习: TypeScript
 54    08-安全: 应用安全与供应链
+55    04-移动开发: 推送与消息(APNs/FCM/厂商通道)
 ```
 
-> 39-54 为类目自动拓展新增(2026-09-12 起 S2);新子类目顺延 55 起。条目数:01:8 02:4 03:4 04:3 05:9 06:8 07:5 08:4 09:4 10:3 11:3(计 55)。
+> 39-55 为类目自动拓展新增(2026-09-12 起 S2);新子类目顺延 56 起。条目数:01:8 02:4 03:4 04:4 05:9 06:8 07:5 08:4 09:4 10:3 11:3(计 56)。
 
 ## 二、本轮状态
 
 ```
-top_pos        : 3        # 本轮取循环第 3 位 → 04-移动开发/17-Android;下一轮取第 4 位 → 05-AI与机器学习
-sub_pos        : 01:1 02:2 03:2 04:1 05:1 06:1 07:1 08:1 09:1 10:1 11:1  # 各大类内子类目指针
-last_run       : 2026-09-17 08:03  # 占位锁(08:00 槽)
-last_top       : 03-系统编程  # 信息字段,不参与决策
+top_pos        : 4        # 本轮取循环第 4 位 → 05-AI与机器学习;下一轮取第 5 位 → 06-DevOps
+sub_pos        : 01:1 02:2 03:2 04:2 05:1 06:1 07:1 08:1 09:1 10:1 11:1  # 各大类内子类目指针
+last_run       : 2026-09-17 08:23  # 08:00 槽完成
+last_top       : 04-移动开发  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -57,11 +58,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
+| 2026-09-17 08:23 | 17 | Android 首批 5 个:OkHttp 拦截器链与连接池、协程上下文与 Flow、WorkManager 约束与重试、Fragment 生命周期与 ViewModel、Service 三种形态;169 断言;补 02-Android 四个子域 README | +5 | 286 |
 | 2026-09-17 06:24 | 13 | 进程线程协程第二批 5 个:fork僵尸(COW/stdio双份/低8位/SIG_IGN)、生产者消费者(condvar while谓词 vs channel hb)、读写锁(双偏好策略/TryLock EBUSY)、ucontext 有栈协程(四件套/uc_link)、CFS(vruntime/最左/权重=份额);20 断言 | +5 | 281 |
 | 2026-09-17 05:09 | 9 | 后端 Node.js 首批 5 个:Libuv线程池(吞吐/跨API传染/运行时设置)、Stream背压(write/drain/hwm/pipe)、Cluster与WorkerThreads(SCHED_NONE倾斜/克隆/transfer)、async_hooks与ALS(因果链/六项语义/迷你复刻)、HTTP-Agent(keep-alive复用/maxSockets排队/freeSockets);66 断言 | +5 | 276 |
 | 2026-09-17 02:30 | 0 | 游戏服务端第三批 5 个:FlatBuffers 零拷贝、Snappy 协议压缩、心跳与断线重连、跨服 RPC、全局服务器;102 断言 | +5 | 271 |
 | 2026-09-16 23:21 | 37 | 系统级剖析第三批 5 个:bpftrace 前端 DSL、USE 检查清单、容器 cgroup v2 归因、runqlat/schedstats、中断与软中断;191 断言 | +5 | 266 |
-| 2026-09-16 08:25 | 35 | 二进制逆向第三批 5 个:ARM64、Ghidra 流水线/headless、BinDiff、脚本改名;217 断言 | +5 | 261 |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

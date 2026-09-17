@@ -1,0 +1,26 @@
+[
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/Protobuf编码/go/pb_check.go",
+    "start": 15,
+    "end": 80,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/Protobuf编码/go/pb_checkutil.go",
+    "mode": "cut",
+    "preamble": "// pb_checkutil.go — 自检工具:断言计数与构造助手(与 pb_check.go 同属 package main)\n//\n// 拆文件只为满足单文件 ≤300 行的约束;Go 同包共享符号,零语义改动。\npackage main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\n"
+  },
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/Protobuf编码/go/pb_codec.go",
+    "start": 205,
+    "end": 274,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/Protobuf编码/go/pb_merge.go",
+    "mode": "cut",
+    "preamble": "// pb_merge.go — 合并语义与 packed 解码(与 pb_codec.go 同属 package main)\n//\n// 权威来源(protobuf.dev programming-guides/encoding/):\n//   * packed:\"parsers must be able to parse repeated fields that were compiled as\n//      packed as if they were not packed, and vice versa\"\n//   * Last One Wins:\"if the same field appears multiple times, the parser accepts\n//      the last value it sees. For embedded message fields, the parser merges\n//      multiple instances of the same field\"\npackage main\n\nimport \"fmt\"\n\n"
+  },
+  {
+    "src": "D:/开发研究/07-数据存储/02-NoSQL/Protobuf编码/go/pb_codec.go",
+    "start": 90,
+    "end": 134,
+    "dst": "D:/开发研究/07-数据存储/02-NoSQL/Protobuf编码/go/pb_group.go",
+    "mode": "cut",
+    "preamble": "// pb_group.go — group 解析与未知字段跳过(与 pb_codec.go 同属 package main)\n//\n// 权威来源(protobuf.dev programming-guides/encoding/):\n//   * \"The wire type tells the parser how big the payload after it is. This allows\n//      old parsers to skip over new fields they don't understand.\"\n//   * \"Group field numbers need to match up. If we encounter 7:EGROUP where we\n//      expect 8:EGROUP, the message is mal-formed.\"\npackage main\n\nimport \"fmt\"\n\n"
+  }
+]

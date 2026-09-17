@@ -5,7 +5,7 @@
 | 子目录 | 说明 |
 | --- | --- |
 | [01-iOS/](./01-iOS/) | Swift / Objective-C / SwiftUI / UIKit(ARC、GCD、RunLoop、async-await+actor、Auto Layout、启动优化、Core Animation 渲染管线) |
-| [02-Android/](./02-Android/) | Kotlin / Java / Jetpack Compose |
+| [02-Android/](./02-Android/) | Kotlin / Java / Jetpack Compose(Handler·协程与 Flow·WorkManager、Fragment/Service 生命周期、OkHttp 网络、Compose 重组) |
 | [03-跨平台/](./03-跨平台/) | React Native / Flutter / Kotlin Multiplatform |
 
 ## 已完成 demo
@@ -26,15 +26,22 @@
 | 229 | `01-iOS/并发编程/Swift-Concurrency/` | Swift 并发:await 串行 vs `async let` 并行、actor = exclusive executor、可重入导致 check/await/act 失效、结构化并发、协作式取消 | Python / Swift / Objective-C |
 | 230 | `01-iOS/启动优化/dyld-pre-main/` | dyld pre-main 四阶段 + `+load` 顺序与次数 + Swift 全局变量懒初始化(与 ObjC +load 的对比) | Python / Swift / Objective-C |
 | 231 | `01-iOS/渲染/CoreAnimation管线/` | Core Animation 渲染循环:Commit(Layout/Display/Prepare)与 render server 分工、脏标记合并、离屏渲染、`shouldRasterize` 盈亏平衡、混合 overdraw | Python / Swift / Objective-C |
+| 282 | `02-Android/网络编程/OkHttp拦截器与连接池/` | OkHttp 拦截器链:应用拦截器(不关心重定向/重试)vs 网络拦截器(在 Connect 之后)分界、7 层内置链顺序与缓存短路、连接池 5 空闲/5 分钟复用、Address→Route→Connection 三级模型、Happy Eyeballs | Python / Kotlin / Java |
+| 283 | `02-Android/并发编程/协程上下文与Flow/` | 协程上下文与 Flow:`CoroutineContext` 带键元素集 + 右侧覆盖合并、`Dispatchers.Default` 并行度 = CPU 核数、结构化并发与子失败取消父+兄弟、冷流每次 collect 重跑 vs 热流共享、`flowOn` 只换上游上下文 | Python / Kotlin |
+| 284 | `02-Android/并发编程/WorkManager约束与重试/` | WorkManager:约束全部 AND 且默认 false、退避 30s 起步(下限 10s/上限 5h)与 `Result.retry()`、`doWork()` 每次实例一次且限 10 分钟、唯一任务 KEEP/REPLACE/APPEND、`Result.failure()` 阻断下游 | Python / Kotlin / Java |
+| 285 | `02-Android/组件生命周期/Fragment生命周期与ViewModel/` | Fragment 状态机与 ViewModel 作用域:`mState` 9 态(含 `AWAITING_EXIT/ENTER_EFFECTS` 过渡态)、进返回栈只 `onDestroyView` 回来重跑 `onCreateView`、`getViewLifecycleOwner()` 视图销毁后抛错、`viewModelScope` 先于 `onCleared()` 取消 | Python / Kotlin |
+| 286 | `02-Android/组件生命周期/Service三种形态/` | Service 三形态:started/bound/foreground 并存规则(已启动或有 BIND_AUTO_CREATE 连接即存活)、`onStartCommand` 返回值四档重建策略(`START_STICKY` 可能收到 null intent)、`stopSelf(startId)` 必须按序否则立即停止、`setForeground()` 已是 no-op | Python / Kotlin / Java |
 
 ## 待研究
 
 - [x] iOS 启动时间优化(dyld / ObjC runtime 初始化)→ demo 230
 - [x] Core Animation 渲染管线 / Auto Layout 原理 → demo 227、231
-- [ ] Android OkHttp / Retrofit 原理
+- [x] Android OkHttp / Retrofit 原理 → demo 282
 - [ ] Compose Multiplatform(共享 UI 的 Kotlin 方案)
 - [ ] SwiftUI 与 UIKit 桥接(UIHostingController / UIViewRepresentable)
 - [ ] iOS Instruments(Leaks / Allocations / Time Profiler / Network)实战
 - [ ] React Native Hermes V1 字节码引擎
 - [ ] Flutter Engine(Impeller 渲染器内部)
 - [ ] Flutter Isolate 并发模型
+- [ ] Android Retrofit 动态代理与 CallAdapter / Converter
+- [ ] Android HTTP/2 多路复用与流控

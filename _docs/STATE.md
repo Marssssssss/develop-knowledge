@@ -48,7 +48,7 @@
 ```
 top_pos        : 8        # 下一轮取循环第 8 位 → 09-语言学习(本轮已取第 7 位 = 08-安全)
 sub_pos        : 01:2 02:3 03:3 04:3 05:4 06:3 07:2 08:3 09:2 10:2 11:2  # 各大类内子类目指针(06 由误写的 4 修正为 3)
-last_run       : 2026-09-18 18:01  # 18:00 槽占位锁(shell date 实测);保险 45 分钟
+last_run       : 2026-09-18 19:03  # 18:00 槽收尾(shell date 实测);保险 45 分钟
 last_top       : 08-安全  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
@@ -58,11 +58,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-18 19:03 | 33 | 网络安全第二批:WireGuard 握手、QUIC 头保护、RPKI 前缀源验证、WPA3-SAE、TLS 1.3 ECH;Py 387 断言;C 实现头模式 | S1(补齐父 README 漏登 5 行)+S3 rotate(ID 252..356) | +5 | 356 | 0 WF/0 WS(curl 直抓 RFC);槽位 ✓ |
 | 2026-09-18 17:00 | 25 | 监控与可观测性第二批:PromQL 范围向量与 rate 外推、TSDB 存储与 Head 块、OTel Collector 管线、Alertmanager 分组抑制静默、Loki 日志存储与 LogQL;Py 535 断言 | S1+欠账+S3 rotate(ID 252..351) | +5 | 351 | 7 WF(触顶)+5 WS;槽位 △ |
 | 2026-09-18 14:34 | 22 | 计算机视觉首批:Canny 五阶段、Harris 结构张量、SIFT 尺度空间、YOLO 检测头、ViT 图像分块;Py 236 断言;重写 bracket_check 为语言感知 | S1+S3 rotate(ID 247..346) | +5 | 346 | 8 WF;槽位 ✓ |
 | 2026-09-18 12:16 | 18 | 跨平台首批:平台通道 codec、dart:ffi ABI、K/N 内存、SlotTable、Tauri vs Electron;Py 252 断言 | S1+S2+S3(ID 242..341) | +5 | 341 | 10 WF;槽位 ✓ |
 | 2026-09-18 10:38 | 14 | 内存管理首批:mmap/brk、ptmalloc2、Cheney、标记-压缩、分代 GC(4008 vs 21708 字=5.4×);Py 336 断言 | S1+S3 rotate(ID 232..336) | +5 | 336 | 10 WF;槽位 ✓ |
-| 2026-09-18 08:24 | 10 | 数据库首批:N+1 预取、EXPLAIN、连接池、键集分页、Redis dict rehash;Py 125 断言;清 B+树 4 处超限 | S1+欠账+S3(ID 227..331) | +5 | 331 | 7 WF+1 WS |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

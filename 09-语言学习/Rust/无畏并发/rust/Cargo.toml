@@ -1,10 +1,10 @@
 [package]
-name = "closures-iter"
+name = "fearless-concurrency"
 version = "0.1.0"
 edition = "2021"
 
 [[bin]]
-name = "closures-iter"
+name = "fearless-concurrency"
 path = "main.rs"
 
 [dependencies]

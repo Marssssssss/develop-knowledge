@@ -173,8 +173,7 @@ fn read_and_parse(path: &str) -> Result<u32, AppError> {
 3. **忘了实现 `From`** —— 编译器会在 `?` 那一行报 E0277，而不是在调用点，新手常找不到原因。
 4. **`unwrap()` 在生产代码里** —— 官方倾向 `expect("为什么这里一定成功")`，出问题时信息量完全不同。
 5. **把错误吞成 `String`** —— 丢掉 `source()` 链；要临时过渡至少用 `Box<dyn Error>` 或 anyhow。
-6. **以为 `?` 只能用于 `Result`** —— 它同样用于 `Option`、`ControlFlow`、`Poll`；
-   但**只有 Result 系会调 `From`**，这一点在写组合子时非常关键。
+6. **以为 `?` 只能用于 `Result`** —— 它同样用于 `Option`/`ControlFlow`/`Poll`，但**只有 Result 系会调 `From`**。
 7. **错误类型没有 `Debug`** —— `Error: Debug` 是硬要求，`unwrap()` / `expect()` 要打 `{:?}`。
 8. **`#[from]` 变体不能带别的字段** —— thiserror 文档原文："The variant using `#[from]`
    must not contain any other fields beyond the source error (and possibly a backtrace)"。

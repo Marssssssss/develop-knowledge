@@ -34,10 +34,25 @@
 | `01-Web安全/SSRF与URL解析歧义/` | SSRF 防护 + WHATWG IPv4 解析与解析器分歧 |
 | `01-Web安全/访问控制与IDOR/` | 访问控制与对象级授权(RBAC/ABAC/ReBAC + CWE-639) |
 | `01-Web安全/点击劫持与框架嵌入/` | X-Frame-Options + CSP frame-ancestors(HTML §7.7) |
+| `02-网络安全/TLS-1.3握手/` | TLS 1.3 握手(RFC 8446):1-RTT/0-RTT、X25519 key_share、HKDF 秘密树 |
+| `02-网络安全/SYN-Cookie/` | SYN Cookie 防 SYN Flood:无状态序列号编码(HMAC-SHA1 + MSS + 时间戳) |
+| `02-网络安全/XDP包过滤/` | eBPF/XDP 早检丢弃:4 种 action、Native/Generic/Offloaded 三模式 |
+| `02-网络安全/IKEv2-ESP/` | IKEv2 密钥协商(RFC 7296):IKE_SA_INIT/IKE_AUTH 两轮 + ESP 子 SA |
+| `02-网络安全/DNSSEC链式信任/` | DNSSEC 信任链(RFC 4033-4035):DNSKEY/RRSIG/DS + NSEC 防遍历 |
+| `02-网络安全/WireGuard握手/` | WireGuard Noise_IKpsk2:1-RTT 握手 + mac1/mac2 cookie 抗反射 |
+| `02-网络安全/QUIC包头保护/` | QUIC 头保护与包保护(RFC 9001):首字节 mask + nonce=IV⊕pkt_num |
+| `02-网络安全/RPKI前缀源验证/` | RPKI 前缀源验证(RFC 6482/8205):ROA/ASPA + maxLength 覆盖判定 |
+| `02-网络安全/WPA3-SAE/` | WPA3 SAE(Dragonfly):提交-确认两轮 PAKE,抗离线字典 |
+| `02-网络安全/TLS-ECH/` | TLS 1.3 ECH(RFC 9849 + HPKE RFC 9180):加密 ClientHello + 外层 AAD |
 
 ## 待研究
 
 - [x] AES / RSA / Ed25519 实现原理 ✓ (08-安全/01-密码学 首批已完成)
-- [x] TLS 1.3 握手
-- [x] XSS 与 CSP
-- [x] OAuth 2.0 流程
+- [x] TLS 1.3 握手 ✓ (02-网络安全/TLS-1.3握手)
+- [x] XSS 与 CSP ✓
+- [x] OAuth 2.0 流程 ✓
+- [x] 传输层协议安全整批 ✓ (02-网络安全 两批共 10 个:SYN Cookie / XDP / IKEv2 / DNSSEC / WireGuard / QUIC / RPKI / SAE / ECH)
+- [ ] MACsec (IEEE 802.1AE)
+- [ ] 供应链与制品安全 (03-应用安全与供应链,demo 待做)
+- [ ] 密钥管理与 HSM/KMS 抽象
+- [ ] 后量子迁移(ML-KEM/ML-DSA 混合模式)

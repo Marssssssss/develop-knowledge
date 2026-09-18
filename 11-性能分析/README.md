@@ -42,6 +42,7 @@
 - [x] 容器性能分析（cgroup v2 级资源压力归因）（[01-系统级剖析/容器性能归因/](./01-系统级剖析/容器性能归因/)，2026-09-16）
 - [x] CI 性能回归门禁（基准结果做成趋势而非单次断言）（[03-基准测试方法论/CI性能回归门禁/](./03-基准测试方法论/CI性能回归门禁/)，2026-09-15）
 - [x] 应用级剖析首批（pprof 在线采集/top 解读、py-spy 采样、cProfile tottime-cumtime、benchmark ReportAllocs）（[02-应用级剖析/](./02-应用级剖析/)，2026-09-18 首批 5 demo）
+- [x] 基准测试方法论第二批：`testing.B` 迭代标定与样本量、MDE 与样本量方程、CoV 噪声地板与降噪、多重比较校正（FWER vs FDR）、`-benchmem` 分配测量与 GC 摊销（[03-基准测试方法论/](./03-基准测试方法论/)，2026-09-19 第二批 5 demo）
 - [ ] 延迟预算拆分：SLO → 每跳预算的下发策略
 - [ ] USL 参数拟合（从实测 (N, X) 点估 α、β、γ 并定位 Nmax）
 - [ ] 中断/软中断绑核再平衡（`smp_affinity` 掩码已覆盖，缺实际调优与 RPS/RFS 侧）
@@ -57,3 +58,4 @@
 - web.dev Core Web Vitals 阈值定义（含 p75 选型论证）+ Google Search Console 官方报告口径 + OpenTelemetry Traces 文档 + Neil Gunther USL 原文 + Cornell/UVA/HPC101 三条 Amdahl-Gustafson 讲解 + Semicolony 容量规划手册（2026-09-15 新增 [04-全链路性能/](./04-全链路性能/) 与 [05-容量规划与性能建模/](./05-容量规划与性能建模/)，逐条链接见两目录 README）
 - bpftrace 语言参考/一行式教程/手册页 + Gregg USE Method 原文与 Linux 清单 + kernel iostats + cgroup v2 内核文档 + Gregg DockerCon 2017 容器分析 + runqlat + kernel sched-stats + IRQ affinity/irq-redir + Red Hat 调优指南（2026-09-16 新增 [01-系统级剖析/](./01-系统级剖析/) 第三批 5 demo，逐条链接见该目录 README）
 - pkg.go.dev net/http/pprof、runtime/pprof、testing + golang/go pprof.go 源码 + Go Blog Profiling Go Programs + docs.python.org The Python Profilers + benfred/py-spy README（2026-09-18 新增 [02-应用级剖析/](./02-应用级剖析/) 首批 5 demo，逐条链接见该目录 README）
+- golang/go `src/testing/benchmark.go` 源码 + pkg.go.dev `runtime#MemStats` + NIST e-Handbook §7.2.2.2/§1.3.5.3 + Dropbox Apogee + LLVM Benchmarking tips + statsmodels `multipletests` + Benjamini-Hochberg(1995)/Benjamini-Yekutieli(2001) 临界常数（2026-09-19 新增 [03-基准测试方法论/](./03-基准测试方法论/) 第二批 5 demo，逐条链接见该目录 README）

@@ -80,6 +80,11 @@ private double x = Math.PI;              // 非 final → 每次真的算
 | [统计检验的选择/](./统计检验的选择/) | 中位数+分位数 vs t 检验的选择律：Welch–Satterthwaite 自由度近似（t 分布用不完全 Beta 函数求尾概率）、U 检验精确分布阈值、ARE（渐近相对效率）与重尾下的功效塌陷 | Python / Go |
 | [CI性能回归门禁/](./CI性能回归门禁/) | 双判据门禁（幅度 ≥10% + Welch t）、Skia/Jetpack 式 step fitting（WIDTH=5/THRESHOLD=25/z>2.0）与朴素差分的假阳性对比、噪声地板与 CoV 门禁、Bonferroni 与 Benjamini–Hochberg 多重比较校正 | Python / Go |
 | [主动基准测试/](./主动基准测试/) | Gregg 的 7 条 problem checklist 程序化判定：扰动观测、资源争用、网络上限、单线程夹紧（`whileTrue`/`onSpinWait`）、测错目标、热降频、结果不可信；含 C 语言 `/proc`+`/sys` 纯文件接口采样器 | Python / Go / C |
+| [GoBench样本量/](./GoBench样本量/) | `testing.B` 的迭代标定：`durationOrCountFlag.Set` 的 Nx/duration 两态、`predictN` 的先乘后除 + 1.2× + `100*last` + `1e9` 上限（**不是** 1,2,5,10 序列）、`1x` 复用 `run1`、`RunParallel` grain 钳制、`-count` 才是样本量 | Python / Go |
+| [MDE与样本量估算/](./MDE与样本量估算/) | 最小可检测效应与样本量方程：NIST §7.2.2.2 两个原例（8.567→9、10.6→11）、t 迭代解、`MDE = (z+z)·CoV·√(2/n)`、`-count=10/20` 对应 1.253%/0.886%×CoV | Python / Go |
+| [CoV噪声地板/](./CoV噪声地板/) | 变异系数与噪声地板：A/A 地板 `CoV·√(2/n)·√(2/π)`、Apogee「60%→5%」的口径核对（每侧 16 次才够）、离群剔除的 O(σ) 偏差 −0.2907σ、交错 vs 顺序跑的漂移倍数恰为 n | Python / Go |
+| [多重比较校正/](./多重比较校正/) | FWER vs FDR：全局零效应下二者**相等**（V≡R）、有真效应时 BH 用 FWER 0.220 换功效 0.530、Holm ⊇ Bonferroni、BY 的 H_m 惩罚因子、benchstat 不做任何校正 | Python / Go |
+| [分配测量与GC/](./分配测量与GC/) | `-benchmem` 的净值/差值语义、整数截断导致的 `0 B/op ≠ 零分配`、GC 摊销使 `ns/op` 随 N **非单调**（100→120→108）、`GCCPUFraction` 分母是 GOMAXPROCS 积分 | Python / Go |
 
 ## 待研究
 
@@ -88,10 +93,15 @@ private double x = Math.PI;              // 非 final → 每次真的算
 - [x] 统计检验的选择：什么时候该用中位数 + 分位数，什么时候能用 t 检验（[统计检验的选择/](./统计检验的选择/)，2026-09-15）
 - [x] CI 里的性能回归门禁（把基准结果做成趋势监控而不是单次断言）（[CI性能回归门禁/](./CI性能回归门禁/)，2026-09-15）
 - [x] 主动基准测试的完整清单（Gregg 的 Active Benchmarking 文章，本页只覆盖了要点）（[主动基准测试/](./主动基准测试/)，2026-09-15）
-- [ ] Go `testing.B` 的 `-benchtime=1000000x` 与 `-count` 组合下如何选样本量
-- [ ] 变异系数（CoV）门禁阈值的经验取值与"降噪优先于判据"的工程顺序
-- [ ] 多重比较校正的选型：何时 Bonferroni 过保守、BH 的 FDR 控制在基准场景是否合适
-- [ ] 微基准的"分配当逻辑测"如何在 `-benchmem` 与 `-prof gc` 之间交叉验证
+- [x] Go `testing.B` 的 `-benchtime=1000000x` 与 `-count` 组合下如何选样本量（[GoBench样本量/](./GoBench样本量/)，2026-09-19）
+- [x] 变异系数（CoV）门禁阈值的经验取值与"降噪优先于判据"的工程顺序（[CoV噪声地板/](./CoV噪声地板/)，2026-09-19）
+- [x] 多重比较校正的选型：何时 Bonferroni 过保守、BH 的 FDR 控制在基准场景是否合适（[多重比较校正/](./多重比较校正/)，2026-09-19）
+- [x] 微基准的"分配当逻辑测"如何在 `-benchmem` 与 `-prof gc` 之间交叉验证（[分配测量与GC/](./分配测量与GC/)，2026-09-19）
+- [ ] JMH `-prof gc` 与 Go `-benchmem` 的分配口径对比（一次分配的对象数 vs 字节数 vs GC 次数）
+- [ ] 预热充分性的判定：如何程序化确认 JIT / 内联缓存已进入稳态（而不是固定 warmup 次数）
+- [ ] 基准结果的长期趋势存储与分片（benchstat 之外的时序方案，如 Skia Perf / Firefox Perfherder 的数据模型）
+- [ ] 虚拟化与容器环境（`cgroup` CPU quota、 steal time）对 `-benchtime` 标定结果的影响
+- [ ] 参数化基准（hyperfine `--parameter-scan` / JMH `@Param`）的结果如何做公平的多维比较
 
 ## 参考资料（实际阅读过的来源）
 
@@ -105,6 +115,16 @@ private double x = Math.PI;              // 非 final → 每次真的算
 - [How to Benchmark Commands with hyperfine（how2.sh）](https://how2.sh/posts/how-to-benchmark-commands-with-hyperfine) — `--prepare` 的作用（每次计时迭代前重置状态）、`--min-runs 20` 与 `--export-json` + `jq` 的 CI 用法
 - [Hyperfine: A Command-Line Benchmarking Tool（kx.cloudingenium.com）](https://kx.cloudingenium.com/en/hyperfine-benchmark-command-line-performance-testing-guide) — `time` 单次测量 vs hyperfine 多次运行的对照、`--warmup N` / `--prepare` 的组合
 - [How to Use Hyperfine for Accurate Command-Line Benchmarking — Notes（notes.suhaib.in）](https://notes.suhaib.in/docs/tech/utilities/hyperfine-cli-benchmarking-tool-guide) — σ > 均值 10% 即视为环境噪声、`--runs 5` 适合慢构建 / `--min-runs 100` 适合微基准、离群点告警的解读、time vs hyperfine vs perf 三者分工
+
+### 2026-09-19 第二批 5 demo 新增来源
+
+- [`golang/go` — `src/testing/benchmark.go`（master 分支源码）](https://raw.githubusercontent.com/golang/go/master/src/testing/benchmark.go) — `-benchtime` 的 `durationOrCountFlag.Set` 解析、默认 `1s`、`predictN` 的四处钳制、`launch`/`run1`/`runN` 的调用关系、`runtime.GC()` 的位置、`RunParallel` 的 grain、`BenchmarkResult` 的整数除法与 `Extra` 优先
+- [`pkg.go.dev/runtime#MemStats`](https://pkg.go.dev/runtime#MemStats) — `TotalAlloc`/`Mallocs`/`Frees`/`PauseTotalNs`/`NextGC`/`GCCPUFraction` 的字段文档原文
+- [NIST/SEMATECH e-Handbook §7.2.2.2（Sample sizes required）](https://www.itl.nist.gov/div898/handbook/prc/section2/prc222.htm) 与 [§1.3.5.3（Two-Sample t-Test）](https://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm) — 样本量公式、迭代要求与 Welch-Satterthwaite 自由度
+- [Keeping sync fast with automated performance regression detection — Dropbox Tech Blog](https://dropbox.tech/infrastructure/keeping-sync-fast-with-automated-performance-regression-detectio) — Apogee 的 60%→5%、「每 5 次剔除 1 个」、用 CoV 做相关分析
+- [Benchmarking tips — LLVM Documentation](https://llvm.org/docs/Benchmarking.html) — 降噪清单（ASLR / scaling_governor / cpuset / SMT 对 / tmpfs）、"perf variations of less than 0.1%"、"low noise is required, but not sufficient"
+- [`statsmodels.stats.multitest.multipletests` 文档](https://www.statsmodels.org/stable/generated/statsmodels.stats.multitest.multipletests.html) — FWER/FDR 方法清单与"独立下控制、多数在正相关下稳健"
+- [Benjamini & Hochberg (1995) 与 Benjamini & Yekutieli (2001) 的临界常数](https://www.sciencedirect.com/science/article/abs/pii/S0378375808000165) — `α_i=(i/m)α` 与任意依赖下 `α_i = iα/(m·Σ1/j)`
 
 ### 2026-09-15 首批 5 demo 新增来源
 

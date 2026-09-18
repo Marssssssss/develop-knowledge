@@ -31,6 +31,11 @@
 - [x] [02-后端/Node.js/async_hooks与AsyncLocalStorage/](./02-后端/Node.js/async_hooks与AsyncLocalStorage/) — hook 事件序 + Promise 因果链 + ALS 六项语义 (JS + TS)
 - [x] [02-后端/Node.js/HTTP-Agent连接复用/](./02-后端/Node.js/HTTP-Agent连接复用/) — keep-alive 复用 + maxSockets 排队 + freeSockets 池化 (JS + TS)
 - [x] [03-数据库/B+树索引/](./03-数据库/B+树索引/) — B+ 树索引原理 (M-way + 叶子兄弟链 + copy-up/push-up 分裂 + borrow/merge 重平衡) (C + Python + Go)
+- [x] [03-数据库/SQL与ORM/N+1与预取策略/](./03-数据库/SQL与ORM/N+1与预取策略/) — 懒加载触发 + selectin/joined/subquery 策略语句数与结果等价性 (Python + Go)
+- [x] [03-数据库/SQL与ORM/EXPLAIN执行计划解读/](./03-数据库/SQL与ORM/EXPLAIN执行计划解读/) — 代价模型 + 节点树解析 + loops 换算 + rows removed (Python + Go)
+- [x] [03-数据库/SQL与ORM/连接池调优/](./03-数据库/SQL与ORM/连接池调优/) — `core*2+spindles` 公式 + pool-locking 下界 + 小池饱和曲线 (Python + Go)
+- [x] [03-数据库/SQL与ORM/键集分页/](./03-数据库/SQL与ORM/键集分页/) — OFFSET O(N) vs keyset O(log N) + 翻页一致性 (Python + Go)
+- [x] [03-数据库/NoSQL/Redis数据结构底层/](./03-数据库/NoSQL/Redis数据结构底层/) — dict 渐进式 rehash + zskiplist span 排名 (Python + Go)
 - [x] [04-API设计/WebSocket/握手协议/](./04-API设计/WebSocket/握手协议/) — WebSocket 握手协议 RFC 6455 §4 (HTTP Upgrade + SHA-1+GUID → Sec-WebSocket-Accept + 101 Switching Protocols) (C + Python + Go)
 
 ## 状态

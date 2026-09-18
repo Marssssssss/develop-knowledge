@@ -84,7 +84,7 @@ RDBMS 把 B+ 树节点映射到 4-16 KB 的磁盘页：每页容纳 `b = ⌊B / 
 # Python
 cd python && python3 demo.py            # 推荐：可视化 + 5 个 demo
 
-# C
+# C（bptree_delete_impl.h 是文本包含的实现头，无需加入编译命令）
 cd c && gcc -O2 -Wall -Wextra -pedantic main.c bptree.c -o bptree && ./bptree
 
 # Go
@@ -132,18 +132,15 @@ if (pushed_node) { /* 根分裂 -> 新建根 */ nr.children = [par, pushed_node]
 ### Delete 的 borrow 优先于 merge
 
 ```c
-if (idx+1 < parent->nk+1) {                            /* 先试右兄 */
-    Node *R = parent->children[idx+1];
-    if (R->nk > min_keys) {
-        if (L->is_leaf) {                               /* 叶子：搬 R 首键到 L 尾；分隔键 <- R 新首键 */
-            L->keys[L->nk] = R->keys[0]; ... R->nk--; parent->keys[idx] = R->keys[0];
-        } else {                                        /* 内节点：rotate-through-parent */
-            L->keys[L->nk] = parent->keys[idx];         /* 父分隔键下沉 */
-            L->children[L->nk+1] = R->children[0];
-            parent->keys[idx] = R->keys[0];             /* R 首键升入父 */
-        }
-        return 1;
+if (idx+1 < parent->nk+1 && R->nk > min_keys) {        /* 先试右兄 */
+    if (L->is_leaf) {                                  /* 叶子：搬 R 首键到 L 尾 */
+        L->keys[L->nk] = R->keys[0]; ... R->nk--; parent->keys[idx] = R->keys[0];
+    } else {                                           /* 内节点：rotate-through-parent */
+        L->keys[L->nk] = parent->keys[idx];            /* 父分隔键下沉 */
+        L->children[L->nk+1] = R->children[0];
+        parent->keys[idx] = R->keys[0];                /* R 首键升入父 */
     }
+    return 1;
 }
 /* 否则合并到左兄（或吸收右兄），并删父分隔键 */
 ```
@@ -151,19 +148,16 @@ if (idx+1 < parent->nk+1) {                            /* 先试右兄 */
 ### Bulk-load（两阶段 O(N)）
 
 ```c
-/* Step 1: 顺序切满叶子（按 MAX_KEYS） */
-while (i < n) {
-    if (cur->nk == MAX_KEYS) { leaves[nleaves++] = cur; cur = leaf_new(); }
-    cur->keys[cur->nk] = keys[i]; strcpy(cur->vals[cur->nk], vals[i]); cur->nk++; i++;
+for (i = 0; i < n; i++) {                            /* Step 1: 顺序切满叶子 */
+    if (cur->nk == BPT_MAX_KEYS) { leaves[nleaves++] = cur; cur = bpt_leaf_new(); }
+    cur->keys[cur->nk] = keys[i]; strcpy(cur->vals[cur->nk], vals[i]); cur->nk++;
 }
-/* Step 2: 自底向上建内层，直到只剩 1 个根 */
-while (lvl_n > 1) {
-    for (i = 0; i < lvl_n;) {
-        Node *par = inner_new();
-        par->children[0] = level[i++];
-        for (j = i; j < lvl_n && par->nk < MAX_KEYS; j++)
+while (lvl_n > 1) {                                  /* Step 2: 自底向上收内层 */
+    for (i = 0; i < lvl_n; i = j) {
+        Node *par = bpt_inner_new(); par->children[0] = level[i++];
+        for (j = i; j < lvl_n && par->nk < BPT_MAX_KEYS; j++)
             par->keys[par->nk] = level[j]->keys[0], par->children[++par->nk] = level[j];
-        next[next_n++] = par; i = j;
+        next[next_n++] = par;
     }
     level = next; lvl_n = next_n;
 }
@@ -193,9 +187,8 @@ while (lvl_n > 1) {
 3. **Bulk-load 的 O(N) 前提是输入已排序**。未排序请先排序或退回 N 次 `bpt_insert`（O(N log N)）。
 4. **Delete 必须 borrow 优先于 merge**：CMU 15-445 / OpenDSA 都强调；merge 会让兄弟也 underflow，触发级联。生产 B\* 树（节点 ≥ 2/3 满）进一步推迟 merge。
 5. **不要把 sibling chain 当子指针递归**：范围扫描只沿叶子 `next` 走，不递归子树 —— 否则最坏 O(N)。
-6. **并发/持久化不在本 demo 范围**：真实数据库还需 crabbing latch / MVCC / WAL 等。
-7. **Go 切片副本陷阱**：`copy(R.keys[:], L.keys[mid:L.nk])` 是值拷贝不是引用；漏 copy 会让左右两半共享底层数组，违反独立节点语义。
-8. **演示 M=4 vs 生产 M≈100**：演示用 M=4 仅为打印可读；代码逻辑本身与生产一致，只调常量。
+6. **Go 切片副本陷阱**：`copy(R.keys[:], L.keys[mid:L.nk])` 是值拷贝不是引用；漏 copy 会让左右两半共享底层数组，违反独立节点语义。
+7. **演示 M=4 vs 生产 M≈100**：演示用 M=4 仅为打印可读；代码逻辑本身与生产一致，只调常量。
 
 ## 参考资料（实际阅读过的权威来源）
 

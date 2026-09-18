@@ -33,16 +33,16 @@
 | struct / enum / `match` | ch05/ch06 | ✅ | 代数数据类型 + 穷尽匹配 | — |
 | 模块与可见性 | ch07 | ✅ | `mod` / `pub` / `use` 路径 | — |
 | 集合(Vec/String/HashMap) | ch08 | ✅ | UTF-8 与索引/切片的关系 | — |
-| 错误处理 | ch09 | ✅ | `panic!` vs `Result` + `?` 传播 | — |
+| 错误处理 | ch09 | ✅ | `panic!` vs `Result` + `?` 传播 | 9 |
 | 泛型 / trait / 生命周期 | ch10 | ✅ | trait bound、孤儿规则、`'a` | 3 / 5 |
 | 智能指针 | ch15 | ✅ | `Box` / `Rc` / `RefCell` + `Deref`/`Drop` | 4 |
-| 无畏并发 | ch16 | 进阶 | `Send`/`Sync` + `Arc<Mutex<T>>` | — |
-| async/await | ch17 | 进阶 | Future / task / stream | — |
-| 闭包与迭代器 | ch13 | ✅ | `Fn`/`FnMut`/`FnOnce`,零成本迭代链 | — |
+| 无畏并发 | ch16 | 进阶 | `Send`/`Sync` + `Arc<Mutex<T>>` | 7 |
+| async/await | ch17 | 进阶 | Future / task / stream | 8 |
+| 闭包与迭代器 | ch13 | ✅ | `Fn`/`FnMut`/`FnOnce`,零成本迭代链 | 6 |
 | 模式匹配 | ch19 | 进阶 | 全量模式参考 | — |
-| unsafe / 宏 / 高级 trait | ch20 | 进阶 | 裸指针、`macro_rules!`、GAT | — |
+| unsafe / 宏 / 高级 trait | ch20 | 进阶 | 裸指针、`macro_rules!`、GAT | 10 |
 
-## 三、已完成 demo(第一批 5 个,2026-09-15)
+## 三、已完成 demo(第一批 5 个 2026-09-15 · 第二批 5 个 2026-09-19)
 
 | # | demo | 一句话核心机制 |
 | --- | --- | --- |
@@ -51,6 +51,11 @@
 | 3 | [`trait与分发/`](./trait与分发/) | 单态化(0 次间接跳转、按类型复制代码实体)↔ `dyn`(胖指针 2 字宽、每次查 vtable);孤儿规则四组合;`impl Trait` 返回位只能单一类型 |
 | 4 | [`智能指针/`](./智能指针/) | `Rc` 计数轨迹 `[1,2,3,2]`;`RefCell` 运行期 panic 而非 UB;`Rc` 引用环 strong 计数永不归零(泄漏但内存安全);`Weak` 破环 |
 | 5 | [`生命周期/`](./生命周期/) | 三条省略规则的判定引擎(7 签名里只有 2 个必须显式标注);返回值生命周期取两输入中较短者;E0597 与 E0106 的分工 |
+| 6 | [`闭包与迭代器/`](./闭包与迭代器/) | Fn/FnMut/FnOnce 是「加法式」推导(移出捕获值→只剩 FnOnce)、`move` 只改捕获方式不改 trait 集;迭代器惰性(不消费 `calls == 0`)与零成本的两个可计数指标(单趟 / 1 次分配) |
+| 7 | [`无畏并发/`](./无畏并发/) | Send/Sync 是语言内置的 auto trait;`&mut T` 竟是 Sync(因 `& &mut T` 退化成只读);`Arc<RefCell<T>>` 连 Send 都不是;类型系统拦得住数据竞争但**拦不住死锁**(wait-for 图判环) |
+| 8 | [`async状态机/`](./async状态机/) | Future 是惰性的(std 原文 inert);Waker 驱动只需 2 次 poll vs 盲轮询 101 次;只有「最近一次 Context」的 Waker 该被唤醒;Pin 只为自引用 future 存在 |
+| 9 | [`错误处理惯用法/`](./错误处理惯用法/) | `?` 能作用于 5 种类型,但**只有 Result 系会调 `From::from`**;`Box<dyn Error>` = "any kind of error";std 明令 source() 与 Display「二者只能选一个」(写成可执行 lint) |
+| 10 | [`unsafe边界/`](./unsafe边界/) | unsafe 只解锁五件事,**借用检查照常生效**(E0502 反例);`UnsafeCell` 只解除 `&T` 不可变保证、交叠 `&mut` 永远非法;安全抽象靠一句 `assert!` 把 UB 变成 panic |
 
 **原理速览**(细节已下沉到各 demo 的 README):
 
@@ -72,11 +77,11 @@
 3. **trait 与静态分发** ✅ `09-语言学习/Rust/trait与分发/` — 单态化 vs vtable、胖指针宽度、孤儿规则/coherence 四组合、blanket impl、条件实现、`impl Trait` 返回位限制
 4. **智能指针与内部可变性** ✅ `09-语言学习/Rust/智能指针/` — Box 递归类型与地址不变性、deref coercion 三情形、Rc 计数轨迹、RefCell 运行期借用、引用环泄漏与 Weak 破环
 5. **生命周期标注** ✅ `09-语言学习/Rust/生命周期/` — 三条省略规则判定引擎、结构体持引用、`'static` 与常量提升、E0597 区间包含检查
-6. [ ] **闭包与迭代器** → `Rust/Fn三兄弟与迭代器/` — `Fn`/`FnMut`/`FnOnce` 推导、捕获方式、零成本迭代链与手写循环的汇编级对比
-7. [ ] **无畏并发** — `Send`/`Sync` 的 auto trait 语义、`Arc<Mutex<T>>`、`MutexGuard` 与死锁
-8. [ ] **async/await 状态机** — Future 是惰性的、`poll` 与 `Waker`、Pin 解决的问题、task 与 executor 的关系
-9. [ ] **错误处理惯用法** — `Result` + `?` + `From` 自动转换、`thiserror`/`anyhow` 的分工、`Box<dyn Error>`
-10. [ ] **unsafe Rust 边界** — 裸指针、`UnsafeCell` 与内部可变性的底层、`transmute` 的前提、`unsafe` 不取消借用检查
+6. ✅ **闭包与迭代器** — `Fn`/`FnMut`/`FnOnce` 推导、捕获方式、零成本迭代链(demo 367)
+7. ✅ **无畏并发** — `Send`/`Sync` 的 auto trait 语义、`Arc<Mutex<T>>`、`MutexGuard` 与死锁(371 目录 `无畏并发/`,demo 368)
+8. ✅ **async/await 状态机** — Future 是惰性的、`poll` 与 `Waker`、Pin 解决的问题、task 与 executor 的关系(demo 369)
+9. ✅ **错误处理惯用法** — `Result` + `?` + `From` 自动转换、`thiserror`/`anyhow` 的分工、`Box<dyn Error>`(demo 370)
+10. ✅ **unsafe Rust 边界** — 裸指针、`UnsafeCell` 与内部可变性的底层、`transmute` 的前提、`unsafe` 不取消借用检查(demo 371)
 11. [ ] **方法解析与 auto-deref** — 方法调用的候选集顺序、`&self`/`&mut self`/`self` 的自动引用、与 `Deref` 的交互
 12. [ ] **variance 与协变** — `&'a T`/`&'a mut T` 的协变/逆变、`PhantomData` 的作用、闭包捕获对 variance 的影响
 13. [ ] **trait 高级形态** — associated type vs 泛型参数、supertrait、GAT、trait object 上的关联类型
@@ -128,6 +133,44 @@
 - [rustc error codes — E0184](https://doc.rust-lang.org/1.74.0/error_codes/E0184.html)
   —— `Copy` 与 `Drop` 互斥的官方错误说明与历史原因(issue #20126)。
 
+第二批(2026-09-19,demo 367-371)新增——逐节依据见各 demo 的 README §八,这里只列主源:
+
+- [The Book — ch13-01 Closures](https://doc.rust-lang.org/book/ch13-01-closures.html)
+  —— 三种捕获方式直接映射三种传参、"additive fashion"、`unwrap_or_else` 的 `FnOnce` 与
+  `sort_by_key` 的 `FnMut`、E0308 / E0507。
+- [The Book — ch13-02 Iterators](https://doc.rust-lang.org/book/ch13-02-iterators.html)
+  —— "iterators are lazy"、`Iterator::next` 是唯一必实现方法、consuming vs iterator adapters。
+- [The Book — ch13-04 Performance](https://doc.rust-lang.org/book/ch13-04-performance.html)
+  —— 基准数字 19,620,300 vs 19,234,900 ns/iter 与 "zero-cost abstractions" 官方定义。
+- [std — `marker::Send`](https://doc.rust-lang.org/std/marker/trait.Send.html)
+  —— "transferred across thread boundaries"、`Rc` 非 Send 与 `Arc` 的对照。
+- [std — `marker::Sync`](https://doc.rust-lang.org/std/marker/trait.Sync.html)
+  —— 精确定义 "`&T` is `Send`"、四条引用关系、`&mut T is Sync` 的 surprising consequence。
+- [std — `sync::MutexGuard`](https://doc.rust-lang.org/std/sync/struct.MutexGuard.html)
+  —— `!Send` 及其理由、`impl<T: Sync> Sync`。
+- [The Book — ch16-03 / ch16-04](https://doc.rust-lang.org/book/ch16-04-extensible-concurrency-sync-and-send.html)
+  —— Mutex 两条规则被类型系统接管、`Rc`→`Arc` 的报错链、Send/Sync 是语言内置、手动实现是 unsafe。
+- [std — `future::Future`](https://doc.rust-lang.org/std/future/trait.Future.html)
+  —— "Futures alone are inert"、只保留最近一次 Waker、完成后不得再 poll。
+- [async-book — The Future Trait](https://rust-lang.github.io/async-book/02_execution/02_future.html)
+  —— 真实签名两处改动的理由、Join / AndThenFut 的 allocation-free state machines。
+- [std — `pin` module](https://doc.rust-lang.org/std/pin/index.html)
+  —— moving / pinning 定义、自引用类型、`AddrTracker` 里 `PhantomPinned` 摘掉自动 `Unpin`。
+- [The Book — ch09-02 Result](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html)
+  —— `?` 走 `From::from`、`Box<dyn Error>` = "any kind of error"、`main` 退出码约定。
+- [Rust Reference — try propagation operator](https://doc.rust-lang.org/reference/expressions/operator-expr.html)
+  —— 五种可作用类型的完整行为表、`Try`/`FromResidual` 去糖。
+- [std — `error::Error`](https://doc.rust-lang.org/std/error/trait.Error.html)
+  —— `Error: Debug + Display`、`source()`、"but not both" 规则。
+- [thiserror](https://docs.rs/thiserror/latest/thiserror/) / [anyhow](https://docs.rs/anyhow/latest/anyhow/)
+  —— derive 生成 Display、`#[from]` 隐含 `#[source]`;trait object 错误、`context()`、downcast。
+- [The Book — ch20-01 Unsafe Rust](https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html)
+  —— 五项 superpower、"doesn't turn off the borrow checker"、安全抽象与 `split_at_mut`。
+- [std — `cell::UnsafeCell`](https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html)
+  —— 内部可变性的核心原语、交叠 `&mut` 无合法途径、不防数据竞争。
+- [Rustonomicon — Transmutes](https://doc.rust-lang.org/nomicon/transmutes.html)
+  —— 尺寸是唯一限制、`&`→`&mut` 永远 UB、`repr(Rust)` 布局无保证。
+
 ## 六、与已有 demo 的边界
 
 - **领域 demo 里的 Rust 实现**(如 `08-安全/01-密码学/`、`06-DevOps/01-容器化/` 后续若补 Rust):
@@ -141,5 +184,5 @@
 ## 七、进度
 
 由 [`_docs/STATE.md`](../../_docs/STATE.md)(主,≤ 5 KB)+ [`archive/`](../../_docs/archive/)(历史回溯)统一追踪。
-本子类目当前状态:**README 已建 + 第一批 5 个 demo 完成(2026-09-15,demo 207-211)**;
-剩余 §四 清单 6–14(闭包迭代器 / 并发 / async / 错误处理 / unsafe / 方法解析 / variance / 高级 trait / 宏)。
+本子类目当前状态:**README 已建 + 第一批 5 个 demo(2026-09-15,demo 207-211)+ 第二批 5 个(2026-09-19,demo 367-371),共 10 个**;
+剩余 §四 清单 11–14(方法解析与 auto-deref / variance 与协变 / trait 高级形态 / 宏系统)。

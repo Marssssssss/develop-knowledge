@@ -46,10 +46,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 6        # 修正:16:00 槽占位锁多推进 1(消费循环[5] 却把指针写 6→7),致 18:00 槽消费循环[7] 而跳过循环[6]=07-数据存储;回退到 6 下轮补
-sub_pos        : 01:2 02:3 03:3 04:3 05:4 06:3 07:2 08:3 09:2 10:2 11:2  # 各大类内子类目指针(06 由误写的 4 修正为 3)
-last_run       : 2026-09-18 20:01  # 20:00 槽占位锁(shell date 实测);保险 45 分钟
-last_top       : 08-安全  # 信息字段,不参与决策
+top_pos        : 7        # 本轮(20:00 槽)消费循环[6]=07-数据存储,指针推进到 7 → 下轮 08-安全
+sub_pos        : 01:2 02:3 03:3 04:3 05:4 06:3 07:3 08:3 09:2 10:2 11:2  # 各大类内子类目指针(本轮消费 sub_pos[07]=2 缓存 → 3)
+last_run       : 2026-09-18 21:08  # 20:00 槽收尾(shell date 实测);保险 45 分钟
+last_top       : 07-数据存储  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -58,11 +58,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-18 21:08 | 29 | 缓存第三批:HTTP 缓存语义(RFC 9111/5861)、缓存一致性 lease、W-TinyLFU 准入、Redis 过期与淘汰、Memcached Slab;Py 213 断言 | S1(索引同步)+工具修复(go_sanity 2 处真 bug)+S3(ID 262..361) | +5 | 361 | curl 直抓 RFC/redis+memcached 源码 + Caffeine wiki;槽位 ✓ |
 | 2026-09-18 19:03 | 33 | 网络安全第二批:WireGuard、QUIC 头保护、RPKI、WPA3-SAE、TLS 1.3 ECH;Py 387 断言 | S1(补父 README 漏登 5 行)+S3(ID 252..356) | +5 | 356 | 0 WF/0 WS(curl 抓 RFC);槽位 ✓ |
 | 2026-09-18 17:00 | 25 | 监控与可观测性第二批:PromQL 范围向量与 rate、TSDB、OTel Collector、Alertmanager 抑制静默、Loki 与 LogQL;Py 535 断言 | S1+欠账+S3(ID 252..351) | +5 | 351 | 7 WF(触顶)+5 WS;槽位 △ |
 | 2026-09-18 14:34 | 22 | 计算机视觉首批:Canny、Harris、SIFT 尺度空间、YOLO 检测头、ViT 分块;Py 236 断言;重写 bracket_check | S1+S3(ID 247..346) | +5 | 346 | 8 WF;槽位 ✓ |
 | 2026-09-18 12:16 | 18 | 跨平台首批:平台通道 codec、dart:ffi ABI、K/N 内存、SlotTable、Tauri vs Electron;Py 252 断言 | S1+S2+S3(ID 242..341) | +5 | 341 | 10 WF;槽位 ✓ |
-| 2026-09-18 10:38 | 14 | 内存管理首批:mmap/brk、ptmalloc2、Cheney、标记-压缩、分代 GC(4008 vs 21708 字=5.4×);Py 336 断言 | S1+S3(ID 232..336) | +5 | 336 | 10 WF;槽位 ✓ |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

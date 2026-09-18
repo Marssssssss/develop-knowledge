@@ -6,7 +6,7 @@
 | --- | --- |
 | [01-iOS/](./01-iOS/) | Swift / Objective-C / SwiftUI / UIKit(ARC、GCD、RunLoop、async-await+actor、Auto Layout、启动优化、Core Animation 渲染管线) |
 | [02-Android/](./02-Android/) | Kotlin / Java / Jetpack Compose(Handler·协程与 Flow·WorkManager、Fragment/Service 生命周期、OkHttp 网络、Compose 重组) |
-| [03-跨平台/](./03-跨平台/) | React Native / Flutter / Kotlin Multiplatform |
+| [03-跨平台/](./03-跨平台/) | React Native / Flutter / Kotlin Multiplatform / Compose Multiplatform / WebView 容器 |
 | [04-推送与消息/](./04-推送与消息/) | APNs / FCM / 厂商通道(设备令牌生命周期、离线排队与 TTL、静默推送与后台唤醒)—— 索引已建,原理待补 |
 
 ## 已完成 demo
@@ -32,13 +32,19 @@
 | 284 | `02-Android/并发编程/WorkManager约束与重试/` | WorkManager:约束全部 AND 且默认 false、退避 30s 起步(下限 10s/上限 5h)与 `Result.retry()`、`doWork()` 每次实例一次且限 10 分钟、唯一任务 KEEP/REPLACE/APPEND、`Result.failure()` 阻断下游 | Python / Kotlin / Java |
 | 285 | `02-Android/组件生命周期/Fragment生命周期与ViewModel/` | Fragment 状态机与 ViewModel 作用域:`mState` 9 态(含 `AWAITING_EXIT/ENTER_EFFECTS` 过渡态)、进返回栈只 `onDestroyView` 回来重跑 `onCreateView`、`getViewLifecycleOwner()` 视图销毁后抛错、`viewModelScope` 先于 `onCleared()` 取消 | Python / Kotlin |
 | 286 | `02-Android/组件生命周期/Service三种形态/` | Service 三形态:started/bound/foreground 并存规则(已启动或有 BIND_AUTO_CREATE 连接即存活)、`onStartCommand` 返回值四档重建策略(`START_STICKY` 可能收到 null intent)、`stopSelf(startId)` 必须按序否则立即停止、`setForeground()` 已是 no-op | Python / Kotlin / Java |
+| 337 | `03-跨平台/Flutter/平台通道/` | Flutter 平台通道:StandardMessageCodec 类型字节(0=null … 7=string)+ expanding 长度格式(0..253 单字节 / 254+uint16 / 255+uint32)+ double 8 字节对齐;MethodCodec 应答信封首字节 0 = 成功、**非零即错误**;EventChannel 流式与 BackgroundIsolateBinaryMessenger | Dart / Python |
+| 338 | `03-跨平台/Flutter/dart-ffi/` | dart:ffi 的 ABI 相关整数类型:`Long` / `Size` / `UintPtr` 宽度随 ABI 变化、**LLP64**(windowsX64/Arm64)指针 8 字节但 `long` 仍 4 字节、定宽 vs 仅作标记 vs 可实例化三类类型、结构体 stride 按 C ABI 对齐 | Dart / C / Python |
+| 339 | `03-跨平台/Kotlin-Multiplatform/内存模型/` | Kotlin/Native 内存模型:共享堆 + 追踪式 GC(CMS,不分代)、旧「冻结」模型在 1.9.20 完全移除、全局属性改为惰性初始化、`AtomicReference` 引用环不再泄漏、stable refs 与 `autoreleasepool` 的 ARC 集成规则 | Kotlin / Python |
+| 340 | `03-跨平台/Compose-Multiplatform/重组与SlotTable/` | SlotTable 结构:`groups` 整数数组(每 group 占 `Group_Fields_Size` 个元素)+ `slots` 数组的 **gap buffer**、`dataAnchor` 写模式下是**锚点而非下标**、`groupSize`/`skipToGroupEnd` 跳过原语、四类 group(Restart/Replaceable/Movable/Node)、满表删除的父锚点回归 | Kotlin / Python |
+| 341 | `03-跨平台/WebView容器/Tauri-vs-Electron/` | Tauri vs Electron:系统 WebView(5 平台 4 引擎)vs 自带 Chromium、不携带 vs 携带运行时、一次调用 3 段 vs 5 段、Structured Clone 负载限制、capability 声明式权限 vs preload+`contextBridge` 手工裁剪 | TypeScript / JavaScript / Python |
 
 ## 待研究
 
 - [x] iOS 启动时间优化(dyld / ObjC runtime 初始化)→ demo 230
 - [x] Core Animation 渲染管线 / Auto Layout 原理 → demo 227、231
 - [x] Android OkHttp / Retrofit 原理 → demo 282
-- [ ] Compose Multiplatform(共享 UI 的 Kotlin 方案)
+- [x] Compose Multiplatform(共享 UI 的 Kotlin 方案)→ demo 340
+- [x] Tauri / Electron 架构对比 → demo 341
 - [ ] SwiftUI 与 UIKit 桥接(UIHostingController / UIViewRepresentable)
 - [ ] iOS Instruments(Leaks / Allocations / Time Profiler / Network)实战
 - [ ] React Native Hermes V1 字节码引擎
@@ -46,3 +52,4 @@
 - [ ] Flutter Isolate 并发模型
 - [ ] Android Retrofit 动态代理与 CallAdapter / Converter
 - [ ] Android HTTP/2 多路复用与流控
+- [ ] Tauri 2.x 移动端(Android/iOS)与 JNI / UniFFI 桥

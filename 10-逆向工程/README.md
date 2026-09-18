@@ -34,6 +34,11 @@
 - [x] 协议状态机恢复（Veritas P-PSM）→ 194 协议状态机恢复（03-协议逆向）
 - [x] JA3/JA4 TLS 握手指纹计算器 → 195 JA3与JA4指纹（03-协议逆向）
 - [x] Polyglot 污点分析四大启发式 → 196 Polyglot污点启发式（03-协议逆向）
+- [x] Discoverer 递归聚类与 FD 格式区分符 → 372 Discoverer递归聚类（03-协议逆向）
+- [x] AutoFormat 上下文感知执行监视与并行字段 → 373 AutoFormat执行上下文（03-协议逆向）
+- [x] Tupni 加权 k-Set Packing 与循环内记录边界 → 374 Tupni记录序列（03-协议逆向）
+- [x] ReFormat 加密报文相位划分与数据生命周期 → 375 ReFormat加密报文（03-协议逆向）
+- [x] bit 级字段切分（位级相关性判据与常量位能力边界）→ 376 bit级字段切分（03-协议逆向）
 - [ ] 加壳与去混淆入门（UPX 壳结构与手工脱壳边界）
 
 ## 参考资料（已读）
@@ -49,6 +54,11 @@
 - [JA3: A method for profiling SSL/TLS Clients — salesforce/ja3（03-协议逆向）](https://github.com/salesforce/ja3)
 - [Protocol Reverse-Engineering Methods and Tools: A Survey — Computer Networks（03-协议逆向）](https://www.sciencedirect.com/science/article/pii/S0140366421004382)
 - [BinPRE: Enhancing Field Inference in Binary Analysis Based PRE — arXiv 2409.01994（03-协议逆向）](https://arxiv.org/pdf/2409.01994v1)
+- [RFC 1035 §4.1.1 — DNS 头部标志位布局，bit 级切分的真值来源（376）](https://www.rfc-editor.org/rfc/rfc1035.txt)
+- [Discoverer: Automatic Protocol Reverse Engineering from Network Traces — USENIX Security 2007（372）](https://www.usenix.org/legacy/events/sec07/tech/full_papers/cui/cui.pdf)
+- [Tupni: Automatic Reverse Engineering of Input Formats — CCS 2008（374）](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tupni-ccs08.pdf)
+- AutoFormat: Automatic Protocol Format Reverse Engineering through Context-Aware Monitored Execution — Zhiqiang Lin, Xuxian Jiang, Dongyan Xu, Xinyuan Zhang, **NDSS 2008**（373；PDF 实读 17 页，下载链接未回溯核对故不著录 URL）
+- ReFormat: Automatic Reverse Engineering of Encrypted Messages — Zhi Wang, Xuxian Jiang, Weidong Cui, Xinyuan Wang, **ESORICS 2009**（375；PDF 实读 16 页，下载链接未回溯核对故不著录 URL）
 - [AAPCS64 — Procedure Call Standard for the Arm 64-bit Architecture（257）](https://raw.githubusercontent.com/ARM-software/abi-aa/main/aapcs64/aapcs64.rst)
 - [A64 ISA Index by Encoding（ddi0602，257）](https://developer.arm.com/documentation/ddi0602/2023-03/Index-by-Encoding/Data-Processing----Register)
 - [Decompiler Analysis Engine — Ghidra 官方反编译器文档（258）](https://ghidradocs.com/11.4_PUBLIC/docs/DecompilerDoxygen/html/index.html)

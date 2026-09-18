@@ -1,0 +1,10 @@
+[package]
+name = "error-idioms"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "error-idioms"
+path = "main.rs"
+
+[dependencies]

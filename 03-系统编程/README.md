@@ -41,3 +41,9 @@ IO 多路复用、协程等通用机制在游戏服务端也是基石。通用 d
   - 读者写者锁（读者/写者偏好双策略、tryrdlock EBUSY、递归读锁）— [02-进程与线程/读者写者锁/](02-进程与线程/读者写者锁/)
   - 最小有栈协程（ucontext 四件套 + 有栈/无栈对照）— [02-协程/最小有栈协程/](02-协程/最小有栈协程/)
   - CFS 调度器（vruntime/最左选取/min_vruntime 放置/权重=份额）— [02-进程与线程/CFS调度器/](02-进程与线程/CFS调度器/)
+- ✅ 内存管理 5 个（2026-09-18 10:00 槽）— 见 [03-内存管理/](./03-内存管理/)：
+  - mmap / brk 虚拟内存基础（三次"返回值口径"差异、`MAP_FIXED` 只丢弃重叠部分、`mallopt` 动态 mmap 阈值）— [03-内存管理/分配器/mmap-brk-虚拟内存/](03-内存管理/分配器/mmap-brk-虚拟内存/)
+  - ptmalloc2 真实实现（chunk 头 / bins / tcache 精确匹配 / arena 上限 8×CPU；master 与 2.35 的 tcache 常量差异）— [03-内存管理/分配器/ptmalloc2/](03-内存管理/分配器/ptmalloc2/)
+  - Cheney 半空间复制式 GC（无递归栈的双指针遍历、转发指针、BFS 层序、成本 ∝ 存活数）— [03-内存管理/垃圾回收/gc-cheney-copying/](03-内存管理/垃圾回收/gc-cheney-copying/)
+  - 标记-压缩式 GC（Lisp2 保序滑动 + GHC `Compact.c` 线程化压缩的 O(1) 额外空间；保序 vs 层序的局部性 2 倍差）— [03-内存管理/垃圾回收/gc-mark-compact/](03-内存管理/垃圾回收/gc-mark-compact/)
+  - 分代式 GC（写屏障/记忆集是正确性前提；实测分代扫 4008 字 vs 非分代基线 21708 字；CPython 三代 + 25% long_lived 启发式 + 默认阈值 3.13 起 700→2000）— [03-内存管理/垃圾回收/gc-generational/](03-内存管理/垃圾回收/gc-generational/)

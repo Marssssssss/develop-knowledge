@@ -15,6 +15,16 @@
 └── CI流水线加固/          # 权限最小化、不可信输入(PR 分支)、构建缓存投毒
 ```
 
+## 已完成 demo
+
+| 目录 | 主题 | 核心机制 | 语言 |
+| --- | --- | --- | --- |
+| [SAST与污点分析/](./SAST与污点分析/) | 污点分析的精确性阶梯 | flow-insensitive / flow-sensitive / path-sensitive 三档精度的误报集与漏报集;DataFlow 只跟保值步骤、TaintTracking 追加非保值步骤 | Py/Go/C |
+| [依赖漏洞与SBOM/](./依赖漏洞与SBOM/) | 版本区间 → 可达性剪枝 → SPDX | SemVer 优先级与 `^`/`~` 语义(0.x 陷阱);传递解析取区间内最高版本;调用图可达性把「装了但调不到」的 CVE 剪掉 | Py/Go/C |
+| [供应链完整性/](./供应链完整性/) | SLSA v1.0 Provenance 验证 | `subject` 摘要绑定、`builder.id` 是级别的 sole determiner、signer-builder 配对、`externalParameters` 不可信而 `internalParameters` 无需验证、扩展字段必须忽略 | Py/Go/C |
+| [密钥管理/](./密钥管理/) | 硬编码凭据检测(CWE-798) | 香农熵上限由字符集决定(十六进制 4.0 bit)→ 阈值 4.5 系统性漏报;归一化 + 结构规则 + 上下文白名单三级叠加 | Py/Go/C |
+| [CI流水线加固/](./CI流水线加固/) | 流水线四类攻击面 | 表达式拼进 shell 文本的注入、action 必须固定到完整 commit SHA(tag 可移动)、特权触发器共享主分支缓存、OIDC 短期令牌把暴露窗口从 10 年压到 780 秒 | Py/Go/C |
+
 ## 与其它子领域的分工
 
 | 子领域 | 攻面 | 典型问题 |

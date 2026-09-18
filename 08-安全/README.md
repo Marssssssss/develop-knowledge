@@ -7,7 +7,7 @@
 | [01-密码学/](./01-密码学/) | 对称/非对称/哈希/签名 |
 | [01-Web安全/](./01-Web安全/) | 请求侧攻防(XSS / CSRF / 注入 / JWT / CORS) |
 | [02-网络安全/](./02-网络安全/) | 链路侧(传输安全、协议指纹) |
-| [03-应用安全与供应链/](./03-应用安全与供应链/) | 代码与制品侧(SAST / 依赖漏洞 / SBOM / 供应链完整性 / CI 加固) — 🗺 已登记,demo 待做 |
+| [03-应用安全与供应链/](./03-应用安全与供应链/) | 代码与制品侧(SAST / 依赖漏洞 / SBOM / 供应链完整性 / CI 加固) — ✅ 首批 5 个 demo |
 
 > 目录命名有重叠以方便按主题跳转，正式安全研究请参考 [OWASP Top 10](https://owasp.org/www-project-top-ten/)。
 > 三个子领域的分工按「攻击者能控制什么输入」划分:请求参数 / 网络包 / **依赖版本与构建环境**。
@@ -44,6 +44,11 @@
 | `02-网络安全/RPKI前缀源验证/` | RPKI 前缀源验证(RFC 6482/8205):ROA/ASPA + maxLength 覆盖判定 |
 | `02-网络安全/WPA3-SAE/` | WPA3 SAE(Dragonfly):提交-确认两轮 PAKE,抗离线字典 |
 | `02-网络安全/TLS-ECH/` | TLS 1.3 ECH(RFC 9849 + HPKE RFC 9180):加密 ClientHello + 外层 AAD |
+| `03-应用安全与供应链/SAST与污点分析/` | 污点分析三档精度阶梯:flow-insensitive/flow-sensitive/path-sensitive 的误报集与漏报集 |
+| `03-应用安全与供应链/依赖漏洞与SBOM/` | SemVer 区间求值 + 传递解析 + 调用图可达性剪枝 + SPDX 2.3 关系(DESCRIBES/CONTAINS/DEPENDS_ON) |
+| `03-应用安全与供应链/供应链完整性/` | SLSA v1.0 provenance 验证:subject 摘要绑定、builder.id 定级别、signer-builder 配对、扩展字段忽略 |
+| `03-应用安全与供应链/密钥管理/` | CWE-798 硬编码凭据检测:熵上限受字符集约束 → 归一化 + 结构规则 + 上下文白名单 |
+| `03-应用安全与供应链/CI流水线加固/` | CI 四类攻击面:表达式注入、action SHA 固定、特权触发器共享缓存投毒、OIDC 短期令牌 |
 
 ## 待研究
 
@@ -53,6 +58,6 @@
 - [x] OAuth 2.0 流程 ✓
 - [x] 传输层协议安全整批 ✓ (02-网络安全 两批共 10 个:SYN Cookie / XDP / IKEv2 / DNSSEC / WireGuard / QUIC / RPKI / SAE / ECH)
 - [ ] MACsec (IEEE 802.1AE)
-- [ ] 供应链与制品安全 (03-应用安全与供应链,demo 待做)
+- [x] 供应链与制品安全 ✓ (03-应用安全与供应链 首批 5 个:污点分析精度阶梯 / 依赖可达性+SPDX / SLSA provenance 验证 / CWE-798 熵判据 / CI 加固)
 - [ ] 密钥管理与 HSM/KMS 抽象
 - [ ] 后量子迁移(ML-KEM/ML-DSA 混合模式)

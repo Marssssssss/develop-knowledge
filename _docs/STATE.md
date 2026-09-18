@@ -58,7 +58,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批:九宫格缩放(border-image 四平铺)、流式布局(Flexbox §9.7)、事件分发(DOM §2.9+穿透)、UI合批(UGUI)、MSDF(n=3 穷举) | S3 | +5 | 386 | 5 份原文 curl 实读;Py 111 断言+node 实跑;槽位 ✓ | notify: pending |
+| 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批:九宫格缩放(border-image 四平铺)、流式布局(Flexbox §9.7)、事件分发(DOM §2.9+穿透)、UI合批(UGUI)、MSDF(n=3 穷举) | S3 | +5 | 386 | 5 份原文 curl 实读;Py 111 断言+node 实跑;槽位 ✓ | notify: ok |
 | 2026-09-19 04:53 | 47 | 基准测试第二批:predictN 四道钳制、MDE 样本量、CoV 噪声地板、FWER vs FDR、-benchmem 截断 | S3 | +5 | 381 | 8 次实读+3 检索;Py 44 断言;槽位 ✓ | notify: ok |
 | 2026-09-19 03:09 | 46 | 协议逆向第二批:Discoverer 递归聚类、AutoFormat 字段树、Tupni 记录序列、ReFormat 相位、bit 级切分 | S1+S3 | +5 | 376 | 4 篇论文 PDF+RFC 1035 实读;Py 99 断言 | notify: ok |
 | 2026-09-19 00:57 | 50 | Rust 第二批:Fn 三 trait、Send/Sync 与死锁判环、Future+Pin、`?` 五形态、unsafe 五 superpower | S1+S3 | +5 | 371 | 20 次官网实读 | notify: ok |

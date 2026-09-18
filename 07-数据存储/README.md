@@ -34,7 +34,12 @@
 - [x] 逻辑复制与 CDC（logical decoding + slot 持留 WAL + Debezium offset/snapshot）— 见 [01-关系型/LogicalDecodingCDC/](./01-关系型/LogicalDecodingCDC/)(Python / Go)
 - [x] Join 算法（hash/GRACE/sort-merge 成本模型，CMU 15-445）— 见 [01-关系型/JoinAlgorithms/](./01-关系型/JoinAlgorithms/)(Python / Go)
 - [x] 物化视图增量刷新（全量 REFRESH 阻塞 vs CONCURRENTLY diff + 唯一索引）— 见 [01-关系型/MaterializedView/](./01-关系型/MaterializedView/)(Python / Go)
-- [x] 在线 DDL（INSTANT/INPLACE/COPY + MDL 两端独占 + gh-ost binlog 流）— 见 [01-关系型/OnlineDDL/](./01-关系型/OnlineDDL/)(Python / Go)
+- [x] 在线 DDL（INSTANT/INPLACE/COPY + MDL 两端独占 + gh-ost binlog 流）— 见 [01-关系型/OnlineDDL/](./01-关系型/OnlineDDL/)（Python / Go）
+- [x] HTTP 缓存语义（RFC 9111 新鲜度/Age/Vary + RFC 5861 stale 扩展）— 见 [03-缓存/HTTP缓存语义/](./03-缓存/HTTP缓存语义/)（Python / Go）
+- [x] 缓存一致性模式（写顺序竞态枚举 + Facebook lease 防 stale set/惊群）— 见 [03-缓存/缓存一致性模式/](./03-缓存/缓存一致性模式/)（C / Python / Go）
+- [x] W-TinyLFU 准入策略（Caffeine 4-bit CMS + 窗口 LRU + 主区 SLRU）— 见 [03-缓存/WTinyLFU准入/](./03-缓存/WTinyLFU准入/)（Python / Go）
+- [x] Redis 过期与淘汰（EXPIRE GT/LT + activeExpireCycle + LFU Morris 计数）— 见 [03-缓存/Redis过期与淘汰/](./03-缓存/Redis过期与淘汰/)（C / Python / Go）
+- [x] Memcached Slab 分配器（39 个 class 建表 + 内部碎片 + 页卡死）— 见 [03-缓存/MemcachedSlab分配/](./03-缓存/MemcachedSlab分配/)（C / Python / Go）
 
 ## 待研究
 
@@ -44,7 +49,6 @@
 - [x] ES BM25 评分算法细节（已在 `04-搜索引擎/BM25评分/`）
 - [ ] 隔离级别与幻读防（next-key lock / SSI）
 - [ ] Redis Sentinel 高可用
-- [ ] Memcached vs Redis 业务选型对比（03-缓存 已部分覆盖；缓存目录仍待深挖）
 - [ ] 中文 IK 分词器与 BM25 协同（影响 avgdl / length normalization）
 - [x] 图数据库 Neo4j / Cypher / 属性图模型（`05-图数据库/` 两批 10 demo：PropertyGraphModel / CypherParser / GraphTraversal / PageRank / Neo4jStorage + VarLengthPath / BoltProtocol / Neo4jLocks / CypherPipeline / MergeSemantics）
 - [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

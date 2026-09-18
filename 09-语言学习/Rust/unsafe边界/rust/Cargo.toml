@@ -1,0 +1,10 @@
+[package]
+name = "unsafe-boundary"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "unsafe-boundary"
+path = "main.rs"
+
+[dependencies]

@@ -13,9 +13,8 @@ repeat_interval),以及 Prometheus 侧的**告警状态机**(`for` 的 pending�
 ### 1. 职责分界:Prometheus 管状态,Alertmanager 管通知
 
 ```
-Prometheus                               Alertmanager
-  expr ──> pending ──for──> firing ──POST /api/v2/alerts──> 分组 ─> 路由
-                                                             └── 抑制 / 静默
+Prometheus                              Alertmanager
+  expr ──> pending ──for──> firing ──POST /api/v2/alerts──> 分组 ─> 路由 ─> 抑制 / 静默
   合成序列 ALERTS{alertname,alertstate} / ALERTS_FOR_STATE(重启恢复 for 计时)
 ```
 
@@ -25,8 +24,7 @@ Prometheus                               Alertmanager
 ### 2. matcher 语言:没有 IN 操作符
 
 ```
-key="value"   等值      key!="value"  不等
-key=~"regex"  正则(完全锚定)   key!~"regex"  正则取反
+key="value" 等值 | key!="value" 不等 | key=~"regex" 正则(完全锚定) | key!~"regex" 取反
 ```
 
 三个必须记住的语义:
@@ -73,11 +71,9 @@ root(default-receiver, group_by=[alertname, cluster])
                └─ 无变化 → 距上次发送是否已过 repeat_interval(4h)
 ```
 
-官方注释里两条容易忽略的细节:
-
-- **告警若在 `group_wait` 结束前就已 resolved,则不发通知** —— 这就是它天然抑制抖动的
-  原理;错过初始 `group_wait` 的告警会在下一个 `group_interval` 补发。
-- **`repeat_interval` 应为 `group_interval` 的倍数,否则向上取整**到下一个倍数。
+官方注释里两条容易忽略的细节:**告警若在 `group_wait` 结束前就已 resolved,则不发通知** ——
+这就是它天然抑制抖动的原理,错过初始 `group_wait` 的告警会在下一个 `group_interval` 补发;
+**`repeat_interval` 应为 `group_interval` 的倍数,否则向上取整**到下一个倍数。
 
 ### 5. 抑制与静默
 
@@ -93,15 +89,14 @@ inhibit_rules:
 写进 `equal` 后,没有 `instance` 标签的聚合告警之间会**互相抑制**。`equal` 留空则退化成
 「只要源告警在跑,所有 target 匹配到的告警都被抑制」。
 
-**静默**与之的区别:抑制写在配置里、长期有效;静默通过 UI/API 动态创建,是一组 matchers
-加一个时间窗口,窗口内所有 matcher 命中的告警都不通知。窗口是**左闭右开**的。
+**静默**与之的区别:抑制写在配置里长期有效;静默通过 UI/API 动态创建,是一组 matchers 加一个
+时间窗口,窗口内命中的告警都不通知。窗口是**左闭右开**的。
 
 ### 6. 告警状态机
 
 ```
 inactive ──expr 命中──> pending ──连续满足 for──> firing ──expr 不再命中──> inactive
-             ^              │                        │
-             │              └─ 任一评估不命中即归零   └─ keep_firing_for 窗口内保持 firing
+                          └─ 任一评估不命中即归零    └─ keep_firing_for 窗口内保持 firing
 ```
 
 - `for` 期间处于 **pending**,只有 firing 才会发给 Alertmanager。
@@ -201,7 +196,5 @@ def decide(self, group, now, current_fps):
 - DeepWiki [yunlzheng/prometheus-book: Alertmanager Configuration](https://deepwiki.com/yunlzheng/prometheus-book/4.2-alertmanager-configuration) —— route 参数默认值表、抑制与静默的定位差异
 - devopsaitoolkit [Alerts Stuck Pending and Never Firing](https://devopsaitoolkit.com/blog/prometheus-error-alerts-stuck-pending-not-firing) —— 用 `time() - ALERTS_FOR_STATE` 量真实持续时长
 
-> 不同来源对 API 字段 `keepFiringSince` 的口径不一致(一处称"转为 firing 的时刻",
-> 另一处称"条件最后一次满足的时刻")。本 demo 只断言"条件不再满足后保持 firing 达
-> `keep_firing_for` 时长"这一有官方文档支撑的行为,不对该字段下结论。
-> 指纹实现用 SHA-256 替代真实实现的 xxhash,只保证稳定性与区分度。
+> 不同来源对 API 字段 `keepFiringSince` 的口径不一致(一处称"转为 firing 的时刻",另一处称"条件最后一次满足的
+> 时刻")。本 demo 只断言有官方文档支撑的行为,不对该字段下结论;指纹用 SHA-256 代替 xxhash,只保证稳定与区分度。

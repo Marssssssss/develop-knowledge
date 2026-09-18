@@ -46,9 +46,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 3        # 下一轮取循环第 3 位 → 04-移动开发(本轮已取第 2 位 = 03-系统编程)
-sub_pos        : 01:2 02:3 03:3 04:2 05:3 06:2 07:2 08:2 09:2 10:2 11:2  # 各大类内子类目指针
-last_run       : 2026-09-18 12:03  # 12:00 槽占位锁(实测 shell date);保险 45 分钟
+top_pos        : 4        # 下一轮取循环第 4 位 → 05-AI与机器学习(本轮已取第 3 位 = 04-移动开发)
+sub_pos        : 01:2 02:3 03:3 04:3 05:3 06:2 07:2 08:2 09:2 10:2 11:2  # 各大类内子类目指针
+last_run       : 2026-09-18 12:16  # 12:00 槽收尾(实测 shell date);保险 45 分钟
 last_top       : 04-移动开发  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
@@ -58,11 +58,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 |
 | --- | --- | --- | --- | --- |
-| 2026-09-18 10:38 | 14 | 内存管理首批:mmap/brk(MAP_FIXED 只丢重叠部分、阈值 128KiB 动态上调+trim 翻倍)、ptmalloc2(request2size 先加 SIZE_SZ、tcache 只精确匹配)、Cheney 复制(scan/alloc 即队列)、标记-压缩(转发表/线程化/V8 五状态)、分代 GC(写屏障+记忆集,4008 vs 21708 字=5.4×);Py 336 断言 | S1+S3 rotate(ID 232..336)+行数审计 | +5 | 336 | 10 WF;槽位 ✓ slot_late |
-| 2026-09-18 08:24 | 10 | 数据库首批:N+1与预取4策略、EXPLAIN(arb.units/loops)、连接池公式与pool-locking下界、键集分页、Redis dict渐进rehash+zskiplist;Py 125 断言;顺带清 B+树索引 4 处历史超限 | S1+欠账+S3 rotate(ID 227..331) | +5 | 331 | 7 WF+1 WS;槽位 ✓ |
-| 2026-09-18 06:29 | 1 | 渲染·图形管线首批:GBuffer 布局/light volume、Forward+ tile 剔除、实例化、TBDR、CS 执行模型;Py 78 断言 | S3+索引补齐×2 | +5 | 326 | 5 WF+4 WS;槽位 ✓ |
-| 2026-09-18 04:29 | 38 | 应用级剖析首批:pprof 在线采集/top 解读、py-spy、cProfile tottime-cumtime、ReportAllocs;Py 59 断言 | S3+rotate(ID 222..321) | +5 | 321 | 7 WebFetch;槽位 ✓ |
-| 2026-09-18 02:22 | 36 | 移动端逆向首批:Frida Java/Interceptor、APK 签名 v1v2v3、SSL Pinning、Objection;Py 62 断言 | S1+S3 rotate(ID 202..316) | +5 | 316 | 6 WF+2 WS+3 curl;槽位 ✓ |
+| 2026-09-18 12:16 | 18 | 跨平台首批:平台通道 codec、dart:ffi ABI、K/N 内存、SlotTable、Tauri vs Electron;Py 252 断言 | S1+S2+S3(ID 242..341) | +5 | 341 | 10 WF;槽位 ✓ |
+| 2026-09-18 10:38 | 14 | 内存管理首批:mmap/brk、ptmalloc2、Cheney、标记-压缩、分代 GC(4008 vs 21708 字=5.4×);Py 336 断言 | S1+S3 rotate(ID 232..336) | +5 | 336 | 10 WF;槽位 ✓ |
+| 2026-09-18 08:24 | 10 | 数据库首批:N+1 预取、EXPLAIN、连接池、键集分页、Redis dict rehash;Py 125 断言;清 B+树 4 处超限 | S1+欠账+S3(ID 227..331) | +5 | 331 | 7 WF+1 WS |
+| 2026-09-18 06:29 | 1 | 渲染·图形管线首批:GBuffer 布局/light volume、Forward+ tile 剔除、实例化、TBDR、CS 执行模型;Py 78 断言 | S3+索引补齐×2 | +5 | 326 | 5 WF+4 WS |
+| 2026-09-18 04:29 | 38 | 应用级剖析首批:pprof 在线采集/top 解读、py-spy、cProfile tottime-cumtime、ReportAllocs;Py 59 断言 | S3+rotate(ID 222..321) | +5 | 321 | 7 WebFetch |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

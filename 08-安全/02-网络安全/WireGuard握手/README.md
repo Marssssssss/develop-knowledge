@@ -12,10 +12,10 @@ WireGuard 用约 4000 行内核代码实现了现代 VPN：握手是 **Noise Pro
   `psk2` = 预共享密钥在第二条消息末尾混入（对称密钥退化为"额外一层口令"）。
 - **ck / h / k 三状态**：chaining key（密钥链）、handshake hash（转录哈希，同时充当 AEAD 的 AD）、
   CipherState 密钥。
-- **TAI64N 时间戳**：12 字节（8 字节秒 + 4 字节纳秒），用于抗握手重放；内核把纳秒向下对齐到
-  `2^24` 以削弱精确计时侧信道。
-- **MAC1 / MAC2 与 cookie**：无状态 DoS 防护 —— 只在握手消息末尾加两个 16 字节 MAC，
-  服务器在不做任何 DH 运算的情况下丢弃绝大多数伪造包。
+- **TAI64N 时间戳**：12 字节（8 字节秒 + 4 字节纳秒）抗握手重放；内核把纳秒向下对齐到 `2^24`
+  以削弱精确计时侧信道。
+- **MAC1 / MAC2 与 cookie**：无状态 DoS 防护 —— 消息末尾两个 16 字节 MAC，让服务器不做任何
+  DH 运算就能丢弃绝大多数伪造包。
 
 ## 原理详解
 
@@ -83,16 +83,14 @@ cookie 绑的是**源地址**而不是消息内容，所以无法被搬到别处
 | --- | --- | --- | --- |
 | 算法协商 | **无协商**，写死 | 大量 SA 提议 | 随 TLS 套件，配置空间大 |
 | 握手往返 | 1-RTT | 2 轮 4 消息 | 依赖 TLS 完整握手 |
-| 代码规模 | ~4 千行内核 | 数十万行 | 数十万行 |
 | 前向保密 | 每 2 分钟重密钥（`REKEY_AFTER_TIME`） | 依配置 | 依配置 |
 | DoS 防护 | 无状态 MAC1/cookie + 令牌桶 | IKEv2 cookie | 需依赖 TCP |
 
 ## 环境准备
 
 - 操作系统：Linux / macOS / Windows（本 demo 纯算法模拟，不建真实隧道）
-- Python：3.10+（仅标准库）
-- C：OpenSSL 1.1.1+（`EVP_PKEY_X25519` 与 `EVP_chacha20_poly1305`）
-- Go：1.20+（`crypto/ecdh` 提供 X25519；BLAKE2s 与 ChaCha20 在本目录自行实现）
+- Python 3.10+（仅标准库）；C 需 OpenSSL 1.1.1+（`EVP_PKEY_X25519`、`EVP_chacha20_poly1305`）；
+  Go 1.20+（`crypto/ecdh` 提供 X25519，BLAKE2s 与 ChaCha20 在本目录自行实现）
 
 ## 运行方式
 
@@ -186,13 +184,10 @@ static void kdf(uint8_t *out1, uint8_t *out2, uint8_t *out3,
 
 - [WireGuard 内核实现：drivers/net/wireguard/messages.h](https://git.zx2c4.com/wireguard-linux/plain/drivers/net/wireguard/messages.h) —
   消息结构体与全部常量（`REKEY_*`、`COOKIE_*`、计数器位数、填充倍数）
-- [noise.c](https://git.zx2c4.com/wireguard-linux/plain/drivers/net/wireguard/noise.c) —
-  `handshake_name`/`identifier_name`、`hmac()`/`kdf()`/`mix_hash()`/`mix_psk()`/`mix_dh()`、
-  握手消息的创建与消费顺序、`tai64n_now()` 的纳秒对齐
-- [cookie.c](https://git.zx2c4.com/wireguard-linux/plain/drivers/net/wireguard/cookie.c) —
-  `mac1----`/`cookie--` 标签、MAC1/MAC2 的计算口径、XChaCha20Poly1305 封装 cookie
-- [receive.c](https://git.zx2c4.com/wireguard-linux/plain/drivers/net/wireguard/receive.c) —
-  8192 位重放窗口 `counter_validate()`
+- [noise.c](https://git.zx2c4.com/wireguard-linux/plain/drivers/net/wireguard/noise.c) — `handshake_name`/`identifier_name`、
+  `hmac()`/`kdf()`/`mix_hash()`/`mix_psk()`/`mix_dh()`、握手消息顺序、`tai64n_now()` 的纳秒对齐
+- [cookie.c](https://git.zx2c4.com/wireguard-linux/plain/drivers/net/wireguard/cookie.c) / [receive.c](https://git.zx2c4.com/wireguard-linux/plain/drivers/net/wireguard/receive.c) —
+  `mac1----`/`cookie--` 标签与 MAC1/MAC2 口径、XChaCha20Poly1305 封 cookie、8192 位重放窗口
 - [Noise Protocol Framework 规范](https://noiseprotocol.org/noise.html) —
   IK 与 IKpsk2 模式定义、`MixHash`/`MixKey`/`MixKeyAndHash`/`Split()`、PSK 对 `e` token 的额外要求
 - [RFC 7748](https://www.rfc-editor.org/rfc/rfc7748.html) / [RFC 8439](https://www.rfc-editor.org/rfc/rfc8439.html) —

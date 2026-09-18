@@ -58,11 +58,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-19 04:53 | 47 | 基准测试方法论第二批:benchtime 解析与 predictN 四道钳制(非 1/2/5/10 序列)、MDE 与样本量方程(NIST 两原例)、CoV 噪声地板与 Apogee 口径核对、多重比较 FWER vs FDR、-benchmem 整数截断 | S3(索引同步 2 处) | +5 | 381 | 8 次源码/文档实读+3 检索;Py 44 断言;槽位 ✓ | notify: ok |
-| 2026-09-19 03:09 | 46 | 协议逆向第二批:Discoverer 递归聚类+FD三判据、AutoFormat 字段树与并行字段、Tupni 记录序列与循环合并、ReFormat 相位剖析、bit 级字段切分与常量位能力边界;Py 99 断言 | S1+S3(277..376) | +5 | 376 | curl 直抓 4 篇论文 PDF + RFC 1035 实读;槽位 ✓ | notify: ok |
-| 2026-09-19 00:57 | 50 | Rust 第二批:Fn三trait+惰性零成本、Send/Sync与死锁判环、Future inert+Waker+Pin、`?`五形态+not-both lint、unsafe五superpower | S1+S3(272..371) | +5 | 371 | 20 次官网实读;槽位 ✓ | notify: ok |
-| 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批(除 SDF):九宫格缩放(border-image 四步+四平铺)、流式布局(Flexbox §9.3/§9.7)、事件分发(DOM §2.9+穿透)、UI合批与Canvas重建(UGUI 官方)、MSDF(median-of-three+n=3 穷举) | S3(索引同步 03-UI/01-游戏开发) | +5 | 386 | 5 份原文 curl 直抓实读;Py 111 断言+JS node 实跑;槽位 ✓ | notify: pending |
-| 2026-09-18 22:57 | 54 | 应用安全与供应链首批:污点三档精度、依赖可达性+SPDX、SLSA provenance、CWE-798 熵判据、CI 加固;Py 151 断言 | S1+S3(267..366) | +5 | 366 | 8 WF;槽位 ✓ |
+| 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批:九宫格缩放(border-image 四平铺)、流式布局(Flexbox §9.7)、事件分发(DOM §2.9+穿透)、UI合批(UGUI)、MSDF(n=3 穷举) | S3 | +5 | 386 | 5 份原文 curl 实读;Py 111 断言+node 实跑;槽位 ✓ | notify: pending |
+| 2026-09-19 04:53 | 47 | 基准测试第二批:predictN 四道钳制、MDE 样本量、CoV 噪声地板、FWER vs FDR、-benchmem 截断 | S3 | +5 | 381 | 8 次实读+3 检索;Py 44 断言;槽位 ✓ | notify: ok |
+| 2026-09-19 03:09 | 46 | 协议逆向第二批:Discoverer 递归聚类、AutoFormat 字段树、Tupni 记录序列、ReFormat 相位、bit 级切分 | S1+S3 | +5 | 376 | 4 篇论文 PDF+RFC 1035 实读;Py 99 断言 | notify: ok |
+| 2026-09-19 00:57 | 50 | Rust 第二批:Fn 三 trait、Send/Sync 与死锁判环、Future+Pin、`?` 五形态、unsafe 五 superpower | S1+S3 | +5 | 371 | 20 次官网实读 | notify: ok |
+| 2026-09-18 22:57 | 54 | 应用安全与供应链首批:污点三档精度、依赖可达性+SPDX、SLSA、CWE-798 熵判据、CI 加固 | S1+S3 | +5 | 366 | 8 WF;Py 151 断言 | notify: ok |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

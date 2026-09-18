@@ -46,10 +46,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 0         # 下轮取循环[0]=01-游戏开发(本轮已消费循环[10]=11-性能分析)
-sub_pos        : 01:2 02:3 03:3 04:3 05:4 06:3 07:3 08:0 09:3 10:0 11:0  # 大类内子类目指针(本轮消费 sub_pos[11]=2 基准测试方法论 → 0)
-last_run       : 2026-09-19 06:00  # 06:00 槽占位锁(shell date 实测开局 06:00:39);保险 45 分钟;上轮 04:53 距 67 分钟通过
-last_top       : 11-性能分析  # 信息字段,不参与决策
+top_pos        : 1         # 下轮取循环[1]=02-Web开发(本轮已消费循环[0]=01-游戏开发)
+sub_pos        : 01:3 02:3 03:3 04:3 05:4 06:3 07:3 08:0 09:3 10:0 11:0  # 大类内子类目指针(本轮消费 sub_pos[01]=2 UI → 3)
+last_run       : 2026-09-19 06:42  # 06:00 槽收尾(shell date 实测开局 06:00:39);保险 45 分钟;上轮 04:53 距 67 分钟通过
+last_top       : 01-游戏开发  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -61,6 +61,7 @@ failed_attempts: []
 | 2026-09-19 04:53 | 47 | 基准测试方法论第二批:benchtime 解析与 predictN 四道钳制(非 1/2/5/10 序列)、MDE 与样本量方程(NIST 两原例)、CoV 噪声地板与 Apogee 口径核对、多重比较 FWER vs FDR、-benchmem 整数截断 | S3(索引同步 2 处) | +5 | 381 | 8 次源码/文档实读+3 检索;Py 44 断言;槽位 ✓ | notify: ok |
 | 2026-09-19 03:09 | 46 | 协议逆向第二批:Discoverer 递归聚类+FD三判据、AutoFormat 字段树与并行字段、Tupni 记录序列与循环合并、ReFormat 相位剖析、bit 级字段切分与常量位能力边界;Py 99 断言 | S1+S3(277..376) | +5 | 376 | curl 直抓 4 篇论文 PDF + RFC 1035 实读;槽位 ✓ | notify: ok |
 | 2026-09-19 00:57 | 50 | Rust 第二批:Fn三trait+惰性零成本、Send/Sync与死锁判环、Future inert+Waker+Pin、`?`五形态+not-both lint、unsafe五superpower | S1+S3(272..371) | +5 | 371 | 20 次官网实读;槽位 ✓ | notify: ok |
+| 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批(除 SDF):九宫格缩放(border-image 四步+四平铺)、流式布局(Flexbox §9.3/§9.7)、事件分发(DOM §2.9+穿透)、UI合批与Canvas重建(UGUI 官方)、MSDF(median-of-three+n=3 穷举) | S3(索引同步 03-UI/01-游戏开发) | +5 | 386 | 5 份原文 curl 直抓实读;Py 111 断言+JS node 实跑;槽位 ✓ | notify: pending |
 | 2026-09-18 22:57 | 54 | 应用安全与供应链首批:污点三档精度、依赖可达性+SPDX、SLSA provenance、CWE-798 熵判据、CI 加固;Py 151 断言 | S1+S3(267..366) | +5 | 366 | 8 WF;槽位 ✓ |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。

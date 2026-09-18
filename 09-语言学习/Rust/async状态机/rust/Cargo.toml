@@ -1,0 +1,10 @@
+[package]
+name = "async-state-machine"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "async-state-machine"
+path = "main.rs"
+
+[dependencies]

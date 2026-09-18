@@ -83,10 +83,9 @@ Mutex<T> comes with the risk of creating **deadlocks**."
 **相同顺序** → 无环 → 正常完成（断言 9.1 / 9.2）。关键在于：**四次加锁动作单独看全都合法、
 全都通过 borrow check** —— 死锁是逻辑错误，不是内存安全问题。
 
-顺带两个运行时细节：
-- **中毒（poisoning）**：持锁线程 panic 后，锁被标记 poison，之后 `lock()` 返回 `Err`，
-  直接 `unwrap()` 会跟着 panic（官方原文）。可用 `is_poisoned()` 探测、`clear_poison()` 恢复。
-- **不可重入**：同一线程重复 `lock()` 同一个 `Mutex` 会直接卡死（std 的 Mutex 不是递归锁）。
+顺带两个运行时细节：**中毒** —— 持锁线程 panic 后锁被标记 poison，之后 `lock()` 返回 `Err`，
+直接 `unwrap()` 会跟着 panic（官方原文），可用 `is_poisoned()` 探测、`clear_poison()` 恢复；
+**不可重入** —— 同一线程重复 `lock()` 同一个 `Mutex` 会直接卡死（std 的 Mutex 不是递归锁）。
 
 ## 二、对比
 
@@ -102,7 +101,6 @@ Mutex<T> comes with the risk of creating **deadlocks**."
 | 借用检查时机 | 运行期（违反 → panic） | 运行期（争用 → 阻塞） |
 | Sync | ❌ | ✅（只要 `T: Send`） |
 | 失败形态 | `BorrowMutError` panic | 阻塞 / 死锁 / poison |
-| 官方定位 | 单线程内部可变性 | 共享状态并发 |
 
 | 维度 | 消息传递（channel） | 共享状态（`Arc<Mutex<T>>`） |
 | --- | --- | --- |

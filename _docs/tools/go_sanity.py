@@ -32,8 +32,12 @@ import re
 import sys
 
 
-def strip_literals_and_comments(src):
-    """把字符串/字符字面量与注释替换成等长空白,保留偏移与换行。"""
+def strip_literals_and_comments(src, fill=" "):
+    """把字符串/字符字面量与注释替换成等长填充,保留偏移与换行。
+
+    fill 默认空格。计数实参时要传一个非空白字符(如 "x"),否则空串实参
+    `check("a", cond, "")` 在拆分后会因 strip() 为空而被当成「没传」。
+    """
     out = []
     i, n = 0, len(src)
     while i < n:
@@ -48,7 +52,7 @@ def strip_literals_and_comments(src):
                     break
                 j += 1
             end = min(j + 1, n)
-            out.append("".join(ch if ch == "\n" else " " for ch in src[i:end]))
+            out.append("".join(ch if ch == "\n" else fill for ch in src[i:end]))
             i = end
             continue
         if c == "'":
@@ -61,7 +65,7 @@ def strip_literals_and_comments(src):
                     break
                 j += 1
             end = min(j + 1, n)
-            out.append("".join(ch if ch == "\n" else " " for ch in src[i:end]))
+            out.append("".join(ch if ch == "\n" else fill for ch in src[i:end]))
             i = end
             continue
         if src.startswith("//", i):
@@ -116,8 +120,10 @@ def top_level_args(s):
     return parts
 
 
-def check_file(path, call_specs):
+def check_file(path, call_specs, pkg_src=None):
     src = io.open(path, encoding="utf-8").read()
+    # 变参定义可能与调用点不在同一个文件（同 main 包多文件），故用整包源码判定
+    pkg_src = src if pkg_src is None else pkg_src
     clean = strip_literals_and_comments(src)
     issues = []
 
@@ -132,10 +138,25 @@ def check_file(path, call_specs):
             if not re.search(r"(?<![A-Za-z0-9_.])" + re.escape(pkg) + r"\.", body):
                 issues.append("未使用的 import: %s" % pkg_path)
 
+    # 变参函数（如 `func check(label string, cond bool, detail ...string)`）：
+    # 末位参数可省略，故合法实参个数是 [want-1, +inf)。不识别会把全仓
+    # 大量合法的 2 参调用报成错误，把真正的漏参淹没掉。
+    variadic = set()
+    for name, _want in call_specs:
+        for m in re.finditer(r"^func\s+" + re.escape(name) + r"\s*\(([^)]*)\)",
+                             pkg_src, re.M):
+            if "..." in m.group(1):
+                variadic.add(name)
+
     for name, want in call_specs:
         for lineno, args in find_calls(src, name):
-            got = len(top_level_args(args))
-            if got != want:
+            # find_calls 返回的是**原始**子串（字面量内容原样保留），
+            # 直接交给 top_level_args 会把字符串里的逗号当成实参分隔符
+            # （如 check("x", f(a) == "Set-Cookie,ETag", "") 被数成 4 个）。
+            # 先按字面量置空再拆分——strip_literals_and_comments 保持偏移不变。
+            got = len(top_level_args(strip_literals_and_comments(args, fill="x")))
+            ok = got >= want - 1 if name in variadic else got == want
+            if not ok:
                 issues.append(
                     "第 %d 行 %s(...) 参数个数 %d,期望 %d" % (lineno, name, got, want)
                 )
@@ -188,8 +209,14 @@ def main(argv):
         return 2
     call_specs = list(specs.items()) if argcheck else []
     total = 0
+    from collections import defaultdict
+    pkg_srcs = defaultdict(list)
     for p in paths:
-        issues = check_file(p, call_specs)
+        pkg_srcs[os.path.dirname(os.path.abspath(p))].append(
+            io.open(p, encoding="utf-8").read())
+    for p in paths:
+        d = os.path.dirname(os.path.abspath(p))
+        issues = check_file(p, call_specs, "\n".join(pkg_srcs[d]))
         if issues:
             print("== %s" % p)
             for s in issues:

@@ -169,5 +169,5 @@ func RelocValue(name string, c RelocContext) (int64, bool) {
 ## 九、参考资料（本轮实测下载并提取正文）
 
 - [System V Application Binary Interface — AMD64 Architecture Processor Supplement, Draft 0.99.6 (July 2, 2012)](https://refspecs.linuxfoundation.org/elf/x86_64-abi-0.99.pdf) — §4.4 Relocation、§4.4.1 Relocation Types（Table 4.10 / 4.11）、Figure 4.1 Relocatable Fields、八个记号 A/B/G/GOT/L/P/S/Z 的原文定义
-- `elf(5)` — Linux man page（man7.org），Elf64_Rela 结构体布局与 `r_info` 拆分口径
+- [elf(5) — Linux man page（man7.org）](https://man7.org/linux/man-pages/man5/elf.5.html) — `Elf64_Rela` 三成员的原文语义：可重定位文件里 `r_offset` 是**节内字节偏移**，可执行/共享库里是**虚拟地址**；`r_info` 的类型与符号索引要经 `ELF64_R_TYPE` / `ELF64_R_SYM` 取出
 - [Linkers part 4: Shared Libraries — Ian Lance Taylor](https://www.airs.com/blog/archives/41) — COPY 重定位与符号抢占的实际后果

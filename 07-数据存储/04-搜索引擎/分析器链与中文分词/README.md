@@ -101,6 +101,9 @@ cd go     && go run .
 cd c      && cc -std=c99 analyzer_chain.c -lm -o a.out && ./a.out
 ```
 
+> Python 版为遵守「单文件 ≤ 300 行」已拆分：模型在 `analyzer_chain.py`，自检在
+> `selfcheck_analyzer_chain.py`（`analyzer_chain.py` 里留了 shim，直接跑主文件即可）。
+
 > 本机无 Go / C 工具链时，这两个版本走人工代码审查；Go 侧静态检查需带
 > `python _docs/tools/go_sanity.py --spec check=2 <file>`（本 demo 的 `check` 是 2 参签名）。
 

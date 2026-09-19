@@ -59,12 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-19 10:54 | 15 | 03-系统编程/文件系统:statx 掩码语义、Btrfs CoW 与 reflink、O_DIRECT 对齐、稀疏文件与打洞、vm.dirty_* 回写 | S1+S3 | +5 | 396 | 7 份原文实读(man7 statx/inode/lseek/fallocate/open、kernel sysctl/vm、btrfs-man5+send-receive、fiemap.h+stat.h+fcntl.h+glibc fcntl-linux.h);Py 190 断言实跑;Go ×6 + C ×2 人工审查 | notify: ok |
-| 2026-09-19 08:38 | 11 | 02-Web开发/API设计首批:RFC9457问题详情、条件请求(§13)、RMM+方法语义(§9.2)、N+1与DataLoader、Idempotency-Key | S1+S2+S3 | +5 | 391 | 5 份原文实读;Py 208+node 23 断言实跑 | notify: ok |
-| 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批:九宫格缩放、流式布局、事件分发、UI合批、MSDF | S3 | +5 | 386 | 5 份原文实读;Py 111 断言+node 实跑 | notify: ok |
-| 2026-09-19 04:53 | 47 | 基准测试第二批:predictN 钳制、MDE 样本量、CoV 噪声地板、FWER vs FDR | S3 | +5 | 381 | 8 次实读+3 检索;Py 44 断言 | notify: ok |
-| 2026-09-19 03:09 | 46 | 协议逆向第二批:Discoverer 聚类、AutoFormat、Tupni、ReFormat、bit 级切分 | S1+S3 | +5 | 376 | 4 篇论文+RFC 1035 实读;Py 99 断言 | notify: ok |
-| 2026-09-19 00:57 | 50 | Rust 第二批:Fn 三 trait、Send/Sync、Future+Pin、? 五形态、unsafe | S1+S3 | +5 | 371 | 20 次官网实读 | notify: ok |
+| 2026-09-19 10:54 | 15 | 03-系统编程/文件系统:statx 掩码语义、Btrfs CoW 与 reflink、O_DIRECT 对齐、稀疏文件与打洞、vm.dirty_* 回写 | S1+S3 | +5 | 396 | 7 份原文实读(man7 ×5 + kernel sysctl/vm + btrfs-man5 + 4 个内核/glibc 头);Py 190 断言实跑;Go ×6 + C ×2 人工审查 | notify: ok |
+| 2026-09-19 08:38 | 11 | 02-Web开发/API设计首批:RFC9457、条件请求、RMM+方法语义、N+1 与 DataLoader、Idempotency-Key | S1+S2+S3 | +5 | 391 | 5 份原文实读;Py 208 断言 + node 23 实跑 | notify: ok |
+| 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批:九宫格缩放、流式布局、事件分发、UI合批、MSDF | S3 | +5 | 386 | 5 份原文实读;Py 111 断言 + node 实跑 | notify: ok |
+| 2026-09-19 04:53 | 47 | 基准测试第二批:predictN 钳制、MDE 样本量、CoV 噪声地板、FWER vs FDR | S3 | +5 | 381 | 8 次实读 + 3 检索;Py 44 断言 | notify: ok |
+| 2026-09-19 03:09 | 46 | 协议逆向第二批:Discoverer 聚类、AutoFormat、Tupni、ReFormat、bit 级切分 | S1+S3 | +5 | 376 | 4 篇论文 + RFC 1035 实读;Py 99 断言 | notify: ok |
 
 > 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
 

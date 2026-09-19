@@ -49,6 +49,11 @@
 | `03-应用安全与供应链/供应链完整性/` | SLSA v1.0 provenance 验证:subject 摘要绑定、builder.id 定级别、signer-builder 配对、扩展字段忽略 |
 | `03-应用安全与供应链/密钥管理/` | CWE-798 硬编码凭据检测:熵上限受字符集约束 → 归一化 + 结构规则 + 上下文白名单 |
 | `03-应用安全与供应链/CI流水线加固/` | CI 四类攻击面:表达式注入、action SHA 固定、特权触发器共享缓存投毒、OIDC 短期令牌 |
+| `01-密码学/TLS1.3密钥调度/` | TLS 1.3 密钥调度(RFC 8446 §7.1):HKDF-Expand-Label + 五层秘密链 + 转录绑定 + KeyUpdate |
+| `01-密码学/国密SM2SM3SM4/` | 国密三件套:SM3(XOR 前馈)、SM4(非平衡 Feistel + L/L′ 双线性层)、SM2(Z_A + k 复用泄漏) |
+| `01-密码学/BLS聚合签名/` | BLS 聚合签名(draft-irtf-cfrg-bls-signature-05):Miller 循环配对 + 恶意公钥攻击三道防线 |
+| `01-密码学/后量子MLKEM/` | ML-KEM(FIPS 203):module-LWE + 不完全 NTT + CBD 采样 + 有损压缩 + FO 隐式拒绝 |
+| `01-密码学/Groth16零知识证明/` | Groth16 zk-SNARK:R1CS→QAP 整除判定 + 可信设置 + 3 群元素证明 + 3 配对验证 |
 
 ## 待研究
 
@@ -57,6 +62,8 @@
 - [x] XSS 与 CSP ✓
 - [x] OAuth 2.0 流程 ✓
 - [x] 传输层协议安全整批 ✓ (02-网络安全 两批共 10 个:SYN Cookie / XDP / IKEv2 / DNSSEC / WireGuard / QUIC / RPKI / SAE / ECH)
+- [x] 密码学深水区整批 ✓ (01-密码学 第 14-18 个:TLS1.3 密钥调度 / 国密 SM2-SM3-SM4 / BLS 聚合签名 / 后量子 ML-KEM / Groth16)
+- [ ] ML-DSA 后量子签名(FIPS 204)
 - [ ] MACsec (IEEE 802.1AE)
 - [x] 供应链与制品安全 ✓ (03-应用安全与供应链 首批 5 个:污点分析精度阶梯 / 依赖可达性+SPDX / SLSA provenance 验证 / CWE-798 熵判据 / CI 加固)
 - [ ] 密钥管理与 HSM/KMS 抽象

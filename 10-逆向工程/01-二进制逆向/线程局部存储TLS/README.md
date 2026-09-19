@@ -125,13 +125,7 @@ Outstanding Relocations:
 0x09 leaq x@tpoff(%rax),%rax       R_X86_64_TPOFF32   x
 ```
 
-**Outstanding Relocations: 空**。偏移作为 immediate 编码进指令，链接期定死。另有两种写法：
-
-```text
-0x00 movq %fs:0,%rax
-0x09 movq x@tpoff(%rax),%rax       ; 取值而非取址
-0x00 movq %fs:x@tpoff,%rax         ; 更短的第三种
-```
+**Outstanding Relocations: 空**。偏移作为 immediate 编码进指令，链接期定死。文档还给了两种等价写法：把 `leaq` 换成 `movq` 即"取值而非取址"，或压到一行 `movq %fs:x@tpoff,%rax`。
 
 文档对 LE 的定性："is only an addition of the offset which is available as an immediate value to the thread pointer."
 
@@ -151,8 +145,8 @@ Outstanding Relocations:
 | 维度 | 静态 TLS 区 | 动态分配区 |
 | --- | --- | --- |
 | 成员 | 可执行文件的 TLS 块 | `dlopen` 进来的模块 |
-| 何时有 | 线程创建时就有 | 首次 `__tls_get_addr` |
-| 地址 | `TP + delta`（variant II 下 delta 为负） | 由 `allocate_tls` 给 |
+| 何时有 | 线程创建时就有 | 首次访问（延迟分配） |
+| 地址 | `TP + delta`（variant II 下为负） | `allocate_tls` 给 |
 | 可用模型 | 四种全可用 | 只能 GD / LD |
 
 ## 四、环境

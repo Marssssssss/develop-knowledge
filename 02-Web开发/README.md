@@ -43,6 +43,12 @@
 - [x] [04-API设计/GraphQL/N+1与DataLoader/](./04-API设计/GraphQL/N+1与DataLoader/) — N+1 往返计数 (1+N vs 1+1) + batchLoadFn 等长/对齐约束 + per-request memoization (JavaScript + Python)
 - [x] [04-API设计/幂等性与重试/](./04-API设计/幂等性与重试/) — Idempotency-Key draft-07：首次/重试/并发三态 + 400/422/409 分派 + fingerprint + 复合键隔离 (Python + Go)
 
+- [x] [01-前端框架/Svelte/编译式响应性/](./01-前端框架/Svelte/编译式响应性/) — Svelte 5 runes 三层订阅 + pull 式 derived + 相等短路 + 深代理不 mutate 原对象 (Python + Go)
+- [x] [01-前端框架/React/RSC与Flight协议/](./01-前端框架/React/RSC与Flight协议/) — Flight 行状态机 + `$` 引用前缀表 + 流式 `$L` 回填 (Python + Go)
+- [x] [01-前端框架/浏览器渲染管线/](./01-前端框架/浏览器渲染管线/) — 改动分类 / 层提升 / 强制同步布局 / 图片迟到引发 reflow (Python + Go)
+- [x] [01-前端框架/WebComponents/](./01-前端框架/WebComponents/) — 升级与 reaction 队列 / 构造期限制 / connectedMoveCallback (Python + Go)
+- [x] [01-前端框架/模块系统/ESM实时绑定/](./01-前端框架/模块系统/ESM实时绑定/) — Link/Evaluate 两阶段 + live binding + TDZ 与循环依赖 (Python + Go)
+
 ## 状态
 
 - 前端：Web 生态碎片化严重，优先沉淀**原理级** demo（虚拟 DOM、Diff 算法、Reactive 原理）

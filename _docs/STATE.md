@@ -47,10 +47,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 1         # 下轮取循环[1]=02-Web开发(本轮已消费循环[0]=01-游戏开发)
-sub_pos        : 01:4 02:0 03:0 04:0 05:5 06:4 07:4 08:1 09:0 10:1 11:1  # 本轮消费 sub_pos[01]=3 → 索引 3 游戏引擎 → 4(8 条目)
-last_run       : 2026-09-20 06:02  # 06:00 槽占位锁(开局 06:00:46);保险 45 分钟;上轮 04:38 距 84 分钟通过
-last_top       : 01-游戏开发  # 本轮消费循环[0]
+top_pos        : 2         # 下轮取循环[2]=03-系统编程(本轮已消费循环[1]=02-Web开发)
+sub_pos        : 01:4 02:1 03:0 04:0 05:5 06:4 07:4 08:1 09:0 10:1 11:1  # 本轮消费 sub_pos[02]=0 → 索引 8 前端框架 → 1(5 条目)
+last_run       : 2026-09-20 06:46  # 06:00 槽收尾(开局 06:00:46);保险 45 分钟;上轮 04:38 距 82 分钟通过
+last_top       : 02-Web开发  # 本轮消费循环[1]
 skipped        : []
 failed_attempts: []
 ```
@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-20 06:46 | 8 | 02-Web开发/前端框架第三批:Svelte runes·RSC Flight·渲染管线·WebComponents·ESM实时绑定 | S3 | +5 | 446 | Svelte runes 4 篇+ReactFlightClient 源码+MDN+WHATWG+ECMA262 全 curl 直抓;Py 141 断言 | notify: pending |
 | 2026-09-20 04:38 | 3 | 01-游戏开发/游戏引擎首批:Archetype存储·固定时间步·JobSystem与Burst·Nanite·Godot节点生命周期 | S3 | +5 | 441 | Unity 官方 13 页+Nanite SIGGRAPH PDF 155 页+Godot 4 页+Gaffer 全文;Py 133 断言 | notify: ok |
 | 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC·RPS/RFS/XPS与中断亲和·OffWake归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg CPU-Util-is-Wrong/Off-CPU/差分 + 内核 scaling/ringbuf;Py 163 断言 | notify: ok |
 | 2026-09-19 22:32 | 53 | 09-语言学习/TypeScript首批:结构类型·条件类型分配律·映射修饰符·收窄守卫·方差 | S1+S3 | +5 | 426 | TS Handbook 5篇+4.7公告;21 fixture+Py 53 断言 | notify: ok |
 | 2026-09-19 21:04 | 31 | 08-安全/密码学深水区:TLS1.3·国密SM2/3/4·BLS·ML-KEM·Groth16 | S1+S3 | +5 | 421 | RFC8446/8998+FIPS203+论文+OpenSSL/GmSSL/kyber;Py 146 断言 | notify: ok |
-| 2026-09-19 18:48 | 30 | 07-数据存储/搜索引擎:中文分词·bool评分·深分页·DocValues·IVF-PQ | S1+S3 | +5 | 416 | Elastic 8 篇 + Lucene/Faiss/IK 源码;Py 93 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

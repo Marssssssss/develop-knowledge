@@ -59,7 +59,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-19 12:36 | 55 | 04-移动开发/推送与消息:APNs 请求响应、aps 载荷、静默推送、令牌生命周期、FCM v1 模型 | S3 | +5 | 401 | Apple 官方 5 篇(DocC JSON)+ FCM 官方 SDK 源码 2 份;Py 268 断言实跑;Swift×3 Kotlin×2 审查 | notify: ok(HTTP 200 errcode=0 errmsg=ok,单次 curl --data-binary 未重试) |
+| 2026-09-19 12:36 | 55 | 04-移动开发/推送与消息:APNs 请求响应、aps 载荷、静默推送、令牌生命周期、FCM v1 模型 | S3 | +5 | 401 | Apple 官方 5 篇(DocC JSON)+ FCM 官方 SDK 源码 2 份;Py 268 断言实跑;Swift×3 Kotlin×2 审查 | notify: ok(errcode=0,单次) |
 | 2026-09-19 10:54 | 15 | 03-系统编程/文件系统:statx 掩码、Btrfs CoW、O_DIRECT 对齐、稀疏文件、vm.dirty_* | S1+S3 | +5 | 396 | man7 ×5 + kernel sysctl/vm + btrfs-man5 + 内核/glibc 头;Py 190 断言实跑;Go×6 C×2 人工审查 | notify: ok |
 | 2026-09-19 08:38 | 11 | 02-Web开发/API设计首批:RFC9457、条件请求、RMM+方法语义、N+1 与 DataLoader、Idempotency-Key | S1+S2+S3 | +5 | 391 | 5 份原文实读;Py 208 断言 + node 23 实跑 | notify: ok |
 | 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批:九宫格缩放、流式布局、事件分发、UI合批、MSDF | S3 | +5 | 386 | 5 份原文实读;Py 111 断言 + node 实跑 | notify: ok |

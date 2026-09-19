@@ -25,26 +25,16 @@
 ### 2. ASCII 时序图:写文件经 mmap
 
 ```
-┌────────┐                            ┌─────────────────────────┐                ┌──────────┐
-│ 进程 A │                            │ 内核 page cache         │                │ 块设备   │
-└───┬────┘                            └────────┬────────────────┘                └────┬─────┘
-    │ mmap(NULL, 4K, RW, SHARED, fd, 0)         │                                  │
-    │──────────────────────────────────────────>│ 创建 VMA,不分配物理页            │
-    │                                            │                                  │
-    │ *p = 0x41   (首次写)                      │                                  │
-    │────────────┐                               │                                  │
-    │<───────────┘ page fault                    │                                  │
-    │                                            │─ 从磁盘读页 ─→ 装入 cache         │
-    │                                            │                                  │
-    │                                            │─ 标记 dirty ─→                 │
-    │ *(p+1) = ...  (后续写)                    │                                  │
-    │──────────────────────────────────────────>│ 改 cache 页(已存在)             │
-    │                                            │                                  │
-    │ msync(addr, 4K, MS_SYNC)                  │                                  │
-    │──────────────────────────────────────────>│ flush dirty 页 ──────────────>│ 落盘
-    │                                            │                                  │
-    │ munmap()                                   │                                  │
-    │──────────────────────────────────────────>│ 销毁 VMA,cache 页保留供他用       │
+进程 A                     内核 page cache                     块设备
+  │ mmap(4K, RW, SHARED)    │                                    │
+  │────────────────────────>│ 创建 VMA,不分配物理页              │
+  │ *p = 0x41 (首次写)      │                                    │
+  │──── page fault ────────>│ 从磁盘读页装入 cache ──────────────>│
+  │                         │ 标记 dirty                          │
+  │ *(p+1) = ... (后续写)   │ 改 cache 页(已存在,零系统调用)    │
+  │ msync(MS_SYNC)          │                                    │
+  │────────────────────────>│ flush dirty 页 ────────────────────>│ 落盘
+  │ munmap()                │ 销毁 VMA,cache 页保留供他用         │
 ```
 
 ### 3. 核心 API & 参数
@@ -115,22 +105,10 @@ int msync(void *addr, size_t length, int flags);
 
 ## 运行方式
 
-### C
-
 ```bash
-cd c && gcc -O2 -Wall -Wextra -pedantic mmap_demo.c -o mmap_demo && ./mmap_demo
-```
-
-### Python
-
-```bash
+cd c      && gcc -O2 -Wall -Wextra -pedantic mmap_demo.c -o mmap_demo && ./mmap_demo
 cd python && python3 mmap_demo.py
-```
-
-### Go
-
-```bash
-cd go && go run mmap_demo.go
+cd go     && go run mmap_demo.go
 ```
 
 ## 关键代码片段

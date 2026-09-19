@@ -29,32 +29,16 @@
 ### 2. ASCII 时序图
 
 ```
-进程          VFS          JBD2            日志文件(/dev/sdaN inode 8)        最终磁盘位置
- │             │            │                        │                              │
- │ sys_write ─>│            │                        │                              │
- │ (新建文件)  │            │                        │                              │
- │             │journal_start(handle=T1)             │                              │
- │             │───────────>│ T1.active++            │                              │
- │             │            │                        │                              │
- │             │ 把 inode 标记 dirty               │                              │
- │             │───────────>│ handle->t_buffers += inode_buf  │                     │
- │             │            │                        │                              │
- │             │ journal_stop(handle=T1)            │                              │
- │             │───────────>│ T1.active-- == 0       │                              │
- │             │            │ T1 进入 log commit 阶段│                              │
- │             │            │                        │                              │
- │             │            │ 写 [Descriptor blk]──>│ [h_magic=0xC03B3998]           │
- │             │            │  (block_tag: 256)     │ [h_blocktype=1]               │
- │             │            │                       │ [h_sequence=42]               │
- │             │            │                       │ [tag.blocknr=256]            │
- │             │            │                       │ [tag.flags:ESCAPED?]         │
- │             │            │ 写 [Data block #0]──>│ inode 内容 (256 字节)         │
- │             │            │ 写 [Data block #1]──>│ dir entry 块                   │
- │             │            │ 写 [Commit blk] ───>│ [h_blocktype=2]               │
- │             │            │  T1 commit 完成       │ [h_sequence=42]               │
- │             │            │                        │                              │
- │             │            │ checkpoint 后台写 ──────────────────────────────────────> inode_buf 写入 .inode_table[block 256]
- │             │            │                       │                              │
+sys_write(新建文件)
+  → VFS journal_start(handle=T1)          T1.active++
+  → inode 标记 dirty                      handle->t_buffers += inode_buf
+  → journal_stop(handle=T1)               T1.active-- == 0 → 进入 log commit 阶段
+  → 写 [Descriptor blk]  h_magic=0xC03B3998 / h_blocktype=1 / h_sequence=42
+                         tag[0].blocknr=256, tag[0].flags(ESCAPED? / SAME_UUID)
+  → 写 [Data block #0]   inode 内容        ┐ 
+  → 写 [Data block #1]   dir entry 块      ┘ 日志文件(/dev/sdaN,通常 inode 8)
+  → 写 [Commit blk]      h_blocktype=2 / h_sequence=42 → T1 commit 完成
+  → checkpoint 后台写 → inode_buf 落到最终位置 .inode_table[block 256]
 ```
 
 ### 3. JBD2 块结构(`struct journal_header_s`,前 12 字节)
@@ -98,7 +82,7 @@ mount 选项(`/etc/fstab` 的 `data=` 或 `mount -o`):
 | `data=ordered`(ext4 默认) | 不 journal | data flush 先于 metadata commit | 通用服务器、桌面 |
 | `data=writeback` | 不 journal,顺序不保证 | metadata journal 即可 | 大文件顺序写吞吐优先 |
 | `data=journal` | journal + metadata 都 journal | 全部经 journal | 数据库、邮件服务器(强一致) |
-| CoW 文件系统(Btrfs/ZFS) | N/A | 不需要 journal,Copy-on-write 自带原子性 | 但仍需 CoW CoW 空洞管理 |
+| CoW 文件系统(Btrfs/ZFS) | N/A | 不需要 journal,Copy-on-write 自带原子性 | 但需自行管理 CoW 带来的碎片与空洞(见 [CoW与快照/](../CoW与快照/)) |
 
 **性能代价**:
 - 写吞吐:ordered 模式比无日志快 0-10% 损耗;journal 模式损耗 30-50%(data 写两遍)
@@ -114,22 +98,10 @@ mount 选项(`/etc/fstab` 的 `data=` 或 `mount -o`):
 
 ## 运行方式
 
-### C
-
 ```bash
-cd c && gcc -O2 -Wall -Wextra -pedantic jbd2_sim.c -o jbd2_sim && ./jbd2_sim
-```
-
-### Python
-
-```bash
+cd c      && gcc -O2 -Wall -Wextra -pedantic jbd2_sim.c -o jbd2_sim && ./jbd2_sim
 cd python && python3 jbd2_sim.py
-```
-
-### Go
-
-```bash
-cd go && go run jbd2_sim.go
+cd go     && go run jbd2_sim.go
 ```
 
 ## 关键代码片段

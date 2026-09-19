@@ -47,10 +47,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 10        # 下轮取循环[0]=01-游戏开发(本轮消费循环[10]=11-性能分析;00:00 槽被中断未回写指针,按磁盘实测补正 9→10)
-sub_pos        : 01:3 02:0 03:0 04:0 05:5 06:4 07:4 08:1 09:0 10:0 11:0  # 本轮消费 sub_pos[11]=0 → 索引 37 系统级剖析;sub_pos[10] 由 00:00 槽消费,收尾补 +1
-last_run       : 2026-09-20 02:00  # 02:00 槽开局占位锁(开局 02:00:28);保险 45 分钟;上轮 00:02 距 118 分钟通过
-last_top       : 10-逆向工程  # 00:00 槽实际消费循环[9],被中断未归档
+top_pos        : 0         # 下轮取循环[0]=01-游戏开发(本轮已消费循环[10]=11-性能分析)
+sub_pos        : 01:3 02:0 03:0 04:0 05:5 06:4 07:4 08:1 09:0 10:1 11:1  # 本轮消费 sub_pos[11]=0 → 索引 37 系统级剖析 → 1(3 条目);sub_pos[10] 0→1 系补记 00:00 槽消费的 二进制逆向
+last_run       : 2026-09-20 02:55  # 02:00 槽收尾(开局 02:00:28);保险 45 分钟;上轮 00:02 距 118 分钟通过
+last_top       : 11-性能分析  # 本轮消费循环[10]
 skipped        : []
 failed_attempts: []
 ```
@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC归因·RPS/RFS/XPS与中断亲和·OffWake调度延迟栈归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg CPU Utilization is Wrong + 内核 scaling/ringbuf 文档 + Gregg Off-CPU/差分火焰图;Py 163 断言实跑 | notify: ok |
 | 2026-09-19 22:32 | 53 | 09-语言学习/TypeScript首批:结构类型与branding·条件类型分配律与never空联合·映射修饰符与同态保持·收窄守卫与CFA边界·方差与strictFunctionTypes作用域 | S1+S3 | +5 | 426 | TS Handbook 5篇+4.7公告;21 fixture + Py 53 断言 | notify: ok |
 | 2026-09-19 21:04 | 31 | 08-安全/密码学深水区:TLS1.3密钥调度·国密SM2-SM3-SM4·BLS聚合签名·ML-KEM·Groth16 | S1+S3 | +5 | 421 | RFC 8446/8998+BLS draft+FIPS 203+Groth16 论文+OpenSSL/GmSSL/kyber 源码;Py 146 断言实跑 | notify: ok |
 | 2026-09-19 18:48 | 30 | 07-数据存储/搜索引擎:分析器链与中文分词·bool查询评分合并·分布式检索与深分页·DocValues与聚合·IVF-PQ | S1+S3 | +5 | 416 | Elastic 官方 8 篇 + Lucene/Faiss/IK 源码 6 份;Py 93 断言实跑 | notify: ok |
 | 2026-09-19 16:02 | 26 | 06-DevOps/Kubernetes第二批:Scheduler框架·HPA算法·NetworkPolicy·ConfigMap投影·Helm渲染 | S1+S3 | +5 | 411 | k8s/helm 官方源码;Py 210 断言 | notify: ok |
-| 2026-09-19 15:12 | 39 | 05-AI/经典ML第三批:GMM+EM·DBSCAN·层次聚类·LDA/QDA·校准 | S3 | +5 | 406 | 官方+源码 9 份+KDD96;Py 131 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

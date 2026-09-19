@@ -31,6 +31,11 @@
 | 104 | [容器性能归因/](./容器性能归因/) | C / Python / Go | `cpu.stat.local.throttled_usec` 含祖先继承,故容器被限必须区分自身限额/祖先限额/宿主机争抢;cgroup v2 禁内部进程 |
 | 105 | [runqlat与调度延迟/](./runqlat与调度延迟/) | C / Python / Go | 桶边界是 2 的幂且桶 0 = `[0,1]`;wakeup→switch 按 tid 配对,`next` 才是开始跑的人;`sched_schedstats=0` 时 run_delay 恒 0 ≠ 0% |
 | 106 | [中断与软中断剖析/](./中断与软中断剖析/) | C / Python / Go | 架构向量(`NMI:`/`LOC:`)无 IRQ 号不能当设备;`softnet_stat` 是十六进制且无表头,按「dropped vs time_squeeze」三分归因 |
+| 432 | [CPU利用率口径与IPC/](./CPU利用率口径与IPC/) | Python / Go | `%CPU` 实为 **non-idle time**(内存停顿周期算在里面);IPC<1.0 内存停顿 / >1.0 指令受限(1.0 是作者拍的自校准线);4-wide 上 IPC 0.78 = 峰值 19.5%;`%INS`/`%STL` 拆分下原文样例 **80.5% 是停顿**;工具口径 busy 与「真空闲线程」两个口径**重叠恰为 iowait** |
+| 433 | [RPSRFS与中断亲和/](./RPSRFS与中断亲和/) | Python / Go | RPS 是 RSS 的软件实现(flow hash 对 `rps_cpus` 列表取模 + IPI);RFS 两表联动与**防乱序三条判据**(旧 CPU 队列 head ≥ 记录的 tail / current 未设置 / current 下线),否则宁可不切;flow limit 在队列过半后统计**最近 256 个报文**、占比过半就丢大流新包(默认 4096 桶) |
+| 434 | [OffWake调度延迟归因/](./OffWake调度延迟归因/) | Python / Go | off-CPU 时间**含调度延迟**(时间膨胀);唯一插桩点是 `finish_task_switch()` 结尾且 `sleeptime` 是**清零而非删除**;按 `(唤醒者栈, 阻塞栈)` 联合归因后塔数多于单纯按阻塞栈聚合;MySQL 等待工作栈占 95% 而请求同步路径仅 5% |
+| 435 | [差分火焰图/](./差分火焰图/) | Python / Go | **宽度取 after、颜色取 2−1**;颜色只反映帧**自身**贡献(帧 a 自身 delta 5 / 子树 delta 45);`-n` 归一化消除整体负载差异(负载翻倍时不归一化会全红);`--negate` 同时换宽度来源;消失路径只能靠 elided 图补 |
+| 436 | [BPF环形缓冲区/](./BPF环形缓冲区/) | Python / Go | 一块共享缓冲区同时解决 perfbuf 的**内存浪费**与**跨 CPU 不保序**;reserve 在自旋锁下串行 ⇒ 保留有序、commit 无锁,但**慢生产者会挡住后面已提交的记录**;NMI 里可能抢不到锁;自节流通知(消费者已追上才通知)让"每 N 个样本通知一次"成为历史 |
 
 ## 待研究
 
@@ -44,8 +49,14 @@
 - [x] 容器性能分析(Gregg DockerCon 演讲方法)(104 已覆盖 cgroup v2 限额归因链)
 - [x] USE 方法检查清单的落地(103 已覆盖 37 格清单与阈值判定)
 - [ ] PSI trigger 接入生产告警链路(cgroup v2 级压力归因;100 已覆盖 trigger/poll,缺告警侧)
-- [ ] 中断/软中断的再平衡实操(`smp_affinity` 掩码已由 106 覆盖,缺实际绑核调优与 `rps`/`rfs` 侧)
-- [ ] 调度器延迟的火焰图化(runqlat 只给直方图,105 未覆盖按栈归因)
+- [x] 中断/软中断的再平衡实操(`smp_affinity` 掩码已由 106 覆盖,缺实际绑核调优与 `rps`/`rfs` 侧)→ 433 RPSRFS与中断亲和
+- [x] 调度器延迟的火焰图化(runqlat 只给直方图,105 未覆盖按栈归因)→ 434 OffWake调度延迟归因
+- [x] `%CPU` 口径与 IPC 归因(内存停顿 vs 指令受限)→ 432 CPU利用率口径与IPC
+- [x] 差分火焰图的生成与读法(回归定位)→ 435 差分火焰图
+- [x] BPF ringbuf 与 perf buffer 的取舍→ 436 BPF环形缓冲区
+- [ ] 唤醒链上溯(chain graph:"谁唤醒了唤醒者",434 只到直接唤醒者一层)
+- [ ] TSA 时间序列分析方法论(Gregg 六法之一,本目录尚未开线)
+- [ ] `perf c2c` 与伪共享(HITM 归因,与 101/432 的内存侧互补)
 
 ## 参考资料（已读）
 
@@ -80,4 +91,9 @@
 - [Kernel — IRQ affinity](https://docs.kernel.org/core-api/irq/irq-affinity.html)(106)
 - [Kernel — IRQ redirection (ia64/irq-redir)](https://docs.kernel.org/6.1/ia64/irq-redir.html)(106)
 - [Red Hat — Performance Tuning Guide, IRQ 章节](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/performance_tuning_guide/s-cpu-irq)(106)
+- [Brendan Gregg — CPU Utilization is Wrong](https://www.brendangregg.com/blog/2017-05-09/cpu-utilization-is-wrong.html)(432)
+- [Linux Kernel — Scaling in the Linux Networking Stack](https://docs.kernel.org/networking/scaling.html)(433)
+- [Brendan Gregg — Off-CPU Analysis](https://www.brendangregg.com/offcpuanalysis.html)(434)
+- [Brendan Gregg — Differential Flame Graphs](https://www.brendangregg.com/blog/2014-11-09/differential-flame-graphs.html)(435)
+- [Linux Kernel — BPF ring buffer](https://docs.kernel.org/bpf/ringbuf.html)(436)
 - 配套书：《Systems Performance》2nd（2020）、《BPF Performance Tools》

@@ -44,6 +44,9 @@
 - [x] 应用级剖析首批（pprof 在线采集/top 解读、py-spy 采样、cProfile tottime-cumtime、benchmark ReportAllocs）（[02-应用级剖析/](./02-应用级剖析/)，2026-09-18 首批 5 demo）
 - [x] 基准测试方法论第二批：`testing.B` 迭代标定与样本量、MDE 与样本量方程、CoV 噪声地板与降噪、多重比较校正（FWER vs FDR）、`-benchmem` 分配测量与 GC 摊销（[03-基准测试方法论/](./03-基准测试方法论/)，2026-09-19 第二批 5 demo）
 - [ ] 延迟预算拆分：SLO → 每跳预算的下发策略
+- [x] 系统级剖析第四批：CPU 利用率口径与 IPC 归因、RPS/RFS/XPS 与中断亲和再平衡、Off-Wake 调度延迟栈归因、差分火焰图、BPF ringbuf（[01-系统级剖析/](./01-系统级剖析/)，2026-09-20 第四批 5 demo，ID 432-436）
+- [x] 二进制符号与调试信息链路：ELF 重定位 / DWARF / CFI 展开 / TLS / Itanium C++ 名字改编（[10-逆向工程/01-二进制逆向/](../10-逆向工程/01-二进制逆向/)，2026-09-20 补录 ID 427-431）
+- [ ] "Linux 性能分析 60 秒"（原文在 netflixtechblog → medium.com 被墙，本轮改做 CPU 利用率口径；待换可达源）
 - [ ] USL 参数拟合（从实测 (N, X) 点估 α、β、γ 并定位 Nmax）
 - [ ] 中断/软中断绑核再平衡（`smp_affinity` 掩码已覆盖，缺实际调优与 RPS/RFS 侧）
 

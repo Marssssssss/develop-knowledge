@@ -30,6 +30,11 @@
 | 259 | [Ghidra-headless自动化/](./Ghidra-headless自动化/) | analyzeHeadless 命令行组合约束(-import/-process 互斥)+ HeadlessContinuationOption 4×4 合并规则 + `-okToDelete` 安全门 + `getScriptArgs()` 与 askXxx 的消费顺序 | Python / Go |
 | 260 | [二进制差分与函数匹配/](./二进制差分与函数匹配/) | BinDiff 三类指纹(官方 signature 三元组、prime 素数乘积及其 uint64 回溢、MD index 六项加权公式与"求和先排序")+ 分阶段匹配与 drill down + confidence S 型压扁 + similarity 权重(含只统计非库函数) | Python / Go |
 | 261 | [Ghidra脚本化批量重命名/](./Ghidra脚本化批量重命名/) | SourceType 优先级链(USER_DEFINED > IMPORTED > ANALYSIS > DEFAULT)+ createLabel 重名幂等与 makeUnique 口径 + 计划/预演/事务三段式(非法名整批回滚) | Python / Go |
+| 427 | [ELF重定位计算/](./ELF重定位计算/) | psABI Table 4.10/4.11 的 38 条 R_X86_64_* 逐条落成算式(S+A / S+A-P / L+A-P / G+GotPC 等)+ Elf64_Rela 编解码与按宽度写回(TLS 的 DTPMOD/DTPOFF/TPOFF 与 GOT 槽两跳) | Go / Python |
+| 428 | [DWARF调试信息解析/](./DWARF调试信息解析/) | 三层嵌套压缩结构:.debug_info CU 头 → .debug_abbrev 缩写表(属性/形式对)→ DIE 树,外加 .debug_line 行号程序(special opcode = 地址/行双增量, 含 opcode_base/line_base/line_range 与 end_sequence 语义) | Go / Python |
+| 429 | [栈回溯与CFI展开/](./栈回溯与CFI展开/) | .eh_frame 的 CIE/FDE(CIE 的 code_alignment_factor·data_alignment_factor·return_address_register)+ DW_CFA 程序逐条执行(def_cfa/offset/advance_loc 形成按 pc 查表的规则行)+ 三帧逐帧回溯(CFA → 上一帧 rbp → 返回地址 → 上一 pc) | C / Python |
+| 430 | [线程局部存储TLS/](./线程局部存储TLS/) | 四种访问模型 GD/LD/IE/LE(模块号+块内偏移二元组 + 每线程 DTV 两级表)+ dlopen 的模块号在运行时才定 ⇒ 四种模型算出的**必须是同一个地址**(静态可执行文件 LE 可省去 DTV 一跳) | C / Python |
+| 431 | [ItaniumC++名字改编/](./ItaniumC++名字改编/) | Itanium C++ ABI §5.1 最小解 mangler:`_Z`+`<encoding>`、`<nested-name>` 的 N...E 与 `[r][V][K]`/R|O、21 个内建类型码、42 个操作符码(一元/二元同符号不同码)、base-36 `<seq-id>` 替换(`S_` 是第 1 个而非 `S0_`)、7 个 `Sx` 缩写与 `St` 的 N...E 例外 | Python / Go |
 
 ## 待研究
 
@@ -48,6 +53,11 @@
 - [x] ARM64 指令集速览 → 257 ARM64指令集与调用约定
 - [x] Ghidra 反编译器内部流水线（15 阶段 / Heritage / p-code）→ 258 Ghidra反编译流水线
 - [x] 二进制差分与函数匹配（BinDiff 指纹与相似度口径）→ 260 二进制差分与函数匹配
+- [x] ELF 重定位类型与计算式（psABI Table 4.10/4.11）→ 427 ELF重定位计算
+- [x] DWARF 调试信息的三层结构与行号程序 → 428 DWARF调试信息解析
+- [x] CFI / .eh_frame 栈回溯（DW_CFA 程序与逐帧展开）→ 429 栈回溯与CFI展开
+- [x] 线程局部存储四种访问模型（GD/LD/IE/LE）→ 430 线程局部存储TLS
+- [x] C++ 符号改编（Itanium ABI mangling 与 substitution）→ 431 ItaniumC++名字改编
 - [ ] 增量式重新分析对已有用户命名的保留边界（重跑分析会不会动 USER_DEFINED）
 - [ ] 二进制差分工具工程化对比（BinDiff / Diaphora / BinDiffNG 的相似度口径差异）
 
@@ -80,3 +90,4 @@
 - [SourceType — 官方 Javadoc（USER_DEFINED > IMPORTED > ANALYSIS > DEFAULT 优先级原文），261 demo 依据](https://ghidradocs.com/11.0_PUBLIC/docs/GhidraAPI_javadoc/api/ghidra/program/model/symbol/SourceType.html)
 - [Symbol Management — Ghidra 官方文档（Batch Renaming / 命名规则 / 自动生成名），261 demo 依据](https://mintlify.wiki/NationalSecurityAgency/ghidra/guide/symbols)
 - [Java Scripts — Ghidra 官方脚本文档（类层次 / 脚本元数据 / 事务写法），261 demo 依据](https://mintlify.wiki/NationalSecurityAgency/ghidra/scripting/java-scripts)
+- [Itanium C++ ABI — §5.1 External Names (a.k.a. Mangling)，431 demo 依据（`<mangled-name>`/`<seq-id>` base-36/`Sx` 缩写/替换候选规则）](https://itanium-cxx-abi.github.io/cxx-abi/abi.html)

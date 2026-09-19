@@ -65,7 +65,7 @@ failed_attempts: []
 | 2026-09-19 04:53 | 47 | 基准测试第二批:predictN 钳制、MDE 样本量、CoV 噪声地板、FWER vs FDR | S3 | +5 | 381 | 8 次实读 + 3 检索;Py 44 断言 | notify: ok |
 | 2026-09-19 03:09 | 46 | 协议逆向第二批:Discoverer 聚类、AutoFormat、Tupni、ReFormat、bit 级切分 | S1+S3 | +5 | 376 | 4 篇论文 + RFC 1035 实读;Py 99 断言 | notify: ok |
 
-> 更早细节见 `_docs/archive/schedule.md`(完整日志)+ `git log -p`(历史回溯)。
+> 更早细节见 `archive/schedule.md` 与 `git log -p`。
 
 ## 四、rotate 与查找
 

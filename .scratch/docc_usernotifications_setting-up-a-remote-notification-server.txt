@@ -1,0 +1,39 @@
+Overview
+Use remote notifications (also known as
+push notifications
+) to push small amounts of data to devices that use your app, even when your app isn’t running. Apps use notifications to provide important information to users. For example, a messaging service sends remote notifications when new messages arrive.
+The delivery of remote notifications involves several key components:
+Your company’s server, known as the
+provider server
+Apple Push Notification service (APNs)
+The user’s device
+Your app running on the user’s device
+Remote notifications begin with your company’s server. You decide which notifications you want to send to your users, and when to send them. When it’s time to send a notification, you generate a request that contains the notification data and a unique identifier for the user’s device. You then forward your request to APNs, which handles the delivery of the notification to the user’s device. Upon receipt of the notification, the operating system on the user’s device handles any user interactions and delivers the notification to your app.
+You’re responsible for setting up a provider server (or servers) and for configuring your app to handle notifications on the user’s device. Apple manages everything in between, including the presentation of notifications to the user. You must also have an app running on the user’s device that can communicate with your server and provide necessary information. For information about how to configure your app to handle remote notifications, see
+.
+If you’re setting up a provider server to send push notifications to users in Safari and other browsers, see
+Tip
+Build custom infrastructure for notifications
+Setting up a remote notification server consists of a few key tasks. How you implement these tasks depends on your infrastructure. Use the technologies that are appropriate for your company:
+Write code to receive device tokens from instances of your app running on user devices, and to associate those tokens with your users’ accounts. See
+Determine when to send notifications to your users, and write code to generate notification payloads. See
+Manage a connection to APNs using HTTP/2 and TLS. See
+Write code to generate POST requests that contain your payloads, and send those requests over your HTTP/2 connection. See
+Regenerate your token periodically for token-based authentication. See
+Establish a trusted connection to APNs
+Communication between your provider server and APNs must take place over a secure connection. Creating a secure connection requires installing the
+and
+on each of your provider servers.
+If your provider server runs macOS Sequoia or later, both AAA and UserTrust Certificate Services root certificate are in the keychain by default. On other systems, you might need to install this certificate yourself. You can download the “AAACertificateServices 5/12/2020” certificate from the
+website and “SHA-2 Root : USERTrust RSA Certification Authority” certificate from the
+website.
+APNs is migrating from AAA to UserTrust Certificate Services root certificate. For migration dates, consult
+To send notifications, your provider server must establish either token-based or certificate-based trust with APNs using HTTP/2 and TLS. Both techniques have advantages and disadvantages, so decide which technique is best for your company.
+To set up token-based trust with APNs, see
+To set up certificate-based trust with APNs, see
+Understand what APNs provides
+APNs makes every effort to deliver your notifications, and to deliver them with the best user experience:
+APNs manages an accredited, encrypted, and persistent IP connection to the user’s device.
+APNs can store notifications for a device that’s currently offline. APNs then forwards the stored notifications when the device comes online.
+If APNs doesn’t deliver a notification immediately, either for device power considerations or because the destination is offline, it may coalesce notifications for the same bundle ID.
+content

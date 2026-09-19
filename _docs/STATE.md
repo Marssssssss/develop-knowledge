@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC归因·RPS/RFS/XPS与中断亲和·OffWake调度延迟栈归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg CPU Utilization is Wrong + 内核 scaling/ringbuf 文档 + Gregg Off-CPU/差分火焰图;Py 163 断言实跑 | notify: ok |
-| 2026-09-19 22:32 | 53 | 09-语言学习/TypeScript首批:结构类型与branding·条件类型分配律与never空联合·映射修饰符与同态保持·收窄守卫与CFA边界·方差与strictFunctionTypes作用域 | S1+S3 | +5 | 426 | TS Handbook 5篇+4.7公告;21 fixture + Py 53 断言 | notify: ok |
-| 2026-09-19 21:04 | 31 | 08-安全/密码学深水区:TLS1.3密钥调度·国密SM2-SM3-SM4·BLS聚合签名·ML-KEM·Groth16 | S1+S3 | +5 | 421 | RFC 8446/8998+BLS draft+FIPS 203+Groth16 论文+OpenSSL/GmSSL/kyber 源码;Py 146 断言实跑 | notify: ok |
-| 2026-09-19 18:48 | 30 | 07-数据存储/搜索引擎:分析器链与中文分词·bool查询评分合并·分布式检索与深分页·DocValues与聚合·IVF-PQ | S1+S3 | +5 | 416 | Elastic 官方 8 篇 + Lucene/Faiss/IK 源码 6 份;Py 93 断言实跑 | notify: ok |
-| 2026-09-19 16:02 | 26 | 06-DevOps/Kubernetes第二批:Scheduler框架·HPA算法·NetworkPolicy·ConfigMap投影·Helm渲染 | S1+S3 | +5 | 411 | k8s/helm 官方源码;Py 210 断言 | notify: ok |
+| 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC·RPS/RFS/XPS与中断亲和·OffWake归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg CPU-Util-is-Wrong/Off-CPU/差分 + 内核 scaling/ringbuf;Py 163 断言 | notify: ok |
+| 2026-09-19 22:32 | 53 | 09-语言学习/TypeScript首批:结构类型·条件类型分配律·映射修饰符·收窄守卫·方差 | S1+S3 | +5 | 426 | TS Handbook 5篇+4.7公告;21 fixture+Py 53 断言 | notify: ok |
+| 2026-09-19 21:04 | 31 | 08-安全/密码学深水区:TLS1.3·国密SM2/3/4·BLS·ML-KEM·Groth16 | S1+S3 | +5 | 421 | RFC8446/8998+FIPS203+论文+OpenSSL/GmSSL/kyber;Py 146 断言 | notify: ok |
+| 2026-09-19 18:48 | 30 | 07-数据存储/搜索引擎:中文分词·bool评分·深分页·DocValues·IVF-PQ | S1+S3 | +5 | 416 | Elastic 8 篇 + Lucene/Faiss/IK 源码;Py 93 断言 | notify: ok |
+| 2026-09-19 16:02 | 26 | 06-DevOps/Kubernetes第二批:Scheduler·HPA·NetworkPolicy·ConfigMap投影·Helm | S1+S3 | +5 | 411 | k8s/helm 官方源码;Py 210 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

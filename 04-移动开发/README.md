@@ -7,7 +7,7 @@
 | [01-iOS/](./01-iOS/) | Swift / Objective-C / SwiftUI / UIKit(ARC、GCD、RunLoop、async-await+actor、Auto Layout、启动优化、Core Animation 渲染管线) |
 | [02-Android/](./02-Android/) | Kotlin / Java / Jetpack Compose(Handler·协程与 Flow·WorkManager、Fragment/Service 生命周期、OkHttp 网络、Compose 重组) |
 | [03-跨平台/](./03-跨平台/) | React Native / Flutter / Kotlin Multiplatform / Compose Multiplatform / WebView 容器 |
-| [04-推送与消息/](./04-推送与消息/) | APNs / FCM / 厂商通道(设备令牌生命周期、离线排队与 TTL、静默推送与后台唤醒)—— 索引已建,原理待补 |
+| [04-推送与消息/](./04-推送与消息/) | APNs / FCM / 厂商通道(HTTP/2 请求与响应语义、aps 载荷字典与本地化、离线排队与 TTL、静默推送与后台唤醒、设备令牌生命周期、FCM v1 平台覆写) |
 
 ## 已完成 demo
 
@@ -37,6 +37,11 @@
 | 339 | `03-跨平台/Kotlin-Multiplatform/内存模型/` | Kotlin/Native 内存模型:共享堆 + 追踪式 GC(CMS,不分代)、旧「冻结」模型在 1.9.20 完全移除、全局属性改为惰性初始化、`AtomicReference` 引用环不再泄漏、stable refs 与 `autoreleasepool` 的 ARC 集成规则 | Kotlin / Python |
 | 340 | `03-跨平台/Compose-Multiplatform/重组与SlotTable/` | SlotTable 结构:`groups` 整数数组(每 group 占 `Group_Fields_Size` 个元素)+ `slots` 数组的 **gap buffer**、`dataAnchor` 写模式下是**锚点而非下标**、`groupSize`/`skipToGroupEnd` 跳过原语、四类 group(Restart/Replaceable/Movable/Node)、满表删除的父锚点回归 | Kotlin / Python |
 | 341 | `03-跨平台/WebView容器/Tauri-vs-Electron/` | Tauri vs Electron:系统 WebView(5 平台 4 引擎)vs 自带 Chromium、不携带 vs 携带运行时、一次调用 3 段 vs 5 段、Structured Clone 负载限制、capability 声明式权限 vs preload+`contextBridge` 手工裁剪 | TypeScript / JavaScript / Python |
+| 397 | `04-推送与消息/APNs请求与响应/` | APNs HTTP/2 请求头语义(apns-id 规范 UUID、expiration 0 与非 0、priority 10·5·1、collapse-id ≤64B)、4096·5120 载荷上限、**每 bundle ID 只存 1 条**的存储语义、10 个状态码 + 32 个 reason、四类重试动作、410 不算 error condition | Python / Swift |
+| 398 | `04-推送与消息/载荷与aps字典/` | `aps` 内自定义键被静默忽略(必须是同级)、alert 字符串↔字典、`badge 0` 清除、critical alert 的 sound 字典、interruption-level 四档、relevance-score 0~1、本地化 `*-loc-args` 按 **出现顺序** 替换 `%@` | Python / Swift |
+| 399 | `04-推送与消息/静默推送与后台唤醒/` | `content-available=1` + push-type=background + priority=5、三条"持有-延迟"副作用(新的顶掉旧的 / 被杀则丢弃 / 启动即投递)、2~3 条每小时节流、30 秒后台预算 | Python / Swift |
+| 400 | `04-推送与消息/设备令牌生命周期/` | token 对「设备+应用」唯一且不可跨 App 复用、每次启动都注册、一用户多设备多 token、APNs 4 个令牌级 reason 与 FCM `UNREGISTERED` 的清理,`PayloadTooLarge`/`TooManyRequests` 不是令牌失效 | Python / Kotlin |
+| 401 | `04-推送与消息/FCMv1消息模型/` | 目标 fid/token/topic/condition 恰好一个、**两套 priority**(high·normal 原样 vs min…max→`PRIORITY_*`)、TTL `"3s"`/`"3.500000000s"`、`remove_null_values` 保留 `False` 与 `0`、`content_available` 只认严格 `True` 且写数值 1 | Python / Kotlin |
 
 ## 待研究
 
@@ -45,6 +50,7 @@
 - [x] Android OkHttp / Retrofit 原理 → demo 282
 - [x] Compose Multiplatform(共享 UI 的 Kotlin 方案)→ demo 340
 - [x] Tauri / Electron 架构对比 → demo 341
+- [x] 推送通道(APNs 请求响应 / aps 载荷 / 静默推送 / 令牌生命周期 / FCM v1)→ demo 397-401
 - [ ] SwiftUI 与 UIKit 桥接(UIHostingController / UIViewRepresentable)
 - [ ] iOS Instruments(Leaks / Allocations / Time Profiler / Network)实战
 - [ ] React Native Hermes V1 字节码引擎

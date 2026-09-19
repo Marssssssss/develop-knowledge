@@ -47,10 +47,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 3         # 下轮取循环[3]=04-移动开发(本轮已消费循环[2]=03-系统编程)
-sub_pos        : 01:3 02:0 03:0 04:3 05:4 06:3 07:3 08:0 09:3 10:0 11:0  # 大类内子类目指针(本轮消费 sub_pos[03]=3 文件系统 → 0)
-last_run       : 2026-09-19 12:01  # 12:00 槽占位锁(shell date 实测开局 12:01:28);保险 45 分钟;上轮 10:54 距 67 分钟通过
-last_top       : 03-系统编程  # 信息字段,不参与决策
+top_pos        : 4         # 下轮取循环[4]=05-AI与机器学习(本轮已消费循环[3]=04-移动开发)
+sub_pos        : 01:3 02:0 03:0 04:0 05:4 06:3 07:3 08:0 09:3 10:0 11:0  # 大类内子类目指针(本轮消费 sub_pos[04]=3 推送与消息 → 0)
+last_run       : 2026-09-19 12:36  # 12:00 槽收尾(开局 12:01:28);保险 45 分钟;上轮 10:54 距 67 分钟通过
+last_top       : 04-移动开发  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -59,13 +59,13 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-19 10:54 | 15 | 03-系统编程/文件系统:statx 掩码语义、Btrfs CoW 与 reflink、O_DIRECT 对齐、稀疏文件与打洞、vm.dirty_* 回写 | S1+S3 | +5 | 396 | 7 份原文实读(man7 ×5 + kernel sysctl/vm + btrfs-man5 + 4 个内核/glibc 头);Py 190 断言实跑;Go ×6 + C ×2 人工审查 | notify: ok |
+| 2026-09-19 12:36 | 55 | 04-移动开发/推送与消息:APNs 请求响应、aps 载荷、静默推送、令牌生命周期、FCM v1 模型 | S3 | +5 | 401 | Apple 官方 5 篇(DocC JSON)+ FCM 官方 SDK 源码 2 份;Py 268 断言实跑;Swift×3 Kotlin×2 审查 | notify: pending |
+| 2026-09-19 10:54 | 15 | 03-系统编程/文件系统:statx 掩码、Btrfs CoW、O_DIRECT 对齐、稀疏文件、vm.dirty_* | S1+S3 | +5 | 396 | man7 ×5 + kernel sysctl/vm + btrfs-man5 + 内核/glibc 头;Py 190 断言实跑;Go×6 C×2 人工审查 | notify: ok |
 | 2026-09-19 08:38 | 11 | 02-Web开发/API设计首批:RFC9457、条件请求、RMM+方法语义、N+1 与 DataLoader、Idempotency-Key | S1+S2+S3 | +5 | 391 | 5 份原文实读;Py 208 断言 + node 23 实跑 | notify: ok |
 | 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批:九宫格缩放、流式布局、事件分发、UI合批、MSDF | S3 | +5 | 386 | 5 份原文实读;Py 111 断言 + node 实跑 | notify: ok |
-| 2026-09-19 04:53 | 47 | 基准测试第二批:predictN 钳制、MDE 样本量、CoV 噪声地板、FWER vs FDR | S3 | +5 | 381 | 8 次实读 + 3 检索;Py 44 断言 | notify: ok |
-| 2026-09-19 03:09 | 46 | 协议逆向第二批:Discoverer 聚类、AutoFormat、Tupni、ReFormat、bit 级切分 | S1+S3 | +5 | 376 | 4 篇论文 + RFC 1035 实读;Py 99 断言 | notify: ok |
+| 2026-09-19 04:53 | 47 | 基准测试第二批:predictN 钳制、MDE 样本量、CoV 地板、FWER vs FDR | S3 | +5 | 381 | 8 次实读+3 检索;Py 44 断言 | notify: ok |
 
-> 更早细节见 `archive/schedule.md` 与 `git log -p`。
+> 更早细节见 `archive/schedule.md`。
 
 ## 四、rotate 与查找
 

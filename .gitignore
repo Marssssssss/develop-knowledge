@@ -33,3 +33,6 @@ env/
 
 # 企业微信群机器人 webhook 凭据(等价于群消息发送权限,严禁入仓)
 _docs/.wecom_webhook
+
+# 巡检临时抓取目录
+.scratch/

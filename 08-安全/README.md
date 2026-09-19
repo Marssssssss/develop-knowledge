@@ -67,4 +67,27 @@
 - [ ] MACsec (IEEE 802.1AE)
 - [x] 供应链与制品安全 ✓ (03-应用安全与供应链 首批 5 个:污点分析精度阶梯 / 依赖可达性+SPDX / SLSA provenance 验证 / CWE-798 熵判据 / CI 加固)
 - [ ] 密钥管理与 HSM/KMS 抽象
-- [ ] 后量子迁移(ML-KEM/ML-DSA 混合模式)
+- [ ] 后量子迁移与混合模式(X25519MLKEM768 混合密钥交换;ML-KEM 单算法已见 420,ML-DSA 待补)
+
+## 历史欠账(行数超限,待后续轮次拆分)
+
+> 仅记录不修,按「源文件 ≤300 行 / README ≤200 行」体检得出;本轮(2026-09-19 20:00)新产 5 个 demo **均已达标**。
+
+| 文件 | 行数 | 超限 |
+| --- | --- | --- |
+| `02-网络安全/DNSSEC链式信任/README.md` | 299 | README >200 |
+| `02-网络安全/DNSSEC链式信任/python/dnssec_chain.py` | 396 | 源 >300 |
+| `02-网络安全/TLS-1.3握手/python/tls13_handshake.py` | 356 | 源 >300 |
+| `02-网络安全/XDP包过滤/README.md` | 280 | README >200 |
+| `02-网络安全/IKEv2-ESP/README.md` | 263 | README >200 |
+| `02-网络安全/IKEv2-ESP/python/ikev2_demo.py` | 310 | 源 >300 |
+| `02-网络安全/TLS-1.3握手/README.md` | 249 | README >200 |
+| `02-网络安全/TLS-1.3握手/c/tls13_handshake.c` | 305 | 源 >300 |
+| `02-网络安全/SYN-Cookie/README.md` | 229 | README >200 |
+| `01-Web安全/SQL注入与预编译/README.md` | 227 | README >200 |
+| `01-Web安全/JWT验证/README.md` | 226 | README >200 |
+| `01-Web安全/Same-Origin与CORS/README.md` | 217 | README >200 |
+| `01-Web安全/CSRF-Token/README.md` | 207 | README >200 |
+| `01-Web安全/JWT验证/go/jwt_demo.go` | 314 | 源 >300 |
+| `01-Web安全/CSRF-Token/python/csrf_demo.py` | 302 | 源 >300 |
+| `01-密码学/非对称加密/RSA-PSS/README.md` | 204 | README >200 |

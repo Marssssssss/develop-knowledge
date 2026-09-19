@@ -47,10 +47,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 6         # 下轮取循环[6]=07-数据存储(本轮已消费循环[5]=06-DevOps)
-sub_pos        : 01:3 02:0 03:0 04:0 05:5 06:4 07:3 08:0 09:3 10:0 11:0  # 本轮消费 sub_pos[06]=3 → 索引 26 Kubernetes → 4
+top_pos        : 7         # 下轮取循环[7]=08-安全(本轮已消费循环[6]=07-数据存储)
+sub_pos        : 01:3 02:0 03:0 04:0 05:5 06:4 07:4 08:0 09:3 10:0 11:0  # 本轮消费 sub_pos[07]=3 → 索引 30 搜索引擎 → 4
 last_run       : 2026-09-19 18:01  # 18:00 槽占位锁(开局 18:00:55);保险 45 分钟;上轮 17:07 距 53 分钟通过
-last_top       : 07-数据存储  # 本轮消费循环[6](top_pos 未预推进,收尾才 +1)
+last_top       : 07-数据存储  # 收尾才推进指针(top_pos 6→7),未预推进
 skipped        : []
 failed_attempts: []
 ```
@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-19 18:48 | 30 | 07-数据存储/搜索引擎:分析器链与中文分词·bool查询评分合并·分布式检索与深分页·DocValues与聚合·IVF-PQ | S1+S3 | +5 | 416 | Elastic 官方 8 篇 + Lucene/Faiss/IK 源码 6 份;Py 93 断言实跑 | notify: ok |
 | 2026-09-19 16:02 | 26 | 06-DevOps/Kubernetes第二批:Scheduler框架·HPA算法·NetworkPolicy·ConfigMap投影·Helm渲染 | S1+S3 | +5 | 411 | k8s.io×3+helm.sh×2+官方源码6份;Py 210 断言实跑 | notify: ok |
 | 2026-09-19 15:12 | 39 | 05-AI与机器学习/经典机器学习第三批:GMM+EM·DBSCAN·层次聚类·LDA/QDA·概率校准 | S3 | +5 | 406 | 官方文档 4 篇 + 源码 5 份 + KDD-96 PDF;Py 131 断言实跑 | notify: ok |
 | 2026-09-19 12:36 | 55 | 04-移动开发/推送与消息:APNs 请求响应·aps 载荷·静默推送·令牌生命周期·FCM v1 | S3 | +5 | 401 | Apple 官方 5 篇 + FCM SDK 源码 2 份;Py 268 断言实跑 | notify: ok |
 | 2026-09-19 10:54 | 15 | 03-系统编程/文件系统:statx 掩码·Btrfs CoW·O_DIRECT 对齐·稀疏文件·脏页 | S1+S3 | +5 | 396 | man7 ×5 + kernel sysctl/vm + btrfs-man5;Py 190 断言实跑 | notify: ok |
-| 2026-09-19 08:38 | 11 | 02-Web开发/API设计首批:RFC9457·条件请求·RMM·N+1·Idempotency-Key | S1+S2+S3 | +5 | 391 | 5 份原文实读;Py 208 断言 + node 23 实跑 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

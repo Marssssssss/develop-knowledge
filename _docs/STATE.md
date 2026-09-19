@@ -47,10 +47,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 8         # 下轮取循环[8]=09-语言学习(本轮已消费循环[7]=08-安全)
-sub_pos        : 01:3 02:0 03:0 04:0 05:5 06:4 07:4 08:1 09:3 10:0 11:0  # 本轮消费 sub_pos[08]=0 → 索引 31 密码学 → 1
-last_run       : 2026-09-19 22:01  # 22:00 槽占位锁(开局 22:01:43);保险 45 分钟;上轮 21:04 距 58 分钟通过
-last_top       : 09-语言学习  # 本轮消费循环[top_pos=8],索引 53 TypeScript 首批
+top_pos        : 9         # 下轮取循环[9]=10-逆向工程(本轮已消费循环[8]=09-语言学习)
+sub_pos        : 01:3 02:0 03:0 04:0 05:5 06:4 07:4 08:1 09:0 10:0 11:0  # 本轮消费 sub_pos[09]=3 → 索引 53 语言学习/TypeScript → 0(4 条目回绕)
+last_run       : 2026-09-19 22:32  # 22:00 槽收尾(开局 22:00:51);保险 45 分钟;上轮 21:04 距 58 分钟通过
+last_top       : 09-语言学习  # 本轮消费循环[8]
 skipped        : []
 failed_attempts: []
 ```
@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-19 22:32 | 53 | 09-语言学习/TypeScript首批:结构类型与branding·条件类型分配律与never空联合·映射修饰符与同态保持·收窄守卫与CFA边界·方差与strictFunctionTypes作用域 | S1+S3 | +5 | 426 | TS Handbook 5篇+4.7公告;21 fixture + Py 53 断言 | notify: pending |
 | 2026-09-19 21:04 | 31 | 08-安全/密码学深水区:TLS1.3密钥调度·国密SM2-SM3-SM4·BLS聚合签名·ML-KEM·Groth16 | S1+S3 | +5 | 421 | RFC 8446/8998+BLS draft+FIPS 203+Groth16 论文+OpenSSL/GmSSL/kyber 源码;Py 146 断言实跑 | notify: ok |
 | 2026-09-19 18:48 | 30 | 07-数据存储/搜索引擎:分析器链与中文分词·bool查询评分合并·分布式检索与深分页·DocValues与聚合·IVF-PQ | S1+S3 | +5 | 416 | Elastic 官方 8 篇 + Lucene/Faiss/IK 源码 6 份;Py 93 断言实跑 | notify: ok |
-| 2026-09-19 16:02 | 26 | 06-DevOps/Kubernetes第二批:Scheduler框架·HPA算法·NetworkPolicy·ConfigMap投影·Helm渲染 | S1+S3 | +5 | 411 | k8s.io×3+helm.sh×2+官方源码6份;Py 210 断言实跑 | notify: ok |
-| 2026-09-19 15:12 | 39 | 05-AI/经典ML第三批:GMM+EM·DBSCAN·层次聚类·LDA/QDA·校准 | S3 | +5 | 406 | 官方 4 篇 + 源码 5 份 + KDD-96;Py 131 断言 | notify: ok |
-| 2026-09-19 12:36 | 55 | 04-移动开发/推送与消息:APNs·静默推送·令牌生命周期·FCM v1 | S3 | +5 | 401 | Apple 官方 5 篇 + FCM 源码 2 份;Py 268 断言 | notify: ok |
+| 2026-09-19 16:02 | 26 | 06-DevOps/Kubernetes第二批:Scheduler框架·HPA算法·NetworkPolicy·ConfigMap投影·Helm渲染 | S1+S3 | +5 | 411 | k8s/helm 官方源码;Py 210 断言 | notify: ok |
+| 2026-09-19 15:12 | 39 | 05-AI/经典ML第三批:GMM+EM·DBSCAN·层次聚类·LDA/QDA·校准 | S3 | +5 | 406 | 官方+源码 9 份+KDD96;Py 131 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

@@ -37,6 +37,11 @@
 - [x] [03-数据库/SQL与ORM/键集分页/](./03-数据库/SQL与ORM/键集分页/) — OFFSET O(N) vs keyset O(log N) + 翻页一致性 (Python + Go)
 - [x] [03-数据库/NoSQL/Redis数据结构底层/](./03-数据库/NoSQL/Redis数据结构底层/) — dict 渐进式 rehash + zskiplist span 排名 (Python + Go)
 - [x] [04-API设计/WebSocket/握手协议/](./04-API设计/WebSocket/握手协议/) — WebSocket 握手协议 RFC 6455 §4 (HTTP Upgrade + SHA-1+GUID → Sec-WebSocket-Accept + 101 Switching Protocols) (C + Python + Go)
+- [x] [04-API设计/REST/问题详情RFC9457/](./04-API设计/REST/问题详情RFC9457/) — RFC 9457 problem details：成员类型不符即忽略 + 相对 type 解析 + `about:blank` title 推导 + 扩展命名规则 (Python + Go)
+- [x] [04-API设计/REST/条件请求与乐观并发/](./04-API设计/REST/条件请求与乐观并发/) — RFC 9110 §13 条件请求：强/弱比较 + 六步优先级 + If-Range 精确匹配 + lost update 防护 (Python + Go)
+- [x] [04-API设计/REST/成熟度模型与方法语义/](./04-API设计/REST/成熟度模型与方法语义/) — RMM 四层可观测判据 + safe/idempotent/cacheable + 代理禁止重试非幂等请求 (Python + Go)
+- [x] [04-API设计/GraphQL/N+1与DataLoader/](./04-API设计/GraphQL/N+1与DataLoader/) — N+1 往返计数 (1+N vs 1+1) + batchLoadFn 等长/对齐约束 + per-request memoization (JavaScript + Python)
+- [x] [04-API设计/幂等性与重试/](./04-API设计/幂等性与重试/) — Idempotency-Key draft-07：首次/重试/并发三态 + 400/422/409 分派 + fingerprint + 复合键隔离 (Python + Go)
 
 ## 状态
 

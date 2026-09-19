@@ -59,7 +59,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-19 22:32 | 53 | 09-语言学习/TypeScript首批:结构类型与branding·条件类型分配律与never空联合·映射修饰符与同态保持·收窄守卫与CFA边界·方差与strictFunctionTypes作用域 | S1+S3 | +5 | 426 | TS Handbook 5篇+4.7公告;21 fixture + Py 53 断言 | notify: pending |
+| 2026-09-19 22:32 | 53 | 09-语言学习/TypeScript首批:结构类型与branding·条件类型分配律与never空联合·映射修饰符与同态保持·收窄守卫与CFA边界·方差与strictFunctionTypes作用域 | S1+S3 | +5 | 426 | TS Handbook 5篇+4.7公告;21 fixture + Py 53 断言 | notify: ok |
 | 2026-09-19 21:04 | 31 | 08-安全/密码学深水区:TLS1.3密钥调度·国密SM2-SM3-SM4·BLS聚合签名·ML-KEM·Groth16 | S1+S3 | +5 | 421 | RFC 8446/8998+BLS draft+FIPS 203+Groth16 论文+OpenSSL/GmSSL/kyber 源码;Py 146 断言实跑 | notify: ok |
 | 2026-09-19 18:48 | 30 | 07-数据存储/搜索引擎:分析器链与中文分词·bool查询评分合并·分布式检索与深分页·DocValues与聚合·IVF-PQ | S1+S3 | +5 | 416 | Elastic 官方 8 篇 + Lucene/Faiss/IK 源码 6 份;Py 93 断言实跑 | notify: ok |
 | 2026-09-19 16:02 | 26 | 06-DevOps/Kubernetes第二批:Scheduler框架·HPA算法·NetworkPolicy·ConfigMap投影·Helm渲染 | S1+S3 | +5 | 411 | k8s/helm 官方源码;Py 210 断言 | notify: ok |

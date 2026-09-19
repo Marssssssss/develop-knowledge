@@ -30,8 +30,13 @@ from go_sanity import find_calls, strip_literals_and_comments, top_level_args  #
 
 
 def count_args(text):
-    """参数列表文本 -> 参数个数。空列表与 `void` 都是 0 个。"""
-    s = text.strip()
+    """参数列表文本 -> 参数个数。空列表与 `void` 都是 0 个。
+
+    必须先剔除字符串/字符字面量:字面量里的逗号(例如 `join(", ")` 或
+    `kv_set(&ctx, "a", "coffee,tea,water")`)不是参数分隔符。
+    2026-09-19 实测:helm_render.c 因此被误报「传 5 个参数,定义处为 4 个」。
+    """
+    s = strip_literals_and_comments(text, fill="x").strip()
     if s == "" or s == "void":
         return 0
     return len(top_level_args(s))

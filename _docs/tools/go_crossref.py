@@ -18,6 +18,11 @@ CONST_RE = re.compile(r"^\s*([A-Za-z_]\w*)\s*=", re.M)
 VARBLOCK_RE = re.compile(r"^(?:var|const)\s+\(([^)]*)\)", re.M | re.S)
 
 STR_RE = re.compile(r'`[^`]*`|"(?:[^"\\]|\\.)*"')
+# Go rune 字面量 `'"'` / `'\''` / `'\\'` / `'\t'`:必须先于 STR_RE 剔除,
+# 否则 `== '"'` 里的那个双引号会被当成字符串起点,一路吞掉后面的 func 定义
+# (2026-09-19 实测:helm_render.go 因此把 parseArg / EvalAction / Render / main
+#  全部判成"未定义的大写调用")。
+RUNE_RE = re.compile(r"'(?:\\.|[^'\\])'")
 COMMENT_RE = re.compile(r"//[^\n]*")
 CALL_RE = re.compile(r"(?<![.\w])([A-Z][A-Za-z0-9_]*)\s*\(")
 
@@ -30,6 +35,7 @@ STDLIB = {
 
 
 def strip(src: str) -> str:
+    src = RUNE_RE.sub("_", src)
     src = STR_RE.sub('""', src)
     return COMMENT_RE.sub("", src)
 

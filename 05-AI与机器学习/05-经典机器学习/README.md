@@ -21,6 +21,11 @@
 | [随机森林/](./随机森林/) | 自助采样 + OOB 估计 + margin/strength 与泛化界 + 排列重要性 vs 基尼重要性 + 单次排序前缀扫描切分 | Breiman 2001 原论文 |
 | [提升算法/](./提升算法/) | AdaBoost.SAMME(`α=lr·(log((1−err)/err)+log(K−1))`) + 指数权重更新与归一 + 加权投票 + GBDT 残差拟合 + shrinkage/subsample | sklearn `_weight_boosting.py` 源码 + Friedman 2001/2002 |
 | [模型评估/](./模型评估/) | K 折/分层折下标 + 混淆矩阵(行=真实) + P/R/F_β 四口径 + ROC 与 AUC 三算法(梯形/秩和/Bamber 恒等) + Gini + 多分类 OvR macro/micro | sklearn metrics/CV/roc_auc_score + Bamber 1975 |
+| [高斯混合模型与EM/](./高斯混合模型与EM/) | EM 两步(E 步响应度 + M 步闭式) + Cholesky 求 log\|Σ\| 与马氏距离 + full/tied/diag/spherical 四协方差类型 + `reg_covar` 只加在对角 + BIC/AIC 参数计数 | sklearn `_gaussian_mixture.py` 源码 + 奇异性 |
+| [DBSCAN密度聚类/](./DBSCAN密度聚类/) | Definition 1–6(core/border/noise、直接密度可达的**非对称**)+ 每点至多一次区域查询 ⇒ O(n·log n) + `min_samples` 含自身 + k-dist 选 eps | Ester et al. KDD-1996 原论文 |
+| [层次聚类与连接准则/](./层次聚类与连接准则/) | Lance-Williams 递推(α_i, α_j, β, γ)四准则 + Ward 的 ΔSSE=(n_i·n_j/(n_i+n_j))·‖c_i−c_j‖² + 距离阵取 **d²/2** 使高度=ΔSSE + K−1 维上限 | sklearn `_agglomerative.py` 数值对照 |
+| [线性判别与二次判别/](./线性判别与二次判别/) | 类条件高斯 + Bayes ⇒ ω_k=Σ⁻¹μ_k、ω_k0=−½μ_kᵀΣ⁻¹μ_k+log π_k + shrinkage 目标 tr(Σ)/p·I + 白化均值 PCA ⇒ 至多 K−1 维 | sklearn LDA/QDA 源码 + 对角 QDA ≡ GaussianNB |
+| [概率校准与Brier分数/](./概率校准与Brier分数/) | Murphy 分解 BS=REL−RES+UNC + 校准曲线 + Platt 目标平滑/初值/缩放阈值 30 + isotonic PAVA 产生并列 + temperature 不改 argmax | sklearn《1.16 Probability calibration》+ `sklearn/calibration.py` |
 
 ## 核心知识点(待研究清单)
 
@@ -33,6 +38,11 @@
 - [x] **支持向量机(SVM)**:最大间隔超平面;核技巧(隐式高维映射);软间隔与 C 参数;对偶问题与 SMO。(2026-09-14)
 - [x] **集成学习**:Bagging(随机森林 = 决策树 + 自助采样 + 随机特征子集)vs Boosting(AdaBoost / GBDT,XGBoost 为其工程实现);偏差-方差分解视角。(2026-09-14)
 - [x] **模型评估**:交叉验证(K 折 / 分层);混淆矩阵、精确率/召回率/F1、ROC-AUC;过拟合诊断(学习曲线)。(2026-09-14)
+- [x] **高斯混合模型与 EM**:隐变量 + E 步响应度 / M 步闭式更新;协方差类型与奇异性;BIC/AIC 选 K。(2026-09-19)
+- [x] **DBSCAN 密度聚类**:核心点/边界点/噪声;ε 与 MinPts;密度可达 vs 密度相连;对非球形簇的优势。(2026-09-19)
+- [x] **层次聚类与连接准则**:凝聚/分裂;single/complete/average/ward 的 Lance-Williams 递推;树状图切分。(2026-09-19)
+- [x] **线性/二次判别分析(LDA/QDA)**:类条件高斯 + 贝叶斯决策;共享协方差 ⇒ 线性边界;shrinkage。(2026-09-19)
+- [x] **概率校准**:Brier 分数与 Murphy 分解;校准曲线;Platt scaling / isotonic / temperature scaling。(2026-09-19)
 
 ## 参考资料(实际阅读过的权威来源)
 
@@ -56,5 +66,25 @@
 - Zhu, Zou, Rosset, Hastie, *Multi-class AdaBoost*, 2009 — SAMME 与 `log(K−1)` 项、eq.(15) 概率
 - Friedman, *Greedy Function Approximation* 2001 / *Stochastic Gradient Boosting* 2002 — 函数空间梯度下降与 subsample
 - Bamber, *The Area Above the Ordinal Dominance Graph…*, J. Math. Psychol. 1975 — AUC = 有序对胜率(秩和等价)
+
+### 2026-09-19 第三批(GMM/EM · DBSCAN · 层次聚类 · LDA-QDA · 概率校准)新增来源
+
+以下链接均在本轮实际抓取并用于撰写 README(括号内为本次复核下载字节数):
+
+- [scikit-learn Gaussian mixture models](https://scikit-learn.org/stable/modules/mixture.html) (64,237 B) — EM 迭代、`covariance_type` 四种、`reg_covar`、`n_parameters` 与 BIC/AIC
+- [`sklearn/mixture/_gaussian_mixture.py`(源码)](https://cdn.jsdelivr.net/gh/scikit-learn/scikit-learn@main/sklearn/mixture/_gaussian_mixture.py) (35,904 B) — `_estimate_log_prob` / `_m_step` / `_estimate_log_prob_resp`
+- Ester, Kriegel, Sander, Xu, *A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise*, KDD-1996 — [aaai.org PDF](https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf) (631,443 B,6 页) — Definition 1–6 与区域查询复杂度
+- [scikit-learn Clustering §2.3](https://scikit-learn.org/stable/modules/clustering.html) (245,702 B) — DBSCAN / 层次聚类与连接准则
+- [`sklearn/cluster/_dbscan.py`(源码)](https://cdn.jsdelivr.net/gh/scikit-learn/scikit-learn@main/sklearn/cluster/_dbscan.py) (20,733 B)
+- [`sklearn/cluster/_agglomerative.py`(源码)](https://cdn.jsdelivr.net/gh/scikit-learn/scikit-learn@main/sklearn/cluster/_agglomerative.py) (49,491 B) — 连接准则与 Ward `d²/2` 距离阵
+- [scikit-learn LDA/QDA §1.2](https://scikit-learn.org/stable/modules/lda_qda.html) (61,291 B) — 类条件高斯、shrinkage 目标、维度上限 K−1
+- [`sklearn/discriminant_analysis.py`(源码)](https://cdn.jsdelivr.net/gh/scikit-learn/scikit-learn@main/sklearn/discriminant_analysis.py) (45,243 B)
+- [scikit-learn Probability calibration §1.16](https://scikit-learn.org/stable/modules/calibration.html) (72,417 B) — 良好校准定义、Murphy 分解、三种校准器
+- [`sklearn/calibration.py`(源码)](https://cdn.jsdelivr.net/gh/scikit-learn/scikit-learn@main/sklearn/calibration.py) (62,711 B) — `_sigmoid_calibration` 目标平滑与缩放阈值 30
+
+> 文献著录(经上述官方文档引用,**本轮未实读全文**,故未用于数值口径):
+> Murphy, *A New Vector Partition of the Probability Score*, J. Appl. Meteor. Climatol. 12(4), 1973;
+> Niculescu-Mizil & Caruana, *Predicting Good Probabilities With Supervised Learning*, ICML 2005;
+> Lance & Williams, *A General Theory of Classificatory Sorting Strategies*, Comput. J. 1967。
 - Hastie, Tibshirani, Friedman《The Elements of Statistical Learning》Ch.3-13 — 统计学习视角
 - Bishop《Pattern Recognition and Machine Learning》Ch.3-9 — 经典 ML 数学基础

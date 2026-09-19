@@ -47,10 +47,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 0         # 下轮取循环[0]=01-游戏开发(本轮已消费循环[10]=11-性能分析)
-sub_pos        : 01:3 02:0 03:0 04:0 05:5 06:4 07:4 08:1 09:0 10:1 11:1  # 本轮消费 sub_pos[11]=0 → 索引 37 系统级剖析 → 1(3 条目);sub_pos[10] 0→1 系补记 00:00 槽消费的 二进制逆向
-last_run       : 2026-09-20 04:00  # 04:00 槽开局占位锁(开局 04:00:52);保险 45 分钟;上轮 02:55 距 65 分钟通过
-last_top       : 11-性能分析  # 本轮消费循环[10]
+top_pos        : 1         # 下轮取循环[1]=02-Web开发(本轮已消费循环[0]=01-游戏开发)
+sub_pos        : 01:4 02:0 03:0 04:0 05:5 06:4 07:4 08:1 09:0 10:1 11:1  # 本轮消费 sub_pos[01]=3 → 索引 3 游戏引擎 → 4(8 条目)
+last_run       : 2026-09-20 04:38  # 04:00 槽收尾(开局 04:00:52);保险 45 分钟;上轮 02:55 距 65 分钟通过
+last_top       : 01-游戏开发  # 本轮消费循环[0]
 skipped        : []
 failed_attempts: []
 ```
@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-20 04:38 | 3 | 01-游戏开发/游戏引擎首批:Archetype存储·固定时间步·JobSystem与Burst·Nanite·Godot节点生命周期 | S3 | +5 | 441 | Unity 官方 13 页+Nanite SIGGRAPH PDF 155 页+Godot 4 页+Gaffer 全文;Py 133 断言 | notify: ok |
 | 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC·RPS/RFS/XPS与中断亲和·OffWake归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg CPU-Util-is-Wrong/Off-CPU/差分 + 内核 scaling/ringbuf;Py 163 断言 | notify: ok |
 | 2026-09-19 22:32 | 53 | 09-语言学习/TypeScript首批:结构类型·条件类型分配律·映射修饰符·收窄守卫·方差 | S1+S3 | +5 | 426 | TS Handbook 5篇+4.7公告;21 fixture+Py 53 断言 | notify: ok |
 | 2026-09-19 21:04 | 31 | 08-安全/密码学深水区:TLS1.3·国密SM2/3/4·BLS·ML-KEM·Groth16 | S1+S3 | +5 | 421 | RFC8446/8998+FIPS203+论文+OpenSSL/GmSSL/kyber;Py 146 断言 | notify: ok |
 | 2026-09-19 18:48 | 30 | 07-数据存储/搜索引擎:中文分词·bool评分·深分页·DocValues·IVF-PQ | S1+S3 | +5 | 416 | Elastic 8 篇 + Lucene/Faiss/IK 源码;Py 93 断言 | notify: ok |
-| 2026-09-19 16:02 | 26 | 06-DevOps/Kubernetes第二批:Scheduler·HPA·NetworkPolicy·ConfigMap投影·Helm | S1+S3 | +5 | 411 | k8s/helm 官方源码;Py 210 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

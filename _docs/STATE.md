@@ -47,10 +47,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 2         # 下轮取循环[2]=03-系统编程(本轮已消费循环[1]=02-Web开发)
-sub_pos        : 01:3 02:0 03:3 04:3 05:4 06:3 07:3 08:0 09:3 10:0 11:0  # 大类内子类目指针(本轮消费 sub_pos[02]=3 API设计 → 0)
-last_run       : 2026-09-19 10:07  # 10:00 槽占位锁(shell date 实测开局 10:07:48);保险 45 分钟;上轮 08:38 距 89 分钟通过
-last_top       : 02-Web开发  # 信息字段,不参与决策
+top_pos        : 3         # 下轮取循环[3]=04-移动开发(本轮已消费循环[2]=03-系统编程)
+sub_pos        : 01:3 02:0 03:0 04:3 05:4 06:3 07:3 08:0 09:3 10:0 11:0  # 大类内子类目指针(本轮消费 sub_pos[03]=3 文件系统 → 0)
+last_run       : 2026-09-19 10:54  # 10:00 槽收尾(shell date 实测开局 10:07:48);保险 45 分钟;上轮 08:38 距 89 分钟通过
+last_top       : 03-系统编程  # 信息字段,不参与决策
 skipped        : []
 failed_attempts: []
 ```
@@ -59,6 +59,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-19 10:54 | 15 | 03-系统编程/文件系统:statx 掩码语义、Btrfs CoW 与 reflink、O_DIRECT 对齐、稀疏文件与打洞、vm.dirty_* 回写 | S1+S3 | +5 | 396 | 7 份原文实读(man7 statx/inode/lseek/fallocate/open、kernel sysctl/vm、btrfs-man5+send-receive、fiemap.h+stat.h+fcntl.h+glibc fcntl-linux.h);Py 190 断言实跑;Go ×6 + C ×2 人工审查 | notify: ok |
 | 2026-09-19 08:38 | 11 | 02-Web开发/API设计首批:RFC9457问题详情、条件请求(§13)、RMM+方法语义(§9.2)、N+1与DataLoader、Idempotency-Key | S1+S2+S3 | +5 | 391 | 5 份原文实读;Py 208+node 23 断言实跑 | notify: ok |
 | 2026-09-19 06:42 | 2 | 01-游戏开发/UI 首批:九宫格缩放、流式布局、事件分发、UI合批、MSDF | S3 | +5 | 386 | 5 份原文实读;Py 111 断言+node 实跑 | notify: ok |
 | 2026-09-19 04:53 | 47 | 基准测试第二批:predictN 钳制、MDE 样本量、CoV 噪声地板、FWER vs FDR | S3 | +5 | 381 | 8 次实读+3 检索;Py 44 断言 | notify: ok |

@@ -16,6 +16,11 @@
 - [x] BM25 评分算法（Lucene/ES 默认相关性，k1=1.2 / b=0.75 / tf 饱和 / 长度归一化） — 见 [04-搜索引擎/BM25评分/](./04-搜索引擎/BM25评分/)（Python / Go）
 - [x] HNSW 近似最近邻检索（Malkov 2016，多层可导航小世界图，O(log N) 查询复杂度） — 见 [04-搜索引擎/HNSW向量检索/](./04-搜索引擎/HNSW向量检索/)（Python / Go）
 - [x] Lucene 段合并与删除回收（TieredMergePolicy + 20 MB/s 节流 + forceMerge） — 见 [04-搜索引擎/段合并策略/](./04-搜索引擎/段合并策略/)（Python / Go）
+- [x] 分析器链与中文分词（char filter→tokenizer→token filter 三段式 + ik_max_word/ik_smart + discount_overlaps 影响 norm） — 见 [04-搜索引擎/分析器链与中文分词/](./04-搜索引擎/分析器链与中文分词/)（C / Python / Go）
+- [x] bool 查询与评分合并（must/should 计分相加、filter/must_not 不计分、minimum_should_match 规格与默认值） — 见 [04-搜索引擎/Bool查询与评分合并/](./04-搜索引擎/Bool查询与评分合并/)（C / Python / Go）
+- [x] 分布式检索两阶段与深分页（scatter-gather + from/size 10000 上限 + search_after/PIT + query_then_fetch vs dfs） — 见 [04-搜索引擎/分布式检索与深分页/](./04-搜索引擎/分布式检索与深分页/)（C / Python / Go）
+- [x] DocValues 列式存储与聚合（doc→term 反向访问、doc-value-only、global ordinals + packed ints） — 见 [04-搜索引擎/DocValues列式存储与聚合/](./04-搜索引擎/DocValues列式存储与聚合/)（C / Python / Go）
+- [x] IVF-PQ 向量量化（残差乘积量化 + M×ksub 距离表 ADC + SDC + nprobe 召回/代价权衡） — 见 [04-搜索引擎/IVFPQ向量量化/](./04-搜索引擎/IVFPQ向量量化/)（C / Python / Go）
 - [x] MVCC 多版本并发控制 — 见 [01-关系型/MVCC/](./01-关系型/MVCC/)（C / Python / Go）
 - [x] WAL 预写日志 + ARIES 恢复 — 见 [01-关系型/WAL/](./01-关系型/WAL/)（C / Python / Go）
 - [x] 两阶段锁 2PL + 死锁检测 — 见 [01-关系型/2PL/](./01-关系型/2PL/)（C / Python / Go）
@@ -49,6 +54,6 @@
 - [x] ES BM25 评分算法细节（已在 `04-搜索引擎/BM25评分/`）
 - [ ] 隔离级别与幻读防（next-key lock / SSI）
 - [ ] Redis Sentinel 高可用
-- [ ] 中文 IK 分词器与 BM25 协同（影响 avgdl / length normalization）
+- [x] 中文 IK 分词器与 BM25 协同（影响 avgdl / length normalization）（已在 `04-搜索引擎/分析器链与中文分词/`）
 - [x] 图数据库 Neo4j / Cypher / 属性图模型（`05-图数据库/` 两批 10 demo：PropertyGraphModel / CypherParser / GraphTraversal / PageRank / Neo4jStorage + VarLengthPath / BoltProtocol / Neo4jLocks / CypherPipeline / MergeSemantics）
 - [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

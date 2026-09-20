@@ -47,9 +47,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 6         # 下轮取循环[6]=07-数据存储(本轮已消费循环[5]=06-DevOps)
-sub_pos        : 01:4 02:1 03:1 04:1 05:6 06:5 07:4 08:1 09:0 10:1 11:1  # 消费 sub_pos[06]=4 → 索引 41 IaC → 5(7 条目)
-last_run       : 2026-09-20 16:03  # 16:00 槽开局占位锁(开局 16:01:01;距上轮 14:46 = 74 分钟)
+top_pos        : 7         # 下轮取循环[7]=08-安全(本轮已消费循环[6]=07-数据存储)
+sub_pos        : 01:4 02:1 03:1 04:1 05:6 06:5 07:0 08:1 09:0 10:1 11:1  # 消费 sub_pos[07]=4 → 索引 45 图数据库 → 0(5 条目)
+last_run       : 2026-09-20 16:50  # 16:00 槽收尾(开局 16:01:01;距上轮 14:46 = 74 分钟)
 last_top       : 07-数据存储  # 本轮消费循环[6],索引 45 图数据库
 skipped        : []
 failed_attempts: []
@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-20 16:50 | 45 | 07-数据存储/图数据库第三批:路径匹配模式·null三值逻辑·搜索性能索引·约束·Louvain模块度 | S3 | +5 | 471 | neo4j.com 14 页+arXiv 0803.0476 论文 12 页 urllib 直抓;Py 334 断言 | notify: pending |
 | 2026-09-20 14:46 | 41 | 06-DevOps/IaC第四批:重构块与状态搬迁·lifecycle与图变换·插件协议与发现·Ansible集合·unknown传播 | S3 | +5 | 466 | HashiCorp/Ansible 11 篇+objchange.go+go-plugin 源码直抓;Py 162 断言 | notify: ok |
 | 2026-09-20 12:48 | 40 | 05-AI与机器学习/语音与多模态首批:CTC损失与解码·logMel频谱图·Whisper解码与失败回退·CLIP双塔对比损失·Wav2Vec2对比学习与量化 | S3 | +5 | 461 | CTC+arXiv×2+whisper/CLIP/fairseq/librosa 直抓;Py 213 断言 | notify: ok |
 | 2026-09-20 10:45 | 16 | 04-移动开发/iOS首批:Swift6严格并发与隔离区·SwiftUI布局协议·Combine背压·ImageIO解码下采样·NotificationCenter投递 | S1+S3 | +5 | 456 | SE-0414/0302/0412+18 份 Apple DocC JSON 直抓;Py 157 断言 | notify: ok |
 | 2026-09-20 08:52 | 12 | 03-系统编程/网络编程第四批:非阻塞EAGAIN·TCP零窗口与窗口扩大·HTTP2与HPACK·io_uring·Unix凭证 | S1+S3 | +5 | 451 | RFC9293/7323/9113/7541+9 份 man7 直抓;Py 210 断言 | notify: ok |
-| 2026-09-20 06:46 | 8 | 02-Web开发/前端框架第三批:Svelte runes·RSC Flight·渲染管线·WebComponents·ESM实时绑定 | S3 | +5 | 446 | Svelte+ReactFlight+MDN+WHATWG+ECMA262 直抓;Py 141 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

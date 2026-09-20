@@ -59,3 +59,9 @@ IO 多路复用、协程等通用机制在游戏服务端也是基石。通用 d
   - HTTP/2 帧与 HPACK（9 字节帧头、HPACK 整数「严格小于 2^N-1」边界、静态表 61 项、动态表逐出）— [01-网络编程/协议解析/HTTP2帧与HPACK/](01-网络编程/协议解析/HTTP2帧与HPACK/)
   - `io_uring` 网络 IO（`res` = `-errno` 单通道、`user_data` 必需、`IOSQE_IO_LINK`、SQPOLL 零系统调用、IOPOLL 不适用于网络）— [01-网络编程/IO多路复用/io_uring网络IO/](01-网络编程/IO多路复用/io_uring网络IO/)
   - Unix socket 凭证传递（`SO_PASSCRED` 逐消息 vs `SO_PEERCRED` connect 时刻快照、autobind 抽象地址上限 2^20）— [01-网络编程/进程间通信/凭证传递/](01-网络编程/进程间通信/凭证传递/)
+- ✅ 进程线程协程第二批 5 个（2026-09-21 06:00 槽）：
+  - futex 原语（`FUTEX_WAIT` 是「原子比较-并-阻塞」、`FUTEX_OP` 位编码、PI futex 的 `TID|WAITERS` 取值策略与传递继承）— [02-进程与线程/futex机制/](02-进程与线程/futex机制/)
+  - 自旋锁与信号量（TAS 不排队 vs ticket 公平、单核不可抢占死锁、POSIX 点名的优先级反转、信号量「出错时值不变」与命名信号量内核持久）— [02-进程与线程/自旋锁与信号量/](02-进程与线程/自旋锁与信号量/)
+  - 内存序与原子操作（relaxed/release-acquire/seq_cst 的 litmus 穷举、release sequence 靠 RMW 接力、RMW 原子性与内存序无关）— [02-进程与线程/内存序与原子操作/](02-进程与线程/内存序与原子操作/)
+  - Go GMP 调度器（`runq[256]`+`runnext`、61 tick 查一次全局、窃取靠头一半、sysmon 20us→10ms、`forcePreemptNS=10ms`、异步抢占与 unsafe-point）— [02-协程/GoGMP调度器/](02-协程/GoGMP调度器/)
+  - C++20 协程状态机（无栈协程状态、awaiter 三件套与四种 `await_suspend` 返回、对称转移栈深 1 vs 递归 64、按引用参数悬垂）— [02-协程/C++20协程/](02-协程/C++20协程/)

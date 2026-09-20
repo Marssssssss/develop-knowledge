@@ -51,9 +51,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 2         # 本轮取循环[2]=03-系统编程
-sub_pos        : 01:5 02:2 03:1 04:1 05:6 06:5 07:0 08:2 09:1 10:2 11:2  # 本轮消费 sub_pos[03]=1 → 索引 13
-last_run       : 2026-09-21 06:00  # 06:00 槽开局(开局 06:00:53)
+top_pos        : 3         # 下轮取循环[3]=04-移动开发
+sub_pos        : 01:5 02:2 03:2 04:1 05:6 06:5 07:0 08:2 09:1 10:2 11:2  # 本轮消费 sub_pos[03]=1 → 索引 13
+last_run       : 2026-09-21 06:50  # 06:00 槽收尾(开局 06:00:53)
 last_top       : 03-系统编程  # 本轮消费循环[2] → 索引 13 进程线程协程
 skipped        : []
 failed_attempts: []
@@ -63,6 +63,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-21 06:50 | 13 | 03-系统编程/进程线程协程第二批:futex原语·自旋锁与信号量·内存序与原子操作·Go GMP调度器·C++20协程状态机 | S3 | +5 | 506 | futex(2)(7)+uapi futex.h+waitwake.c+POSIX spin+sem_overview/sem_wait+cppreference memorder+n1570+runtime2.go/proc.go+design24543+cppreference coroutines;Py 236 断言 | notify: ok |
 | 2026-09-21 04:52 | 9 | 02-Web开发/后端第二批:优雅关闭与排空·中间件责任链·HTTP缓存与条件请求·HTTP2帧与HPACK·JWT与JWS | S3 | +5 | 501 | Go server.go+k8s+Express/Django 中间件+RFC9111/9110/9113/7541/7519/7515;Py 207 断言 | notify: ok |
 | 2026-09-21 02:54 | 4 | 01-游戏开发/物理第一批:SAT与EPA·BroadPhase·PBD与XPBD·布料模拟·接触与冲量求解 | S3 | +5 | 496 | Box2D v3 九份源码+dyn4j+pbrt+Müller2006/XPBD/PBDBodies+TenMinutePhysics14;Py 383 | notify: ok |
 | 2026-09-21 00:45 | 38 | 11-性能分析/应用级剖析第二批:pprof图过滤·Go执行追踪器·py-spy·JFR与async-profiler·b.Loop | S2+S3 | +5 | 491 | pprof 5 份源码+Go trace 2 篇+py-spy+async-profiler 3 篇+JEP328/349+benchmark.go;Py 152 | notify: ok |

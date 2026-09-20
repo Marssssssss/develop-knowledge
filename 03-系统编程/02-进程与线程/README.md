@@ -30,8 +30,19 @@
   - vruntime 记账（delta×NICE_0/weight）、最左选取、min_vruntime 放置
   - 权重比即 CPU 份额比；睡眠者反投机；6.6 起 EEVDF 取代说明
 
+- ✅ 自旋锁与信号量 —— 见 [自旋锁与信号量/](自旋锁与信号量/)
+  - TAS 不排队（逆序调度下插队 6 次）vs ticket 锁零插队；单核不可抢占时自旋死锁（500 tick 全空转）
+  - POSIX 明文点名的优先级反转：3 tick 临界区被 100 tick 的中优先级任务拖成 103 tick
+  - 信号量值永不为负、`EINTR` 时值不变、命名信号量 251 字符 + `/dev/shm/sem.*` + 内核持久
+- ✅ 内存序与原子操作 —— 见 [内存序与原子操作/](内存序与原子操作/)
+  - litmus 穷举：MP 下 `(1,0)` 在 release-acquire 被排除、全 relaxed 出现；SB 下 `(0,0)` 只有 seq_cst（或全栅栏）能排除
+  - release sequence 靠 relaxed **RMW** 接力，换个普通写就断；`fetch_add` 不丢更新与内存序无关
+- ✅ futex 原语 —— 见 [futex机制/](futex机制/)
+  - `FUTEX_WAIT` 的「比较」步骤正是防丢失唤醒的支点（对照组验证）；`WAKE` 返回实际唤醒数
+  - `FUTEX_OP` 位编码（op 只有低 3 位 + `OPARG_SHIFT`）与 `WAKE_OP` 无条件唤醒 uaddr1
+  - PI futex 的 `0 / TID / WAITERS|TID` 取值策略、`OWNER_DIED`、继承的传递性
+
 ## 待研究
 
-- [ ] 读写锁之外的自旋锁与信号量
 - [ ] 进程间通信：管道 / 消息队列 / 共享内存
-- [ ] Go GMP 调度器模型（跨 02-协程，见其待研究）
+- [ ] Go GMP 调度器模型（已完成，见 [02-协程/GoGMP调度器/](../02-协程/GoGMP调度器/)）

@@ -28,19 +28,42 @@
 | SCM_RIGHTS 传文件描述符 | [进程间通信/SCM-RIGHTS-fd传递/](./进程间通信/SCM-RIGHTS-fd传递/) | C / Python / Go | 传的是 **open file description 引用**(等价 dup),偏移量共享;`SCM_MAX_FD=253`;流式 socket 必须夹带 ≥1 字节;`CMSG_SPACE` vs `CMSG_LEN` 差 4 字节就丢 fd;截断/限流时多余 fd 在接收方被自动关闭 |
 | HTTP/1.1 请求解析器 | [协议解析/HTTP11-Parser/](./协议解析/HTTP11-Parser/) | Python + Go | RFC 7230 §3 状态机;Request-Line + Header Fields + 空行终结 + Content-Length/chunked body;header 大小写不敏感 + 同名合并 + 裸 LF 容错;mini server 实战 |
 | TLV 编解码器(简化版 ASN.1 BER) | [协议解析/TLV-Codec/](./协议解析/TLV-Codec/) | Python + Go | Type 2B BE + Length 短/长格式 + Value bytes;流式解码前向兼容未知 tag 跳过;Person 业务示例展示多层结构 |
+| 非阻塞 IO 与 `EAGAIN` 语义 | [IO模型/非阻塞Socket/](./IO模型/非阻塞Socket/) | Python + Go | `read(2)` 按 fd 类型分两条 ERRORS 条目(Linux 上 `EAGAIN==EWOULDBLOCK`);短读「有多少给多少」、`MSG_DONTWAIT` 按调用覆盖、部分写、非阻塞 connect 三态 `EINPROGRESS`/`EALREADY`/`EISCONN`、失败只能从 `SO_ERROR` 取;忙轮询 7 次空转 vs 就绪通知 1 次挂起,数据面完全等价 |
+| TCP 流量控制与零窗口 | [传输层/TCP流量控制与零窗口/](./传输层/TCP流量控制与零窗口/) | Python + Go | `U = SND.UNA+SND.WND-SND.NXT`;发送端 SWS 四判据(`Fs=1/2`、判据(2)(3) 要求无在飞数据、override 超时兜底);接收端抑制更新至 `RCV.BUFF-RCV.USER-RCV.WND >= min(Fr*RCV.BUFF, MSS)`;零窗口探测首探 RTO、间隔指数增长;`MAY-8`+`MUST-37` 不得拆连接;RFC 7323 `shift<=14`、SYN 不缩放、量化损失与窗口回缩 |
+| HTTP/2 帧与 HPACK | [协议解析/HTTP2帧与HPACK/](./协议解析/HTTP2帧与HPACK/) | Python + Go | 9 字节帧头且 Length 不含帧头、默认上限 2^14、未知类型先读长度再丢弃、未定义 flags 必须忽略;HPACK 整数边界是**严格小于** `2^N-1`(故 127 编码为 `FF 00` 而非 `FF`);indexed 索引 0 非法 vs 字面量索引 0 合法;静态表 61 项;条目大小 +32、尾部逐出、过大条目清空整表 |
+| `io_uring` 网络 IO | [IO多路复用/io_uring网络IO/](./IO多路复用/io_uring网络IO/) | Python + Go | 每 SQE 恰一 CQE;`res` 成功为返回值、失败为 `-errno` 且 **errno 通道根本不用**;完成顺序不可假设,`user_data` 是必需品;同 socket 同方向不得有多个在飞 send/recv;`IOSQE_IO_LINK` 只保执行顺序;`IORING_SETUP_SQPOLL` 可做到零系统调用(睡了要查 `IORING_SQ_NEED_WAKEUP`);`IOPOLL` 只给 O_DIRECT 不给网络 |
+| Unix socket 凭证传递 | [进程间通信/凭证传递/](./进程间通信/凭证传递/) | Python + Go | `SO_PASSCRED` 是接收侧开关但凭证**逐消息**携带,默认填发送方 PID + **real** UID/GID;`SO_PEERCRED` 是 `connect`/`listen`/`socketpair` **时刻的快照**(之后 setuid 不影响),只适用于已连接 stream 与 socketpair;设 `SO_PASSCRED` 会触发 autobind 抽象地址(`\0` + 5 hex,上限 2^20);`SO_RCVBUF` 对 AF_UNIX 无效、无 `MSG_OOB`、`MSG_MORE` |
 
 ## 待研究
 
 - [ ] TLS 握手流程(04-API设计 已先做 WebSocket 握手;TLS 与 OpenSSL/BoringSSL 在 03-系统编程 视角下补)
-- [ ] 非阻塞 Socket 编程(`O_NONBLOCK` + `EAGAIN` + IO 模式)
-- [ ] 紧急数据 (`MSG_OOB`) 与 SIGURG
+- [x] 非阻塞 Socket 编程(`O_NONBLOCK` + `EAGAIN` + IO 模式) → [IO模型/非阻塞Socket/](./IO模型/非阻塞Socket/)
+- [ ] 紧急数据 (`MSG_OOB`) 与 SIGURG(TCP 侧;AF_UNIX 明确不支持,见 [进程间通信/凭证传递/](./进程间通信/凭证传递/))
 - [x] scatter/gather IO (`readv` / `writev` / `sendmsg`) → [IO模型/scatter-gather/](./IO模型/scatter-gather/)
 - [x] TCP_CORK / TCP_QUICKACK / TCP_USER_TIMEOUT → `TCP_CORK` 已随 [IO模型/scatter-gather/](./IO模型/scatter-gather/);`TCP_QUICKACK` / `TCP_USER_TIMEOUT` 待补
 - [x] Unix domain socket 与文件描述符传递(SCM_RIGHTS) → [进程间通信/SCM-RIGHTS-fd传递/](./进程间通信/SCM-RIGHTS-fd传递/)
-- [ ] HTTP/2 二进制帧解析(HPACK 头部压缩)
+- [x] HTTP/2 二进制帧解析(HPACK 头部压缩) → [协议解析/HTTP2帧与HPACK/](./协议解析/HTTP2帧与HPACK/)
+- [ ] HTTP/3 与 QUIC(帧层、流复用、0-RTT)
 - [ ] MQTT / CoAP 协议解析
-- [ ] TCP 流量控制与零窗口探测(`window update` / 接收窗口自动调优)
+- [x] TCP 流量控制与零窗口探测(`window update` / 接收窗口自动调优) → [传输层/TCP流量控制与零窗口/](./传输层/TCP流量控制与零窗口/)
 - [ ] 拥塞控制新算法对照(BBR / Vegas / DCTCP 与 ECN)
-- [ ] `io_uring` 下的网络 IO(与 `epoll` 的取舍)
+- [x] `io_uring` 下的网络 IO(与 `epoll` 的取舍) → [IO多路复用/io_uring网络IO/](./IO多路复用/io_uring网络IO/)
 - [ ] `MSG_ZEROCOPY` 与 `vmsplice`(零拷贝的用户态页传递)
-- [ ] Unix socket 凭证传递(`SCM_CREDENTIALS` / `SO_PASSCRED`)与 `SO_PEERCRED`
+- [x] Unix socket 凭证传递(`SCM_CREDENTIALS` / `SO_PASSCRED`)与 `SO_PEERCRED` → [进程间通信/凭证传递/](./进程间通信/凭证传递/)
+- [ ] `TCP_QUICKACK` / `TCP_USER_TIMEOUT`(2026-09-20 补记:仍待补)
+- [ ] `SO_ATTACH_BPF` / `SO_REUSEPORT` 的 eBPF 负载分发
+## 参考资料(2026-09-20 08:00 槽实际抓取并阅读)
+
+- RFC 9293《Transmission Control Protocol (TCP)》§3.8.6 / §3.8.6.1 / §3.8.6.2 — https://www.rfc-editor.org/rfc/rfc9293.txt
+- RFC 7323《TCP Extensions for High Performance》§2.2 / §2.3 / §2.4 — https://www.rfc-editor.org/rfc/rfc7323.txt
+- RFC 9113《HTTP/2》§4.1 / §4.2 — https://www.rfc-editor.org/rfc/rfc9113.txt
+- RFC 7541《HPACK》§4 / §5.1 / §6.1 / Appendix A — https://www.rfc-editor.org/rfc/rfc7541.txt
+- `read(2)` — https://man7.org/linux/man-pages/man2/read.2.html
+- `recv(2)` — https://man7.org/linux/man-pages/man2/recv.2.html
+- `socket(7)` — https://man7.org/linux/man-pages/man7/socket.7.html
+- `tcp(7)` — https://man7.org/linux/man-pages/man7/tcp.7.html
+- `unix(7)` — https://man7.org/linux/man-pages/man7/unix.7.html
+- `credentials(7)` — https://man7.org/linux/man-pages/man7/credentials.7.html
+- `io_uring(7)` — https://man7.org/linux/man-pages/man7/io_uring.7.html
+- `io_uring_setup(2)` — https://man7.org/linux/man-pages/man2/io_uring_setup.2.html
+- `io_uring_enter(2)` — https://man7.org/linux/man-pages/man2/io_uring_enter.2.html

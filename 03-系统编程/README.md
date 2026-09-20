@@ -53,3 +53,9 @@ IO 多路复用、协程等通用机制在游戏服务端也是基石。通用 d
   - `O_DIRECT` 与对齐（三代对齐口径、静默退回 buffered、`O_DIRECT ≠ O_SYNC`）— [04-文件系统/O_DIRECT与对齐/](03-系统编程/04-文件系统/O_DIRECT与对齐/)
   - 稀疏文件与打洞（`SEEK_HOLE`/`SEEK_DATA`、fallocate 五模式、`FIEMAP`）— [04-文件系统/稀疏文件与打洞/](03-系统编程/04-文件系统/稀疏文件与打洞/)
   - 回写与脏页（`vm.dirty_*` 的 available 分母、counterpart 互斥、两页下限）— [04-文件系统/回写与脏页/](03-系统编程/04-文件系统/回写与脏页/)
+- ✅ 网络编程第四批 5 个（2026-09-20 08:00 槽）— 见 [01-网络编程/](./01-网络编程/)：
+  - 非阻塞 IO 与 `EAGAIN` 语义（`read(2)` 按 fd 类型分两条 ERRORS、`MSG_DONTWAIT` 按调用覆盖、短读/部分写、非阻塞 connect 三态）— [01-网络编程/IO模型/非阻塞Socket/](01-网络编程/IO模型/非阻塞Socket/)
+  - TCP 流量控制与零窗口（RFC 9293 §3.8.6 收发双端 SWS、零窗口探测 RTO 起指数退避、RFC 7323 窗口扩大与回缩）— [01-网络编程/传输层/TCP流量控制与零窗口/](01-网络编程/传输层/TCP流量控制与零窗口/)
+  - HTTP/2 帧与 HPACK（9 字节帧头、HPACK 整数「严格小于 2^N-1」边界、静态表 61 项、动态表逐出）— [01-网络编程/协议解析/HTTP2帧与HPACK/](01-网络编程/协议解析/HTTP2帧与HPACK/)
+  - `io_uring` 网络 IO（`res` = `-errno` 单通道、`user_data` 必需、`IOSQE_IO_LINK`、SQPOLL 零系统调用、IOPOLL 不适用于网络）— [01-网络编程/IO多路复用/io_uring网络IO/](01-网络编程/IO多路复用/io_uring网络IO/)
+  - Unix socket 凭证传递（`SO_PASSCRED` 逐消息 vs `SO_PEERCRED` connect 时刻快照、autobind 抽象地址上限 2^20）— [01-网络编程/进程间通信/凭证传递/](01-网络编程/进程间通信/凭证传递/)

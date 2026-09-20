@@ -48,7 +48,6 @@
 ```
 
 > 39-62 类目拓展/补登记(S2+S3),新子类目顺延 63 起;条目数 9/8/4/4/9/8/5/4/5/4/7 = 63。
-
 ## 二、本轮状态
 
 ```
@@ -74,6 +73,6 @@ failed_attempts: []
 
 ## 四、rotate 与查找
 
-- rotate(副任务,不耗主配额):completed.md > 100 行 / schedule.md > 30 行 → 截到最近 100/30,丢弃部分查 `git log -p _docs/archive/`
+- rotate(副任务,不耗主配额):completed.md > 100 / schedule.md > 30 → 截到最近 100/30,丢弃部分查 `git log -p _docs/archive/`
 - 某 demo 是否做过 → Grep `completed.md`;上轮资料/坑 → Grep `schedule.md`;总数 → 数 completed.md 行数
-- 每轮只动 §三且每行 ≤120 字,超 5 KB 时同步压缩旧行;大改同步 `OPTIMIZATION.md §2.4`。
+- 每轮只动 §三,超 5 KB 时压缩旧行。

@@ -7,6 +7,7 @@
 | 子目录 | 知识点 |
 | --- | --- |
 | [RunLoop/](./RunLoop/) | modes / sources / timers / observers(6 个 Activity + 5 个标准 mode + Timer 生命周期 + CFRunLoopObserver) |
+| [NotificationCenter投递/](./NotificationCenter投递/) | 同步投递(`queue=nil` 走投递线程)、`name/object` 筛选、中心强持有 token 与 block 拷贝、一次性通知、weak self |
 
 ## 待研究
 
@@ -16,3 +17,5 @@
 - [ ] CADisplayLink vs NSTimer 的 vsync 同步
 - [ ] Combine 框架的 RunLoop / DispatchQueue 调度
 - [ ] async/await 在 main run loop 上的 continuation 调度
+- [x] NotificationCenter 的注册与投递语义 → demo 456
+- [ ] `NotificationCenter.notifications(name:)` 异步序列与 main run loop 的协同

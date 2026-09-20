@@ -27,6 +27,11 @@
 | 229 | `01-iOS/并发编程/Swift-Concurrency/` | Swift 并发:await 串行 vs `async let` 并行、actor = exclusive executor、可重入导致 check/await/act 失效、结构化并发、协作式取消 | Python / Swift / Objective-C |
 | 230 | `01-iOS/启动优化/dyld-pre-main/` | dyld pre-main 四阶段 + `+load` 顺序与次数 + Swift 全局变量懒初始化(与 ObjC +load 的对比) | Python / Swift / Objective-C |
 | 231 | `01-iOS/渲染/CoreAnimation管线/` | Core Animation 渲染循环:Commit(Layout/Display/Prepare)与 render server 分工、脏标记合并、离屏渲染、`shouldRasterize` 盈亏平衡、混合 overdraw | Python / Swift / Objective-C |
+| 452 | `01-iOS/并发编程/Swift6严格并发/` | Swift 6 严格并发:隔离区四类与合并规则、弱传递下所有权仍在调用方、`Sendable` 隐式一致与同文件限制、全局变量「不可变且 Sendable」 | Python / Swift |
+| 453 | `01-iOS/UI框架/SwiftUI布局协议/` | SwiftUI Layout 尺寸协商:三提案语义、`sizeThatFits`/`placeSubviews` 分工、cache 让测量次数减半、`ViewThatFits` 按提供顺序挑、`AnyLayout` 不毁状态 | Python / Swift |
+| 454 | `01-iOS/UI框架/Combine背压/` | Combine 背压:`Demand` 累加、零欠量不产出、请求 `max(3)` 后不发 `finished`、`sink` 索要 unlimited、`flatMap(maxPublishers:)` 限制并发订阅 | Python / Swift |
+| 455 | `01-iOS/渲染/图片解码与ImageIO/` | ImageIO:12MP 全解码 46.5 MiB vs 200px 缩略图 0.11 MiB(406×)、三个 FromImage/Transform key、`MaxPixelSize` 约束长边、渐进式必须交全部累计数据 | Python / Objective-C |
+| 456 | `01-iOS/事件循环/NotificationCenter投递/` | NotificationCenter:`queue=nil` 即投递线程同步执行、`name/object` 为 nil 不筛选、中心强持有 token 与 block 拷贝、weak self vs strong self 的 GC 对照 | Python / Swift / Objective-C |
 | 282 | `02-Android/网络编程/OkHttp拦截器与连接池/` | OkHttp 拦截器链:应用拦截器(不关心重定向/重试)vs 网络拦截器(在 Connect 之后)分界、7 层内置链顺序与缓存短路、连接池 5 空闲/5 分钟复用、Address→Route→Connection 三级模型、Happy Eyeballs | Python / Kotlin / Java |
 | 283 | `02-Android/并发编程/协程上下文与Flow/` | 协程上下文与 Flow:`CoroutineContext` 带键元素集 + 右侧覆盖合并、`Dispatchers.Default` 并行度 = CPU 核数、结构化并发与子失败取消父+兄弟、冷流每次 collect 重跑 vs 热流共享、`flowOn` 只换上游上下文 | Python / Kotlin |
 | 284 | `02-Android/并发编程/WorkManager约束与重试/` | WorkManager:约束全部 AND 且默认 false、退避 30s 起步(下限 10s/上限 5h)与 `Result.retry()`、`doWork()` 每次实例一次且限 10 分钟、唯一任务 KEEP/REPLACE/APPEND、`Result.failure()` 阻断下游 | Python / Kotlin / Java |
@@ -51,6 +56,7 @@
 - [x] Compose Multiplatform(共享 UI 的 Kotlin 方案)→ demo 340
 - [x] Tauri / Electron 架构对比 → demo 341
 - [x] 推送通道(APNs 请求响应 / aps 载荷 / 静默推送 / 令牌生命周期 / FCM v1)→ demo 397-401
+- [x] iOS 第五批(Swift 6 严格并发 / SwiftUI 布局协议 / Combine 背压 / ImageIO 解码 / NotificationCenter)→ demo 452-456
 - [ ] SwiftUI 与 UIKit 桥接(UIHostingController / UIViewRepresentable)
 - [ ] iOS Instruments(Leaks / Allocations / Time Profiler / Network)实战
 - [ ] React Native Hermes V1 字节码引擎

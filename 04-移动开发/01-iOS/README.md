@@ -29,17 +29,26 @@
 | 229 | `并发编程/Swift-Concurrency/` | Swift 并发:await 串行 vs `async let` 并行、actor = exclusive executor、**可重入**导致 check/await/act 失效、结构化并发、协作式取消(不检查就不停) | Python / Swift / Objective-C |
 | 230 | `启动优化/dyld-pre-main/` | dyld pre-main 四阶段(Load dylibs / Rebase-Bind / ObjC setup / Initializers)+ `+load` 顺序与次数 + Swift 全局变量懒初始化 | Python / Swift / Objective-C |
 | 231 | `渲染/CoreAnimation管线/` | Core Animation 渲染循环:Commit(Layout/Display/Prepare)与 render server 的分工、脏标记合并、离屏渲染、`shouldRasterize` 盈亏平衡、混合与 overdraw | Python / Swift / Objective-C |
+| 452 | `并发编程/Swift6严格并发/` | Swift 6 严格并发:隔离区四类(disconnected / actor / task / invalid)与合并规则、弱传递、`Sendable` 判定表(隐式一致 / `@unchecked` / 同文件限制)、全局变量「不可变且 Sendable」 | Python / Swift |
+| 453 | `UI框架/SwiftUI布局协议/` | SwiftUI Layout 协议:尺寸协商(proposal → response)、`.zero/.infinity/.unspecified` 三提案、`makeCache` 把测量次数减半、`ViewThatFits` 按提供顺序挑、`AnyLayout` 换布局不毁状态 | Python / Swift |
+| 454 | `UI框架/Combine背压/` | Combine 背压:`Demand` 累加语义、零欠量时一个元素都不发、请求 `max(3)` 后不发 `finished`、`sink` 一上手就要 unlimited、`flatMap(maxPublishers:)` 限制并发订阅数 | Python / Swift |
+| 455 | `渲染/图片解码与ImageIO/` | ImageIO 解码:全尺寸 vs 下采样 406 倍内存差、`FromImageAlways/IfAbsent` 分工、`MaxPixelSize` 约束长边、`WithTransform` 先按 orientation 换轴、渐进式必须提交全部累计数据与六个状态 | Python / Objective-C |
+| 456 | `事件循环/NotificationCenter投递/` | NotificationCenter 投递语义:`queue=nil` 时在**投递线程同步**执行、`name/object` 为 nil 表示不筛选、中心强持有 token 与 block 拷贝、一次性通知、weak self 与 strong self 的 GC 对照 | Python / Swift / Objective-C |
 
 ## 待研究
 
 - [ ] UIKit vs SwiftUI 生命周期(viewDidLoad vs .onAppear 等)
 - [ ] Swift 5.9+ 新特性(宏、参数包、if/switch 表达式)
-- [ ] Swift 6 严格并发检查(Sendable / 区域隔离 / 数据竞争诊断)
-- [ ] NotificationCenter 与 KVO 实现差异
-- [ ] Combine 框架(Publisher / Subscriber / Operator)
-- [ ] SwiftUI 布局系统(布局协议 Layout、ViewThatFits、尺寸协商)
-- [ ] 图片解码与 ImageIO(下采样、渐进式解码、HEIF)
 - [ ] Instruments 实战(Leaks / Allocations / Time Profiler / Core Animation / GPU Driver)
+- [ ] Swift 6 `sending` / `transferring` 标注与跨函数区域推断
+- [ ] SwiftUI `LayoutValueKey` 自定义布局值与 `layoutPriority`
+- [ ] HEIF / ProRAW 多图容器与辅助数据(auxiliary data / 深度图)
+- [ ] `NotificationCenter.notifications(name:)` 异步序列与 Actor 隔离消息
+- [x] Swift 6 严格并发检查(Sendable / 区域隔离 / 数据竞争诊断)→ demo 452
+- [x] NotificationCenter 与 KVO 实现差异(NotificationCenter 侧)→ demo 456(KVO 侧见 demo 135)
+- [x] Combine 框架(Publisher / Subscriber / Operator / 背压)→ demo 454
+- [x] SwiftUI 布局系统(布局协议 Layout、ViewThatFits、尺寸协商)→ demo 453
+- [x] 图片解码与 ImageIO(下采样、渐进式解码、HEIF)→ demo 455
 - [x] Auto Layout 原理(约束求解 Cassowary)→ demo 227
 - [x] @State / @Binding / @Observable 等 SwiftUI 状态管理 → demo 228
 - [x] Swift async/await + Task 与 RunLoop / GCD 协同 → demo 229

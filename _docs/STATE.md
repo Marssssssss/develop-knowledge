@@ -47,9 +47,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 4         # 下轮取循环[4]=05-AI与机器学习(本轮已消费循环[3]=04-移动开发)
-sub_pos        : 01:4 02:1 03:1 04:1 05:5 06:4 07:4 08:1 09:0 10:1 11:1  # 本轮消费 sub_pos[04]=0 → 索引 16 iOS → 1(4 条目)
-last_run       : 2026-09-20 12:04  # 12:00 槽占位锁(开局 12:01:45;上轮 10:45 距 76 分钟通过保险)
+top_pos        : 5         # 下轮取循环[5]=06-DevOps(本轮已消费循环[4]=05-AI与机器学习)
+sub_pos        : 01:4 02:1 03:1 04:1 05:6 06:4 07:4 08:1 09:0 10:1 11:1  # 本轮消费 sub_pos[05]=5 → 索引 40 语音与多模态 → 6(9 条目)
+last_run       : 2026-09-20 12:48  # 12:00 槽收尾(开局 12:01:45;上轮 10:45 距 76 分钟通过保险)
 last_top       : 05-AI与机器学习  # 本轮消费循环[4]
 skipped        : []
 failed_attempts: []
@@ -59,6 +59,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-20 12:48 | 40 | 05-AI与机器学习/语音与多模态首批:CTC损失与解码·logMel频谱图·Whisper解码与失败回退·CLIP双塔对比损失·Wav2Vec2对比学习与量化 | S3 | +5 | 461 | CTC论文+arXiv两篇+whisper4份+CLIP/fairseq源码+librosa 直抓;Py 213 断言 | notify: ok |
 | 2026-09-20 10:45 | 16 | 04-移动开发/iOS首批:Swift6严格并发与隔离区·SwiftUI布局协议·Combine背压·ImageIO解码下采样·NotificationCenter投递 | S1+S3 | +5 | 456 | SE-0414/0302/0412+18 份 Apple DocC JSON 直抓;Py 157 断言 | notify: ok |
 | 2026-09-20 08:52 | 12 | 03-系统编程/网络编程第四批:非阻塞EAGAIN·TCP零窗口与窗口扩大·HTTP2与HPACK·io_uring·Unix凭证 | S1+S3 | +5 | 451 | RFC9293/7323/9113/7541+9 份 man7 直抓;Py 210 断言 | notify: ok |
 | 2026-09-20 06:46 | 8 | 02-Web开发/前端框架第三批:Svelte runes·RSC Flight·渲染管线·WebComponents·ESM实时绑定 | S3 | +5 | 446 | Svelte runes+ReactFlightClient+MDN+WHATWG+ECMA262 直抓;Py 141 断言 | notify: ok |

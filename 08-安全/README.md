@@ -54,6 +54,11 @@
 | `01-密码学/BLS聚合签名/` | BLS 聚合签名(draft-irtf-cfrg-bls-signature-05):Miller 循环配对 + 恶意公钥攻击三道防线 |
 | `01-密码学/后量子MLKEM/` | ML-KEM(FIPS 203):module-LWE + 不完全 NTT + CBD 采样 + 有损压缩 + FO 隐式拒绝 |
 | `01-密码学/Groth16零知识证明/` | Groth16 zk-SNARK:R1CS→QAP 整除判定 + 可信设置 + 3 群元素证明 + 3 配对验证 |
+| `01-Web安全/DPoP与发送方约束令牌/` | DPoP(RFC 9449 §4.3 十二校验 + jkt 绑定 + 两套独立 nonce)与 RFC 8705 `x5t#S256` 证书绑定 |
+| `01-Web安全/TrustedTypes与DOMXSS/` | W3C Trusted Types:§3.4 汇点四分支、default policy 在 report-only 下返回原值、§3.8 属性表 |
+| `01-Web安全/CSP strict-dynamic与违规报告/` | CSP3 `'strict-dynamic'` 的信任传递、parser-inserted 分水岭、sample 截断 40 字符、Strict CSP 判据 |
+| `01-Web安全/SRI与完整性策略/` | SRI 标准 base64 摘要 +「只验最强那批」+ §3.8 Integrity-Policy 的强制/report-only 判定 |
+| `01-Web安全/COOPCOEP跨源隔离/` | HTML §7.1.3 COOP 五种取值与 BCG 切换 + COEP §2.3 fail-open 表 + §3.2.1 CORP check |
 
 ## 待研究
 
@@ -66,6 +71,7 @@
 - [ ] ML-DSA 后量子签名(FIPS 204)
 - [ ] MACsec (IEEE 802.1AE)
 - [x] 供应链与制品安全 ✓ (03-应用安全与供应链 首批 5 个:污点分析精度阶梯 / 依赖可达性+SPDX / SLSA provenance 验证 / CWE-798 熵判据 / CI 加固)
+- [x] Web 安全第三批:浏览器侧纵深防御 ✓ (01-Web安全 第三批 5 个:DPoP 发送方约束 / Trusted Types / CSP strict-dynamic 与报告 / SRI 与 Integrity-Policy / COOP-COEP-CORP 跨源隔离)
 - [ ] 密钥管理与 HSM/KMS 抽象
 - [ ] 后量子迁移与混合模式(X25519MLKEM768 混合密钥交换;ML-KEM 单算法已见 420,ML-DSA 待补)
 

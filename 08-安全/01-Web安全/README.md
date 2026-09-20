@@ -35,6 +35,16 @@
 | `访问控制与IDOR/` | A01 失效的访问控制:RBAC/ABAC/ReBAC 三层叠加、对象级授权(CWE-639)、deny-overrides + 默认拒绝、会话级间接引用、失败安全退出与审计 | Python + Go |
 | `点击劫持与框架嵌入/` | HTML §7.7 XFO 处理模型(官方"困惑多值"结果表)+ CSP `frame-ancestors` 优先与逐层祖先校验 + `<meta>` 无效 + frame-buster 绕过手法 | Python + JavaScript |
 
+### 第三批(浏览器侧纵深防御)
+
+| 路径 | 知识点 | 语言 |
+| --- | --- | --- |
+| `DPoP与发送方约束令牌/` | DPoP(RFC 9449 §4.3 的 12 条校验:typ/alg/jwk/htm/htu/iat/ath/nonce/jti 单用)+ `jkt` 公钥指纹绑定 + AS 400 / RS 401 两套独立 nonce + `dpop_jkt` 授权码绑定;对照 RFC 8705 的 `x5t#S256` 证书绑定 | Python + Go |
+| `TrustedTypes与DOMXSS/` | W3C Trusted Types:§3.4 汇点只接受类型化值的四条分支、default policy 在强制/report-only 下的差异、§3.8 属性表(`on*`→TrustedScript)、§4.2.5 的 `'none'` 被忽略与 `'allow-duplicates'` | Python + Go |
+| `CSP strict-dynamic与违规报告/` | CSP3 §6.7.3.2/§6.7.3.3 的内联匹配与 `'strict-dynamic'` 短路、§6.7.1.1 的 parser-inserted 判定、§6.7.2.6 `'none'` 的三条细节、§2.4 sample 截断 40 字符、§8.5 Strict CSP 判据 | Python + Go |
+| `SRI与完整性策略/` | W3C SRI:标准 base64 摘要(非 base64url)、§3.3.3「只验最强那批」、§3.3.4 空集即放行与 CORS 要求、§3.8 Integrity-Policy 的 Dictionary 结构与 §3.8.2 判定顺序 | Python + Go |
+| `COOPCOEP跨源隔离/` | HTML §7.1.3 五种 opener policy 与 BCG 切换判定、COEP §2.3 的 fail-open 表(`require-corp, require-corp` → `unsafe-none`)、§3.2.1 CORP internal check(`same-site` 的 https 约束)、§4.3 子文档必须自声明 | Python + Go |
+
 ## 待研究
 
 - [x] XSS 攻击与 CSP 防御 ✓ (已完成,见上表 XSS与CSP)
@@ -44,9 +54,13 @@
 - [x] SameSite Lax 行为细节 ✓ (已完成,见上表 Cookie安全属性与SameSite)
 - [x] HTTPS 与 HSTS ✓ (已完成,见上表 Cookie安全属性与SameSite 的 HSTS 部分)
 - [x] 浏览器 Cookie Same-Origin 流程 ✓ (已完成,见上表 Cookie安全属性与SameSite 的存储/检索模型)
-- [ ] OAuth 2.0 资源服务器侧:DPoP / mTLS 发送方约束、令牌受众校验(§2.3)
-- [ ] CSP 进阶:`report-to`/`Reporting-Endpoints`、Trusted Types、`strict-dynamic`
+- [x] OAuth 2.0 资源服务器侧:DPoP / mTLS 发送方约束 ✓ (已完成,见上表 DPoP与发送方约束令牌)
+- [x] CSP 进阶 ✓ (已完成,见上表 CSP strict-dynamic与违规报告 与 TrustedTypes与DOMXSS)
+- [ ] 令牌受众校验 `aud`(RFC 9068 JWT 访问令牌 profile)与 JWT 访问令牌的签发/校验
 - [ ] Fetch Metadata(Request-Context)作为 CSRF 纵深的完整策略
 - [ ] 账户安全:密码重置流程、账户枚举、凭据填充防护
-- [ ] 跨窗口隔离:COOP/COEP/CORP 与 XS-Leaks
-- [ ] 子资源完整性(SRI)与第三方脚本治理
+- [x] 跨窗口隔离:COOP/COEP/CORP ✓ (已完成,见上表 COOPCOEP跨源隔离;XS-Leaks 手法清单待补)
+- [x] 子资源完整性(SRI)与第三方脚本治理 ✓ (已完成,见上表 SRI与完整性策略)
+- [ ] HTTP 请求走私(CL.TE / TE.CL,RFC 9112 §6.3 消息体长度判定分歧)
+- [ ] DOM Clobbering 与 `document.write` 注入面
+- [ ] 开放重定向(CWE-601)与 URL 校验的分歧

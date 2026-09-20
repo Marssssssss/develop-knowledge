@@ -61,7 +61,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-20 22:40 | 36 | 10-逆向工程/移动端逆向第二批:DEX格式·Dalvik指令编码·FridaStalker·iOS砸壳·反调试与越狱对抗 | S1+S2+S3 | +5 | 486 | AOSP dex-format/dalvik-bytecode/instruction-formats 三篇+frida JS API+gumevent.h+xnu loader.h+MASTG 0046/0354/0240/0241 直抓;Py 606 断言 | notify: pending |
+| 2026-09-20 22:40 | 36 | 10-逆向工程/移动端逆向第二批:DEX格式·Dalvik指令编码·FridaStalker·iOS砸壳·反调试与越狱对抗 | S1+S2+S3 | +5 | 486 | AOSP dex-format/dalvik-bytecode/instruction-formats 三篇+frida JS API+gumevent.h+xnu loader.h+MASTG 0046/0354/0240/0241 直抓;Py 606 断言 | notify: ok |
 | 2026-09-20 20:39 | 34 | 09-语言学习/Python第四批:迭代器·MRO与C3·参数绑定·运算符分派·作用域闭包 | S3 | +5 | 481 | datamodel+itertools+functools+PEP570/479+typeobject.c 直抓;Py 43 组 | notify: ok |
 | 2026-09-20 18:00 | 32 | 08-安全/Web安全第三批:DPoP·TrustedTypes·strict-dynamic·SRI·COOP-COEP-CORP | S1+S3 | +5 | 476 | RFC9449/8705+CSP3+SRI+COEP+HTML 直抓;Py 230 断言 | notify: ok |
 | 2026-09-20 16:50 | 45 | 07-数据存储/图数据库第三批:路径匹配·null三值·索引·约束·Louvain | S3 | +5 | 471 | neo4j.com+arXiv 0803.0476 直抓;Py 334 断言 | notify: ok |

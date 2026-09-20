@@ -25,6 +25,7 @@
 | 102-106 | [05-IaC与配置管理/](./05-IaC与配置管理/) | HCL 解析器 / Terraform 资源依赖图+Kahn 拓扑 / Ansible 幂等模块 / Jinja2 模板引擎 / Terraform State diff & Plan (IaC 主干五件套) | C/Python/Go / Python+JS |
 | 107-111 | [05-IaC与配置管理/](./05-IaC与配置管理/) | Terraform 远程后端与 state 锁(条件写+nonce) / Ansible 变量优先级 22 级 / Ansible-Vault 格式(AES-256-CTR+HMAC) / Pulumi 资源注册与 Preview / GitOps 调和与漂移检测(SSA 字段所有权) | C/Python/Go |
 | 292-296 | [02-CI-CD/](./02-CI-CD/) | GitHub Actions 触发与表达式语义 / GitLab CI rules 与父子流水线 / Jenkins 声明式 Pipeline 时序 / Argo CD 同步与漂移检测 / 制品晋升与语义化版本（CI-CD 主干第二批） | Python/Go |
+| 462-466 | [05-IaC与配置管理/](./05-IaC与配置管理/) | Terraform 重构块与状态搬迁(moved/removed/import) / lifecycle 元参数与依赖图变换 / 插件协议发现与版本选择 / Ansible 集合 FQCN 解析与 runtime 元数据 / 计划期 unknown 值传播（IaC 主干第四批） | Python/Go |
 
 | 152-156 | [01-容器化/](./01-容器化/) | OverlayFS 联合挂载 / Capabilities 权限分割 / Seccomp-BPF 过滤 / veth pair 网络 / OCI Runtime Spec | C/Python/Go |
 | 237-241 | [01-容器化/](./01-容器化/) | Docker 层缓存失效(缓存键链+COPY 校验和) / 多阶段构建与镜像瘦身 / user namespace UID 映射 / rootless 容器 / cgroup v2 + eBPF 附加与 BPF token | Python/Go / Python/Go/C |

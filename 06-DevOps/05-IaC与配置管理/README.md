@@ -35,8 +35,10 @@ Terraform 核心工作流(官方):**Write**(定义资源,可跨多云)→ **Plan
 - [x] Ansible 变量体系与 Vault(加密敏感变量) ✓ demo 108-109
 - [x] Pulumi:通用语言(TS/Python/Go)写 IaC,与 Terraform 引擎模型的异同 ✓ demo 110
 - [x] GitOps 流水线:IaC 代码的 PR 审批 → plan 预览 → apply 自动化 ✓ demo 111
-- [ ] OpenTofu 与 Terraform 的 state 格式互操作、`removed` 块(1.7+)与 `import` 块(1.5+)声明式迁移
-- [ ] Ansible Collections 与 Execution Environment(EE)的依赖打包
+- [x] `removed` 块与 `import` 块的声明式状态迁移(含 `moved` 的整资源/实例级寻址与 move 链)✓ demo 462
+- [x] Ansible Collections:命名空间与 FQCN 解析、`collections` 搜索路径作用域、`meta/runtime.yml` 元数据 ✓ demo 465
+- [ ] OpenTofu 与 Terraform 的 state 格式互操作
+- [ ] Ansible Execution Environment(EE)的镜像分层与依赖打包(ansible-builder)
 
 ## 已完成 demo 索引(2026-09-13 起;2026-09-15 增补 107-111)
 
@@ -106,6 +108,41 @@ Terraform 核心工作流(官方):**Write**(定义资源,可跨多云)→ **Plan
 - Kubernetes **Server-Side Apply** 的 `managedFields` 记录字段所有权:同一字段被两个控制器写 → 冲突;
   `force=True` 才夺取所有权;空值字段会被释放(交还所有权)
 - 9 个场景全部按预期:自动同步 / 手动 spec 不自动 / drift 不自愈 / selfHeal 自愈 / 失败不重试 / prune 关保孤儿 / 开 prune 清理 / SSA 共享所有权 / SSA 冲突与 force
+
+### Terraform 重构块与状态搬迁 (Demo 462)
+- Python(`tfrefactor.py` 254 行 + 自检 149)/ Go(`tfrefactor.go` 260 + `tfrefactor_plan.go` 173 + 自检 183)
+- 核心机制:**plan 前先改 state 地址再造计划**;`from`/`to` **只要一侧带实例键就按「具体实例」匹配**,否则按「整资源」匹配并**保留**实例键
+- 实例级到无键目标时**丢掉**键(`d[2]` → `d`);move 链让 `a` 与 `b` 两个起点都能一步到 `c`
+- 给单实例资源加 `count` 时**自动搬到 0 号**,除非有 `moved` 块提及该资源(`for_each` 无此兜底)
+- `removed` **默认 `destroy = true`**(销毁真实资源),`destroy = false` 才是只移出 state;`import` 的 `to` 必须匹配已有 `resource` 块、`id` 与 `identity` 互斥
+
+### Terraform 生命周期元参数与依赖图变换 (Demo 463)
+- Python(`tflifecycle.py` 192 + 自检 180)/ Go(271 + 195)
+- 核心机制:**`create_before_destroy` 会沿依赖边向被依赖方传播且是传递的**,并写进 state;被隐式置位后再写 `false` 会被拒(**会成环**)
+- 替换次序:CBD 时 `(create, destroy)`,否则 `(destroy, create)`;销毁图上 CBD 会让边**翻转**
+- `prevent_destroy` 挡得住 replace,挡不住「把配置整个删掉」;`ignore_changes` 只在 update 生效、`all` 时永不 update
+- `replace_triggered_by` **只能引用托管资源**,触发条件只有 update/replace(或属性值变化)
+
+### Terraform 插件协议、发现与版本选择 (Demo 464)
+- Python(`tfplugin.py` 135 + 自检 99)/ Go(248 + 136)
+- 核心机制:插件协议是**版本化接口**(protobuf + gRPC),主版本划兼容性(v6→CLI 1.0+、v5→0.12+)、次版本叠加
+- 版本选择四条:lock 优先 → **已安装里最新的可接受(即使 registry 有更新)** → registry 最新 → 都没有则 init 失败
+- 协议版本同时是 **registry 发现时的筛选元数据**;`~>` 只允许最右分量递增
+- go-plugin 握手先校验 **magic cookie**(防把普通二进制当插件启动)再校验 protocol version
+
+### Ansible 集合与依赖解析 (Demo 465)
+- Python(`anscoll.py` 141 + 自检 101)/ Go(208 + 125)
+- 核心机制:`collections:` 只是**有序搜索路径**(不安装任何东西),且**角色不继承 playbook 的 collections**,角色没定义自己的也不继承
+- 非 action/module 插件(lookup/filter/test)**即使**在搜索路径里也必须用 FQCN
+- `meta/runtime.yml` 的 `requires_ansible` 是 PEP440 但**会截断预发布段**(`2.11.0b1` 满足 `>=2.11`)
+- `plugin_routing` 三态:`redirect` 改指向 / `deprecation` 警告 / `tombstone` 致命移除
+
+### Terraform 计划期 unknown 值传播 (Demo 466)
+- Python(`tfunknown.py` 222 + 自检 133)/ Go(274 + 161)
+- 核心机制(**依据 Terraform v1.9.8 源码 `internal/plans/objchange/objchange.go`**):属性级只有三分支 —— computed 且 config 为 null 取 prior、有 NestedType 递归、否则一律取 config
+- 嵌套关联方式:`list` 按下标、`map` 按键、`set` 是**按非 computed 属性匹配的启发式**(源码自认可能有奇怪结果)
+- **`known after apply` 不是 ProposedNew 产生的**:新建时 computed 取到的是 null,补 unknown 是 provider 的 `PlanResourceChange`
+- data source 用一个**整体 unknown 的 prior** 跑同一套逻辑,靠 cty 的 unknown 短路让 unknown 传播到所有本该保留 prior 的位置
 
 ## 参考资料(实际阅读过的权威来源)
 

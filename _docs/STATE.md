@@ -47,10 +47,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 2         # 下轮取循环[2]=03-系统编程(本轮已消费循环[1]=02-Web开发)
-sub_pos        : 01:4 02:1 03:0 04:0 05:5 06:4 07:4 08:1 09:0 10:1 11:1  # 本轮消费 sub_pos[02]=0 → 索引 8 前端框架 → 1(5 条目)
-last_run       : 2026-09-20 08:05  # 08:00 槽占位锁(开局 08:05:06;上轮 06:46 距 79 分钟通过保险);收尾补正
-last_top       : 02-Web开发  # 本轮消费循环[1]
+top_pos        : 3         # 下轮取循环[3]=04-移动开发(本轮已消费循环[2]=03-系统编程)
+sub_pos        : 01:4 02:1 03:1 04:0 05:5 06:4 07:4 08:1 09:0 10:1 11:1  # 本轮消费 sub_pos[03]=0 → 索引 12 网络编程 → 1(4 条目)
+last_run       : 2026-09-20 08:52  # 08:00 槽收尾(开局 08:05:06;上轮 06:46 距 79 分钟通过保险)
+last_top       : 03-系统编程  # 本轮消费循环[2]
 skipped        : []
 failed_attempts: []
 ```
@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-20 06:46 | 8 | 02-Web开发/前端框架第三批:Svelte runes·RSC Flight·渲染管线·WebComponents·ESM实时绑定 | S3 | +5 | 446 | Svelte runes 4 篇+ReactFlightClient 源码+MDN+WHATWG+ECMA262 全 curl 直抓;Py 141 断言 | notify: ok(HTTP 200 errcode=0 errmsg=ok,python urllib 单次调用未重试,发送前已确认本轮无既有 notify 记录) |
-| 2026-09-20 04:38 | 3 | 01-游戏开发/游戏引擎首批:Archetype存储·固定时间步·JobSystem与Burst·Nanite·Godot节点生命周期 | S3 | +5 | 441 | Unity 官方 13 页+Nanite SIGGRAPH PDF 155 页+Godot 4 页+Gaffer 全文;Py 133 断言 | notify: ok |
-| 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC·RPS/RFS/XPS与中断亲和·OffWake归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg CPU-Util-is-Wrong/Off-CPU/差分 + 内核 scaling/ringbuf;Py 163 断言 | notify: ok |
+| 2026-09-20 08:52 | 12 | 03-系统编程/网络编程第四批:非阻塞EAGAIN·TCP零窗口与窗口扩大·HTTP2与HPACK·io_uring·Unix凭证 | S1+S3 | +5 | 451 | RFC9293/7323/9113/7541+9 份 man7 直抓;Py 210 断言 | notify: 待回写 |
+| 2026-09-20 06:46 | 8 | 02-Web开发/前端框架第三批:Svelte runes·RSC Flight·渲染管线·WebComponents·ESM实时绑定 | S3 | +5 | 446 | Svelte runes+ReactFlightClient+MDN+WHATWG+ECMA262 直抓;Py 141 断言 | notify: ok |
+| 2026-09-20 04:38 | 3 | 01-游戏开发/游戏引擎首批:Archetype存储·固定时间步·JobSystem与Burst·Nanite·Godot节点生命周期 | S3 | +5 | 441 | Unity 13 页+Nanite PDF 155 页+Godot+Gaffer;Py 133 断言 | notify: ok |
+| 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC·RPS/RFS/XPS与中断亲和·OffWake归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg 三篇+内核 scaling/ringbuf;Py 163 断言 | notify: ok |
 | 2026-09-19 22:32 | 53 | 09-语言学习/TypeScript首批:结构类型·条件类型分配律·映射修饰符·收窄守卫·方差 | S1+S3 | +5 | 426 | TS Handbook 5篇+4.7公告;21 fixture+Py 53 断言 | notify: ok |
-| 2026-09-19 21:04 | 31 | 08-安全/密码学深水区:TLS1.3·国密SM2/3/4·BLS·ML-KEM·Groth16 | S1+S3 | +5 | 421 | RFC8446/8998+FIPS203+论文+OpenSSL/GmSSL/kyber;Py 146 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

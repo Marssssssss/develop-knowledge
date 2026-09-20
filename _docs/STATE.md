@@ -64,12 +64,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-21 02:54 | 4 | 01-游戏开发/物理第一批:SAT与EPA·BroadPhase与空间分割·PBD与XPBD·布料模拟·接触与冲量求解 | S3 | +5 | 496 | Box2D v3 九份源码+dyn4j SAT/EPA+pbrt BVH+Müller2006/XPBD/PBDBodies+TenMinutePhysics14;Py 383 断言 | notify: ok |
+| 2026-09-21 02:54 | 4 | 01-游戏开发/物理第一批:SAT与EPA·BroadPhase与空间分割·PBD与XPBD·布料模拟·接触与冲量求解 | S3 | +5 | 496 | Box2D v3 九份源码+dyn4j+pbrt BVH+Müller2006/XPBD/PBDBodies+TenMinutePhysics14;Py 383 断言 | notify: ok |
 | 2026-09-21 00:45 | 38 | 11-性能分析/应用级剖析第二批:pprof图过滤·Go执行追踪器·py-spy native·JFR与async-profiler·b.Loop | S2+S3 | +5 | 491 | pprof 5 份源码+Go trace 2 篇+py-spy+async-profiler 3 篇+JEP328/349+benchmark.go;Py 152 断言 | notify: ok |
-| 2026-09-20 22:40 | 36 | 10-逆向工程/移动端逆向第二批:DEX格式·Dalvik指令编码·FridaStalker·iOS砸壳·反调试与越狱对抗 | S1+S2+S3 | +5 | 486 | AOSP dex-format/dalvik-bytecode/instruction-formats+frida JS API+gumevent.h+xnu loader.h+MASTG 四篇;Py 606 断言 | notify: ok |
+| 2026-09-20 22:40 | 36 | 10-逆向工程/移动端逆向第二批:DEX格式·Dalvik指令编码·FridaStalker·iOS砸壳·反调试与越狱对抗 | S1+S2+S3 | +5 | 486 | AOSP dex 三篇+frida JS API+gumevent.h+xnu loader.h+MASTG 四篇;Py 606 断言 | notify: ok |
 | 2026-09-20 20:39 | 34 | 09-语言学习/Python第四批:迭代器·MRO与C3·参数绑定·运算符分派·作用域闭包 | S3 | +5 | 481 | datamodel+itertools+functools+PEP570/479+typeobject.c;Py 43 组 | notify: ok |
 | 2026-09-20 18:00 | 32 | 08-安全/Web安全第三批:DPoP·TrustedTypes·strict-dynamic·SRI·COOP-COEP-CORP | S1+S3 | +5 | 476 | RFC9449/8705+CSP3+SRI+COEP+HTML;Py 230 断言 | notify: ok |
-| 2026-09-20 16:50 | 45 | 07-数据存储/图数据库第三批:路径匹配·null三值·索引·约束·Louvain | S3 | +5 | 471 | neo4j.com+arXiv 0803.0476;Py 334 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

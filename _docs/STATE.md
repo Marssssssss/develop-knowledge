@@ -59,12 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-20 12:48 | 40 | 05-AI与机器学习/语音与多模态首批:CTC损失与解码·logMel频谱图·Whisper解码与失败回退·CLIP双塔对比损失·Wav2Vec2对比学习与量化 | S3 | +5 | 461 | CTC论文+arXiv两篇+whisper4份+CLIP/fairseq源码+librosa 直抓;Py 213 断言 | notify: ok |
+| 2026-09-20 12:48 | 40 | 05-AI与机器学习/语音与多模态首批:CTC损失与解码·logMel频谱图·Whisper解码与失败回退·CLIP双塔对比损失·Wav2Vec2对比学习与量化 | S3 | +5 | 461 | CTC+arXiv×2+whisper/CLIP/fairseq/librosa 直抓;Py 213 断言 | notify: ok |
 | 2026-09-20 10:45 | 16 | 04-移动开发/iOS首批:Swift6严格并发与隔离区·SwiftUI布局协议·Combine背压·ImageIO解码下采样·NotificationCenter投递 | S1+S3 | +5 | 456 | SE-0414/0302/0412+18 份 Apple DocC JSON 直抓;Py 157 断言 | notify: ok |
 | 2026-09-20 08:52 | 12 | 03-系统编程/网络编程第四批:非阻塞EAGAIN·TCP零窗口与窗口扩大·HTTP2与HPACK·io_uring·Unix凭证 | S1+S3 | +5 | 451 | RFC9293/7323/9113/7541+9 份 man7 直抓;Py 210 断言 | notify: ok |
 | 2026-09-20 06:46 | 8 | 02-Web开发/前端框架第三批:Svelte runes·RSC Flight·渲染管线·WebComponents·ESM实时绑定 | S3 | +5 | 446 | Svelte runes+ReactFlightClient+MDN+WHATWG+ECMA262 直抓;Py 141 断言 | notify: ok |
-| 2026-09-20 04:38 | 3 | 01-游戏开发/游戏引擎首批:Archetype存储·固定时间步·JobSystem与Burst·Nanite·Godot节点生命周期 | S3 | +5 | 441 | Unity 13 页+Nanite PDF 155 页+Godot+Gaffer;Py 133 断言 | notify: ok |
-| 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC·RPS/RFS/XPS·OffWake归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg 三篇+内核 ringbuf;Py 163 断言 | notify: ok |
+| 2026-09-20 04:38 | 3 | 01-游戏开发/游戏引擎首批:Archetype存储·固定时间步·JobSystem与Burst·Nanite·Godot节点生命周期 | S3 | +5 | 441 | Unity/Nanite PDF/Godot/Gaffer 直抓;Py 133 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

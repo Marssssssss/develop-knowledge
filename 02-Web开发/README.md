@@ -48,6 +48,11 @@
 - [x] [01-前端框架/浏览器渲染管线/](./01-前端框架/浏览器渲染管线/) — 改动分类 / 层提升 / 强制同步布局 / 图片迟到引发 reflow (Python + Go)
 - [x] [01-前端框架/WebComponents/](./01-前端框架/WebComponents/) — 升级与 reaction 队列 / 构造期限制 / connectedMoveCallback (Python + Go)
 - [x] [01-前端框架/模块系统/ESM实时绑定/](./01-前端框架/模块系统/ESM实时绑定/) — Link/Evaluate 两阶段 + live binding + TDZ 与循环依赖 (Python + Go)
+- [x] [02-后端/优雅关闭与连接排空/](./02-后端/优雅关闭与连接排空/) — Go Shutdown/Close 分野 + 轮询 1ms→500ms + k8s Pod 终止宽限与 preStop 延期 (Python + Go)
+- [x] [02-后端/中间件与责任链/](./02-后端/中间件与责任链/) — Django 洋葱短路语义 + process_view/process_exception 顺序 + Express arity 与 next('route') (Python + Go)
+- [x] [02-后端/HTTP缓存与条件请求/](./02-后端/HTTP缓存与条件请求/) — RFC 9111 新鲜度/Age/Vary/stale 许可 + RFC 9110 §13.2.2 前置条件优先级 (Python + Go)
+- [x] [02-后端/HTTP2帧与流多路复用/](./02-后端/HTTP2帧与流多路复用/) — RFC 9113 帧头与 SETTINGS/流控 + RFC 7541 HPACK 官方向量对拍 (Python + Go)
+- [x] [02-后端/JWT与JWS会话认证/](./02-后端/JWT与JWS会话认证/) — RFC 7515 紧凑序列化与官方 A.1 向量 + RFC 7519 exp/nbf/aud 校验语义 (Python + Go)
 
 ## 状态
 

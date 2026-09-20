@@ -62,6 +62,11 @@
 | `__slots__` 与对象内存布局 | [slots与内存布局/](./slots与内存布局/) |
 | 字符串柔性表示(PEP 393)与编码 | [字符串与编码/](./字符串与编码/) |
 | 数值精度:`decimal` / `fractions` | [decimal与fractions/](./decimal与fractions/) |
+| 迭代器协议与 `itertools` / `functools` | [迭代器协议与itertools/](./迭代器协议与itertools/) |
+| MRO 与 C3 线性化 | [MRO与C3线性化/](./MRO与C3线性化/) |
+| 参数绑定与调用约定(PEP 570 / 3102) | [参数绑定与调用约定/](./参数绑定与调用约定/) |
+| 运算符与特殊方法分派 | [运算符与特殊方法分派/](./运算符与特殊方法分派/) |
+| 作用域、闭包与单元变量 | [作用域闭包与单元变量/](./作用域闭包与单元变量/) |
 
 ## 四、待研究清单(按"教学价值"排序)
 
@@ -73,7 +78,7 @@
 6. ~~`dataclasses` / `attrs` / `__slots__` 与对象内存布局~~ ✅
 7. ~~`async`/`await` 与 asyncio~~ ✅
 8. ~~GIL、多进程与 `concurrent.futures`~~ ✅
-9. 迭代器协议与 `itertools` / `functools`
+9. ~~迭代器协议与 `itertools` / `functools`~~ ✅
 10. ~~元类(ORM 怎么用)~~ ✅
 11. ~~字节码、`dis` 与自适应解释器(PEP 659)~~ ✅
 12. ~~结构化模式匹配(PEP 634)~~ ✅
@@ -81,6 +86,13 @@
 14. ~~导入系统(module spec / `sys.meta_path` / 命名空间包)~~ ✅
 15. ~~字符串与编码(PEP 393 柔性表示 / UTF-8 模式)~~ ✅
 16. ~~数值类型与 `decimal` / `fractions` 的精度模型~~ ✅
+17. ~~类属性查找顺序与 MRO(C3 线性化、`super()`)~~ ✅
+18. ~~函数参数绑定(位置限定 `/`、关键字限定 `*`)~~ ✅
+19. ~~运算符与特殊方法分派(`NotImplemented` / 反射 / in-place)~~ ✅
+20. ~~作用域、闭包与单元变量(cell)~~ ✅
+21. `pickle` / `copyreg` 与对象序列化协议(`__reduce__` / `__getstate__`)
+22. `contextvars` 与异步上下文传播
+23. `enum` / `dataclasses` 的运行时行为与 `__init_subclass__`
 
 ## 五、参考资料
 

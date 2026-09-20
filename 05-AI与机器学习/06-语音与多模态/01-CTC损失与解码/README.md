@@ -16,15 +16,7 @@
 
 ### 1. 输出层：|L| + 1 个单元
 
-softmax 输出层比标签集 `L` **多一个单元**，多出来的那个就是 **blank**（论文 §3.1：`"one more unit than there are labels in L"`）。论文 TIMIT 实验里 61 个音素 + 1 个 blank = **62** 个 softmax 单元，总权重 114,662。
-
-对长度 `T` 的输入，网络输出定义了 `L'^T`（`L' = L ∪ {blank}`）上的分布：
-
-```
-p(π|x) = Π_{t=1..T} y^t_{π_t}          （式 2）
-```
-
-隐含假设：**给定网络内部状态后各帧输出条件独立** —— 论文明确指出这靠「输出层不能反馈到自己或网络」来保证。
+softmax 输出层比标签集 `L` **多一个单元**，多出来的那个就是 **blank**（论文 §3.1：`"one more unit than there are labels in L"`）。论文 TIMIT 实验里 61 个音素 + 1 个 blank = **62** 个 softmax 单元，总权重 114,662。对长度 `T` 的输入，网络输出定义了 `L'^T`（`L' = L ∪ {blank}`）上的分布：`p(π|x) = Π_{t=1..T} y^t_{π_t}`（式 2）。隐含假设是**给定网络内部状态后各帧输出条件独立** —— 论文明确指出这靠「输出层不能反馈到自己或网络」来保证。
 
 ### 2. 折叠映射 B：先合并相邻重复，再去 blank
 
@@ -131,20 +123,7 @@ Z_t = Σ_s α̂_t(s) β̂_t(s) / y^t_{l'_s}
 | best path decoding | §3.2 式(4) | `π*` = 每帧最大激活的拼接，输出 `B(π*)` | **不保证**，论文原话 *"it is not guaranteed to find the most probable labelling"* |
 | prefix search decoding | §3.2 | 改造前向-后向，逐前缀扩展 | 时间足够时最优，但待扩展前缀数随 `T` 指数增长 |
 
-best path 之所以不最优：**折叠后相同的多条路径会各自贡献概率**，最大单条路径所在的 labelling 未必是总概率最大的 labelling。本 demo 扫描 400 组随机分布，统计出「best path ≠ 穷举 argmax」的用例（`G1`），并断言该用例下 best path 的概率确实更低（`G2`）。
-
-论文 §5.2 在 TIMIT 上的结果（LER，越低越好）：
-
-| 系统 | LER |
-| --- | --- |
-| Context-independent HMM | 38.85 % |
-| Context-dependent HMM | 35.21 % |
-| BLSTM/HMM | 33.84 ± 0.06 % |
-| Weighted error BLSTM/HMM | 31.57 ± 0.06 % |
-| CTC (best path) | 31.47 ± 0.21 % |
-| CTC (prefix search) | 30.51 ± 0.19 % |
-
-论文还提到一个工程细节：为了让 prefix search 可行，用 blank 概率阈值把输出切成若干段，阈值设为 **99.99 %**。
+best path 之所以不最优：**折叠后相同的多条路径会各自贡献概率**，最大单条路径所在的 labelling 未必是总概率最大的 labelling。本 demo 扫描 400 组随机分布，统计出「best path ≠ 穷举 argmax」的用例（`G1`），并断言该用例下 best path 的概率确实更低（`G2`）。论文 §5.2 的 TIMIT 结果（LER）：context-independent HMM 38.85 %、context-dependent HMM 35.21 %、BLSTM/HMM 33.84 %、加权误差 BLSTM/HMM 31.57 %、CTC best path 31.47 %、CTC prefix search **30.51 %**；为了让 prefix search 可行，论文用 blank 概率阈值把输出分段，阈值设为 **99.99 %**。
 
 ## 对比：CTC vs framewise vs HMM 混合
 
@@ -153,13 +132,12 @@ best path 之所以不最优：**折叠后相同的多条路径会各自贡献�
 | 训练数据 | 必须预切分 | HMM 自动切分 | 不需要对齐 |
 | 目标函数 | 逐帧独立分类 | 生成式 + 判别式混合 | 直接最大化目标串概率 |
 | 输出后处理 | 需要 | HMM 负责 | 不需要（解码即最终串） |
-| 标签间依赖 | 无 | 显式马尔可夫假设 | 无显式建模（靠双尖峰隐式表达，见 §6） |
+| 标签间依赖 | 无 | 显式马尔可夫假设 | 无显式建模（靠双尖峰隐式表达） |
 | 需要任务先验 | 低 | 高（状态拓扑、插入惩罚等） | 低 |
 
 ## 环境
 
-- Python 3.13（仅用标准库 `math` / `itertools` / `random`）
-- Go 1.20+（仅用标准库）
+Python 3.13（仅用标准库 `math` / `itertools` / `random`）；Go 1.20+（仅用标准库）。
 
 ## 运行方式
 
@@ -203,8 +181,8 @@ def forward_log(log_y, ext, prune=False):
 - **必须走 log 空间**。路径数是 `|L'|^T`，TIMIT 那种 62 类、几百帧的序列直接用概率相乘必然下溢到 0。本 demo 的 `forward_log` 全用 log-sum-exp。
 - **缩放版依赖零区置零**（见 §6）。不置零时 `Π C_t` 会偏大，本 demo 实测确实不相等。
 - 朴素穷举只在 `|L'|^T` 很小时可用；本 demo 用它做 `T ≤ 6` 的对照，共 1559 个用例全部一致。
-- 复杂度：前向 + 后向是 `O(T · |l'|)`，而 `|l'| = 2|l| + 1`，所以是 `O(T · |l|)`；prefix search 的最坏情况随 `T` 指数增长。
-- 论文 §5.1 的特征口径：TIMIT 用 10 ms 帧、5 ms 重叠、**12 个 MFCC**（来自 26 个滤波器组通道），加 log-energy 与一阶差分，共 26 维/帧，逐维归一化到均值 0 方差 1。
+- 复杂度：前向 + 后向是 `O(T · |l'|)`，即 `O(T · |l|)`；prefix search 的最坏情况随 `T` 指数增长。
+- 论文 §5.1 的特征口径：TIMIT 用 10 ms 帧、5 ms 重叠、**12 个 MFCC**（来自 26 个滤波器组通道），加 log-energy 与一阶差分共 26 维/帧，逐维归一化到均值 0 方差 1。
 
 ## 注意事项与常见坑
 

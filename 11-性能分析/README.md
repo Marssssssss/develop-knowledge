@@ -11,6 +11,8 @@
 | [03-基准测试方法论/](./03-基准测试方法论/) | 微基准陷阱（DCE/常量折叠/循环优化）、统计显著性、主动基准测试 |
 | [04-全链路性能/](./04-全链路性能/) | Core Web Vitals（LCP/INP/CLS）、field vs lab、OpenTelemetry 端到端追踪、延迟预算、扇出放大 |
 | [05-容量规划与性能建模/](./05-容量规划与性能建模/) | Little 定律、M/M/1 拐点、Amdahl vs Gustafson、Universal Scalability Law、容量余量 |
+| [06-数据库性能/](./06-数据库性能/) | 执行计划与 cost 口径、索引选择率、连接池、慢查询归因（2026-09-21 S2 建目录） |
+| [07-网络与传输性能/](./07-网络与传输性能/) | 拥塞控制、RTT/BDP、TLS 握手开销、QUIC（2026-09-21 S2 建目录） |
 
 ## 已建子类目
 
@@ -19,11 +21,13 @@
 - [x] 03-基准测试方法论（微基准陷阱 / 统计显著比较 CI 门禁，2026-09-14 S2 建目录 → 2026-09-15 首批 5 demo）
 - [x] 04-全链路性能（Core Web Vitals / OpenTelemetry / 延迟预算，2026-09-15 S2 建目录）
 - [x] 05-容量规划与性能建模（排队论 / 扩展性定律 / 余量论证，2026-09-15 S2 建目录）
+- [x] 06-数据库性能（PostgreSQL EXPLAIN cost 口径 / 索引选择率 / 连接池 / 慢查询归因，2026-09-21 S2 建目录）
+- [x] 07-网络与传输性能（RFC 9002 QUIC 丢包检测与拥塞控制 / RTT-BDP / TLS 握手，2026-09-21 S2 建目录）
 
 ## 待拓展子类目（由自动巡检按类目拓展规则逐步补建）
 
-- [ ] 06-数据库性能（执行计划、索引选择率、连接池、慢查询归因）
-- [ ] 07-网络与传输性能（拥塞控制、RTT/BDP、TLS 握手开销、QUIC）
+- [ ] 08-编译器与运行时优化（JIT 分层编译、GC 停顿与分配速率、内联与逃逸分析）
+- [ ] 09-前端与渲染性能（关键渲染路径、长任务与 INP、布局抖动、内存泄漏定位）
 
 ## 待研究
 
@@ -47,6 +51,7 @@
 - [x] 系统级剖析第四批：CPU 利用率口径与 IPC 归因、RPS/RFS/XPS 与中断亲和再平衡、Off-Wake 调度延迟栈归因、差分火焰图、BPF ringbuf（[01-系统级剖析/](./01-系统级剖析/)，2026-09-20 第四批 5 demo，ID 432-436）
 - [x] 二进制符号与调试信息链路：ELF 重定位 / DWARF / CFI 展开 / TLS / Itanium C++ 名字改编（[10-逆向工程/01-二进制逆向/](../10-逆向工程/01-二进制逆向/)，2026-09-20 补录 ID 427-431）
 - [ ] "Linux 性能分析 60 秒"（原文在 netflixtechblog → medium.com 被墙，本轮改做 CPU 利用率口径；待换可达源）
+- [x] 应用级剖析第二批：pprof 调用图与火焰图过滤、Go execution tracer、py-spy `--native`、JFR 与 async-profiler 的 safepoint 偏差、`testing.B.Loop`（[02-应用级剖析/](./02-应用级剖析/)，2026-09-21 第二批 5 demo，ID 487-491）
 - [ ] USL 参数拟合（从实测 (N, X) 点估 α、β、γ 并定位 Nmax）
 - [ ] 中断/软中断绑核再平衡（`smp_affinity` 掩码已覆盖，缺实际调优与 RPS/RFS 侧）
 
@@ -59,6 +64,7 @@
 - Oracle《Avoiding Benchmarking Pitfalls on the JVM》+ CodSpeed JMH 指南 + openjdk/jmh 样例解读 + hyperfine 官方仓库与 4 篇用法指南（2026-09-14 新增 [03-基准测试方法论/](./03-基准测试方法论/)，逐条链接见该目录 README）
 - pkg.go.dev `benchstat` + golang/perf `utest.go` 源码 + JMH `LinuxPerfNormProfiler.java` + jmh-dev 邮件列表 + NIST/Skis/Dropbox 等 20 条来源（2026-09-15 首批 5 demo，逐条链接见 [03-基准测试方法论/README.md](./03-基准测试方法论/README.md)）
 - web.dev Core Web Vitals 阈值定义（含 p75 选型论证）+ Google Search Console 官方报告口径 + OpenTelemetry Traces 文档 + Neil Gunther USL 原文 + Cornell/UVA/HPC101 三条 Amdahl-Gustafson 讲解 + Semicolony 容量规划手册（2026-09-15 新增 [04-全链路性能/](./04-全链路性能/) 与 [05-容量规划与性能建模/](./05-容量规划与性能建模/)，逐条链接见两目录 README）
+- PostgreSQL《Using EXPLAIN》官方文档 + RFC 9002（QUIC Loss Detection and Congestion Control）（2026-09-21 新增 [06-数据库性能/](./06-数据库性能/) 与 [07-网络与传输性能/](./07-网络与传输性能/)，逐条链接见两目录 README）
 - bpftrace 语言参考/一行式教程/手册页 + Gregg USE Method 原文与 Linux 清单 + kernel iostats + cgroup v2 内核文档 + Gregg DockerCon 2017 容器分析 + runqlat + kernel sched-stats + IRQ affinity/irq-redir + Red Hat 调优指南（2026-09-16 新增 [01-系统级剖析/](./01-系统级剖析/) 第三批 5 demo，逐条链接见该目录 README）
 - pkg.go.dev net/http/pprof、runtime/pprof、testing + golang/go pprof.go 源码 + Go Blog Profiling Go Programs + docs.python.org The Python Profilers + benfred/py-spy README（2026-09-18 新增 [02-应用级剖析/](./02-应用级剖析/) 首批 5 demo，逐条链接见该目录 README）
 - golang/go `src/testing/benchmark.go` 源码 + pkg.go.dev `runtime#MemStats` + NIST e-Handbook §7.2.2.2/§1.3.5.3 + Dropbox Apogee + LLVM Benchmarking tips + statsmodels `multipletests` + Benjamini-Hochberg(1995)/Benjamini-Yekutieli(2001) 临界常数（2026-09-19 新增 [03-基准测试方法论/](./03-基准测试方法论/) 第二批 5 demo，逐条链接见该目录 README）

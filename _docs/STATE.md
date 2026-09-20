@@ -14,7 +14,7 @@
 **大类内子类目轮转**:取该大类在索引表的全部条目(表序)第 `sub_pos[大类]` 个;完成后 +1 mod 条目数,新子类目只追加表尾。
 
 ```text
-轮询索引表(组内按 | 顺序即索引递增;仅供大类内子类目轮转取条目):
+轮询索引表(组内顺序即轮转顺序):
 0-7   01-游戏开发: 服务端|渲染|UI|游戏引擎|物理|AI|音频|动画
 8-11  02-Web开发: 前端框架|后端|数据库|API设计
 12-15 03-系统编程: 网络编程|进程线程协程|内存管理|文件系统
@@ -42,17 +42,20 @@
 56    02-Web开发: 流量治理与限流(RateLimit 头部/GCRA)
 57    10-逆向工程: 固件与嵌入式逆向
 58    02-Web开发: WebAssembly
+59-60 11-性能分析: 全链路性能|容量规划与性能建模(# 补登记)
+61    11-性能分析: 数据库性能
+62    11-性能分析: 网络与传输性能
 ```
 
-> 39-58 为类目自动拓展新增(S2),新子类目顺延 59 起;条目数 9/8/4/4/9/8/5/4/5/4/3 = 59。
+> 39-62 类目拓展/补登记(S2+S3),新子类目顺延 63 起;条目数 9/8/4/4/9/8/5/4/5/4/7 = 63。
 
 ## 二、本轮状态
 
 ```
-top_pos        : 10        # 下轮取循环[10]=11-性能分析
-sub_pos        : 01:4 02:1 03:1 04:1 05:6 06:5 07:0 08:2 09:1 10:2 11:1  # 消费 sub_pos[10]=1 → 索引 36 移动端逆向
-last_run       : 2026-09-21 00:00  # 00:00 槽占位锁(开局 00:00:54)
-last_top       : 10-逆向工程  # 本轮消费循环[9] → 索引 36 移动端逆向
+top_pos        : 0         # 下轮取循环[0]=01-游戏开发
+sub_pos        : 01:4 02:1 03:1 04:1 05:6 06:5 07:0 08:2 09:1 10:2 11:2  # 本轮消费 sub_pos[11]=1 → 索引 38
+last_run       : 2026-09-21 00:47  # 00:00 槽收尾(开局 00:00:54)
+last_top       : 11-性能分析  # 本轮消费循环[10] → 索引 38 应用级剖析
 skipped        : []
 failed_attempts: []
 ```
@@ -61,11 +64,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-20 22:40 | 36 | 10-逆向工程/移动端逆向第二批:DEX格式·Dalvik指令编码·FridaStalker·iOS砸壳·反调试与越狱对抗 | S1+S2+S3 | +5 | 486 | AOSP dex-format/dalvik-bytecode/instruction-formats 三篇+frida JS API+gumevent.h+xnu loader.h+MASTG 0046/0354/0240/0241 直抓;Py 606 断言 | notify: ok |
-| 2026-09-20 20:39 | 34 | 09-语言学习/Python第四批:迭代器·MRO与C3·参数绑定·运算符分派·作用域闭包 | S3 | +5 | 481 | datamodel+itertools+functools+PEP570/479+typeobject.c 直抓;Py 43 组 | notify: ok |
-| 2026-09-20 18:00 | 32 | 08-安全/Web安全第三批:DPoP·TrustedTypes·strict-dynamic·SRI·COOP-COEP-CORP | S1+S3 | +5 | 476 | RFC9449/8705+CSP3+SRI+COEP+HTML 直抓;Py 230 断言 | notify: ok |
-| 2026-09-20 16:50 | 45 | 07-数据存储/图数据库第三批:路径匹配·null三值·索引·约束·Louvain | S3 | +5 | 471 | neo4j.com+arXiv 0803.0476 直抓;Py 334 断言 | notify: ok |
-| 2026-09-20 14:46 | 41 | 06-DevOps/IaC第四批:重构块·lifecycle·插件协议·Ansible·unknown | S3 | +5 | 466 | HashiCorp/Ansible+objchange.go 直抓;Py 162 断言 | notify: ok |
+| 2026-09-21 00:47 | 38 | 11-性能分析/应用级剖析第二批:pprof图过滤·Go执行追踪器·py-spy native·JFR与async-profiler·b.Loop | S2+S3 | +5 | 491 | pprof 5 份源码+Go trace 2 篇+py-spy+async-profiler 3 篇+JEP328/349+benchmark.go;Py 152 断言 | notify: ok |
+| 2026-09-20 22:40 | 36 | 10-逆向工程/移动端逆向第二批:DEX格式·Dalvik指令编码·FridaStalker·iOS砸壳·反调试与越狱对抗 | S1+S2+S3 | +5 | 486 | AOSP dex-format/dalvik-bytecode/instruction-formats+frida JS API+gumevent.h+xnu loader.h+MASTG 四篇;Py 606 断言 | notify: ok |
+| 2026-09-20 20:39 | 34 | 09-语言学习/Python第四批:迭代器·MRO与C3·参数绑定·运算符分派·作用域闭包 | S3 | +5 | 481 | datamodel+itertools+functools+PEP570/479+typeobject.c;Py 43 组 | notify: ok |
+| 2026-09-20 18:00 | 32 | 08-安全/Web安全第三批:DPoP·TrustedTypes·strict-dynamic·SRI·COOP-COEP-CORP | S1+S3 | +5 | 476 | RFC9449/8705+CSP3+SRI+COEP+HTML;Py 230 断言 | notify: ok |
+| 2026-09-20 16:50 | 45 | 07-数据存储/图数据库第三批:路径匹配·null三值·索引·约束·Louvain | S3 | +5 | 471 | neo4j.com+arXiv 0803.0476;Py 334 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

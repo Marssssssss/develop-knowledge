@@ -108,7 +108,7 @@ if abs64(n.Cum) < nodeCutoff { continue }   // 小于才丢；等于保留
 ## 七、运行
 
 ```bash
-python python/pprof_graph_filter.py    # 38 条断言，全部对照上述源码语义
+python python/selfcheck_filter.py       # 38 条断言，全部对照上述源码语义
 cd go && go run .                      # 同语义的 Go 版（本机无 Go 工具链，走人工审查）
 ```
 

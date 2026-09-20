@@ -55,5 +55,10 @@
 - [ ] 隔离级别与幻读防（next-key lock / SSI）
 - [ ] Redis Sentinel 高可用
 - [x] 中文 IK 分词器与 BM25 协同（影响 avgdl / length normalization）（已在 `04-搜索引擎/分析器链与中文分词/`）
-- [x] 图数据库 Neo4j / Cypher / 属性图模型（`05-图数据库/` 两批 10 demo：PropertyGraphModel / CypherParser / GraphTraversal / PageRank / Neo4jStorage + VarLengthPath / BoltProtocol / Neo4jLocks / CypherPipeline / MergeSemantics）
+- [x] 图数据库 Neo4j / Cypher / 属性图模型（`05-图数据库/` 三批 15 demo：PropertyGraphModel / CypherParser / GraphTraversal / PageRank / Neo4jStorage + VarLengthPath / BoltProtocol / Neo4jLocks / CypherPipeline / MergeSemantics + PathMatchModes / CypherNullLogic / SearchIndexes / SchemaConstraints / LouvainModularity）
+- [x] Cypher 路径匹配模式（默认关系唯一性 TRAIL / REPEATABLE ELEMENTS=WALK / ACYCLIC，七桥图 2·48·0 与路由器网 80 条 + 十项占比）— 见 [05-图数据库/PathMatchModes/](./05-图数据库/PathMatchModes/)（Python / Go）
+- [x] Cypher null 与三值逻辑（官方 9 行真值表 + AND/OR 吸收律 vs XOR 无吸收 + IN 八例 + 类型谓词对 null 恒 true + 排序 null 升序最后/降序最前）— 见 [05-图数据库/CypherNullLogic/](./05-图数据库/CypherNullLogic/)（Python / Go）
+- [x] Neo4j 搜索性能索引（Range/Text/Point/Token 四类谓词可解性 + trigram 索引 "developer" + planner 选择与 USING 提示 + 复合索引收录条件）— 见 [05-图数据库/SearchIndexes/](./05-图数据库/SearchIndexes/)（Python / Go）
+- [x] Neo4j 约束（唯一性 / 存在性 / 类型 / Key，Key = 存在性+唯一性，`LIST<STRING NOT NULL>` 与联合类型，约束名与索引共享命名空间）— 见 [05-图数据库/SchemaConstraints/](./05-图数据库/SchemaConstraints/)（Python / Go）
+- [x] Louvain 与模块度（式(1) Q 与式(2) ΔQ 增量、两阶段聚合、自环 A_ii=2s 的聚合不变性、ring of 30 cliques 30→15）— 见 [05-图数据库/LouvainModularity/](./05-图数据库/LouvainModularity/)（Python / Go）
 - [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

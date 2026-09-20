@@ -1,7 +1,8 @@
 # 图数据库
 
-> 本目录为类目拓展占位（2026-09-12 巡检自动新建），尚未产生 demo。
-> 后续轮次会在此目录下按主题生成 demo。
+> 本目录最初为类目拓展占位（2026-09-12 巡检自动新建），现已产出 **三批 15 个 demo**。
+> 第一批（属性图模型 / Cypher 解析 / 图遍历 / PageRank / 存储层）、第二批（量化路径 / Bolt / 并发控制 / 执行计划 / MERGE）、
+> **第三批（2026-09-20 16:00 槽，ID 467-471）**：路径匹配模式 / null 三值逻辑 / 搜索性能索引 / 约束 / Louvain 模块度。
 
 ## 子领域与待研究清单
 
@@ -43,6 +44,11 @@
 - [x] Neo4j 并发控制(READ_COMMITTED 丢失更新 + 实体锁管理器 + 等待图死锁检测) — 见 [Neo4jLocks/](./Neo4jLocks/)（Python / Go）
 - [x] Cypher 执行计划火山模型(算子树 open/next + Apply/Join 二元 + 惰性 vs Eager) — 见 [CypherPipeline/](./CypherPipeline/)（Python / Go）
 - [x] MERGE 语义(find-or-create 全属性精确匹配 + ON CREATE/ON MATCH + 并发排他锁+二次 MATCH) — 见 [MergeSemantics/](./MergeSemantics/)（Python / Go）
+- [x] Cypher 路径匹配模式(默认关系唯一性 TRAIL / REPEATABLE ELEMENTS=WALK / ACYCLIC；七桥图 2·48·0 与路由器网 80 条 + 十项占比) — 见 [PathMatchModes/](./PathMatchModes/)（Python 87 断言 / Go）
+- [x] Cypher null 与三值逻辑(官方 9 行真值表、AND/OR 吸收 vs XOR 无吸收、IN 八例、`IS ::` 对 null 恒 true、排序 null 位置) — 见 [CypherNullLogic/](./CypherNullLogic/)（Python 100 断言 / Go）
+- [x] 搜索性能索引(Range/Text/Point/Token 四类谓词可解性、trigram 索引、planner 选择与 USING、复合索引收录) — 见 [SearchIndexes/](./SearchIndexes/)（Python 50 断言 / Go）
+- [x] Neo4j 约束(唯一性/存在性/类型/Key，Key=存在性+唯一性，`LIST<STRING NOT NULL>` 与联合类型) — 见 [SchemaConstraints/](./SchemaConstraints/)（Python 49 断言 / Go）
+- [x] Louvain 与模块度(式(1) Q、式(2) ΔQ、两阶段聚合、自环 `A_ii=2s` 的聚合不变性、ring of 30 cliques 30→15) — 见 [LouvainModularity/](./LouvainModularity/)（Python 48 断言 / Go）
 
 ## 待研究（细化）
 
@@ -56,5 +62,13 @@
 - [x] 并发控制：隔离级别/锁/死锁检测（2026-09-15 第二批）
 - [x] 执行计划与火山模型算子树（2026-09-15 第二批）
 - [x] MERGE 语义与并发（2026-09-15 第二批）
+- [x] Cypher 路径匹配模式与 match mode（2026-09-20 第三批）
+- [x] Cypher null 与三值逻辑（2026-09-20 第三批）
+- [x] Neo4j 搜索性能索引与 planner 选择（2026-09-20 第三批）
+- [x] Neo4j 约束四类与索引支撑约束（2026-09-20 第三批）
+- [x] Louvain 社区发现（模块度优化）（2026-09-20 第三批）
 - [ ] GQL 标准概览（ISO/IEC 39075:2024）
-- [ ] Louvain 社区发现（模块度优化）
+- [ ] 全文索引与向量索引（semantic indexes）
+- [ ] 因果集群与 Raft（bookmarks 因果一致性）
+- [ ] 图算法：WCC / 标签传播 / 节点相似度
+- [ ] Graph type 与 schema 定义

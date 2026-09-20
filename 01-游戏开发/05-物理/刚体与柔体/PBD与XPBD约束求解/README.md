@@ -91,14 +91,9 @@ Algorithm 1 相对原 PBD **只多了 3 行**：初始化 `λ=0`、按式 18 算
 
 原文 3.2：GS 逐个约束投影，修改**立刻对后续可见**，"压力波能在一轮之内传遍材料，这个效果**依赖约束求解顺序**"；代价是过约束情况下顺序不稳定会振荡。
 
-实测（四粒子链，**只让第一根约束违规**）：
-
-| 求解器 | 一轮后链尾位移 |
-| --- | --- |
-| Gauss-Seidel | **-0.1**（扰动已传到链尾） |
-| Jacobi | **0**（纹丝不动，各约束只看旧值） |
-
-同时断言：同一个过约束系统换求解顺序会得到**不同**结果，但顺序固定时**可复现** —— 这正是原文"必须保持顺序不变"的工程含义。
+实测（四粒子链，**只让第一根约束违规**）：一轮后 Gauss-Seidel 的链尾位移为 **-0.1**
+（扰动已传到链尾），Jacobi 为 **0**（纹丝不动，各约束只看旧值）。同时断言：同一个过约束系统
+换求解顺序会得到**不同**结果，但顺序固定时**可复现** —— 这正是"必须保持顺序不变"的工程含义。
 
 ### 五、全局阻尼（原文 3.5）
 
@@ -171,7 +166,8 @@ def project_distance_xpbd(a, b, d, alpha_tilde, lam):
 ## 性能边界
 
 - **单轮代价**：PBD/XPBD 每约束每次投影 O(基数)；本 demo 的距离约束是常数时间。
-- **收敛速度**：GS 一轮能传遍链条（实测），Jacobi 不能 —— 长链条用 GS 划算得多，但 GS 难以并行（顺序依赖）。工程上常见做法是**图着色**把约束分成可并行的颜色组（Box2D v3 的 `B2_GRAPH_COLOR_COUNT = 24` 就是干这个的）。
+- **收敛速度**：GS 一轮能传遍链条（实测），Jacobi 不能 —— 长链条用 GS 划算得多，但 GS 顺序
+  依赖、难以并行；工程上常见做法是**图着色**分色（Box2D v3 `B2_GRAPH_COLOR_COUNT = 24`）。
 - **迭代次数 vs 子步**：XPBD 下"多次迭代"不改变有效刚度（实测），但会改善收敛；Müller 2020 的结论是**在总预算相同时，多加子步比多加迭代更划算**。
 - **过约束系统**：GS 结果依赖顺序，务必固定顺序，否则会看到莫名的抖动/振荡。
 
@@ -183,8 +179,8 @@ def project_distance_xpbd(a, b, d, alpha_tilde, lam):
 4. **每步不清零 λ** —— XPBD 的 `λ` 是**每个子步**重新开始累加的，跨步复用会让柔度失效。
 5. **用全局阻尼去压抖动** —— 它只吃"偏离刚体运动"的部分，对整体漂移无效；整体漂移要在 `velocityUpdate` 或外力层处理。
 6. **α̃ 的量纲** —— `α̃ = α/Δt²`，子步长度变了 `α̃` 跟着变，别把 α 当成"每步修正比例"来调。
-7. **2D 的 I 是标量** —— 别照抄 3D 的 `Σ m_i r̃_i r̃_iᵀ`（3×3 矩阵），2D 退化成 `Σ m_i|r_i|²`。
-8. **`w=0` 端点** —— 分母 `w1+w2` 为 0 时直接返回零修正，别做除法。
+7. **2D 的 I 是标量** —— 别照抄 3D 的 `Σ m_i r̃_i r̃_iᵀ`（3×3 矩阵），2D 退化成 `Σ m_i|r_i|²`；
+   **`w=0` 端点**分母 `w1+w2` 为 0 时直接返回零修正，别做除法。
 
 ## 参考资料
 
@@ -194,16 +190,11 @@ def project_distance_xpbd(a, b, d, alpha_tilde, lam):
   <https://matthias-research.github.io/pages/publications/posBasedDyn.pdf>
   （Algorithm 1、3.2 Gauss-Seidel、3.3 约束投影与式 1-11、3.5 全局阻尼、第 4 章布料）
 - Macklin, Müller, Chentanez (2016). *XPBD: Position-Based Simulation of Compliant Constrained Dynamics*
-  <https://matthias-research.github.io/pages/publications/XPBD.pdf>
-  （式 17/18、Algorithm 1、α=0 退化为 s_j、式 26 带阻尼扩展）
-- Müller, Macklin, Chentanez, Jeschke, Kim (2020). *Detailed Rigid Body Simulation with XPBD*
-  <https://matthias-research.github.io/pages/publications/PBDBodies.pdf>
-  （XPBD 刚体化与子步路线）
-- Müller. *Ten Minute Physics* 第 09 期 XPBD 讲义
-  <https://matthias-research.github.io/pages/tenMinutePhysics/09-xpbd.pdf>
+  <https://matthias-research.github.io/pages/publications/XPBD.pdf>（式 17/18、Algorithm 1、α=0 退化为 s_j、式 26 带阻尼扩展）
+- Müller et al. (2020). *Detailed Rigid Body Simulation with XPBD*：<https://matthias-research.github.io/pages/publications/PBDBodies.pdf>（XPBD 刚体化与子步路线）
+- Müller. *Ten Minute Physics* 第 09 期 XPBD 讲义：<https://matthias-research.github.io/pages/tenMinutePhysics/09-xpbd.pdf>
 
 ## 待研究
 
-- [ ] 小步长（Small Steps，Macklin 2019）与子步数的定量取舍
-- [ ] XPBD 的阻尼扩展（式 26 的 `γ_j = α̃_j β̃_j / Δt`）实测
+- [ ] 小步长（Small Steps，Macklin 2019）与子步数的定量取舍；XPBD 阻尼扩展（式 26 的 `γ_j = α̃_j β̃_j / Δt`）实测
 - [ ] 图着色并行（Box2D `B2_GRAPH_COLOR_COUNT`）与本 demo GS 的顺序依赖如何共存

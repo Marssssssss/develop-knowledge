@@ -123,11 +123,9 @@ s = C / Σ_j w_j|∇_{p_j}C|²        Δp_i = -s·w_i·∇_{p_i}C
 | 静止角口径 | 静长 = 初始对角距离 | 平铺布面 **φ0 = π** |
 | 数值稳健性 | 好（无 acos 端点奇点） | `acos` 在 `±1` 附近导数发散 |
 
-## 环境
+## 环境 / 运行方式
 
-- Python 3.13，仅用标准库 `math`。无第三方依赖、不联网。
-
-## 运行方式
+Python 3.13，仅用标准库 `math`，无第三方依赖、不联网。
 
 ```bash
 cd 01-游戏开发/05-物理/刚体与柔体/布料模拟
@@ -179,28 +177,24 @@ for i, g_i in grads.items():
 4. **`acos` 的端点** —— `n1·n2` 必须 clamp 到 `[-1, 1]`，否则 `NaN`；且在完全平铺/完全对折时导数发散。
 5. **地面只在 preSolve 处理** —— 约束求解会把点重新拽到地面以下（实测 -5.6e-5）。
 6. **静止二面角是 π 不是 0** —— 取决于公式里两个叉积的取向，改公式就要改 φ0。
-7. **只测顶点不够** —— 原文提醒：小刚体会穿过大三角形，刚体的**凸角**也要反过来对三角形测试。
-8. **自碰撞的法线方向** —— 顶点从哪一侧进入要用对应朝向的法线（原文式 12 与式 13 是两种写法）。
-9. **纯约束求解不该移动质心** —— 内部约束必须动量守恒；本 demo 断言平铺布求解后质心漂移 < 1e-9。
+7. **只测顶点不够** —— 原文提醒：小刚体会穿过大三角形，刚体的**凸角**也要反过来对三角形测试；
+   自碰撞的顶点从哪一侧进入要用**对应朝向**的法线（原文式 12 与式 13 是两种写法）。
+8. **纯约束求解不该移动质心** —— 内部约束必须动量守恒；本 demo 断言平铺布求解后质心漂移 < 1e-9。
 
 ## 参考资料
 
 （以下均为本轮**实读**并落盘核对的原文）
 
-- Matthias Müller, *Ten Minute Physics* 第 14 期 —— *The secret of cloth simulation*
-  - 交互演示与完整 JS 源码：<https://matthias-research.github.io/pages/tenMinutePhysics/14-cloth.html>
-    （`class Cloth` 的构造、`findTriNeighbors()`、`solveStretching/solveBending`、
-    `preSolve/solve/postSolve`、默认 `bendingCompliance = 1.0` 与 `stretchingCompliance = 0.0`）
-  - 讲义 PDF：<https://matthias-research.github.io/pages/tenMinutePhysics/14-cloth.pdf>
-- Müller, Heidelberger, Hennix, Ratcliff (2006). *Position Based Dynamics*，第 4 章 Cloth Simulation
-  <https://matthias-research.github.io/pages/publications/posBasedDyn.pdf>
-  （顶点质量规则、拉伸约束、二面角弯曲约束、自碰撞、刚体双向作用、气球压力约束）
-- Macklin, Müller, Chentanez (2016). *XPBD*（式 17/18，与本 demo 的简化版对照）
-  <https://matthias-research.github.io/pages/publications/XPBD.pdf>
+- Matthias Müller, *Ten Minute Physics* 第 14 期 —— *The secret of cloth simulation*：
+  交互演示与完整 JS 源码 <https://matthias-research.github.io/pages/tenMinutePhysics/14-cloth.html>
+  （`class Cloth` 构造、`findTriNeighbors()`、`preSolve/solve/postSolve`、默认
+  `bendingCompliance = 1.0` 与 `stretchingCompliance = 0.0`）；讲义 PDF `.../14-cloth.pdf`
+- Müller et al. (2006). *Position Based Dynamics*，第 4 章 Cloth Simulation：<https://matthias-research.github.io/pages/publications/posBasedDyn.pdf>
+  （顶点质量规则、拉伸约束、二面角弯曲、自碰撞、刚体双向作用、气球压力约束）
+- Macklin, Müller, Chentanez (2016). *XPBD*（式 17/18，与本 demo 的简化版对照）：<https://matthias-research.github.io/pages/publications/XPBD.pdf>
 
 ## 待研究
 
 - [ ] 自碰撞：空间哈希 + 顶点-三角形约束 `C = (q-p1)·n - h`（原文 §4.3）
-- [ ] 刚体与布的双向作用：`m_i·Δp_i/dt` 的冲量回传（原文 §4.2）
-- [ ] 长程约束（Long Range Attachments, Kim 2012）解决不可伸长布的过度拉伸
+- [ ] 刚体与布的双向作用 `m_i·Δp_i/dt` 冲量回传（原文 §4.2）；长程约束（Kim 2012）解决过度拉伸
 - [ ] 二面角弯曲的解析梯度（原文附录 A）替换本 demo 的数值差分

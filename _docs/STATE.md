@@ -53,7 +53,7 @@
 ```
 top_pos        : 2         # 下轮取循环[2]=03-系统编程
 sub_pos        : 01:5 02:2 03:1 04:1 05:6 06:5 07:0 08:2 09:1 10:2 11:2  # 本轮消费 sub_pos[02]=1 → 索引 9
-last_run       : 2026-09-21 04:02  # 04:00 槽占位锁(开局 04:00:35)
+last_run       : 2026-09-21 04:52  # 04:00 槽收尾(开局 04:00:35)
 last_top       : 02-Web开发  # 本轮消费循环[1] → 索引 9 后端
 skipped        : []
 failed_attempts: []
@@ -63,7 +63,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-21 04:49 | 9 | 02-Web开发/后端第二批:优雅关闭与排空·中间件责任链·HTTP缓存与条件请求·HTTP2帧与HPACK·JWT与JWS | S3 | +5 | 501 | Go server.go+k8s+Express/Django 中间件+RFC9111/9110/9113/7541/7519/7515;Py 207 断言 | pending |
+| 2026-09-21 04:52 | 9 | 02-Web开发/后端第二批:优雅关闭与排空·中间件责任链·HTTP缓存与条件请求·HTTP2帧与HPACK·JWT与JWS | S3 | +5 | 501 | Go server.go+k8s+Express/Django 中间件+RFC9111/9110/9113/7541/7519/7515;Py 207 断言 | notify: ok |
 | 2026-09-21 02:54 | 4 | 01-游戏开发/物理第一批:SAT与EPA·BroadPhase·PBD与XPBD·布料模拟·接触与冲量求解 | S3 | +5 | 496 | Box2D v3 九份源码+dyn4j+pbrt+Müller2006/XPBD/PBDBodies+TenMinutePhysics14;Py 383 | notify: ok |
 | 2026-09-21 00:45 | 38 | 11-性能分析/应用级剖析第二批:pprof图过滤·Go执行追踪器·py-spy·JFR与async-profiler·b.Loop | S2+S3 | +5 | 491 | pprof 5 份源码+Go trace 2 篇+py-spy+async-profiler 3 篇+JEP328/349+benchmark.go;Py 152 | notify: ok |
 | 2026-09-20 22:40 | 36 | 10-逆向工程/移动端逆向第二批:DEX格式·Dalvik编码·FridaStalker·iOS砸壳·反调试与越狱对抗 | S1+S2+S3 | +5 | 486 | AOSP dex 三篇+frida+gumevent.h+xnu loader.h+MASTG 四篇;Py 606 | notify: ok |

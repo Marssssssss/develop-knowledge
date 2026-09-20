@@ -47,10 +47,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 7         # 下轮取循环[7]=08-安全(本轮已消费循环[6]=07-数据存储)
-sub_pos        : 01:4 02:1 03:1 04:1 05:6 06:5 07:0 08:1 09:0 10:1 11:1  # 消费 sub_pos[07]=4 → 索引 45 图数据库 → 0(5 条目)
-last_run       : 2026-09-20 18:03  # 18:00 槽开局占位锁(开局 18:00:55;上轮 16:50 距 70 分钟)
-last_top       : 07-数据存储  # 上轮消费循环[6],索引 45 图数据库;本轮消费循环[7]=08-安全,sub_pos[08]=1 → 索引 32 Web安全
+top_pos        : 8         # 下轮取循环[8]=09-语言学习(本轮已消费循环[7]=08-安全)
+sub_pos        : 01:4 02:1 03:1 04:1 05:6 06:5 07:0 08:2 09:0 10:1 11:1  # 消费 sub_pos[08]=1 → 索引 32 Web安全 → 2(4 条目)
+last_run       : 2026-09-20 18:00  # 18:00 槽收尾(开局 18:00:55;上轮 16:50 距 70 分钟)
+last_top       : 08-安全  # 本轮消费循环[7],sub_pos[08]=1 → 索引 32 Web安全
 skipped        : []
 failed_attempts: []
 ```
@@ -59,11 +59,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-20 18:00 | 32 | 08-安全/Web安全第三批:DPoP发送方约束·TrustedTypes·strict-dynamic与报告·SRI与Integrity-Policy·COOP-COEP-CORP | S1+S3 | +5 | 476 | RFC9449/8705+TT+CSP3+SRI+COEP+HTML7.1.3 直抓;Py 230 断言 | notify: ok |
 | 2026-09-20 16:50 | 45 | 07-数据存储/图数据库第三批:路径匹配模式·null三值逻辑·搜索性能索引·约束·Louvain模块度 | S3 | +5 | 471 | neo4j.com 14 页+arXiv 0803.0476 论文 12 页 urllib 直抓;Py 334 断言 | notify: ok |
 | 2026-09-20 14:46 | 41 | 06-DevOps/IaC第四批:重构块与状态搬迁·lifecycle与图变换·插件协议与发现·Ansible集合·unknown传播 | S3 | +5 | 466 | HashiCorp/Ansible 11 篇+objchange.go+go-plugin 源码直抓;Py 162 断言 | notify: ok |
 | 2026-09-20 12:48 | 40 | 05-AI与机器学习/语音与多模态首批:CTC损失与解码·logMel频谱图·Whisper解码回退·CLIP对比损失·Wav2Vec2量化 | S3 | +5 | 461 | CTC+arXiv×2+whisper/CLIP/fairseq/librosa 直抓;Py 213 断言 | notify: ok |
 | 2026-09-20 10:45 | 16 | 04-移动开发/iOS首批:Swift6严格并发·SwiftUI布局协议·Combine背压·ImageIO下采样·NotificationCenter | S1+S3 | +5 | 456 | SE-0414/0302/0412+18 份 Apple DocC 直抓;Py 157 断言 | notify: ok |
-| 2026-09-20 08:52 | 12 | 03-系统编程/网络编程第四批:非阻塞EAGAIN·TCP零窗口·HTTP2与HPACK·io_uring·Unix凭证 | S1+S3 | +5 | 451 | RFC9293/7323/9113/7541+9 份 man7 直抓;Py 210 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

@@ -156,22 +156,20 @@ go run ctc.go selfcheck_ctc.go
 `ctc.py`：
 
 ```python
-def forward_log(log_y, ext, prune=False):
-    ...
-    for t in range(1, T):
+for t in range(1, T):
+    for s in range(S):
+        terms = [prev[s]]
+        if s - 1 >= 0:
+            terms.append(prev[s - 1])
+        # l'_s = b 或 l'_{s-2} = l'_s 时不引入 s-2 项
+        if not (ext[s] == BLANK or (s >= 2 and ext[s - 2] == ext[s])):
+            if s - 2 >= 0:
+                terms.append(prev[s - 2])
+        cur[s] = logsumexp(terms) + log_y[t][ext[s]]
+    if prune:                      # 论文 §4.1 的零区必须显式置零
         for s in range(S):
-            terms = [prev[s]]
-            if s - 1 >= 0:
-                terms.append(prev[s - 1])
-            # l'_s = b 或 l'_{s-2} = l'_s 时不引入 s-2 项
-            if not (ext[s] == BLANK or (s >= 2 and ext[s - 2] == ext[s])):
-                if s - 2 >= 0:
-                    terms.append(prev[s - 2])
-            cur[s] = logsumexp(terms) + log_y[t][ext[s]]
-        if prune:                      # 论文 §4.1 的零区必须显式置零
-            for s in range(S):
-                if s + 1 < alpha_zero_bound(ext, T, t + 1):
-                    cur[s] = NEG
+            if s + 1 < alpha_zero_bound(ext, T, t + 1):
+                cur[s] = NEG
 ```
 
 `ctc.go` 的实现与之一一对应，用 `Yale.Probs[t]` 的**最后一个位置**表示 blank（`At(t, BLANK)` 做映射）。

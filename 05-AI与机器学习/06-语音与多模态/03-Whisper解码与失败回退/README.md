@@ -136,12 +136,7 @@ result.append(logprob / penalty)
 
 ### 7. 时间精度
 
-```
-input_stride   = N_FRAMES / n_audio_ctx = 3000 / 1500 = 2
-time_precision = input_stride * HOP_LENGTH / SAMPLE_RATE = 2*160/16000 = 0.02 s
-```
-
-即每个输出 token 对应 **20 ms**，与 `TOKENS_PER_SECOND = 50` 一致。
+`input_stride = N_FRAMES / n_audio_ctx = 3000/1500 = 2`，`time_precision = input_stride * HOP_LENGTH / SAMPLE_RATE = 2*160/16000 = 0.02 s`，即每个输出 token 对应 **20 ms**，与 `TOKENS_PER_SECOND = 50` 一致。
 
 ## 对比：贪心 / beam / best-of-N
 

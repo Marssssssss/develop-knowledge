@@ -21,6 +21,8 @@
 
 - [x] Ghidra 反编译器原理与脚本化分析 → 258 Ghidra反编译流水线（15 阶段/Heritage）+ 259 Ghidra-headless自动化 + 261 Ghidra脚本化批量重命名
 - [x] Frida hook 原理（QuickJS 注入 + 双向通信通道）→ 312 Frida-Java层hook + 313 Frida-Interceptor-native-hook + 316 Objection与Frida（02-移动端逆向）
+- [x] DEX/Dalvik 指令与 Stalker 跟踪 → 482 DEX文件格式解析 + 483 smali与Dalvik指令编码 + 484 FridaStalker指令级跟踪（02-移动端逆向）
+- [x] iOS 砸壳与移动端反调试对抗 → 485 iOS砸壳与加密镜像 + 486 反调试与越狱检测对抗（02-移动端逆向）
 - [x] ELF 与 PE 文件格式对比 → 087 ELF文件解析 / 088 PE文件解析（对比表见 165 Mach-O README §对比）
 - [x] ARM64 指令集速览 → 257 ARM64指令集与调用约定（01-二进制逆向）
 - [x] Mach-O 文件格式（macOS 侧）→ 165 Mach-O文件解析
@@ -73,3 +75,10 @@
 - [APK signature scheme v2 / v3 — AOSP 官方中国镜像（314）](https://source.android.google.cn/docs/security/features/apksigning/v2)
 - [MASTG-TECH-0012: Bypassing Certificate Pinning — OWASP MAS（315）](https://mas.owasp.org/MASTG/techniques/android/MASTG-TECH-0012)
 - [objection 官方 README / Wiki / pinning.ts 源码（315/316）](https://github.com/sensepost/objection)
+- [Dalvik 可执行文件格式 / 字节码 / 指令格式 — AOSP 官方中国镜像（482/483）](https://source.android.google.cn/docs/core/dalvik/dex-format)
+- [Frida JavaScript API — Stalker 一节（484）](https://frida.re/docs/javascript-api/)
+- [frida-gum 源码 gum/gumevent.h — GumEventType 与六个事件结构体（484）](https://github.com/frida/frida-gum/blob/main/gum/gumevent.h)
+- [xnu 源码 EXTERNAL_HEADERS/mach-o/loader.h — encryption_info_command_64 与 MH_* 常量（485）](https://github.com/apple-oss-distributions/xnu/blob/main/EXTERNAL_HEADERS/mach-o/loader.h)
+- [MASTG-TEST-0046 Android 反调试检测与绕过（486）](https://mas.owasp.org/MASTG/tests/android/MASVS-RESILIENCE/MASTG-TEST-0046/)
+- [MASTG-TEST-0354 Runtime Use of Hook Detection Techniques（486）](https://mas.owasp.org/MASTG/tests/ios/MASVS-RESILIENCE/MASTG-TEST-0354/)
+- [MASTG-TEST-0240 / 0241 越狱检测的静态与运行时形态（486）](https://mas.owasp.org/MASTG/tests/ios/MASVS-RESILIENCE/MASTG-TEST-0240/)

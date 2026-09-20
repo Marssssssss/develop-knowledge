@@ -19,6 +19,11 @@
 | [APK签名校验/](./APK签名校验/) | v1 JAR 保护链、v2 Signing Block/分块摘要/EOCD 口径、防回滚、v3 PoR 密钥轮换 |
 | [SSLPinning绕过/](./SSLPinning绕过/) | 三层 pinning、objection pinning.ts 五条 hook 路径、静态/动态绕过、frida-multiple-unpinning |
 | [Objection与Frida/](./Objection与Frida/) | 分层架构、gadget vs usb 模式、REPL 命令分发、job 模型、patchapk 重签 |
+| [DEX文件格式解析/](./DEX文件格式解析/) | header_item 落位、uleb128/sleb128/uleb128p1 官方四行示例、MUTF-8 与 utf16_size、checksum 覆盖 signature、method_idx_diff 差分、code_item padding |
+| [smali与Dalvik指令编码/](./smali与Dalvik指令编码/) | 格式 ID 命名规则、类型代码字母表、35c 的 G 位、3rc 的 NNNN=CCCC+AA-1、三个 payload 的单元数公式 |
+| [FridaStalker指令级跟踪/](./FridaStalker指令级跟踪/) | GumEvent 结构体大小与事件位掩码、transform 迭代器与 keep() 语义、exclude / trustThreshold / 队列 / call probe |
+| [iOS砸壳与加密镜像/](./iOS砸壳与加密镜像/) | LC_ENCRYPTION_INFO(_64) 三字段、cryptoff 到 vmaddr 的段内换算、整页 dump、patch cryptid、MH_DYLIB_IN_CACHE |
+| [反调试与越狱检测对抗/](./反调试与越狱检测对抗/) | java/native/syscall 三层检测、any/all/threshold 组合、patch vs 改环境、同根因非独立信号 |
 
 ## 待研究
 
@@ -27,9 +32,15 @@
 - [x] APK 签名校验机制（v1/v2/v3）→ 314 APK签名校验
 - [x] SSL Pinning 绕过原理 → 315 SSLPinning绕过
 - [x] Frida 与 Objection 的关系与用法 → 316 Objection与Frida
-- [ ] iOS 砸壳与 class-dump（dyld 共享缓存、脱壳原理）
-- [ ] Frida Stalker 指令级跟踪（与 Interceptor 的边界）
-- [ ] smali 语义与 jadx/apktool 输出对照
+- [x] DEX 文件格式与 LEB128 / MUTF-8 → 482 DEX文件格式解析
+- [x] smali 与 Dalvik 指令编码 → 483 smali与Dalvik指令编码
+- [x] Frida Stalker 指令级跟踪（与 Interceptor 的边界）→ 484 FridaStalker指令级跟踪
+- [x] iOS 砸壳原理（加密段、cryptid、dyld 共享缓存）→ 485 iOS砸壳与加密镜像
+- [x] 反调试 / Root / 越狱检测与其绕过 → 486 反调试与越狱检测对抗
+- [ ] iOS class-dump 与 Objective-C 运行时结构还原
+- [ ] jadx / apktool 输出与 smali 的对照（反编译器偏差）
+- [ ] native 层 JNI 与 RegisterNatives 动态注册还原
+- [ ] Android 加固壳（加壳/脱壳、DexClassLoader 抽离）
 
 ## 参考资料（已读）
 

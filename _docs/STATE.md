@@ -42,7 +42,7 @@
 56    02-Web开发: 流量治理与限流(RateLimit 头部/GCRA)
 ```
 
-> 39-56 为类目自动拓展新增(S2);新子类目顺延 57 起。条目数 8/5/4/4/9/8/5/4/4/3/3 = 57(02-Web开发 因新增 56 由 4 变 5)。
+> 39-56 为类目自动拓展新增(S2),新子类目顺延 57 起;条目数 8/5/4/4/9/8/5/4/4/3/3 = 57。
 
 ## 二、本轮状态
 
@@ -63,12 +63,12 @@ failed_attempts: []
 | 2026-09-20 08:52 | 12 | 03-系统编程/网络编程第四批:非阻塞EAGAIN·TCP零窗口与窗口扩大·HTTP2与HPACK·io_uring·Unix凭证 | S1+S3 | +5 | 451 | RFC9293/7323/9113/7541+9 份 man7 直抓;Py 210 断言 | notify: ok |
 | 2026-09-20 06:46 | 8 | 02-Web开发/前端框架第三批:Svelte runes·RSC Flight·渲染管线·WebComponents·ESM实时绑定 | S3 | +5 | 446 | Svelte runes+ReactFlightClient+MDN+WHATWG+ECMA262 直抓;Py 141 断言 | notify: ok |
 | 2026-09-20 04:38 | 3 | 01-游戏开发/游戏引擎首批:Archetype存储·固定时间步·JobSystem与Burst·Nanite·Godot节点生命周期 | S3 | +5 | 441 | Unity 13 页+Nanite PDF 155 页+Godot+Gaffer;Py 133 断言 | notify: ok |
-| 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC·RPS/RFS/XPS与中断亲和·OffWake归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg 三篇+内核 scaling/ringbuf;Py 163 断言 | notify: ok |
+| 2026-09-20 02:55 | 37 | 11-性能分析/系统级剖析第四批:%CPU口径与IPC·RPS/RFS/XPS·OffWake归因·差分火焰图·BPF ringbuf | S1+S3 | +5 | 436 | Gregg 三篇+内核 ringbuf;Py 163 断言 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 
 ## 四、rotate 与查找
 
-- rotate(副任务,不耗主配额):completed.md > 100 行 / schedule.md > 30 行 → 截到最近 100/30,丢弃部分查 `git log -p _docs/archive/`;本文件只动 §三,archive append 即可
+- rotate(副任务,不耗主配额):completed.md > 100 行 / schedule.md > 30 行 → 截到最近 100/30,丢弃部分查 `git log -p _docs/archive/`
 - 某 demo 是否做过 → Grep `completed.md`;上轮资料/坑 → Grep `schedule.md`;总数 → 数 completed.md 行数
 - 每轮只动 §三且每行 ≤120 字,超 5 KB 时同步压缩旧行;大改同步 `OPTIMIZATION.md §2.4`。

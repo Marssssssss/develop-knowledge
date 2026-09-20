@@ -5,10 +5,11 @@
 """
 
 from main import (StoredResponse, build_validation_request, calculate_age,
-                  evaluate_preconditions, freshen, freshness_lifetime,
+                  freshen, freshness_lifetime,
                   heuristic_lifetime, http_date, may_serve_stale,
                   parse_cache_control, response_is_fresh, select_stored,
-                  unmodified_since, vary_matches)
+                  vary_matches)
+from precond import evaluate_preconditions
 
 PASS = [0]
 

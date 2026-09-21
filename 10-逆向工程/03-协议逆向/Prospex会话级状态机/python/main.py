@@ -6,179 +6,27 @@
          |                                            |
          +--> 会话 = 消息类型序列 --> APTA --> 前置条件标注 --> Exbar 最小化
 
-本文件只做「可判定的那部分」：相似度/聚类/APTA/标注/状态合并。执行轨迹本身
-（污点分析、系统调用跟踪）不在这里，而是以特征集合的形式喂进来。
+本文件只做「可判定的那部分」：APTA / 前置条件 / 标注 / 状态合并；
+特征与聚类在 features.py。执行轨迹本身（污点分析、系统调用跟踪）不在这里，
+而是以特征集合的形式喂进来。
 
 运行：python main.py
 """
 
 from __future__ import annotations
 
-import itertools
-
-# ---------------------------------------------------------------- 特征与距离
-
-# 三组特征（论文 §2.2）：message / execution / file-system。
-# 论文规定：每组总权重 1/3，组内特征等权。
-FEATURE_GROUPS = (
-    ("direction", "keywords"),   # message 组
-    ("funcs", "syscalls"),       # execution 组
-    ("fileops",),                # file-system 组
+from features import (
+    FEATURE_GROUPS,
+    feature_weights,
+    WEIGHTS,
+    jaccard,
+    similarity,
+    distance,
+    Message,
+    pam,
+    dunn_index,
+    choose_k,
 )
-
-
-def feature_weights():
-    """每组 1/3，组内等权。"""
-    w = {}
-    for group in FEATURE_GROUPS:
-        for name in group:
-            w[name] = 1.0 / (3 * len(group))
-    return w
-
-
-WEIGHTS = feature_weights()
-
-
-def jaccard(a, b):
-    """Jaccard 指数。两边都空时定义为 1（完全相似），否则 0/0 无定义。"""
-    if not a and not b:
-        return 1.0
-    u = a | b
-    if not u:
-        return 1.0
-    return len(a & b) / len(u)
-
-
-def _eq(a, b):
-    return 1.0 if a == b else 0.0
-
-
-def similarity(a, b):
-    """s_i(a,b) 逐特征相似度。direction 只有相等/不等两种，其余走 Jaccard。"""
-    return {
-        "direction": _eq(a.direction, b.direction),
-        "keywords": jaccard(a.keywords, b.keywords),
-        "funcs": jaccard(a.funcs, b.funcs),
-        "syscalls": jaccard(a.syscalls, b.syscalls),
-        "fileops": jaccard(a.fileops, b.fileops),
-    }
-
-
-def distance(a, b):
-    """d(a,b) = 1 - sum_i w_i * s_i(a,b)（论文 §2.2.2 式）。"""
-    s = similarity(a, b)
-    return 1.0 - sum(WEIGHTS[k] * v for k, v in s.items())
-
-
-class Message:
-    """一条被监控到的协议消息。"""
-
-    def __init__(self, mid, direction, keywords=(), funcs=(), syscalls=(),
-                 fileops=()):
-        self.mid = mid
-        self.direction = direction
-        self.keywords = frozenset(keywords)
-        self.funcs = frozenset(funcs)
-        self.syscalls = frozenset(syscalls)
-        self.fileops = frozenset(fileops)
-
-    def __repr__(self):
-        return "Message(%s)" % self.mid
-
-
-# ---------------------------------------------------------------- PAM 聚类
-
-def _cost(medoids, points, dist):
-    return sum(min(dist(p, m) for m in medoids) for p in points)
-
-
-def _assign(medoids, points, dist):
-    clusters = [[] for _ in medoids]
-    for p in points:
-        best = min(range(len(medoids)), key=lambda i: dist(p, medoids[i]))
-        clusters[best].append(p)
-    return clusters
-
-
-def pam(points, k, dist, iters=40, seed=0):
-    """Partitioning Around Medoids：先贪心选初始代表点，再 swap 到局部最优。"""
-    n = len(points)
-    if k >= n:
-        return [[p] for p in points], [p for p in points]
-    # BUILD：首个取离全局质心最近的点，之后取「能最大降低代价」的点
-    chosen = [points[0]]
-    while len(chosen) < k:
-        cand, gain = None, None
-        for p in points:
-            if p in chosen:
-                continue
-            g = _cost(chosen, points, dist) - _cost(chosen + [p], points, dist)
-            if gain is None or g > gain:
-                cand, gain = p, g
-        chosen.append(cand)
-    # SWAP
-    cur = _cost(chosen, points, dist)
-    for _ in range(iters):
-        improved = False
-        for i, m in enumerate(chosen):
-            for p in points:
-                if p in chosen:
-                    continue
-                trial = list(chosen)
-                trial[i] = p
-                c = _cost(trial, points, dist)
-                if c < cur - 1e-12:
-                    chosen, cur, improved = trial, c, True
-                    break
-            if improved:
-                break
-        if not improved:
-            break
-    return _assign(chosen, points, dist), chosen
-
-
-# ---------------------------------------------------------------- Dunn 指数
-
-def _rng_diameter(cluster, dist):
-    """基于 Relative Neighborhood Graph 的直径（论文 §2.2.2 引 [29]）。
-
-    RNG 中 (a,b) 成边当且仅当不存在 c 使 max(d(a,c), d(b,c)) < d(a,b)。
-    直径取 RNG 上的最大边权；单点/无边时为 0。
-    """
-    if len(cluster) < 2:
-        return 0.0
-    best = 0.0
-    for a, b in itertools.combinations(cluster, 2):
-        dab = dist(a, b)
-        if all(max(dist(a, c), dist(b, c)) >= dab for c in cluster
-               if c is not a and c is not b):
-            best = max(best, dab)
-    return best
-
-
-def dunn_index(clusters, dist):
-    """D(k) = min_{i≠j} δ(Ci,Cj) / max_i Δ(Ci)，δ 取 single-linkage。"""
-    nonempty = [c for c in clusters if c]
-    if len(nonempty) < 2:
-        return 0.0
-    sep = min(dist(a, b) for ci, cj in itertools.combinations(nonempty, 2)
-              for a in ci for b in cj)
-    dia = max(_rng_diameter(c, dist) for c in nonempty)
-    if dia == 0.0:
-        return float("inf") if sep > 0 else 0.0
-    return sep / dia
-
-
-def choose_k(points, dist, kmax):
-    """枚举 k = 2..kmax，取 Dunn 指数最大的那个。"""
-    best_k, best_v = 1, -1.0
-    for k in range(2, min(kmax, len(points)) + 1):
-        clusters, _ = pam(points, k, dist)
-        v = dunn_index(clusters, dist)
-        if v > best_v:
-            best_k, best_v = k, v
-    return best_k
-
 
 # ---------------------------------------------------------------- APTA
 
@@ -306,146 +154,9 @@ def label_states(tree, prereq, ends):
 
 # ---------------------------------------------------------------- 状态合并
 
-def is_consistent(block_of, tree, syms):
-    """划分是否可合并：同块内的两个状态不能把同一个符号指向不同块。
-
-    这是 Exbar 意义下的「与 APTA 一致」——未定义的转移不构成冲突（合并后的
-    状态只是保留那些被定义过的转移），只有**都被定义且落在不同块**才算冲突。
-    """
-    for a in syms:
-        seen = {}
-        for s, b in block_of.items():
-            nxt = tree.step(s, a)
-            if nxt is None:
-                continue
-            prev = seen.setdefault(b, block_of[nxt])
-            if prev != block_of[nxt]:
-                return False
-    return True
-
-
-def label_realizable(tree, labels, block_of):
-    """「label 里允许的类型都必须真的存在转移」——比 is_consistent 更强的要求。
-
-    这条**对训练集里没出现过的行为是永远满足不了的**：例如 Agobot 示例中
-    `login` 之后的 label 含 `login`（前置条件推导允许二次登录），但两个会话里
-    从未出现过连续的 `login`，于是任何划分下该块都没有 `login` 转移。
-    这正是论文自述的局限「trace-based 方法学不到训练集中不存在的 behavior」。
-    """
-    for b in set(block_of.values()):
-        members = [s for s in tree.states() if block_of[s] == b]
-        lab = labels[members[0]]
-        for m in tree.types():
-            if m in lab and not any(tree.step(s, m) is not None
-                                    for s in members):
-                return False
-    return True
-
-
-def _rgs(n, max_blocks):
-    """受限增长串：枚举 n 个元素、块数 < max_blocks 的全部集合划分。"""
-    if n == 0:
-        yield ()
-        return
-    code = [0] * n
-    while True:
-        yield tuple(code)
-        i = n - 1
-        while i >= 1:
-            lim = 1 + max(code[:i])
-            if code[i] + 1 <= lim and code[i] + 1 < max_blocks:
-                code[i] += 1
-                for j in range(i + 1, n):
-                    code[j] = 0
-                break
-            i -= 1
-        if i < 1:
-            return
-
-
-def merge_states(tree, labels, exhaustive_n=11, exhaustive_m=4):
-    """Exbar 的最小一致 DFA：label 不同绝不合块，label 相同则尽量合。
-
-    状态数少时按块数 m 由小到大**穷举**全部划分，返回可判定的最小机器；
-    状态多时退回贪心两两合并（可能不是最小）。返回 (block_of, blocks)。
-    """
-    states = tree.states()
-    syms = tree.types()
-
-    def block_of_from(blocks):
-        return {s: k for k, members in blocks.items() for s in members}
-
-    if len(states) <= exhaustive_n:
-        for m in range(1, exhaustive_m + 1):
-            for code in _rgs(len(states), m + 1):
-                if 1 + max(code) != m:
-                    continue
-                bo = {states[i]: code[i] for i in range(len(states))}
-                same_label = all(
-                    len({labels[s] for s in states if bo[s] == b}) == 1
-                    for b in set(code))
-                if not same_label:
-                    continue
-                if is_consistent(bo, tree, syms):
-                    blocks = {}
-                    for s in states:
-                        blocks.setdefault(bo[s], []).append(s)
-                    return bo, blocks
-
-    blocks = {i: [s] for i, s in enumerate(states)}
-    changed = True
-    while changed:
-        changed = False
-        keys = list(blocks)
-        for i in range(len(keys)):
-            for j in range(i + 1, len(keys)):
-                a, b = keys[i], keys[j]
-                if labels[blocks[a][0]] != labels[blocks[b][0]]:
-                    continue
-                trial = {k: v for k, v in blocks.items()}
-                trial[a] = trial[a] + trial[b]
-                del trial[b]
-                if is_consistent(block_of_from(trial), tree, syms):
-                    blocks = trial
-                    changed = True
-                    break
-            if changed:
-                break
-    return block_of_from(blocks), blocks
-
-
-class DFA:
-    """合并后的协议状态机；未定义的转移一律落到 reject（-1）。"""
-
-    def __init__(self, tree, block_of, labels):
-        self.syms = tree.types()
-        self.block_of = block_of
-        self.labels = labels
-        self.start = block_of[()]
-        self.reject = -1
-        self.trans = {}
-        for s in tree.states():
-            q = block_of[s]
-            for a in self.syms:
-                nxt = tree.step(s, a)
-                if nxt is None:
-                    continue
-                self.trans[(q, a)] = block_of[nxt]
-
-    def run(self, seq):
-        q = self.start
-        for sym in seq:
-            q = self.trans.get((q, sym), self.reject)
-            if q == self.reject:
-                return self.reject
-        return q
-
-    def accepts(self, seq):
-        return self.run(seq) != self.reject
-
-    def n_states(self):
-        return len(set(self.block_of.values()))
-
+from merging import (  # noqa: F401
+    DFA, is_consistent, label_realizable, merge_states,
+)
 
 def infer_state_machine(sessions):
     tree = APTA(sessions)
@@ -455,6 +166,7 @@ def infer_state_machine(sessions):
     labels = label_states(tree, prereq, ends)
     block_of, blocks = merge_states(tree, labels)
     return tree, prereq, labels, DFA(tree, block_of, labels), blocks
+
 
 
 # ---------------------------------------------------------------- 演示

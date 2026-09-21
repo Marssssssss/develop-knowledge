@@ -13,8 +13,9 @@ from main import (  # noqa: F401
     AGOBOT_SESSIONS, APTA, Message, WEIGHTS, dunn_index, distance,
     end_types, feature_weights, infer_prerequisites, infer_state_machine,
     is_consistent, jaccard, label_realizable, label_states, matches, merge_states,
-    pam, similarity, _rgs,
+    pam, similarity,
 )
+from merging import _rgs  # noqa: F401
 
 PASS = [0]
 FAIL = [0]

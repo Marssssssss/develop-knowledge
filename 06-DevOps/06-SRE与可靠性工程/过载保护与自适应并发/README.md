@@ -71,15 +71,9 @@ minRTT 的 10 倍、梯度恒 > 1,控制器会把并发放大到天文数字(第
 
 ### 3. headroom 让控制器过冲后阻尼收敛
 
-实测(E10):延迟模型 `sampleRTT = 50 + max(0, limit−120) × 0.5`,从 25 起步:
-
-```text
-32.5 → 41.45 → 52.03 → 64.45 → 78.92 → 95.70 → 115.05 → 137.29
-→ 140.47(峰值) → 140.11 → 140.153 → 140.149 → …
-```
-
-峰值 140.4746 高出稳态约 0.33,然后阻尼收敛。**它不是单调爬升的** —— 断言写成
-"单调"是错的,过冲才是真实行为。
+实测(E10):延迟模型 `sampleRTT = 50 + max(0, limit−120) × 0.5`,从 25 起步的轨迹是
+`32.5 → 41.45 → … → 137.29 → 140.47(峰值) → 140.11 → 140.149 → …`。峰值高出稳态约
+0.33 后阻尼收敛。**它不是单调爬升的** —— 断言写成"单调"是错的,过冲才是真实行为。
 
 ### 4. minRTT 怎么测:踩到下限连续 5 个窗口才重算
 
@@ -125,10 +119,9 @@ jitter=50% 时只剩 5 个。
 
 ### 7. cgroup 内存压力:没配 limit 就永远是 0
 
-文档原文:
-
-> When no memory limit is set in cgroup (indicated by -1 in v1 or "max" in v2), the
-> pressure is reported as 0.
+文档原文:> "When no memory limit is set in cgroup (indicated by -1 in v1 or "max" in
+v2), the pressure is reported as 0." —— 实测(E9):`limit = None / 0 / -1` 三种写法
+都得到压力 0,基于内存的降载动作因此永远不会触发。
 
 ## 对比 / 选型
 
@@ -185,27 +178,20 @@ return (pressure - scaling_threshold) / (saturation_threshold - scaling_threshol
 ## 性能与边界
 
 - 单次更新是 O(1);迭代 400 步求稳态约 0.1 ms 级
-- `gradient` 要求 `sampleRTT > 0`,否则抛 `ValueError`
-- `scaled` 要求 `saturation > scaling`,否则抛 `ValueError`
-- `min_concurrency` 缺省 3、`minRTT` 触发需 5 个连续窗口,均为文档给出的常量
-- `jitter` 的分布文档未规定,本实现取均匀分布 —— **口径已标注**
-- `headroom` 取更新前的 limit(文档未明确新旧,已标注口径)
+- `gradient` 要求 `sampleRTT > 0`;`scaled` 要求 `saturation > scaling`,否则抛错
+- `min_concurrency` 缺省 3、minRTT 触发需 5 个连续窗口,均为文档给出的常量
+- 三处文档未明确、本 demo 自行选择的口径(buffer 量纲 / headroom 取旧值 / jitter
+  取均匀分布)已在代码注释与 `NOTES.md` §8 标注
 
 ## 注意事项与常见坑
 
-1. **buffer 是百分数不是小数**:填 10 表示 10%。按 `B = minRTT × 10` 实现会让梯度
-   恒 > 1,并发无上限增长。
-2. **稳态只在 `g < 1` 时存在**。上游延迟长期高于 `minRTT × (1 + buffer/100)` 时,
-   上限会被一路压到 `min_concurrency`,然后触发 minRTT 重算 —— 这是设计好的回环,
-   不是故障。
-3. **minRTT 测量期会有 503**:并发被钉到 `min_concurrency`(缺省 3)。务必对 503 /
-   reset 开启重试,并用 `previous_hosts` 之类的重试谓词换一个 host。
-4. **jitter 别设成 0**:否则集群里所有 host 同时进入测量窗口,同时把并发压到 3,
-   形成周期性整体掉容量。
-5. **cgroup 没配内存 limit 时压力恒为 0**,基于内存的降载动作永远不会触发。
-6. **threshold 触发器是严格大于**:压力恰好等于阈值时状态是 0。写边界测试要留意。
-7. **`headroom` 让系统过冲**:稳态附近会有约 0.3 的振荡(本例)。不要用"单调爬升"
-   做断言,也不要指望它精确停在某个值。
+1. **buffer 是百分数不是小数**:填 10 表示 10%。按 `B = minRTT × 10` 实现会让梯度恒 > 1,并发无上限增长。
+2. **稳态只在 `g < 1` 时存在**,否则上限被压到 `min_concurrency` 并触发 minRTT 重算 —— 这是设计好的回环。
+3. **minRTT 测量期会有 503**(并发被钉到缺省的 3),务必对 503 / reset 开启重试;**jitter 别设成 0**,否则整个集群同时进入测量窗口。
+4. **`headroom` 让系统过冲**:稳态附近有约 0.3 的振荡。不要用"单调爬升"做断言。
+5. **cgroup 没配内存 limit 时压力恒为 0**;**threshold 触发器是严格大于**,恰好等于阈值时状态为 0。
+
+> 完整版(含每条的现象 → 原因 → 规避)见 [`NOTES.md`](./NOTES.md)。
 
 ## 参考资料(实际阅读过的权威来源)
 

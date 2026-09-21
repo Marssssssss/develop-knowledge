@@ -1,0 +1,16 @@
+CRC-8/SMBUS          0.4s cand=2 equiv=2
+    poly=0x7 init=0x0 refin=False refout=False xorout=0x0
+    poly=0x7 init=0xfd refin=False refout=False xorout=0xfd
+    TRUTH poly=0x7 init=0x0 refin=False refout=False xorout=0x0
+CRC-8/MAXIM-DOW      0.3s cand=2 equiv=2
+    poly=0x31 init=0x0 refin=True refout=True xorout=0x0
+    poly=0x31 init=0xf7 refin=True refout=True xorout=0xf7
+    TRUTH poly=0x31 init=0x0 refin=True refout=True xorout=0x0
+CRC-8/AUTOSAR        0.8s cand=2 equiv=2
+    poly=0x2f init=0x1a refin=False refout=False xorout=0x1a
+    poly=0x2f init=0xff refin=False refout=False xorout=0xff
+    TRUTH poly=0x2f init=0xff refin=False refout=False xorout=0xff
+CRC-16/ARC           401.4s cand=2 equiv=2
+    poly=0x8005 init=0x0 refin=True refout=True xorout=0x0
+    poly=0x8005 init=0xc001 refin=True refout=True xorout=0xc001
+    TRUTH poly=0x8005 init=0x0 refin=True refout=True xorout=0x0

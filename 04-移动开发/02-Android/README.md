@@ -8,6 +8,8 @@
 | [组件生命周期/](./组件生命周期/) | Activity 启动模式 / Fragment / Service / ViewModel |
 | [UI框架/](./UI框架/) | Compose 重组 / Compose 状态 / View 体系 |
 | [网络编程/](./网络编程/) | OkHttp 拦截器链 / 连接池 / Retrofit 适配 |
+| [NDK与JNI/](./NDK与JNI/) | JNI 符号 mangling / 引用生命周期 / RegisterNatives |
+| [数据持久化/](./数据持久化/) | Room 连接池 / PRAGMA 配置 / 迁移事务 |
 
 ## 已完成 demo
 
@@ -21,6 +23,11 @@
 | 284 | `并发编程/WorkManager约束与重试/` | WorkManager 约束与重试(约束全 AND 且默认 false + 退避 30s 起步 clamp 5h + 一次执行 10 分钟窗口 + 唯一任务 KEEP/REPLACE/APPEND) | Python / Kotlin / Java |
 | 285 | `组件生命周期/Fragment生命周期与ViewModel/` | Fragment 生命周期与 ViewModel 作用域(`mState` 9 态含 `AWAITING_*` 过渡态 + 视图生命周期 vs Fragment 生命周期 + `viewLifecycleOwner` 抛错边界 + `viewModelScope` 早于 `onCleared` 取消) | Python / Kotlin |
 | 286 | `组件生命周期/Service三种形态/` | Service 三种形态(started/bound/foreground + `onStartCommand` 返回值四档重建策略 + `stopSelf(startId)` 排序语义 + 前台服务权限与 type 子集) | Python / Kotlin / Java |
+| 507 | `UI框架/ComposeNavigation类型安全路由/` | 类型安全路由与嵌套图(RouteBuilder 的 PATH/QUERY 单判据 + RouteEncoder 的 `Map<String, List<String>>` + RouteDecoder 跳过缺失元素 + startDestination 必须是直接子节点) | Python / Kotlin |
+| 508 | `NDK与JNI/JNI互调机制/` | JNI 互调机制(短名/长名 mangling 与转义表、局部引用随方法返回失效、全局与弱全局、`PushLocalFrame`、`RegisterNatives` 与 JNI 版本协商) | Python / Kotlin / C |
+| 509 | `网络编程/Retrofit动态代理与适配器/` | Retrofit 动态代理与适配器(`create()` 接口校验 + InvocationHandler 三分支 + RequestFactory 注解规则 + suspend 的 Call 改写 + `nextCallAdapter` skipPast 与 Platform 分支) | Python / Kotlin |
+| 510 | `数据持久化/Room连接池与ORM映射/` | Room 连接池与打开流程(Single/Multiple 配置、选池四路分支、500ms 退避与破坏性恢复、`journal_mode`/`synchronous` 与迁移事务、AOSP 连接池主连接与 30s 阈值) | Python / Kotlin |
+| 511 | `UI框架/Compose快照与LazyColumn复用/` | Compose 快照与 LazyColumn 复用(StateRecord 多版本链 + 碰撞写定义 + `innerApplyLocked` 三分支合并 + `PreexistingSnapshotId` 豁免 + 空集/钳位/beyondBounds + key 驱动的位置修正) | Python / Kotlin |
 
 ## 待研究
 
@@ -29,9 +36,13 @@
 - [x] WorkManager(后台任务调度 + 约束条件 + 持久化)→ demo 284
 - [x] Fragment 生命周期 + ViewModel 作用域 → demo 285
 - [x] Service 启动 / 绑定 / 前台服务 → demo 286
-- [ ] Compose Navigation(类型安全路由 + 嵌套图)
-- [ ] Android JNI / NDK(Java ↔ C++ 互调)
-- [ ] Retrofit 动态代理与 CallAdapter / Converter 解析
+- [x] Compose Navigation(类型安全路由 + 嵌套图)→ demo 507
+- [x] Android JNI / NDK(Java ↔ C++ 互调)→ demo 508
+- [x] Retrofit 动态代理与 CallAdapter / Converter 解析 → demo 509
+- [x] Room 的 ORM 与连接池 → demo 510
+- [x] Compose 快照系统与 `LazyColumn` 复用 → demo 511
 - [ ] HTTP/2 多路复用与流控
-- [ ] Room 的 ORM 与连接池
-- [ ] Compose 快照系统与 `LazyColumn` 复用
+- [ ] `GetPrimitiveArrayCritical` 的 critical section 与 pin 开销
+- [ ] DataStore 与 SharedPreferences 的事务语义对比
+- [ ] Room 编译期 DAO 校验与 `EntityUpsertAdapter`
+- [ ] WorkManager 的加急任务与进程间调度

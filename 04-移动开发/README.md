@@ -5,7 +5,7 @@
 | 子目录 | 说明 |
 | --- | --- |
 | [01-iOS/](./01-iOS/) | Swift / Objective-C / SwiftUI / UIKit(ARC、GCD、RunLoop、async-await+actor、Auto Layout、启动优化、Core Animation 渲染管线) |
-| [02-Android/](./02-Android/) | Kotlin / Java / Jetpack Compose(Handler·协程与 Flow·WorkManager、Fragment/Service 生命周期、OkHttp 网络、Compose 重组) |
+| [02-Android/](./02-Android/) | Kotlin / Java / Jetpack Compose(Handler·协程与 Flow·WorkManager、Fragment/Service 生命周期、OkHttp 与 Retrofit 网络、Compose 重组与快照、JNI、Room 连接池) |
 | [03-跨平台/](./03-跨平台/) | React Native / Flutter / Kotlin Multiplatform / Compose Multiplatform / WebView 容器 |
 | [04-推送与消息/](./04-推送与消息/) | APNs / FCM / 厂商通道(HTTP/2 请求与响应语义、aps 载荷字典与本地化、离线排队与 TTL、静默推送与后台唤醒、设备令牌生命周期、FCM v1 平台覆写) |
 
@@ -37,6 +37,11 @@
 | 284 | `02-Android/并发编程/WorkManager约束与重试/` | WorkManager:约束全部 AND 且默认 false、退避 30s 起步(下限 10s/上限 5h)与 `Result.retry()`、`doWork()` 每次实例一次且限 10 分钟、唯一任务 KEEP/REPLACE/APPEND、`Result.failure()` 阻断下游 | Python / Kotlin / Java |
 | 285 | `02-Android/组件生命周期/Fragment生命周期与ViewModel/` | Fragment 状态机与 ViewModel 作用域:`mState` 9 态(含 `AWAITING_EXIT/ENTER_EFFECTS` 过渡态)、进返回栈只 `onDestroyView` 回来重跑 `onCreateView`、`getViewLifecycleOwner()` 视图销毁后抛错、`viewModelScope` 先于 `onCleared()` 取消 | Python / Kotlin |
 | 286 | `02-Android/组件生命周期/Service三种形态/` | Service 三形态:started/bound/foreground 并存规则(已启动或有 BIND_AUTO_CREATE 连接即存活)、`onStartCommand` 返回值四档重建策略(`START_STICKY` 可能收到 null intent)、`stopSelf(startId)` 必须按序否则立即停止、`setForeground()` 已是 no-op | Python / Kotlin / Java |
+| 507 | `02-Android/UI框架/ComposeNavigation类型安全路由/` | 类型安全导航:RouteBuilder 的 PATH/QUERY 单判据(集合或可选元素走 query)、argMap 恒为 `List<String>`、RouteDecoder 跳过缺失元素、startDestination 必须是直接子节点 | Python / Kotlin |
+| 508 | `02-Android/NDK与JNI/JNI互调机制/` | JNI:短名 `Java_pkg_Cls_f` 与长名 `__ILjava_lang_String_2` 的 mangling 与转义表、局部引用随方法返回失效、全局/弱全局、`PushLocalFrame`、`RegisterNatives` 与 JNI_OnLoad 版本协商 | Python / Kotlin / C |
+| 509 | `02-Android/网络编程/Retrofit动态代理与适配器/` | Retrofit:`create()` 递归校验父接口泛型参数、InvocationHandler 三分支、RequestFactory 注解规则集、suspend 改写成 `Call<T>`、`nextCallAdapter` 的 skipPast 起点、Platform 按 `java.vm.name` 分支 | Python / Kotlin |
+| 510 | `02-Android/数据持久化/Room连接池与ORM映射/` | Room:WAL 默认 4 读 1 写、选池四路分支(含内存库强制单连接)、500ms 退避重试与 `allowDataLossOnRecovery` 删库恢复、`journal_mode=TRUNCATE` 与 `synchronous` 绑定、AOSP 连接池主连接唯一与 30s 忙阈值 | Python / Kotlin |
+| 511 | `02-Android/UI框架/Compose快照与LazyColumn复用/` | Compose:StateRecord 多版本链、`apply()` 的碰撞写定义与三分支 merge、`PreexistingSnapshotId=1` 豁免、LazyColumn 空集/钳位/beyondBounds、`withoutReadObservation` 下按 key 修正滚动锚点 | Python / Kotlin |
 | 337 | `03-跨平台/Flutter/平台通道/` | Flutter 平台通道:StandardMessageCodec 类型字节(0=null … 7=string)+ expanding 长度格式(0..253 单字节 / 254+uint16 / 255+uint32)+ double 8 字节对齐;MethodCodec 应答信封首字节 0 = 成功、**非零即错误**;EventChannel 流式与 BackgroundIsolateBinaryMessenger | Dart / Python |
 | 338 | `03-跨平台/Flutter/dart-ffi/` | dart:ffi 的 ABI 相关整数类型:`Long` / `Size` / `UintPtr` 宽度随 ABI 变化、**LLP64**(windowsX64/Arm64)指针 8 字节但 `long` 仍 4 字节、定宽 vs 仅作标记 vs 可实例化三类类型、结构体 stride 按 C ABI 对齐 | Dart / C / Python |
 | 339 | `03-跨平台/Kotlin-Multiplatform/内存模型/` | Kotlin/Native 内存模型:共享堆 + 追踪式 GC(CMS,不分代)、旧「冻结」模型在 1.9.20 完全移除、全局属性改为惰性初始化、`AtomicReference` 引用环不再泄漏、stable refs 与 `autoreleasepool` 的 ARC 集成规则 | Kotlin / Python |

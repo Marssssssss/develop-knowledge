@@ -63,7 +63,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除与合并·分级分配器对比·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc.3+tcmalloc+mimalloc types.h+zAddress.hpp+JEP333/439/379+mbind(2)+this_cpu_ops+mm.rst+uffd(2);Py 299 | notify: pending |
+| 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除与合并·分级分配器对比·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc.3+tcmalloc+mimalloc types.h+zAddress.hpp+JEP333/439/379+mbind(2)+this_cpu_ops+mm.rst+uffd(2);Py 299 | notify: ok |
 | 2026-09-22 02:00 | 10 | 02-Web开发/03-数据库:ORM工作单元·Upsert·JSONB与GIN·RLS多租户·Parquet列式 | S3 | +5 | 555 | SA源码3份+PG18四篇+SQLite+rowsecurity.c+parquet-format;Py 193 | notify: ok |
 | 2026-09-22 00:01 | 5 | 01-游戏开发/06-AI:行为树·GOAP反向规划·效用系统·JPS·层级状态机HFSM | S3 | +5 | 550 | BT.CPP+ReGoap+big-brain+JPS AAAI11+W3C SCXML;Py 210 | notify: ok |
 | 2026-09-21 18:54 | 44 | 09-语言学习/Golang第四批:定时器四叉堆·netpoll信号量·连续栈增长·UTF-8查表·方法集与选择器 | S1+S3 | +5 | 536 | runtime/time.go+netpoll.go+stack.go+proc.go+utf8.go+spec;Py 371 | notify: ok |

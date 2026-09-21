@@ -59,6 +59,11 @@
 | `01-Web安全/CSP strict-dynamic与违规报告/` | CSP3 `'strict-dynamic'` 的信任传递、parser-inserted 分水岭、sample 截断 40 字符、Strict CSP 判据 |
 | `01-Web安全/SRI与完整性策略/` | SRI 标准 base64 摘要 +「只验最强那批」+ §3.8 Integrity-Policy 的强制/report-only 判定 |
 | `01-Web安全/COOPCOEP跨源隔离/` | HTML §7.1.3 COOP 五种取值与 BCG 切换 + COEP §2.3 fail-open 表 + §3.2.1 CORP check |
+| `02-网络安全/TCP盲注入与RFC5961/` | TCP 盲重置/盲注入与 RFC 5961 缓解(RFC 5961 + Linux tcp_input.c 实读) |
+| `02-网络安全/DNS缓存投毒与RFC5452/` | DNS 伪造应答的组合难度与端口随机化增益(RFC 5452) |
+| `02-网络安全/证书透明度Merkle审计/` | CT Merkle 审计:包含性证明与 append-only 一致性证明(RFC 9162) |
+| `02-网络安全/SSH传输层与密钥交换/` | SSH 二进制包协议 + KEX 协商 + 密钥派生(RFC 4253 + RFC 8308) |
+| `02-网络安全/IPv6隐私地址与SLAAC/` | IPv6 临时地址两代生成算法与生命周期(RFC 4941 + RFC 8981) |
 
 ## 待研究
 
@@ -68,6 +73,7 @@
 - [x] OAuth 2.0 流程 ✓
 - [x] 传输层协议安全整批 ✓ (02-网络安全 两批共 10 个:SYN Cookie / XDP / IKEv2 / DNSSEC / WireGuard / QUIC / RPKI / SAE / ECH)
 - [x] 密码学深水区整批 ✓ (01-密码学 第 14-18 个:TLS1.3 密钥调度 / 国密 SM2-SM3-SM4 / BLS 聚合签名 / 后量子 ML-KEM / Groth16)
+- [x] 网络安全第三批:传输与命名基础设施 ✓ (02-网络安全 第三批 5 个:TCP 盲注入与 RFC 5961 / DNS 缓存投毒与 RFC 5452 / 证书透明度 Merkle 审计 / SSH 传输层 / IPv6 隐私地址)
 - [ ] ML-DSA 后量子签名(FIPS 204)
 - [ ] MACsec (IEEE 802.1AE)
 - [x] 供应链与制品安全 ✓ (03-应用安全与供应链 首批 5 个:污点分析精度阶梯 / 依赖可达性+SPDX / SLSA provenance 验证 / CWE-798 熵判据 / CI 加固)

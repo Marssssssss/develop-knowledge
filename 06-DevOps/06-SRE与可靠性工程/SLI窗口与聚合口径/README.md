@@ -22,8 +22,7 @@ SLO 的所有分歧几乎都能追溯到两个"看起来只是配置"的选择:*
 | extrapolatedRate | `rate`/`increase` 的共同内核:把观测到的增量外推到整个区间 |
 | rawType | `raw` 形态 SLI 的元数据,`success` 表示存的是 good/total,`failure` 表示存的是 bad/total |
 
-历史背景:SLI/SLO 由 Google SRE 体系推广;OpenSLO 是云原生社区(Nobl9 等发起)为
-"跨工具描述 SLO"提出的开放规范,Prometheus 则是事实上的指标抓取标准。
+历史背景:SLI/SLO 由 Google SRE 体系推广;OpenSLO 是云原生社区(Nobl9 等发起)为"跨工具描述 SLO"提出的开放规范,Prometheus 则是事实上的指标抓取标准。
 
 ## 原理详解
 

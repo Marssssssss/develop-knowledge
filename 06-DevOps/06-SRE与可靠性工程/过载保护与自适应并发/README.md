@@ -2,10 +2,9 @@
 
 ## 简介
 
-固定并发上限是个两难:设小了浪费容量,设大了过载时雪崩。Envoy 的
-**Adaptive Concurrency** 用一个反馈环解决:持续采样请求延迟,把实测延迟与"理想
-往返时间(minRTT)"比较,据此**动态调整**并发上限。配合 **Overload Manager** 的
-资源监视器与动作,可以在内存/连接压力升高时分级降载。
+固定并发上限是个两难:设小了浪费容量,设大了过载时雪崩。Envoy 的 **Adaptive
+Concurrency** 用反馈环解决:采样请求延迟,把实测延迟与"理想往返时间(minRTT)"比较,
+据此动态调整并发上限;配合 **Overload Manager**,可在内存/连接压力升高时分级降载。
 
 本 demo 把这两个机制的公式从 Envoy 官方文档落成可执行模型,并给出**稳态闭式**。
 
@@ -16,7 +15,7 @@
 | minRTT | 上游在**无排队**时的理想往返时间,周期性实测 |
 | gradient | `(minRTT + B) / sampleRTT`,延迟越高越小 |
 | headroom | `sqrt(limit)`,**不可配置**,驱动上限向上试探 |
-| trigger | Overload Manager 里把"资源压力"映射到"动作状态"的两段/三段函数 |
+| trigger | 把"资源压力"映射到"动作状态"的两段/三段函数 |
 
 ## 原理详解
 
@@ -88,11 +87,9 @@ minRTT 的 10 倍、梯度恒 > 1,控制器会把并发放大到天文数字(第
 实测(E6):连着 5 个窗口 `limit = 3` 才触发一次重算并清零;中间出现一次 10 会打断
 连击重新计数。
 
-副作用:**测量期间并发被压到 3,会有明显 503**。文档承认这点并建议开启重试:
-
-> It is possible that there is a noticeable increase in request 503s during the minRTT
-> measurement window because of the potentially significant drop in the concurrency
-> limit. This is expected and it is recommended to enable retries for resets/503s.
+副作用:**测量期间并发被压到 3,会有明显 503**。文档原文:> "It is possible that there
+is a noticeable increase in request 503s during the minRTT measurement window ... it is
+recommended to enable retries for resets/503s."
 
 ### 5. jitter 防止整个集群同时进入测量窗口
 
@@ -128,8 +125,7 @@ v2), the pressure is reported as 0." —— 实测(E9):`limit = None / 0 / -1` �
 | | 固定并发上限 | 自适应并发 | Overload Manager |
 | --- | --- | --- | --- |
 | 依据 | 压测拍板 | 实测延迟 vs minRTT | 进程内资源压力(内存/连接) |
-| 粒度 | 一个常数 | 每 `concurrency_update_interval` 调整 | 每资源监视器周期 |
-| 代价 | 容量浪费或雪崩 | 测量期有 503、需重试 | 需要正确配置 limit |
+| 代价 | 容量浪费或雪崩 | 测量期有 503、需重试 | 没配 limit 就永不触发 |
 | 适合 | 上游容量已知且稳定 | 上游容量未知/波动 | 本机资源快撑不住时降载 |
 
 ## 环境准备

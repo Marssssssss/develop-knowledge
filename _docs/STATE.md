@@ -63,11 +63,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-21 11:14 | 48 | 05-AI与机器学习/特征工程与降维第二批:稳定性·幂变换·分箱与样条·稀疏降维·时序因果 | S1 | +5 | 516 | Nogueira JMLR+Meinshausen+scipy morestats+sklearn+pandas rolling;Py 776 | notify: ok |
-| 2026-09-21 09:03 | 17 | 04-移动开发/Android第二批:类型安全路由·JNI互调·Retrofit代理·Room连接池·Compose快照 | S1+S2 | +5 | 511 | androidx navigation/compose/room3+AOSP SQLiteConnectionPool+retrofit+JNI 规范;Py 245 | notify: ok |
+| 2026-09-21 11:14 | 48 | 05-AI/特征工程与降维第二批:稳定性·幂变换·分箱与样条·稀疏降维·时序因果 | S1 | +5 | 516 | Nogueira JMLR+Meinshausen+scipy/sklearn/pandas;Py 776 | notify: ok |
+| 2026-09-21 09:03 | 17 | 04-移动开发/Android第二批:类型安全路由·JNI·Retrofit·Room连接池·Compose快照 | S1+S2 | +5 | 511 | androidx navigation/compose/room3+AOSP+retrofit+JNI 规范;Py 245 | notify: ok |
 | 2026-09-21 06:50 | 13 | 03-系统编程/进程线程协程第二批:futex·自旋锁与信号量·内存序·GoGMP·C++20协程 | S3 | +5 | 506 | futex(2)+futex.h+waitwake.c+POSIX spin/sem+cppreference+n1570+runtime2.go;Py 236 | notify: ok |
-| 2026-09-21 16:52 | 33 | 08-安全/02-网络安全第三批:TCP盲注入与RFC5961·DNS缓存投毒与RFC5452·证书透明度Merkle审计·SSH传输层·IPv6隐私地址 | S3 | +5 | 531 | RFC5961/5452/9162/6962/4253/8308/4941/8981/4861/4862+Linux tcp_input.c 与 sysctl_net_ipv4.c;Py 1253 | notify: pending |
-| 2026-09-21 14:48 | 27 | 07-数据存储/01-关系型第四批:分片与路由键空间·EXPLAIN ANALYZE 读数·并行查询 worker 数·autovacuum 与 XID 回绕·声明式分区与裁剪 | S3 | +5 | 526 | PG18 官方文档 6 篇+官方源码 5 份+Vitess 文档/源码+Citus/TiDB;Py 244 | notify: ok |
+| 2026-09-21 16:52 | 33 | 08-安全/02-网络安全第三批:TCP盲注入·DNS缓存投毒·证书透明度·SSH传输层·IPv6隐私地址 | S3 | +5 | 531 | RFC5961/5452/9162/4253/8308/4941/8981+Linux tcp_input.c;Py 1253 | notify: pending |
+| 2026-09-21 14:48 | 27 | 07-数据存储/01-关系型第四批:分片与键空间·EXPLAIN 读数·并行 worker·autovacuum 与 XID 回绕·分区裁剪 | S3 | +5 | 526 | PG18 文档 6 篇+源码 5 份+Vitess+Citus/TiDB;Py 244 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

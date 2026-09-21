@@ -53,7 +53,7 @@
 ```
 top_pos        : 3         # 下轮消费循环[3]=04-移动开发(本轮已消费[2]=03-系统编程)
 sub_pos        : 01:6 02:3 03:3 04:2 05:7 06:6 07:1 08:3 09:2 10:3 11:3  # 本轮消费 sub_pos[03]=2 → 索引 14 = 03-内存管理
-last_run       : 2026-09-22 04:00  # 04:00 槽占位锁(开局 04:00:36)
+last_run       : 2026-09-22 04:00  # 04:00 槽收尾(开局 04:00:36)
 last_top       : 03-系统编程  # 本轮;索引 14 = 03-内存管理
 skipped        : []
 failed_attempts: []
@@ -63,11 +63,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-22 02:00 | 10 | 02-Web开发/03-数据库:ORM会话工作单元·Upsert·JSONB与GIN·RLS多租户·Parquet列式 | S3 | +5 | 555 | SA源码3份+PG18四篇+SQLite+rowsecurity.c+parquet-format3份;Py 193 | notify: ok |
-| 2026-09-22 00:01 | 5 | 01-游戏开发/06-AI:行为树·GOAP反向规划·效用系统·JPS·层级状态机HFSM | S3 | +5 | 550 | BT.CPP+ReGoap+big-brain+JPS AAAI11+W3C SCXML;Py 210 | notify: ok(errcode=0) | 11-性能分析/基准测试方法论第三批:分配口径·预热判定·趋势分片·容器标定·参数化比较 | S1+S3 | +5 | 545 | jmh GCProfiler/Defaults/Warmup/Param+go benchmark.go/cgroup.go/proc.go+pyperf3+treeherder+catapult+proc.rst+hyperfine3;Py 211 | notify: ok |
-| 2026-09-21 18:54 | 44 | 09-语言学习/Golang第四批:定时器四叉堆·netpoll信号量·连续栈增长·UTF-8查表·方法集与选择器 | S1+S3 | +5 | 536 | runtime/time.go+netpoll.go+stack.go+proc.go+utf8.go+spec+blog/strings;Py 371 | notify: ok |
-| 2026-09-21 16:52 | 33 | 08-安全/02-网络安全第三批:TCP盲注入·DNS缓存投毒·证书透明度·SSH传输层·IPv6隐私地址 | S3 | +5 | 531 | RFC5961/5452/9162/4253/8308/4941/8981+Linux tcp_input.c;Py 1253 | notify: ok |
-| 2026-09-21 14:48 | 27 | 07-数据存储/01-关系型第四批:分片与键空间·EXPLAIN 读数·并行 worker·autovacuum 与 XID 回绕·分区裁剪 | S3 | +5 | 526 | PG18 文档 6 篇+源码 5 份+Vitess+Citus/TiDB;Py 244 | notify: ok |
+| 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除与合并·分级分配器对比·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc.3+tcmalloc+mimalloc types.h+zAddress.hpp+JEP333/439/379+mbind(2)+this_cpu_ops+mm.rst+uffd(2);Py 299 | notify: pending |
+| 2026-09-22 02:00 | 10 | 02-Web开发/03-数据库:ORM工作单元·Upsert·JSONB与GIN·RLS多租户·Parquet列式 | S3 | +5 | 555 | SA源码3份+PG18四篇+SQLite+rowsecurity.c+parquet-format;Py 193 | notify: ok |
+| 2026-09-22 00:01 | 5 | 01-游戏开发/06-AI:行为树·GOAP反向规划·效用系统·JPS·层级状态机HFSM | S3 | +5 | 550 | BT.CPP+ReGoap+big-brain+JPS AAAI11+W3C SCXML;Py 210 | notify: ok |
+| 2026-09-21 18:54 | 44 | 09-语言学习/Golang第四批:定时器四叉堆·netpoll信号量·连续栈增长·UTF-8查表·方法集与选择器 | S1+S3 | +5 | 536 | runtime/time.go+netpoll.go+stack.go+proc.go+utf8.go+spec;Py 371 | notify: ok |
+| 2026-09-21 16:52 | 33 | 08-安全/02-网络安全第三批:TCP盲注入·DNS投毒·证书透明度·SSH传输层·IPv6隐私地址 | S3 | +5 | 531 | RFC5961/5452/9162/4253/8308/4941/8981+tcp_input.c;Py 1253 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

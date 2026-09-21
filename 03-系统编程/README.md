@@ -64,4 +64,10 @@ IO 多路复用、协程等通用机制在游戏服务端也是基石。通用 d
   - 自旋锁与信号量（TAS 不排队 vs ticket 公平、单核不可抢占死锁、POSIX 点名的优先级反转、信号量「出错时值不变」与命名信号量内核持久）— [02-进程与线程/自旋锁与信号量/](02-进程与线程/自旋锁与信号量/)
   - 内存序与原子操作（relaxed/release-acquire/seq_cst 的 litmus 穷举、release sequence 靠 RMW 接力、RMW 原子性与内存序无关）— [02-进程与线程/内存序与原子操作/](02-进程与线程/内存序与原子操作/)
   - Go GMP 调度器（`runq[256]`+`runnext`、61 tick 查一次全局、窃取靠头一半、sysmon 20us→10ms、`forcePreemptNS=10ms`、异步抢占与 unsafe-point）— [02-协程/GoGMP调度器/](02-协程/GoGMP调度器/)
+- ✅ 内存管理第二批 5 个（2026-09-22 04:00 槽）— 见 [03-内存管理/](./03-内存管理/)：
+  - 标记-清除与空闲链表合并（dlmalloc 边界标记 + 128 bin + best-first with coalescing、延迟合并造成假性 OOM、mmap 块不并入 arena、最小 chunk 16/24 B）— [03-内存管理/垃圾回收/mark-sweep-free-list/](03-内存管理/垃圾回收/mark-sweep-free-list/)
+  - 分级分配器对比（jemalloc 每翻倍 4 档与 20% 碎片、tcmalloc 静态容量 = 数组间距/指针、mimalloc 三级页与 `MI_BIN_HUGE=73`）— [03-内存管理/分配器/分级分配器对比/](03-内存管理/分配器/分级分配器对比/)
+  - ZGC 着色指针（`RRRRMMmmFFrr0000` 16 位元数据、remap 四步循环、load barrier 自愈、对照 Shenandoah Brooks pointer）— [03-内存管理/垃圾回收/zgc-colored-pointers/](03-内存管理/垃圾回收/zgc-colored-pointers/)
+  - per-CPU 与 NUMA 分配（`this_cpu_*` 抢占保护、`MPOL_BIND` 取最近节点、`MPOL_MF_MOVE` 只搬独占页）— [03-内存管理/分配器/percpu-numa/](03-内存管理/分配器/percpu-numa/)
+  - 多级页表与缺页中断（规范地址符号扩展、5 级 → 128 PiB、COW 是 minor 而非 SIGSEGV、userfaultfd 四种模式）— [03-内存管理/虚拟内存/多级页表与TLB/](03-内存管理/虚拟内存/多级页表与TLB/)
   - C++20 协程状态机（无栈协程状态、awaiter 三件套与四种 `await_suspend` 返回、对称转移栈深 1 vs 递归 64、按引用参数悬垂）— [02-协程/C++20协程/](02-协程/C++20协程/)

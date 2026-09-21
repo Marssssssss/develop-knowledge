@@ -51,9 +51,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 7         # 本轮消费循环[6]=07-数据存储 → 下轮取循环[7]=08-安全
-sub_pos        : 01:5 02:2 03:2 04:2 05:7 06:6 07:1 08:2 09:1 10:2 11:2  # 本轮消费 sub_pos[07]=0 → 27,已 +1
-last_run       : 2026-09-21 16:02  # 16:00 槽占位锁(开局 16:00:46)
+top_pos        : 8         # 本轮消费循环[7]=08-安全 → 下轮取循环[8]=09-语言学习
+sub_pos        : 01:5 02:2 03:2 04:2 05:7 06:6 07:1 08:3 09:1 10:2 11:2  # 本轮消费 sub_pos[08]=2 → 33,已 +1
+last_run       : 2026-09-21 16:52  # 16:00 槽收尾(开局 16:00:46)
 last_top       : 08-安全  # 本轮;索引 33 02-网络安全
 skipped        : []
 failed_attempts: []
@@ -66,7 +66,7 @@ failed_attempts: []
 | 2026-09-21 11:14 | 48 | 05-AI与机器学习/特征工程与降维第二批:稳定性·幂变换·分箱与样条·稀疏降维·时序因果 | S1 | +5 | 516 | Nogueira JMLR+Meinshausen+scipy morestats+sklearn+pandas rolling;Py 776 | notify: ok |
 | 2026-09-21 09:03 | 17 | 04-移动开发/Android第二批:类型安全路由·JNI互调·Retrofit代理·Room连接池·Compose快照 | S1+S2 | +5 | 511 | androidx navigation/compose/room3+AOSP SQLiteConnectionPool+retrofit+JNI 规范;Py 245 | notify: ok |
 | 2026-09-21 06:50 | 13 | 03-系统编程/进程线程协程第二批:futex·自旋锁与信号量·内存序·GoGMP·C++20协程 | S3 | +5 | 506 | futex(2)+futex.h+waitwake.c+POSIX spin/sem+cppreference+n1570+runtime2.go;Py 236 | notify: ok |
-| 2026-09-21 04:52 | 9 | 02-Web开发/后端第二批:优雅关闭·中间件责任链·HTTP缓存·HTTP2帧与HPACK·JWT与JWS | S3 | +5 | 501 | Go server.go+k8s+Express/Django+RFC9111/9110/9113/7541/7519;Py 207 | notify: ok |
+| 2026-09-21 16:52 | 33 | 08-安全/02-网络安全第三批:TCP盲注入与RFC5961·DNS缓存投毒与RFC5452·证书透明度Merkle审计·SSH传输层·IPv6隐私地址 | S3 | +5 | 531 | RFC5961/5452/9162/6962/4253/8308/4941/8981/4861/4862+Linux tcp_input.c 与 sysctl_net_ipv4.c;Py 1253 | notify: pending |
 | 2026-09-21 14:48 | 27 | 07-数据存储/01-关系型第四批:分片与路由键空间·EXPLAIN ANALYZE 读数·并行查询 worker 数·autovacuum 与 XID 回绕·声明式分区与裁剪 | S3 | +5 | 526 | PG18 官方文档 6 篇+官方源码 5 份+Vitess 文档/源码+Citus/TiDB;Py 244 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。

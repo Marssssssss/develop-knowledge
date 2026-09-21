@@ -64,7 +64,7 @@ failed_attempts: []
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-09-21 11:14 | 48 | 05-AI/特征工程与降维第二批:稳定性·幂变换·分箱与样条·稀疏降维·时序因果 | S1 | +5 | 516 | Nogueira JMLR+Meinshausen+scipy/sklearn/pandas;Py 776 | notify: ok |
-| 2026-09-21 22:46 | 47 | 11-性能分析/基准测试方法论第三批:JMH-gc与benchmem分配口径·预热充分性判定·趋势存储与分片·容器下的benchtime标定·参数化多维比较 | S1+S3 | +5 | 545 | jmh GCProfiler/Defaults/Warmup/Param+go benchmark.go/cgroup.go/proc.go+pyperf三个文件+treeherder+catapult+proc.rst+hyperfine三文件;Py 211 | notify: ok(HTTP 200，errcode=0 errmsg=ok；UTF-8 payload 单次 POST 未重试，发送前已确认本轮行是 pending) |
+| 2026-09-21 22:46 | 47 | 11-性能分析/基准测试方法论第三批:分配口径对拍·预热判定·趋势分片·容器标定·参数化多维比较 | S1+S3 | +5 | 545 | jmh GCProfiler/Defaults/Warmup/Param+go benchmark.go/cgroup.go/proc.go+pyperf3+treeherder+catapult+proc.rst+hyperfine3;Py 211 | notify: ok |
 | 2026-09-21 18:54 | 44 | 09-语言学习/Golang第四批:定时器四叉堆·netpoll信号量·连续栈增长·UTF-8查表·方法集与选择器 | S1+S3 | +5 | 536 | runtime/time.go+netpoll.go+stack.go+proc.go+utf8.go+spec+blog/strings;Py 371 | notify: ok |
 | 2026-09-21 16:52 | 33 | 08-安全/02-网络安全第三批:TCP盲注入·DNS缓存投毒·证书透明度·SSH传输层·IPv6隐私地址 | S3 | +5 | 531 | RFC5961/5452/9162/4253/8308/4941/8981+Linux tcp_input.c;Py 1253 | notify: ok |
 | 2026-09-21 14:48 | 27 | 07-数据存储/01-关系型第四批:分片与键空间·EXPLAIN 读数·并行 worker·autovacuum 与 XID 回绕·分区裁剪 | S3 | +5 | 526 | PG18 文档 6 篇+源码 5 份+Vitess+Citus/TiDB;Py 244 | notify: ok |

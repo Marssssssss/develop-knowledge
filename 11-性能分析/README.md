@@ -47,6 +47,7 @@
 - [x] CI 性能回归门禁（基准结果做成趋势而非单次断言）（[03-基准测试方法论/CI性能回归门禁/](./03-基准测试方法论/CI性能回归门禁/)，2026-09-15）
 - [x] 应用级剖析首批（pprof 在线采集/top 解读、py-spy 采样、cProfile tottime-cumtime、benchmark ReportAllocs）（[02-应用级剖析/](./02-应用级剖析/)，2026-09-18 首批 5 demo）
 - [x] 基准测试方法论第二批：`testing.B` 迭代标定与样本量、MDE 与样本量方程、CoV 噪声地板与降噪、多重比较校正（FWER vs FDR）、`-benchmem` 分配测量与 GC 摊销（[03-基准测试方法论/](./03-基准测试方法论/)，2026-09-19 第二批 5 demo）
+- [x] 基准测试方法论第三批：JMH `-prof gc` 与 `-benchmem` 分配口径对拍、预热充分性的程序化判定（pyperf 五条不等式）、趋势存储与分片（Perfherder signature_hash vs Chrome Perf 路径主键）、容器/虚拟化下的 `-benchtime` 标定（cgroup 配额量化 + steal）、参数化基准的多维公平比较（[03-基准测试方法论/](./03-基准测试方法论/)，2026-09-21 第三批 5 demo）
 - [ ] 延迟预算拆分：SLO → 每跳预算的下发策略
 - [x] 系统级剖析第四批：CPU 利用率口径与 IPC 归因、RPS/RFS/XPS 与中断亲和再平衡、Off-Wake 调度延迟栈归因、差分火焰图、BPF ringbuf（[01-系统级剖析/](./01-系统级剖析/)，2026-09-20 第四批 5 demo，ID 432-436）
 - [x] 二进制符号与调试信息链路：ELF 重定位 / DWARF / CFI 展开 / TLS / Itanium C++ 名字改编（[10-逆向工程/01-二进制逆向/](../10-逆向工程/01-二进制逆向/)，2026-09-20 补录 ID 427-431）
@@ -68,3 +69,4 @@
 - bpftrace 语言参考/一行式教程/手册页 + Gregg USE Method 原文与 Linux 清单 + kernel iostats + cgroup v2 内核文档 + Gregg DockerCon 2017 容器分析 + runqlat + kernel sched-stats + IRQ affinity/irq-redir + Red Hat 调优指南（2026-09-16 新增 [01-系统级剖析/](./01-系统级剖析/) 第三批 5 demo，逐条链接见该目录 README）
 - pkg.go.dev net/http/pprof、runtime/pprof、testing + golang/go pprof.go 源码 + Go Blog Profiling Go Programs + docs.python.org The Python Profilers + benfred/py-spy README（2026-09-18 新增 [02-应用级剖析/](./02-应用级剖析/) 首批 5 demo，逐条链接见该目录 README）
 - golang/go `src/testing/benchmark.go` 源码 + pkg.go.dev `runtime#MemStats` + NIST e-Handbook §7.2.2.2/§1.3.5.3 + Dropbox Apogee + LLVM Benchmarking tips + statsmodels `multipletests` + Benjamini-Hochberg(1995)/Benjamini-Yekutieli(2001) 临界常数（2026-09-19 新增 [03-基准测试方法论/](./03-基准测试方法论/) 第二批 5 demo，逐条链接见该目录 README）
+- JMH `GCProfiler.java` + golang/go `src/testing/benchmark.go` + psf/pyperf `_worker.py`/`_utils.py`/`_runner.py` + JMH `Defaults.java`/`Warmup.java` + mozilla/treeherder `etl/perf.py`/`perf/models.py` + catapult-project `graph_data.py` + golang/go `internal/runtime/cgroup/cgroup.go`/`runtime/proc.go` + Linux `Documentation/filesystems/proc.rst` + hyperfine `range_step.rs`/`relative_speed.rs`/`benchmark_result.rs` + JMH `Param.java`（2026-09-21 新增 [03-基准测试方法论/](./03-基准测试方法论/) 第三批 5 demo，逐条链接见该目录 README）

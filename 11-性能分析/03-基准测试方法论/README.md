@@ -85,6 +85,11 @@ private double x = Math.PI;              // 非 final → 每次真的算
 | [CoV噪声地板/](./CoV噪声地板/) | 变异系数与噪声地板：A/A 地板 `CoV·√(2/n)·√(2/π)`、Apogee「60%→5%」的口径核对（每侧 16 次才够）、离群剔除的 O(σ) 偏差 −0.2907σ、交错 vs 顺序跑的漂移倍数恰为 n | Python / Go |
 | [多重比较校正/](./多重比较校正/) | FWER vs FDR：全局零效应下二者**相等**（V≡R）、有真效应时 BH 用 FWER 0.220 换功效 0.530、Holm ⊇ Bonferroni、BY 的 H_m 惩罚因子、benchstat 不做任何校正 | Python / Go |
 | [分配测量与GC/](./分配测量与GC/) | `-benchmem` 的净值/差值语义、整数截断导致的 `0 B/op ≠ 零分配`、GC 摊销使 `ns/op` 随 N **非单调**（100→120→108）、`GCCPUFraction` 分母是 GOMAXPROCS 积分 | Python / Go |
+| [JMH-gc与benchmem分配口径/](./JMH-gc与benchmem分配口径/) | 两侧分配口径对拍：JMH `gc.alloc.rate.norm` 是浮点且**零分配时整列消失**，Go 一律打印 `0 B/op`；JMH 是进程级窗口而 Go 只算 `StartTimer→StopTimer`；`gc.count` 用 SUM 而 `alloc.rate` 用 AVG ⇒ 两者不可相除；JMH **没有对象数**口径 | Python(40 断言实跑) / Go |
+| [预热充分性判定/](./预热充分性判定/) | pyperf `test_calibrate_warmups` 的可执行判据：样本对半分 + 离群（只查最大值、iqr 里不含首值）+ 五条不等式；`mean_diff` 区间**非对称** `[-0.5, +0.10]`；离散度用 MAD 不用 stdev；JMH 只有固定 5 次，实测欠预热 216% | Python(35 断言实跑) / Go |
+| [趋势存储与分片/](./趋势存储与分片/) | Perfherder 的 40 字符 `signature_hash`（key 与 value 混在一个桶里排序 ⇒ 键值互换碰撞）vs Chrome Perf 的**路径即主键**；父子关系一用 `parent_signature` 外键、一用 `parts[:-1]` 推导；`Row` 的 X 轴必须是单调整数 | Python(54 断言实跑) / Go |
+| [容器与虚拟化下的标定/](./容器与虚拟化下的标定/) | cgroup CFS 配额的**量化**闭式 `(k-1)P + (R-(k-1)Q)`：前 Q 的 CPU 时间免费 ⇒ 短任务免疫、配额边界是悬崖、长任务趋近 `P/Q`；限流**不改 N 却把 ns/op 放大约 P/Q 倍**；steal 是乘性且叠加；`GOMAXPROCS` 手动设过就不再跟随 cgroup | Python(45 断言实跑) / Go |
+| [参数化基准的多维比较/](./参数化基准的多维比较/) | hyperfine 默认以**全局最快**为参考 ⇒ 多维扫描把各维度混成一个数（×10 = 4× size × 2.5× threads），公平做法是分组内选参考；`RangeStep` 的 `size_hint` 用 `(end-start+1)/step` ⇒ 整数步长低估、小数步长高估；JMH `@Param` 走外积、Enum 默认取全部常量 | Python(37 断言实跑) / Go |
 
 ## 待研究
 
@@ -97,11 +102,16 @@ private double x = Math.PI;              // 非 final → 每次真的算
 - [x] 变异系数（CoV）门禁阈值的经验取值与"降噪优先于判据"的工程顺序（[CoV噪声地板/](./CoV噪声地板/)，2026-09-19）
 - [x] 多重比较校正的选型：何时 Bonferroni 过保守、BH 的 FDR 控制在基准场景是否合适（[多重比较校正/](./多重比较校正/)，2026-09-19）
 - [x] 微基准的"分配当逻辑测"如何在 `-benchmem` 与 `-prof gc` 之间交叉验证（[分配测量与GC/](./分配测量与GC/)，2026-09-19）
-- [ ] JMH `-prof gc` 与 Go `-benchmem` 的分配口径对比（一次分配的对象数 vs 字节数 vs GC 次数）
-- [ ] 预热充分性的判定：如何程序化确认 JIT / 内联缓存已进入稳态（而不是固定 warmup 次数）
-- [ ] 基准结果的长期趋势存储与分片（benchstat 之外的时序方案，如 Skia Perf / Firefox Perfherder 的数据模型）
-- [ ] 虚拟化与容器环境（`cgroup` CPU quota、 steal time）对 `-benchtime` 标定结果的影响
-- [ ] 参数化基准（hyperfine `--parameter-scan` / JMH `@Param`）的结果如何做公平的多维比较
+- [x] JMH `-prof gc` 与 Go `-benchmem` 的分配口径对比（一次分配的对象数 vs 字节数 vs GC 次数）（[JMH-gc与benchmem分配口径/](./JMH-gc与benchmem分配口径/)，2026-09-21）
+- [x] 预热充分性的判定：如何程序化确认 JIT / 内联缓存已进入稳态（而不是固定 warmup 次数）（[预热充分性判定/](./预热充分性判定/)，2026-09-21）
+- [x] 基准结果的长期趋势存储与分片（benchstat 之外的时序方案，如 Skia Perf / Firefox Perfherder 的数据模型）（[趋势存储与分片/](./趋势存储与分片/)，2026-09-21）
+- [x] 虚拟化与容器环境（`cgroup` CPU quota、 steal time）对 `-benchtime` 标定结果的影响（[容器与虚拟化下的标定/](./容器与虚拟化下的标定/)，2026-09-21）
+- [x] 参数化基准（hyperfine `--parameter-scan` / JMH `@Param`）的结果如何做公平的多维比较（[参数化基准的多维比较/](./参数化基准的多维比较/)，2026-09-21）
+- [ ] 跨语言基准的口径对齐：同一段逻辑在 Python / Go / C 三个实现下如何公平比较（编译期常量折叠、运行时分配策略都不等价）
+- [ ] 基准结果的可复现性打包：如何把「环境指纹」（CPU 型号 / 微码 / 内核 / 编译器版本）随结果一起存
+- [ ] 长跑基准的漂移检测：同一台机器跨月的结果如何区分「代码变慢」与「机器变慢」
+- [ ] JMH `-prof async` / `perfasm` 的汇编级归因：如何确认热点指令确实来自被测代码而不是框架
+- [ ] 基准套件的时间预算分配：在固定 CI 时长下按哪些基准的方差分配 `-count`
 
 ## 参考资料（实际阅读过的来源）
 
@@ -115,6 +125,20 @@ private double x = Math.PI;              // 非 final → 每次真的算
 - [How to Benchmark Commands with hyperfine（how2.sh）](https://how2.sh/posts/how-to-benchmark-commands-with-hyperfine) — `--prepare` 的作用（每次计时迭代前重置状态）、`--min-runs 20` 与 `--export-json` + `jq` 的 CI 用法
 - [Hyperfine: A Command-Line Benchmarking Tool（kx.cloudingenium.com）](https://kx.cloudingenium.com/en/hyperfine-benchmark-command-line-performance-testing-guide) — `time` 单次测量 vs hyperfine 多次运行的对照、`--warmup N` / `--prepare` 的组合
 - [How to Use Hyperfine for Accurate Command-Line Benchmarking — Notes（notes.suhaib.in）](https://notes.suhaib.in/docs/tech/utilities/hyperfine-cli-benchmarking-tool-guide) — σ > 均值 10% 即视为环境噪声、`--runs 5` 适合慢构建 / `--min-runs 100` 适合微基准、离群点告警的解读、time vs hyperfine vs perf 三者分工
+
+### 2026-09-21 第三批 5 demo 新增来源
+
+- [`openjdk/jmh` — `jmh-core/.../profile/GCProfiler.java`](https://github.com/openjdk/jmh/blob/master/jmh-core/src/main/java/org/openjdk/jmh/profile/GCProfiler.java) — 541 的依据：`gc.count` 遍历全部 GC bean、`gc.time` 条件发射、`gc.cpuTime` 整除 1e6、`gc.alloc.rate.norm` 的 `allocated != 0` 分支、全局与 per-thread 两条快照路径、负差钳 0、churn 的 `c > 0` 与 `churnWait=500`
+- [`golang/go` — `src/testing/benchmark.go`](https://github.com/golang/go/blob/master/src/testing/benchmark.go) — 541 与 544 的依据：`StartTimer`/`StopTimer`/`ResetTimer`/`runN` 顺序、`predictN` 四步钳制与"先乘后除"注释、`maxBenchPredictIters=1e9`、`launch` 循环判据
+- [`psf/pyperf` — `pyperf/_worker.py` 与 `_utils.py`](https://github.com/psf/pyperf/blob/main/pyperf/_worker.py) — 542 的依据：`MAX_WARMUP_VALUES=300`、`WARMUP_SAMPLE_SIZE=20`、五条不等式、"只查最大值"的离群检验、`percentile` 线性插值、`median_abs_dev`、`mad_diff` 的除零 FIXME
+- [`openjdk/jmh` — `runner/Defaults.java` 与 `annotations/Warmup.java`](https://github.com/openjdk/jmh/blob/master/jmh-core/src/main/java/org/openjdk/jmh/runner/Defaults.java) — 542 的对照组：`WARMUP_ITERATIONS=5`、`WARMUP_ITERATIONS_SINGLESHOT=0`、`WARMUP_FORKS=0`、`BLANK_* = -1` 哨兵
+- [`mozilla/treeherder` — `treeherder/etl/perf.py` 与 `perf/models.py`](https://github.com/mozilla/treeherder/blob/master/treeherder/etl/perf.py) — 543 的依据：`_get_signature_hash` 的键桶排序、`SIGNATURE_HASH_LENGTH=40`、`parent_signature` 注入、`_create_or_update_signature` 的 `last_updated` 单调、两条 `unique_together`
+- [`catapult-project/catapult` — `dashboard/dashboard/models/graph_data.py`](https://github.com/catapult-project/catapult/blob/master/dashboard/dashboard/models/graph_data.py) — 543 的依据：`TestMetadata` 以完整路径为 key、`bot`/`parent_test` 的段数判据、`Row` 的 `revision = key.integer_id()`、`d_`/`r_`/`a_` 前缀、`LastAddedRevision` 拆实体的原因
+- [`golang/go` — `src/internal/runtime/cgroup/cgroup.go`](https://github.com/golang/go/blob/master/src/internal/runtime/cgroup/cgroup.go) — 544 的依据：`parseV1Number` 换行截断、`parseV2Limit` 的 `max` 字面量、v1 CPU controller 优先于 v2
+- [`golang/go` — `src/runtime/proc.go`](https://github.com/golang/go/blob/master/src/runtime/proc.go) — 544 的依据：`sysmonUpdateGOMAXPROCS` 的 `customGOMAXPROCS` 与"值没变就不动"两道闸门
+- [Linux `Documentation/filesystems/proc.rst`](https://github.com/torvalds/linux/blob/master/Documentation/filesystems/proc.rst) — 544 的依据：`/proc/stat` cpu 行 `steal: involuntary wait`
+- [`sharkdp/hyperfine` — `src/parameter/range_step.rs`、`src/benchmark/relative_speed.rs`、`benchmark_result.rs`](https://github.com/sharkdp/hyperfine/blob/master/src/parameter/range_step.rs) — 545 的依据：三条拒绝、`MAX_PARAMETERS=100_000`、`size_hint` 公式、`fastest_of` 与 ratio 三向取法、误差传播、`parameters: BTreeMap`
+- [`openjdk/jmh` — `annotations/Param.java`](https://github.com/openjdk/jmh/blob/master/jmh-core/src/main/java/org/openjdk/jmh/annotations/Param.java) — 545 的依据：outer product 原文、`BLANK_ARGS` 哨兵、`@State` 非 final 约束、Enum 的隐式默认值
 
 ### 2026-09-19 第二批 5 demo 新增来源
 

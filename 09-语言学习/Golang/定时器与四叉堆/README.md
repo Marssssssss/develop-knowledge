@@ -119,7 +119,7 @@ Go 选堆而不是时间轮，是因为 `time.After(3 * time.Hour)` 这种「任
 
 ```bash
 cd python
-python selfcheck_timers.py   # 100 条断言
+python selfcheck_timers.py   # 100 条断言（会自动带上 timerchecks.py 里的 E8~E14）
 python main.py               # 四组可观察结论
 ```
 
@@ -132,7 +132,9 @@ go run .                     # 同样的五组结论，内置 check 断言
 
 ## 关键代码片段
 
-`python/timermodel.py` 里最核心的 20 行（`siftDown` 与 `updateHeap`）：
+Python 侧拆成三个模块：`timerheap.py`（四叉堆的上下沉与增删）、`timermodel.py`
+（三个状态位与 `updateHeap`/`cleanHead`/`adjust`/`run`）、`timerchecks.py`（E8~E14 断言）。
+最核心的 20 行是 `timerheap.py` 的 `sift_down`：
 
 ```python
 def sift_down(self, i):

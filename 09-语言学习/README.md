@@ -15,7 +15,7 @@
 | 语言 | 状态 | 路径 | 主线(与其他语言的分工) | demo |
 | --- | --- | --- | --- | --- |
 | Python | ✅ 已开线 | [Python/](./Python/) | 动态类型 + 引用计数 GC + 语法糖(PEP) | 21 |
-| Golang | ✅ 已开线 | [Golang/](./Golang/) | GC + CSP 并发(GPM 调度、channel) | 15 |
+| Golang | ✅ 已开线 | [Golang/](./Golang/) | GC + CSP 并发(GPM 调度、channel) | 20 |
 | Rust | ✅ 已开线 | [Rust/](./Rust/) | **无 GC 的内存安全**:所有权 / 借用检查 / trait 静态分发 | 10 |
 | TypeScript | ✅ 已开线 | [TypeScript/](./TypeScript/) | **纯编译期**:结构化类型系统 + 类型级编程(约束在运行时被擦除) | 5 |
 
@@ -43,6 +43,11 @@
 > 与 `__mro__` 对拍)、实参怎么填进形参(手写绑定算法与 `inspect` 对拍)、`NotImplemented` 触发的
 > 回退链(含「设成 None 是阻断而非促成回退」这一反直觉点)、以及名字在编译期就被判定为局部
 > 而引发的 `UnboundLocalError` 与类作用域对推导式不可见的静默陷阱。
+> Golang 第四批 5 个 demo(2026-09-21 18:00 槽):`定时器与四叉堆/`、`netpoll与网络轮询器/`、
+> `栈增长与连续栈/`、`字符串与UTF8rune/`、`方法集与嵌入提升/` —— 两个「运行时如何调度/唤醒」
+> (per-P 四叉定时器堆、`pollDesc` 的 rg/wg 信号量)、两个「内存与编码的基本盘」(连续栈的
+> 增长/收缩公式、`first[256]` + `acceptRanges` 的 UTF-8 查表)、一个纯规范层面的
+> 「方法集与选择器深度」;五份 Python 模型共 371 条断言全部实跑通过,Go 侧为同语义复刻。
 > 后续继续补 Java / C++ / C# 等。
 
 ## 目录内约定

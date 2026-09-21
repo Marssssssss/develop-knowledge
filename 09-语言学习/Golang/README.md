@@ -56,6 +56,14 @@
 14. **反射三定律** ✅ `09-语言学习/Golang/反射三定律/` — interface 对 + `Kind` vs `Type` + flag 位(StickyRO/EmbedRO/Indir/Addr/Method) + `CanSet` 真实边界
 15. **unsafe 与内存布局** ✅ `09-语言学习/Golang/unsafe与内存布局/` — `Sizeof/Alignof/Offsetof` 语义 + pointer bytes + 字段排序五规则 + size class 浪费 + `unsafe.Pointer` 六种合法模式
 
+### 第四批(2026-09-21,demo 532-536) — 定时器/网络轮询/栈/UTF-8/方法集
+
+16. **定时器与四叉堆** ✅ `09-语言学习/Golang/定时器与四叉堆/` — per-P 四叉最小堆(`timerHeapN=4`)+ `timerWhen` 快照 + Heaped/Modified/Zombie 三状态位 + `Stop` 只打标记 + `Reset` 延后同步 + ticker `next = when + period*(1+delay/period)`
+17. **netpoll 与网络轮询器** ✅ `09-语言学习/Golang/netpoll与网络轮询器/` — `pollDesc` 的 rg/wg 二值信号量(pdNil/pdReady/pdWait/G)+ `netpollblock` 三步 CAS + 超时唤醒是 pdNil 不是 pdReady + deadline 的 seq 失效 + `netpollBreak` CAS 去重
+18. **栈增长与连续栈** ✅ `09-语言学习/Golang/栈增长与连续栈/` — `stackMin=2048` / `fixedStack` 上取整到 2 的幂 / `stackGuard = 800+stackSystem+128` + `newstack` 翻倍但至少够放当前帧 + 1 GB 上限 + 收缩的「不到 1/4 才缩一半」
+19. **字符串与 UTF-8 rune** ✅ `09-语言学习/Golang/字符串与UTF8rune/` — `first[256]` 查表 + 5 个 `acceptRanges` 分别拦 overlong/代理区/超上限 + 非法输入返回 `(RuneError, 1)` + `RuneLen` 对代理区返回 -1
+20. **方法集与嵌入提升** ✅ `09-语言学习/Golang/方法集与嵌入提升/` — `T` 的方法集是 `*T` 的子集 + 嵌入 `T` vs 嵌入 `*T` 的提升差异 + 选择器「深度最浅且唯一」+ 定义型指针只对字段开后门 + 接口方法集是交集
+
 ## 四、权威来源(本 README 主要依据)
 
 - [Go 语言规范 — The Go Programming Language Specification](https://go.dev/ref/spec) — 语法与语义的权威定义, 含 channel、select、defer、slice 完整规范。
@@ -87,6 +95,15 @@
 - 口径说明:本机**无 Go 工具链**,`go/` 目录的代码只做人工审查 + `_docs/tools/` 的
   结构自检(`bracket_check.py` / `syntax_sanity.py`),不作为"已编译通过"的承诺;
   Python 侧实现均实跑断言,以它为准。
+
+第四批(2026-09-21,demo 532-536)新增:
+
+- [runtime/time.go(master)](https://github.com/golang/go/blob/master/src/runtime/time.go) — `timerHeapN=4`、`siftUp/siftDown`、`stop/modify/updateHeap/cleanHead/adjust/run/unlockAndRun`、三个状态位与 `maxWhen`。
+- [runtime/netpoll.go + netpoll_epoll.go(master)](https://github.com/golang/go/blob/master/src/runtime/netpoll.go) — rg/wg 状态机注释、`netpollblock/unblock/ready`、`poll_runtime_pollReset/Wait/SetDeadline/Unblock`、`netpolldeadlineimpl`、`netpollBreak` 的 CAS 去重。
+- [runtime/stack.go + proc.go(master)](https://github.com/golang/go/blob/master/src/runtime/stack.go) — `stackMin/stackSystem/fixedStack/stackGuard`、三个哨兵值、`copystack`、`shrinkstack`、`isShrinkStackSafe`、`newstack` 的新栈大小计算与 `maxstacksize`。
+- [unicode/utf8/utf8.go(master)](https://github.com/golang/go/blob/master/src/unicode/utf8/utf8.go) — `first[256]` 表、`acceptRanges`、`decodeRuneSlow`、`RuneLen`、`EncodeRune`、`RuneCountInString`。
+- [Go 官方博客 Strings, bytes, runes and characters in Go](https://go.dev/blog/strings) — 索引得到字节而非字符、`for range` 解码 rune、`%q`/`%+q`、字符串不保证 Unicode 规范化。
+- [Go 语言规范 §Method sets / §Selectors / §Struct types](https://go.dev/ref/spec) — `T` 与 `*T` 的方法集、promoted methods 两条规则、深度最浅且唯一、定义型指针的字段例外、T0/T1/T2/Q 官方示例。
 
 ## 五、与已有 demo 的边界
 

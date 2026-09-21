@@ -51,9 +51,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 8         # 本轮消费循环[7]=08-安全 → 下轮取循环[8]=09-语言学习
-sub_pos        : 01:5 02:2 03:2 04:2 05:7 06:6 07:1 08:3 09:1 10:2 11:2  # 本轮消费 sub_pos[08]=2 → 33,已 +1
-last_run       : 2026-09-21 18:00  # 18:00 槽占位锁(开局 18:00:52)
+top_pos        : 9         # 本轮消费循环[8]=09-语言学习 → 下轮取循环[9]=10-逆向工程
+sub_pos        : 01:5 02:2 03:2 04:2 05:7 06:6 07:1 08:3 09:2 10:2 11:2  # 本轮消费 sub_pos[09]=1 → 44,已 +1
+last_run       : 2026-09-21 18:54  # 18:00 槽收尾(开局 18:00:52)
 last_top       : 09-语言学习  # 本轮;索引 44 Golang
 skipped        : []
 failed_attempts: []
@@ -65,7 +65,7 @@ failed_attempts: []
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-09-21 11:14 | 48 | 05-AI/特征工程与降维第二批:稳定性·幂变换·分箱与样条·稀疏降维·时序因果 | S1 | +5 | 516 | Nogueira JMLR+Meinshausen+scipy/sklearn/pandas;Py 776 | notify: ok |
 | 2026-09-21 09:03 | 17 | 04-移动开发/Android第二批:类型安全路由·JNI·Retrofit·Room连接池·Compose快照 | S1+S2 | +5 | 511 | androidx navigation/compose/room3+AOSP+retrofit+JNI 规范;Py 245 | notify: ok |
-| 2026-09-21 06:50 | 13 | 03-系统编程/进程线程协程第二批:futex·自旋锁与信号量·内存序·GoGMP·C++20协程 | S3 | +5 | 506 | futex(2)+futex.h+waitwake.c+POSIX spin/sem+cppreference+n1570+runtime2.go;Py 236 | notify: ok |
+| 2026-09-21 18:54 | 44 | 09-语言学习/Golang第四批:定时器四叉堆·netpoll信号量·连续栈增长·UTF-8查表·方法集与选择器 | S1+S3 | +5 | 536 | runtime/time.go+netpoll.go+stack.go+proc.go+utf8.go+spec+blog/strings;Py 371 | notify: pending |
 | 2026-09-21 16:52 | 33 | 08-安全/02-网络安全第三批:TCP盲注入·DNS缓存投毒·证书透明度·SSH传输层·IPv6隐私地址 | S3 | +5 | 531 | RFC5961/5452/9162/4253/8308/4941/8981+Linux tcp_input.c;Py 1253 | notify: pending |
 | 2026-09-21 14:48 | 27 | 07-数据存储/01-关系型第四批:分片与键空间·EXPLAIN 读数·并行 worker·autovacuum 与 XID 回绕·分区裁剪 | S3 | +5 | 526 | PG18 文档 6 篇+源码 5 份+Vitess+Citus/TiDB;Py 244 | notify: ok |
 

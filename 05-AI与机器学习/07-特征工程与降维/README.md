@@ -65,22 +65,31 @@ sklearn 的 `covariance_eigh` solver 走这条路,`explained_variance_` 直接�
 | 3 | [t-SNE与UMAP/](./t-SNE与UMAP/) | 自写 t-SNE(困惑度二分)与 mini-UMAP:簇大小无意义、噪声成团、簇间距可信度、早停形态 | Python / Go |
 | 4 | [Target编码与泄漏/](./Target编码与泄漏/) | 泄漏三层次、平滑、K 折交叉拟合、CatBoost 有序统计;高基数噪声特征上量化泄漏 | Python / Go |
 | 5 | [Pipeline与ColumnTransformer防泄漏/](./Pipeline与ColumnTransformer防泄漏/) | 特征选择/缩放泄漏、`remainder` 三种语义、嵌套 CV | Python / Go |
+| 6 | [特征选择的稳定性/](./特征选择的稳定性/) | Nogueira Φ̂、Kuncheva 一致性指数、稳定性选择、PFER 上界:换种子后选出的集合还能重叠多少 | Python / Go |
+| 7 | [幂变换与分位数变换/](./幂变换与分位数变换/) | Box-Cox / Yeo-Johnson 的剖面似然、`BOUNDS_THRESHOLD`、`QuantileTransformer` 的分布映射 | Python / Go |
+| 8 | [分箱与样条/](./分箱与样条/) | `KBinsDiscretizer` 三种策略 + `SplineTransformer` 的 Cox-de Boor 递推、节点外推与周期样条 | Python / Go |
+| 9 | [稀疏矩阵降维路线/](./稀疏矩阵降维路线/) | `TruncatedSVD` 不中心化的代价(comp0 就是均值方向)、`IncrementalPCA` 分块与 `batch_size_=5*n_features` | Python / Go |
+| 10 | [时间序列因果特征/](./时间序列因果特征/) | 滚动窗口对齐陷阱、`TimeSeriesSplit` 的 `gap`、"因果/错位/泄漏"三档与**支持集机械探针** | Python / Go |
 
 **这一批的共同主线**:*任何用 `y` 学参数的步骤——选择、编码、缩放、超参搜索——都必须关进
 `Pipeline` 或内层 CV。* 5 个 demo 分别量化了这条规则在 5 个环节上的违反代价。
 
+**第二批(6-10)换了一条主线**:*变换与对齐会各自引进一类"看起来没问题"的失真。*
+幂变换/分位数变换动的是分布的**形状**,分箱与样条动的是**边界连续性与外推**,
+`TruncatedSVD` 动的是**中心化假设**,时间序列滚动特征动的是**时间轴对齐**。
+五个 demo 的共同结论是:这些失真的绝对值往往很小(几个千分点),但**方向可预测、判据可机械给出** ——
+所以别靠"分数没掉就该没事"来验收,要靠支持集、剖面似然、Eckart-Young 上界这类可验的判据。
+
 ## 待研究
 
-- [x] PCA 的 SVD 与协方差两条路线的数值对比(条件数、大 `p` 下的内存实测)→ 见 demo 1
-- [x] 随机化 SVD 的 `n_oversamples` / `iterated_power` 对近似误差的影响 → 见 demo 2
-- [x] t-SNE 与 UMAP 的对比:哪些结论是可信的、哪些是"可视化幻觉" → 见 demo 3
-- [x] Target Encoding 的泄漏机理与 K 折内编码 / 平滑 → 见 demo 4
-- [x] `ColumnTransformer` + `Pipeline` 防止交叉验证泄漏的完整范式 → 见 demo 5
-- [ ] 特征选择的稳定性:不同随机种子选出的特征集合能重叠多少
-- [ ] 幂变换(Box-Cox / Yeo-Johnson)与分位数变换在偏态特征上的实际收益
-- [ ] 分箱与样条:等频 vs 等宽 vs 有监督分箱的偏差/方差权衡
-- [ ] 稀疏矩阵路线:`TruncatedSVD` 不中心化的代价,以及 `IncrementalPCA` 的 `partial_fit` 一致性
-- [ ] 时间序列的因果特征:滚动统计量在 CV 里的对齐陷阱
+- [x] 特征选择的稳定性:不同随机种子选出的特征集合能重叠多少 → 见 demo 6(ID 512)
+- [x] 幂变换(Box-Cox / Yeo-Johnson)与分位数变换在偏态特征上的实际收益 → 见 demo 7(ID 513)
+- [x] 分箱与样条:等频 vs 等宽 vs 有监督分箱的偏差/方差权衡 → 见 demo 8(ID 514)
+- [x] 稀疏矩阵路线:`TruncatedSVD` 不中心化的代价,以及 `IncrementalPCA` 的 `partial_fit` 一致性 → 见 demo 9(ID 515)
+- [x] 时间序列的因果特征:滚动统计量在 CV 里的对齐陷阱 → 见 demo 10(ID 516)
+- [ ] 缺失值插补与"缺失即信息":`IterativeImputer` / `MissingIndicator` 与插补引入的泄漏
+- [ ] 高基数类别特征的路线对比:`HashingEncoder` / 频次编码 / 目标编码在内存与稳定性上的取舍
+- [ ] 特征交互的自动发现:多项式展开、`Nystroem` 近似与"合成特征是否值得"的判据
 
 ## 参考资料(实际阅读过的来源)
 
@@ -119,3 +128,27 @@ sklearn 的 `covariance_eigh` solver 走这条路,`explained_variance_` 直接�
   —— sklearn `score`/`score_samples` 所实现的概率 PCA 模型与 `noise_variance_`
 - [CatBoost 官方文档 — Transforming categorical features to numerical features](https://catboost.ai/docs/concepts/algorithm-main-stages_cat-to-number.html)
   —— 有序目标统计(经检索确认存在,未逐页通读)
+
+### 第二批(6-10)新读的来源
+
+- [Nogueira, Sechidis, Brown, *On the Stability of Feature Selection Algorithms*, JMLR 18(174), 2018](https://jmlr.org/papers/v18/17-514.html)
+  —— Φ̂(Kuncheva 一致性指数的加权版)、IC 与 Jaccard/Dice 的关系、稳定性选择的理论基础
+- [Meinshausen & Bühlmann, *Stability Selection*, JRSS-B 72(4), 2010](https://arxiv.org/abs/0809.2932)
+  —— 稳定性选择与 `PFER` 上界的原始出处
+- [scipy `scipy.stats.boxcox` / `yeojohnson` 文档与 `scipy/stats/morestats.py` 源码](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox.html)
+  —— `BOUNDS_THRESHOLD = 1e-7`、`boxcox_normmax` 的剖面似然优化、`lmbda=None` 时的自动选择
+- [scikit-learn 1.9.1 源码 `sklearn/preprocessing/_discretization.py` 与 `_data.py`](https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/preprocessing/_data.py)
+  —— `KBinsDiscretizer` 的 `uniform`/`quantile`/`kmeans` 三种策略与 `onehot`/`ordinal` 编码、
+  `SplineTransformer` 的节点构造(`extrapolation='constant'/'linear'/'continue'/'periodic'`)
+- [scikit-learn `SplineTransformer` API](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.SplineTransformer.html)
+  —— B 样条基函数、`degree`/`n_knots`/`knots` 的语义与 `include_bias` 的取值规则
+- [pandas `DataFrame.rolling` API](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rolling.html)
+  与 [Windowing operations 用户指南](https://pandas.pydata.org/docs/user_guide/window.html)
+  —— 滚动窗口的 `closed='right'` 基准、`center` 的位移规则、`min_periods` 默认值
+- [scikit-learn `TimeSeriesSplit` API](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html)
+  与 [源码 `model_selection/_split.py`](https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/model_selection/_split.py)
+  —— `gap` 的定义("exclude from the end of each train set before the test set")、
+  两条硬校验原文、以及 docstring 里的示例输出(被 demo 10 自检直接当作数值锚点)
+- [scikit-learn §12.2 Common pitfalls — Data leakage](https://scikit-learn.org/stable/common_pitfalls.html)
+  —— "information that would not be available at prediction time" 与
+  "overly optimistic performance estimates" 的原文定义

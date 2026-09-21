@@ -45,6 +45,16 @@
 - [x] W-TinyLFU 准入策略（Caffeine 4-bit CMS + 窗口 LRU + 主区 SLRU）— 见 [03-缓存/WTinyLFU准入/](./03-缓存/WTinyLFU准入/)（Python / Go）
 - [x] Redis 过期与淘汰（EXPIRE GT/LT + activeExpireCycle + LFU Morris 计数）— 见 [03-缓存/Redis过期与淘汰/](./03-缓存/Redis过期与淘汰/)（C / Python / Go）
 - [x] Memcached Slab 分配器（39 个 class 建表 + 内部碎片 + 页卡死）— 见 [03-缓存/MemcachedSlab分配/](./03-缓存/MemcachedSlab分配/)（C / Python / Go）
+- [x] 隔离级别与幻读（SQL 四级别 × 四异常 + PG SI vs InnoDB next-key + SSI pivot）— 见 [01-关系型/IsolationLevels/](./01-关系型/IsolationLevels/)（Python / Go）
+- [x] 缓冲池 Buffer Pool（midpoint LRU 3/8 + clock sweep + WAL-before-data）— 见 [01-关系型/BufferPool/](./01-关系型/BufferPool/)（Python / Go）
+- [x] CBO 成本优化器（PG 1.0/4.0/0.01 成本模型 + 直方图/MCV/NDV + Selinger DP + GEQO）— 见 [01-关系型/CostBasedOptimizer/](./01-关系型/CostBasedOptimizer/)（Python / Go）
+- [x] 两段式提交 2PC / XA（协调者状态机 + 决定日志 + blocking 问题）— 见 [01-关系型/TwoPhaseCommit/](./01-关系型/TwoPhaseCommit/)（Python / Go）
+- [x] Prepared Statement 与连接池（PG 扩展协议 + custom/generic plan + PgBouncer）— 见 [01-关系型/PreparedStatementPool/](./01-关系型/PreparedStatementPool/)（Python / Go）
+- [x] 分片与路由键空间（Vitess 键范围 [start,end) + 左对齐 + vindex 分布对照 + resharding）— 见 [01-关系型/ShardingVitess/](./01-关系型/ShardingVitess/)（Python / Go）
+- [x] EXPLAIN ANALYZE 读数口径（loops 归一化 + BitmapAnd 恒 0 + LIMIT/merge join 假性落差）— 见 [01-关系型/ExplainAnalyze/](./01-关系型/ExplainAnalyze/)（Python / Go）
+- [x] 并行查询 worker 数（`compute_parallel_worker` log3 公式 + 4 个旋钮 + 不可并行四条件）— 见 [01-关系型/ParallelQuery/](./01-关系型/ParallelQuery/)（Python / Go）
+- [x] autovacuum 与事务 ID 回绕（`50+0.2N` 阈值与 1 亿封顶 + XID 四道防线）— 见 [01-关系型/AutovacuumXID/](./01-关系型/AutovacuumXID/)（Python / Go）
+- [x] 声明式分区与分区裁剪（RANGE/LIST/HASH 差异 + 三阶段裁剪 + DEFAULT 分区天花板）— 见 [01-关系型/PartitionPruning/](./01-关系型/PartitionPruning/)（Python / Go）
 
 ## 待研究
 

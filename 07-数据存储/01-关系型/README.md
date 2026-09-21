@@ -20,6 +20,11 @@
 | **Join 算法** | [JoinAlgorithms/](./JoinAlgorithms/) | 朴素/块嵌套/hash(GRACE 分区 3(M+N))/sort-merge 成本模型 + 重复键回溯(CMU 15-445) |
 | **物化视图 + 增量刷新** | [MaterializedView/](./MaterializedView/) | 持久化 + 全量 REFRESH 阻塞语义 vs CONCURRENTLY diff 增量 + 唯一索引前置 |
 | **在线 DDL** | [OnlineDDL/](./OnlineDDL/) | INSTANT/INPLACE/COPY 矩阵 + MDL 两端独占 + row log + 行版本 64 上限 + gh-ost binlog 流 |
+| **分片与路由键空间** | [ShardingVitess/](./ShardingVitess/) | 键范围含起点不含终点 + 左对齐使右侧 0 可省 + `0x80` 中点 + numeric/reverse_bits vindex 分布对照(10000:0 vs 5000:5000) + fan-out 三形态 + resharding 键不动 |
+| **EXPLAIN ANALYZE 读数** | [ExplainAnalyze/](./ExplainAnalyze/) | actual rows/time 是**每次执行均值**要乘 loops + `Rows Removed by Filter` 出现条件 + BitmapAnd 恒 0 + LIMIT/merge join 的假性落差 + cost 445/470 原式 |
+| **并行查询 worker 数** | [ParallelQuery/](./ParallelQuery/) | `compute_parallel_worker` 的 log3 三倍阈值循环 + `min_parallel_table_scan_size` 1024 页下界 + `max_parallel_workers_per_gather=2` 上限 + reloption 覆盖 + 四条不可并行条件 |
+| **autovacuum 与 XID 回绕** | [AutovacuumXID/](./AutovacuumXID/) | `50+0.2N` 阈值与 1 亿封顶 + insert 阈值按未冻结比例缩放 + 打分是比值 + XID 四线(wrap/stop(300 万)/warn(1 亿)/vac(2 亿)) |
+| **声明式分区与裁剪** | [PartitionPruning/](./PartitionPruning/) | RANGE 含下界不含上界 + HASH 无法按区间裁剪 + DEFAULT 分区排除不掉 + 三阶段裁剪(计划期/Subplans Removed/never executed) |
 
 > **B+ 树索引**（MVCC 配套存储结构）已在 [`02-Web开发/03-数据库/B+树索引/`](../../02-Web开发/03-数据库/B+树索引/) 完成。
 
@@ -27,8 +32,12 @@
 
 - [x] 主从复制与 binlog（ROW vs STATEMENT 格式 + GTID + 异步/半同步）→ [ReplicationBinlog/](./ReplicationBinlog/)
 - [x] 逻辑复制与 CDC（logical decoding / debezium）→ [LogicalDecodingCDC/](./LogicalDecodingCDC/)
-- [ ] 分库分表（Sharding 中间件：Citus / TiDB / Vitess）
+- [x] 分库分表（Sharding 中间件：Citus / TiDB / Vitess）→ [ShardingVitess/](./ShardingVitess/)
 - [x] 在线 DDL：pt-online-schema-change / gh-ost → [OnlineDDL/](./OnlineDDL/)
-- [ ] 慢查询分析：EXPLAIN ANALYZE + plans
+- [x] 慢查询分析：EXPLAIN ANALYZE + plans → [ExplainAnalyze/](./ExplainAnalyze/)
 - [x] Materialized Views + 增量刷新 → [MaterializedView/](./MaterializedView/)
 - [ ] 物化视图与查询重写(query rewrite)
+- [ ] 列式存储与向量化执行（PG 的 fdw/cstore、ClickHouse 的 MergeTree 对照）
+- [ ] 并行应用的代价模型：`parallel_setup_cost` / `parallel_tuple_cost` 的实测标定
+- [ ] 分区表上的 partitionwise join / aggregate 收益
+- [ ] 备份与 PITR：pg_basebackup + WAL 归档 + 时间点恢复

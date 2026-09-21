@@ -51,9 +51,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 1         # 下轮消费循环[1]=02-Web开发(本轮已消费[0]=01-游戏开发)
-sub_pos        : 01:6 02:2 03:2 04:2 05:7 06:6 07:1 08:3 09:2 10:3 11:3  # 下轮 sub_pos[01]=6 → 07-音频(本轮已消费 5 = 06-AI 游戏AI)
-last_run       : 2026-09-22 02:00  # 02:00 槽开局占位锁(实测 02:00:49)
+top_pos        : 2         # 下轮消费循环[2]=03-系统编程(本轮已消费[1]=02-Web开发)
+sub_pos        : 01:6 02:3 03:2 04:2 05:7 06:6 07:1 08:3 09:2 10:3 11:3  # 下轮 sub_pos[02]=3 → 索引 11 = 04-API设计(本轮已消费 2 = 03-数据库)
+last_run       : 2026-09-22 02:48  # 02:00 槽收尾(开局 02:00:49)
 last_top       : 02-Web开发  # 本轮;索引 10 = 03-数据库
 skipped        : []
 failed_attempts: []
@@ -63,8 +63,8 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-22 00:01 | 5 | 01-游戏开发/06-AI:行为树·GOAP反向规划·效用系统·JPS·层级状态机HFSM | S3 | +5 | 550 | BT.CPP+ReGoap+big-brain+JPS AAAI11+W3C SCXML;Py 210 | notify: ok(errcode=0) |
-| 2026-09-21 22:46 | 47 | 11-性能分析/基准测试方法论第三批:分配口径·预热判定·趋势分片·容器标定·参数化比较 | S1+S3 | +5 | 545 | jmh GCProfiler/Defaults/Warmup/Param+go benchmark.go/cgroup.go/proc.go+pyperf3+treeherder+catapult+proc.rst+hyperfine3;Py 211 | notify: ok |
+| 2026-09-22 02:00 | 10 | 02-Web开发/03-数据库:ORM会话工作单元·Upsert·JSONB与GIN·RLS多租户·Parquet列式 | S3 | +5 | 555 | SA源码3份+PG18四篇+SQLite+rowsecurity.c+parquet-format3份;Py 193 | notify: ok |
+| 2026-09-22 00:01 | 5 | 01-游戏开发/06-AI:行为树·GOAP反向规划·效用系统·JPS·层级状态机HFSM | S3 | +5 | 550 | BT.CPP+ReGoap+big-brain+JPS AAAI11+W3C SCXML;Py 210 | notify: ok(errcode=0) | 11-性能分析/基准测试方法论第三批:分配口径·预热判定·趋势分片·容器标定·参数化比较 | S1+S3 | +5 | 545 | jmh GCProfiler/Defaults/Warmup/Param+go benchmark.go/cgroup.go/proc.go+pyperf3+treeherder+catapult+proc.rst+hyperfine3;Py 211 | notify: ok |
 | 2026-09-21 18:54 | 44 | 09-语言学习/Golang第四批:定时器四叉堆·netpoll信号量·连续栈增长·UTF-8查表·方法集与选择器 | S1+S3 | +5 | 536 | runtime/time.go+netpoll.go+stack.go+proc.go+utf8.go+spec+blog/strings;Py 371 | notify: ok |
 | 2026-09-21 16:52 | 33 | 08-安全/02-网络安全第三批:TCP盲注入·DNS缓存投毒·证书透明度·SSH传输层·IPv6隐私地址 | S3 | +5 | 531 | RFC5961/5452/9162/4253/8308/4941/8981+Linux tcp_input.c;Py 1253 | notify: ok |
 | 2026-09-21 14:48 | 27 | 07-数据存储/01-关系型第四批:分片与键空间·EXPLAIN 读数·并行 worker·autovacuum 与 XID 回绕·分区裁剪 | S3 | +5 | 526 | PG18 文档 6 篇+源码 5 份+Vitess+Citus/TiDB;Py 244 | notify: ok |

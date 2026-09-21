@@ -53,6 +53,11 @@
 - [x] [02-后端/HTTP缓存与条件请求/](./02-后端/HTTP缓存与条件请求/) — RFC 9111 新鲜度/Age/Vary/stale 许可 + RFC 9110 §13.2.2 前置条件优先级 (Python + Go)
 - [x] [02-后端/HTTP2帧与流多路复用/](./02-后端/HTTP2帧与流多路复用/) — RFC 9113 帧头与 SETTINGS/流控 + RFC 7541 HPACK 官方向量对拍 (Python + Go)
 - [x] [02-后端/JWT与JWS会话认证/](./02-后端/JWT与JWS会话认证/) — RFC 7515 紧凑序列化与官方 A.1 向量 + RFC 7519 exp/nbf/aud 校验语义 (Python + Go)
+- [x] [03-数据库/SQL与ORM/ORM会话与工作单元/](./03-数据库/SQL与ORM/ORM会话与工作单元/) — 身份映射弱引用 + 快照脏检查 + flush 三层顺序（先保存后删除、表内 UPDATE 先于 INSERT）(Python + Go)
+- [x] [03-数据库/SQL与ORM/批量写入与Upsert/](./03-数据库/SQL与ORM/批量写入与Upsert/) — PG 唯一索引推断与 cardinality violation + SQLite UPSERT 差异 + REPLACE 的先删后插 (Python + Go)
+- [x] [03-数据库/NoSQL/JSONB半结构化与索引/](./03-数据库/NoSQL/JSONB半结构化与索引/) — json/jsonb 规范化差异 + @> 越级不算 + GIN 两个操作符类与 pending list (Python + Go)
+- [x] [03-数据库/SQL与ORM/行级安全与多租户/](./03-数据库/SQL与ORM/行级安全与多租户/) — USING/WITH CHECK 双向 + default-deny + 属主绕过与 FORCE + permissive OR / restrictive AND (Python + Go)
+- [x] [03-数据库/列式存储与Parquet/](./03-数据库/列式存储与Parquet/) — Dremel def/rep levels 切分与装配 + RLE/Bit-Packing 混合编码逐字节对拍 (Python + Go)
 
 ## 状态
 

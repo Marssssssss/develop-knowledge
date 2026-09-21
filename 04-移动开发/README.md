@@ -47,6 +47,11 @@
 | 339 | `03-跨平台/Kotlin-Multiplatform/内存模型/` | Kotlin/Native 内存模型:共享堆 + 追踪式 GC(CMS,不分代)、旧「冻结」模型在 1.9.20 完全移除、全局属性改为惰性初始化、`AtomicReference` 引用环不再泄漏、stable refs 与 `autoreleasepool` 的 ARC 集成规则 | Kotlin / Python |
 | 340 | `03-跨平台/Compose-Multiplatform/重组与SlotTable/` | SlotTable 结构:`groups` 整数数组(每 group 占 `Group_Fields_Size` 个元素)+ `slots` 数组的 **gap buffer**、`dataAnchor` 写模式下是**锚点而非下标**、`groupSize`/`skipToGroupEnd` 跳过原语、四类 group(Restart/Replaceable/Movable/Node)、满表删除的父锚点回归 | Kotlin / Python |
 | 341 | `03-跨平台/WebView容器/Tauri-vs-Electron/` | Tauri vs Electron:系统 WebView(5 平台 4 引擎)vs 自带 Chromium、不携带 vs 携带运行时、一次调用 3 段 vs 5 段、Structured Clone 负载限制、capability 声明式权限 vs preload+`contextBridge` 手工裁剪 | TypeScript / JavaScript / Python |
+| 561 | `03-跨平台/React-Native/Yoga布局算法/` | Yoga 布局引擎:像素网格取整(宽度 = 两条绝对边各自取整再相减、0.5 一律进位、文本节点只向上)、测量缓存四条规则(负的 lastComputed 直接否决、取整后再比可用空间)、两遍弹性分配(默认 errata=24 走「滚动总量」= 修复前行为) | Python / Go |
+| 562 | `03-跨平台/Flutter/事件循环与Timer/` | Dart 事件循环:微任务是单链表(非队列,排空前不让出事件循环)、优先级回调插在上一个优先级之后、Timer 二叉小顶堆(初值 7 / 扩容 2n+1 / 同时刻按 id FIFO)、零延迟计时器独立 FIFO 且**一条消息一个** | Python / Go |
+| 563 | `03-跨平台/React-Native/Hermes值与字节码/` | Hermes 的 64 位值表示:NaN-boxing 借高 16 位(标签区间 0xfff9..0xffff)、7 个 Tag + 14 个 ETag(bit47 被占用,数据位实为 47 位)、指针上限 48 位、HBC 魔数 = 古希腊语 Ἑρμῆ 的 UTF-16BE、文件头 128 字节 | Python / Go |
+| 564 | `03-跨平台/Compose-Multiplatform/快照系统/` | Compose 快照:id 位集合(双 Long 窗口 + 下界有序数组,无变化返回同一实例)、`valid()` 三条件、`readable()` 取合法最大 id、`apply()` 的 previous/current/applied 三记录碰撞判据(默认 `mergeRecords` 返回 null = 任何碰撞都失败) | Python / Go |
+| 565 | `03-跨平台/WebView容器/IPC与能力ACL/` | Tauri 2 权限:命令键归一化(`plugin:<name>|<cmd>`,`core:` 剥前缀,app 裸名)、`resolve_access` 的 deny 优先且**只看 origin**、window 与 webview 是或关系、远程 URL 用 WHATWG urlpattern | Python / Go |
 | 397 | `04-推送与消息/APNs请求与响应/` | APNs HTTP/2 请求头语义(apns-id 规范 UUID、expiration 0 与非 0、priority 10·5·1、collapse-id ≤64B)、4096·5120 载荷上限、**每 bundle ID 只存 1 条**的存储语义、10 个状态码 + 32 个 reason、四类重试动作、410 不算 error condition | Python / Swift |
 | 398 | `04-推送与消息/载荷与aps字典/` | `aps` 内自定义键被静默忽略(必须是同级)、alert 字符串↔字典、`badge 0` 清除、critical alert 的 sound 字典、interruption-level 四档、relevance-score 0~1、本地化 `*-loc-args` 按 **出现顺序** 替换 `%@` | Python / Swift |
 | 399 | `04-推送与消息/静默推送与后台唤醒/` | `content-available=1` + push-type=background + priority=5、三条"持有-延迟"副作用(新的顶掉旧的 / 被杀则丢弃 / 启动即投递)、2~3 条每小时节流、30 秒后台预算 | Python / Swift |
@@ -62,11 +67,16 @@
 - [x] Tauri / Electron 架构对比 → demo 341
 - [x] 推送通道(APNs 请求响应 / aps 载荷 / 静默推送 / 令牌生命周期 / FCM v1)→ demo 397-401
 - [x] iOS 第五批(Swift 6 严格并发 / SwiftUI 布局协议 / Combine 背压 / ImageIO 解码 / NotificationCenter)→ demo 452-456
+- [x] React Native Hermes 值表示与 HBC 字节码 → demo 563
+- [x] Dart 事件循环 / Isolate 并发模型(微任务链表 + Timer 堆 + 零延迟队列)→ demo 562
+- [x] Yoga 布局算法(取整 / 测量缓存 / 两遍弹性分配)→ demo 561
+- [x] Compose 快照系统(id 位集合 / 可见性 / apply 冲突合并)→ demo 564
+- [x] Tauri 2 IPC 协议与 capability ACL 判定 → demo 565
 - [ ] SwiftUI 与 UIKit 桥接(UIHostingController / UIViewRepresentable)
 - [ ] iOS Instruments(Leaks / Allocations / Time Profiler / Network)实战
-- [ ] React Native Hermes V1 字节码引擎
 - [ ] Flutter Engine(Impeller 渲染器内部)
-- [ ] Flutter Isolate 并发模型
 - [ ] Android Retrofit 动态代理与 CallAdapter / Converter
 - [ ] Android HTTP/2 多路复用与流控
 - [ ] Tauri 2.x 移动端(Android/iOS)与 JNI / UniFFI 桥
+- [ ] React Native 新架构 Fabric 的 Shadow Tree 与挂载阶段
+- [ ] Kotlin Multiplatform 与 Swift/ObjC 互操作(名称翻译、集合映射)

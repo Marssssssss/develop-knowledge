@@ -1,7 +1,7 @@
 # STATE.md — 自动化巡检主状态文件
 
 > 每轮结束追加/滚动,**永远 ≤ 5 KB**;历史全本见 `_docs/archive/`。
-> 调度(**12 条定点任务**:每日 `00:00…22:00` 整点各一次,永不漂移,见 [`AUTOMATION_PROMPT.md`](./AUTOMATION_PROMPT.md))、配额(5 主 + ≤2 副)、失败回退:[`SCHEDULE_QUOTA.md`](./SCHEDULE_QUOTA.md);Token:[`OPTIMIZATION.md`](./OPTIMIZATION.md)
+> 调度(12 条定点任务,每日 00:00…22:00 整点各一次,永不漂移)、配额(5 主 + ≤2 副)、失败回退:[`SCHEDULE_QUOTA.md`](./SCHEDULE_QUOTA.md);Token:[`OPTIMIZATION.md`](./OPTIMIZATION.md)
 
 ## 一、轮询顺序(2026-09-16 起:大类严格轮转)
 
@@ -51,9 +51,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 5         # 本轮消费循环[4]=05-AI与机器学习 → 下轮取循环[5]=06-DevOps
-sub_pos        : 01:5 02:2 03:2 04:2 05:7 06:5 07:0 08:2 09:1 10:2 11:2  # 本轮消费 sub_pos[05]=6 → 索引 48,已 +1
-last_run       : 2026-09-21 12:03  # 12:00 槽占位锁(开局 12:01:45,开局即写防重入)
+top_pos        : 6         # 本轮消费循环[5]=06-DevOps → 下轮取循环[6]=07-数据存储
+sub_pos        : 01:5 02:2 03:2 04:2 05:7 06:6 07:0 08:2 09:1 10:2 11:2  # 本轮消费 sub_pos[06]=5 → 42,已 +1
+last_run       : 2026-09-21 12:55  # 12:00 槽收尾(开局 12:01:45)
 last_top       : 06-DevOps  # 本轮;索引 42 SRE与可靠性工程
 skipped        : []
 failed_attempts: []
@@ -63,11 +63,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-21 11:14 | 48 | 05-AI与机器学习/特征工程与降维第二批:稳定性·幂变换·分箱与样条·稀疏降维·时序因果 | S1 | +5 | 516 | Nogueira JMLR+Meinshausen+scipy morestats+sklearn(_split/_data/tsvd/ipca)+pandas rolling;Py 776 | notify: ok |
+| 2026-09-21 12:55 | 42 | 06-DevOps/SRE与可靠性工程首批:SLI窗口与聚合口径·错误预算与燃烧率·多窗口多燃烧率告警·退避与抖动·过载保护与自适应并发 | S3 | +5 | 521 | OpenSLO v1+Prometheus functions.go+sloth+AWS 退避+Envoy 自适应并发/过载管理;Py 339 | notify: ok |
+| 2026-09-21 11:14 | 48 | 05-AI与机器学习/特征工程与降维第二批:稳定性·幂变换·分箱与样条·稀疏降维·时序因果 | S1 | +5 | 516 | Nogueira JMLR+Meinshausen+scipy morestats+sklearn+pandas rolling;Py 776 | notify: ok |
 | 2026-09-21 09:03 | 17 | 04-移动开发/Android第二批:类型安全路由·JNI互调·Retrofit代理·Room连接池·Compose快照 | S1+S2 | +5 | 511 | androidx navigation/compose/room3+AOSP SQLiteConnectionPool+retrofit+JNI 规范;Py 245 | notify: ok |
-| 2026-09-21 06:50 | 13 | 03-系统编程/进程线程协程第二批:futex·自旋锁与信号量·内存序·GoGMP·C++20协程 | S3 | +5 | 506 | futex(2)(7)+futex.h+waitwake.c+POSIX spin+sem_overview+cppreference+n1570+runtime2.go;Py 236 | notify: ok |
+| 2026-09-21 06:50 | 13 | 03-系统编程/进程线程协程第二批:futex·自旋锁与信号量·内存序·GoGMP·C++20协程 | S3 | +5 | 506 | futex(2)+futex.h+waitwake.c+POSIX spin/sem+cppreference+n1570+runtime2.go;Py 236 | notify: ok |
 | 2026-09-21 04:52 | 9 | 02-Web开发/后端第二批:优雅关闭·中间件责任链·HTTP缓存·HTTP2帧与HPACK·JWT与JWS | S3 | +5 | 501 | Go server.go+k8s+Express/Django+RFC9111/9110/9113/7541/7519;Py 207 | notify: ok |
-| 2026-09-21 02:54 | 4 | 01-游戏开发/物理第一批:SAT与EPA·BroadPhase·PBD与XPBD·布料·接触与冲量 | S3 | +5 | 496 | Box2D v3×9+dyn4j+pbrt+Müller06/XPBD;Py 383 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

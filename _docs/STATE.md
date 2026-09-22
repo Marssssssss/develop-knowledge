@@ -1,17 +1,17 @@
 # STATE.md — 自动化巡检主状态文件
 
 > 每轮结束追加/滚动,**永远 ≤ 5 KB**;历史全本见 `_docs/archive/`。
-> 调度(12 条 DAILY 定点任务,每日整点各一次,永不漂移)、配额(5 主 + ≤2 副)、失败回退:[`SCHEDULE_QUOTA.md`](./SCHEDULE_QUOTA.md);Token:[`OPTIMIZATION.md`](./OPTIMIZATION.md)
+> 调度(12 条 DAILY 定点,整点各一次)/配额(5 主+≤2 副)/回退:[`SCHEDULE_QUOTA.md`];Token:[`OPTIMIZATION.md`](./OPTIMIZATION.md)
 
 ## 一、轮询顺序(2026-09-16 起:大类严格轮转)
 
-**旧机制已废**:禁止按 priority_score/偏好挑领域(原「仅 ≠ 上轮大类」允许 A→B→A 横跳且表尾被系统性多抓)。
+**旧机制已废**:禁止按 priority_score/偏好挑领域(A→B→A 横跳,表尾被系统性多抓)。
 
 **大类循环**(固定顺序,取后指针 +1,回绕):
-`01-游戏开发 → 02-Web开发 → 03-系统编程 → 04-移动开发 → 05-AI与机器学习 → 06-DevOps → 07-数据存储 → 08-安全 → 09-语言学习 → 10-逆向工程 → 11-性能分析`
-每轮大类 = 循环[§二 `top_pos`],**11 大类各占 1/11 轮次,与子类目数量无关**。
+`01-游戏开发 → 02-Web开发 → 03-系统编程 → 04-移动开发 → 05-AI与机器学习 → 06-DevOps → 07-数据存储 → 08-安全 → 09-语言学习 → 10-逆向工程 → 11-性能分析 → 12-项目工程`
+每轮大类 = 循环[§二 `top_pos`],**12 大类各占 1/12 轮次,与子类目数量无关**(# 12-项目工程 2026-09-22 用户新增)。
 
-**大类内子类目轮转**:取该大类在索引表的全部条目(表序)第 `sub_pos[大类]` 个;完成后 +1 mod 条目数,新子类目只追加表尾。
+**类内轮转**:该大类在索引表的全部条目(表序)第 `sub_pos[大类]` 个;完成后 +1 mod 条目数,新子类目只追加表尾。
 
 ```text
 轮询索引表(组内顺序即轮转顺序):
@@ -45,14 +45,16 @@
 59-60 11-性能分析: 全链路性能|容量规划与性能建模(# 补登记)
 61    11-性能分析: 数据库性能
 62    11-性能分析: 网络与传输性能
+63-66 12-项目工程: 数据结构与集合选型|设计模式与惯用法|架构模式与模块边界|代码可读性与重构技法
+67-70 12-项目工程: 依赖治理与耦合控制|可测试性设计|代码质量度量与架构守护|演进式设计与遗留系统重构
 ```
 
-> 39-62 类目拓展/补登记(S2+S3),新子类目顺延 63 起。
+> 39-62 类目拓展/补登记(S2+S3);63-70 = 2026-09-22 用户新增顶层 12-项目工程(8 子类目);新子类目顺延 71 起。
 ## 二、本轮状态
 
 ```
 top_pos        : 0         # 下轮消费循环[0]=01-游戏开发(本轮已消费[10]=11-性能分析)
-sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4  # 本轮 sub_pos[11]=3 → 索引 59;11 共 7 条目(37/38/47/59/60/61/62),(3+1)%7=4
+sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4 12:0  # 本轮 sub_pos[11]=3 → 索引 59;11 共 7 条目(37/38/47/59/60/61/62),(3+1)%7=4
 last_run       : 2026-09-23 00:00  # 占位锁:00:00 槽开局(索引 6 = 01-游戏开发/07-音频)
 last_top       : 11-性能分析  # 本轮大类;索引 59 = 全链路性能 首批(596-600)
 skipped        : []
@@ -63,16 +65,16 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-22 22:37 | 59 | 11-性能分析/全链路性能首批:W3C TraceContext·尾采样决策窗口·关键路径self-time·延迟预算deadline·扇出放大与对冲 | S1+S3 | +5 | 600 | w3c2+grpc2直连+otel4+spec1(GitHub API)+tail1(WebFetch);Py258+main×5 | notify: ok |
-| 2026-09-22 20:46 | 57 | 10-逆向工程/固件与嵌入式逆向首批:uImage与FIT·SquashFS·JFFS2与UBI·Cortex-M向量表·MCUboot | S1+S3 | +5 | 595 | u-boot+linux7+cmsis+zephyr+mcuboot3+fitspec(GitHub API);0检索;Py428+main×5 | notify: ok |
-| 2026-09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析·型变与PhantomData·trait高级形态·宏卫生性·TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2(GitHub API直取);0检索;Py 245+main×5 | notify: ok |
-| 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | notify: ok |
-| 2026-09-22 16:55 | 54 | 08-安全/供应链二批:CVSS v4.0宏向量·TUF·in-toto·可复现构建·AFL覆盖率 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss官方JS6+spec§8;0检索;Py 1021 | notify: ok |
+| 09-22 22:37 | 59 | 11-性能分析/全链路性能首批:TraceContext·尾采样窗口·self-time·deadline·扇出对冲 | S1+S3 | +5 | 600 | w3c2+grpc2+otel4+spec1+tail1;Py258+main×5 | ok |
+| 09-22 20:46 | 57 | 10-逆向工程/固件与嵌入式首批:uImage与FIT·SquashFS·JFFS2与UBI·Cortex-M向量表·MCUboot | S1+S3 | +5 | 595 | u-boot+linux7+cmsis+zephyr+mcuboot3+fitspec;Py428+main×5 | ok |
+| 09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析·型变·trait高级形态·宏卫生性·TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2;Py245+main×5 | ok |
+| 09-22 09:03 | 49 | 05-AI/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | ok |
+| 09-22 16:55 | 54 | 08-安全/供应链二批:CVSS v4.0宏向量·TUF·in-toto·可复现构建·AFL覆盖率 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss6+spec8;Py1021 | ok |
 
 > 更早细节见 `archive/schedule.md`。
 
 ## 四、rotate 与查找
 
-- rotate(副任务,不耗主配额):completed.md > 100 / schedule.md > 30 → 截到最近 100/30,丢弃部分查 `git log -p _docs/archive/`
-- 某 demo 是否做过 → Grep `completed.md`;上轮资料/坑 → Grep `schedule.md`;总数 → 数 completed.md 行数
-- 每轮只动 §三,超 5 KB 时压缩旧行。
+- rotate(副任务):completed >100 / schedule >30 → 截最近 100/30,丢弃部分查 `git log -p _docs/archive/`
+- 查.demo/资料:Grep `completed.md` / `schedule.md`;总数 = completed.md 行数
+- 每轮只动 §三,超 5 KB 压缩旧行。

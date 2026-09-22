@@ -63,7 +63,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-22 22:37 | 59 | 11-性能分析/全链路性能首批:W3C TraceContext·尾采样决策窗口·关键路径self-time·延迟预算deadline·扇出放大与对冲 | S1+S3 | +5 | 600 | w3c2+grpc2直连+otel4+spec1(GitHub API)+tail1(WebFetch);Py258+main×5 | notify: pending |
+| 2026-09-22 22:37 | 59 | 11-性能分析/全链路性能首批:W3C TraceContext·尾采样决策窗口·关键路径self-time·延迟预算deadline·扇出放大与对冲 | S1+S3 | +5 | 600 | w3c2+grpc2直连+otel4+spec1(GitHub API)+tail1(WebFetch);Py258+main×5 | notify: ok |
 | 2026-09-22 20:46 | 57 | 10-逆向工程/固件与嵌入式逆向首批:uImage与FIT·SquashFS·JFFS2与UBI·Cortex-M向量表·MCUboot | S1+S3 | +5 | 595 | u-boot+linux7+cmsis+zephyr+mcuboot3+fitspec(GitHub API);0检索;Py428+main×5 | notify: ok |
 | 2026-09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析·型变与PhantomData·trait高级形态·宏卫生性·TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2(GitHub API直取);0检索;Py 245+main×5 | notify: ok |
 | 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | notify: ok |

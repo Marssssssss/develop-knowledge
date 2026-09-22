@@ -90,7 +90,8 @@ CQ ring 满时的行为：早期内核直接丢完成事件；`IORING_SETUP_CQ_O
 
 ## 文件说明
 
-- `python/ioring.py` —— 常量、`SQE`/`CQE`、`Ring`（含 SQ 间接 / CQ 溢出），`RegisteredBuffers`、`setup()` / `clamp_entries()` / `mmap_length()`
+- `python/ioring.py` —— 常量、`SQE`/`CQE` 结构及其序列化
+- `python/ioring_ring.py` —— `Ring`（SQ 间接 / CQ 溢出）、`RegisteredBuffers`、`setup()` / `clamp_entries()` / `mmap_length()`
 - `python/selfcheck_ioring.py` —— 75 条断言（实跑全绿）
 - `python/main.py` —— 演示入口
 - `go/ioring.go` + `go/ioring_ring.go` —— Go 侧镜像（常量与 setup 一份，环与注册表一份）

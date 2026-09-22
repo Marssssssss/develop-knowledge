@@ -8,8 +8,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ioring import (  # noqa: E402
     CQE, IORING_MAX_CQ_ENTRIES, IORING_MAX_ENTRIES, IORING_OFF_CQ_RING,
     IORING_OFF_SQES, IORING_OFF_SQ_RING, IORING_OP_READ,
-    IORING_OP_READ_FIXED, IORING_SETUP_SQPOLL, OP_NAME, RegisteredBuffers,
-    Ring, clamp_entries, mmap_length, prep_read, prep_read_plain, setup,
+    IORING_OP_READ_FIXED, IORING_SETUP_SQPOLL, OP_NAME,
+)
+from ioring_ring import (  # noqa: E402
+    RegisteredBuffers, Ring, clamp_entries, mmap_length, prep_read,
+    prep_read_plain, setup,
 )
 
 

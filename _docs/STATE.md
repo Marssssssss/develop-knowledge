@@ -51,10 +51,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 8         # 下轮消费循环[8]=09-语言学习(本轮已消费[7]=08-安全)
-sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:2 10:3 11:3  # 本轮 sub_pos[08]=3 → 索引 54=03-应用安全与供应链;08 共 4 条目(31/32/33/54),(3+1)%4=0 → 下轮 31=01-密码学
-last_run       : 2026-09-22 18:01  # 18:00 槽开局占位锁(消费循环[8]=09-语言学习,sub_pos[09]=2 → 索引 50=Rust 第三批)
-last_top       : 08-安全  # 上轮;索引 54 = 03-应用安全与供应链 二批(581-585)
+top_pos        : 9         # 下轮消费循环[9]=10-逆向工程(本轮已消费[8]=09-语言学习)
+sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:3 11:3  # 本轮 sub_pos[09]=2 → 索引 50=Rust;09 共 4 条目(34/44/50/53),(2+1)%4=3 → 下轮 53=TypeScript
+last_run       : 2026-09-22 19:08  # 18:00 槽收尾(本轮消费循环[8]=09-语言学习,索引 50=Rust 第三批 586-590)
+last_top       : 09-语言学习  # 本轮;索引 50 = Rust 第三批(586-590)
 skipped        : []
 failed_attempts: []
 ```
@@ -63,10 +63,10 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析候选列表·型变与PhantomData·trait高级形态·声明宏卫生性·过程宏TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2(GitHub API直取);0检索;Py 245+main×5 | notify: ok |
+| 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | notify: ok |
+| 2026-09-22 06:41 | 18 | 04-移动开发/03-跨平台首批:Yoga布局·Dart事件循环·Hermes字节码·Compose快照·Tauri IPC | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+tauri4;Py262 | notify: ok |
 | 2026-09-22 16:55 | 54 | 08-安全/03-应用安全与供应链二批:CVSS v4.0宏向量·TUF四角色·in-toto链路验证·可复现构建·AFL覆盖率引导 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss官方JS6+spec§8;0检索;Py 1021 | notify: ok |
-| 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+ihler05a+SLP3A+hmmlearn+blei1601+sklearn;Py 264 | notify: ok |
-| 2026-09-22 06:41 | 18 | 04-移动开发/03-跨平台首批:Yoga布局·Dart事件循环·Hermes值与字节码·Compose快照·Tauri IPC与ACL | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+compose2+tauri4;Py 262 | notify: ok |
-| 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除·分级分配器·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc+tcmalloc+mimalloc+zAddress+JEP333/439+mbind+mm.rst+uffd;Py 299 | notify: ok |
 | 2026-09-22 14:44 | 28 | 07-数据存储/02-NoSQL第三批:ScyllaDB分片·DynamoDB自适应容量·MongoDB chunk·Cassandra SAI·HBase分裂 | S3 | +5 | 580 | scylladb7+ddb4+mongo2+cs3+hbase3+book;Py211 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。

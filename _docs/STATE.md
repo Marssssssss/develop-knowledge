@@ -53,10 +53,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 0         # 下轮消费循环[0]=01-游戏开发(本轮已消费[10]=11-性能分析)
-sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4 12:0  # 本轮 sub_pos[11]=3 → 索引 59;11 共 7 条目(37/38/47/59/60/61/62),(3+1)%7=4
-last_run       : 2026-09-23 00:00  # 占位锁:00:00 槽开局(索引 6 = 01-游戏开发/07-音频)
-last_top       : 11-性能分析  # 本轮大类;索引 59 = 全链路性能 首批(596-600)
+top_pos        : 1         # 下轮消费循环[1]=02-Web开发(本轮已消费[0]=01-游戏开发)
+sub_pos        : 01:7 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4 12:0  # 本轮 sub_pos[01]=6 → 索引 6;01 共 8 条目(0-7),(6+1)%8=7
+last_run       : 2026-09-23 00:54  # 00:00 槽收尾(索引 6 = 01-游戏开发/07-音频 601-605)
+last_top       : 01-游戏开发  # 本轮大类;索引 6 = 07-音频 音频专题 5 demo(601-605)
 skipped        : []
 failed_attempts: []
 ```
@@ -66,10 +66,10 @@ failed_attempts: []
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
 | 09-22 22:37 | 59 | 11-性能分析/全链路性能首批:TraceContext·尾采样窗口·self-time·deadline·扇出对冲 | S1+S3 | +5 | 600 | w3c2+grpc2+otel4+spec1+tail1;Py258+main×5 | ok |
-| 09-22 20:46 | 57 | 10-逆向工程/固件与嵌入式首批:uImage与FIT·SquashFS·JFFS2与UBI·Cortex-M向量表·MCUboot | S1+S3 | +5 | 595 | u-boot+linux7+cmsis+zephyr+mcuboot3+fitspec;Py428+main×5 | ok |
 | 09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析·型变·trait高级形态·宏卫生性·TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2;Py245+main×5 | ok |
 | 09-22 09:03 | 49 | 05-AI/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | ok |
 | 09-22 16:55 | 54 | 08-安全/供应链二批:CVSS v4.0宏向量·TUF·in-toto·可复现构建·AFL覆盖率 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss6+spec8;Py1021 | ok |
+| 09-23 00:54 | 6 | 01-游戏开发/07-音频:Ambisonic声场ACN-SN3D·HRTF双耳渲染SOFA·参数自动化与包络·Opus帧结构与Ogg封装·实时变调与变速 | S1+S3 | +5 | 605 | spatialaudio1+sofaconv2+mysofa6+w3c1+rfc2+rubberband2;0检索;Py385+main×5 | ok |
 
 > 更早细节见 `archive/schedule.md`。
 

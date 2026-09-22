@@ -65,15 +65,27 @@ INP 的 200 ms 阈值同理，来自"因果知觉"这类感知实验：延迟 �
 
 这就是"单服务 p99 很漂亮，端到端 p99 很难看"的算术来源。对策不是"让每个下游更快"，而是：给下游设**独立的超时与预算**（预算用尽就降级）、对非关键依赖做**异步化或裁剪**、把尾部采样打开以便真的能看见这些慢 trace。
 
+## 已完成 demo（2026-09-22 首批 5 个，ID 596-600）
+
+| demo | 核心机制 | 自检 |
+| --- | --- | --- |
+| [W3C-TraceContext传播/](./W3C-TraceContext传播/) | `traceparent` 四字段定长布局与"忽略 vs 重开"两类失败；sampled 是 **bit 0** 不是"等于 1"；高版本按位置解析（dash 在 2/35/52，短于 55 字符重开）；tracestate 左移规则与两阶段截断；baggage 的 64 成员 / 8192 字节下限 | 62 条 |
+| [尾采样决策窗口/](./尾采样决策窗口/) | 批数 = `decision_wait` 秒数，决策延迟 = 批数 + 1 次 tick；根 span 加速只在 `after_root < decision_wait` 时生效；**决策不回头**；`num_traces` 满时淘汰最老待决 trace 且**不给决策**；LRU 决策缓存兜住晚到 span | 58 条 |
+| [关键路径与self-time归因/](./关键路径与self-time归因/) | `self_time = duration − Σ 子 span 时长`，并发时为负 → 切 `parallel_wait`；关键路径以 self time 为点权的根到叶最长路径；`(CLIENT, SERVER)` 配对差值 = 网络 + 排队；多根 / 孤儿 span 检测 | 38 条 |
+| [延迟预算与deadline传播/](./延迟预算与deadline传播/) | deadline 是时刻、timeout 是时长；传播要扣已耗时与收尾预留；**线路上传 timeout 才免疫时钟偏移**（±30 s 实测）；客户端 `DEADLINE_EXCEEDED` vs 服务端 `CANCELLED`；等分 / 按成本加权 / 可压缩空间注水三种拆法与不可行判定 | 51 条 |
+| [扇出放大与对冲请求/](./扇出放大与对冲请求/) | `1 − (1−p)ⁿ`：p=1% 扇出 100 → 63%；反解最大可容忍扇出（5 / 512）；对冲 delay 取 **p95** 时额外负载 ≈5% 而 p99.9 从 1075 ms 降到 23.5 ms；gRPC `maxAttempts` 封顶 5、令牌桶限流、`grpc-retry-pushback-ms` | 49 条 |
+
 ## 待研究
 
-- [ ] 端到端追踪的传播机制：W3C Trace Context 的 `traceparent` 字段布局与采样标志
-- [ ] 尾采样（tail sampling）的判定窗口与"决策不回头"约束
-- [ ] 关键路径分析（critical path）与 span 树的差值归因算法
-- [ ] 延迟预算的拆分母法：SLO → 每跳预算的分配策略（等分 / 按成本 / 按可压缩空间）
-- [ ] 扇出放大的量化模型与"最大可容忍下游数"
+- [x] 端到端追踪的传播机制：W3C Trace Context 的 `traceparent` 字段布局与采样标志（[W3C-TraceContext传播/](./W3C-TraceContext传播/)，2026-09-22，ID 596）
+- [x] 尾采样（tail sampling）的判定窗口与"决策不回头"约束（[尾采样决策窗口/](./尾采样决策窗口/)，2026-09-22，ID 597）
+- [x] 关键路径分析（critical path）与 span 树的差值归因算法（[关键路径与self-time归因/](./关键路径与self-time归因/)，2026-09-22，ID 598）
+- [x] 延迟预算的拆分母法：SLO → 每跳预算的分配策略（等分 / 按成本 / 按可压缩空间）（[延迟预算与deadline传播/](./延迟预算与deadline传播/)，2026-09-22，ID 599）
+- [x] 扇出放大的量化模型与"最大可容忍下游数"（[扇出放大与对冲请求/](./扇出放大与对冲请求/)，2026-09-22，ID 600）
 - [ ] 合成监测（Synthetic）与 RUM 的互补：用合成做门禁、用 RUM 做判定的闭环
 - [ ] CDN / 边缘侧的缓存命中率与回源放大对端到端延迟的影响
+- [ ] Core Web Vitals 的字段采集口径：LCP 候选元素淘汰、INP 的交互分组与离群剔除、CLS 的会话窗口
+- [ ] head sampling 与 tail sampling 的成本对照：在既有 trace 上重放两种策略的命中率
 
 ## 参考资料（实际阅读过的来源）
 
@@ -82,5 +94,15 @@ INP 的 200 ms 阈值同理，来自"因果知觉"这类感知实验：延迟 �
 - [What Are the Core Web Vitals? LCP, INP & CLS Explained — corewebvitals.io](https://www.corewebvitals.io/core-web-vitals) — INP 于 2024 年 3 月取代 FID（FID 只测首次交互的输入延迟，INP 测整次访问中所有点击/轻触/按键，且取最长交互并剔除离群）；INP 不测量滚动、悬停这类连续交互
 - [Traces — OpenTelemetry 官方文档](https://opentelemetry.io/docs/concepts/signals/traces/) — span 的完整字段（name / parent_id / 起止时间戳 / span context / attributes / events / links / status）、SpanKind 五值与官方种属约定、上下文传播作为分布式追踪核心机制的说明；三个示例 span 的 trace_id 相同、parent_id 构成层级，即"trace = 带上下文与层级的结构化日志集合"
 - [Queueing Theory for SREs: Little's Law and the Utilisation Knee — cloudandsre.com](https://cloudandsre.com/blog/queueing-theory-for-sres) — 用于本页扇出放大与排队拐点的口径校验（W = S/(1−ρ) 在 ρ=0.7 处 3.3×、0.9 处 10×），与延迟预算"为什么不能打满"的量化依据
+
+### 2026-09-22 首批 5 demo 新增来源
+
+- [W3C Baggage — TR/baggage](https://www.w3.org/TR/baggage/) — 64 成员 / 8192 字节传播下限、"不得传播半个成员"、value 的 ASCII 限制与百分号编码
+- [opentelemetry-collector-contrib — `processor/tailsamplingprocessor/processor.go`](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/processor.go) — `numDecisionBatches = math.Max(1, DecisionWait.Seconds())`、根 span 的 `MoveToEarlierBatch`、`waitForSpace` 的阻塞/淘汰分支、tick 上 `FinalDecision != Unspecified` 即跳过、`numDropPolicies` 的前缀 break
+- [opentelemetry-collector-contrib — `internal/idbatcher/id_batcher.go`](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/internal/idbatcher/id_batcher.go) — 批号为绝对编号（`takeID + len(batches)`）、环形槽位替换、`MoveToEarlierBatch` 的 `proposed >= traceCurrentBatch` 空操作条件
+- [OpenTelemetry Specification — Trace API（SpanKind）](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md) — 五值 SpanKind 二维表、`CLIENT` 传播后成为远端 `SERVER` 的父（跨进程配对与差值归因的依据）
+- [gRPC — Deadlines 官方指南](https://grpc.io/docs/guides/deadlines/) — deadline 是时刻 / timeout 是时长、默认不设即无限等、`DEADLINE_EXCEEDED` 与 `CANCELLED` 的分工、传播时扣除已耗时以屏蔽时钟偏移、13:00:00 / 2s / 0.5s / 1.5s 时序
+- [gRPC — Request Hedging 官方指南](https://grpc.io/docs/guides/request-hedging/) — `maxAttempts` 必填且 >5 按 5 处理、`hedgingDelay` 不填则同时发出、deadline 覆盖整条对冲链、`maxTokens`/`tokenRatio` 令牌桶与 `> maxTokens/2` 才发对冲、`grpc-retry-pushback-ms` 负值即不重试
+- [Jeff Dean & Luiz André Barroso — The Tail at Scale（CACM）](https://cacm.acm.org/research/the-tail-at-scale/) — 10ms/p99=1s 与扇出 100 → 63%；1/10000 与 2000 台 → 约 18%；Table 1 的 10/70/140 ms；对冲 delay 取 p95 → 额外负载约 5%，1000 keys/100 servers 实测 p99.9 1800ms→74ms 且只多 2% 请求；tied requests 的 2× 网络延迟与 Table 2 的 median −16% / p99.9 近 −40%
 
 > 姊妹阅读：[05-容量规划与性能建模/](../05-容量规划与性能建模/) 把这里的"预算"升级为"可预测的容量曲线"。

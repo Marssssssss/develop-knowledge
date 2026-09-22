@@ -51,9 +51,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 10        # 下轮消费循环[10]=11-性能分析(本轮已消费[9]=10-逆向工程)
-sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:3  # 本轮 sub_pos[10]=3 → 索引 57;10 共 4 条目(35/36/46/57),(3+1)%4=0
-last_run       : 2026-09-22 22:02  # 22:00 槽占位锁(索引 59 = 全链路性能 首批)
+top_pos        : 0         # 下轮消费循环[0]=01-游戏开发(本轮已消费[10]=11-性能分析)
+sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4  # 本轮 sub_pos[11]=3 → 索引 59;11 共 7 条目(37/38/47/59/60/61/62),(3+1)%7=4
+last_run       : 2026-09-22 22:37  # 22:00 槽收尾(索引 59 = 全链路性能 596-600)
 last_top       : 11-性能分析  # 本轮大类;索引 59 = 全链路性能 首批(596-600)
 skipped        : []
 failed_attempts: []
@@ -63,10 +63,10 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-22 22:37 | 59 | 11-性能分析/全链路性能首批:W3C TraceContext·尾采样决策窗口·关键路径self-time·延迟预算deadline·扇出放大与对冲 | S1+S3 | +5 | 600 | w3c2+grpc2直连+otel4+spec1(GitHub API)+tail1(WebFetch);Py258+main×5 | notify: pending |
 | 2026-09-22 20:46 | 57 | 10-逆向工程/固件与嵌入式逆向首批:uImage与FIT·SquashFS·JFFS2与UBI·Cortex-M向量表·MCUboot | S1+S3 | +5 | 595 | u-boot+linux7+cmsis+zephyr+mcuboot3+fitspec(GitHub API);0检索;Py428+main×5 | notify: ok |
 | 2026-09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析·型变与PhantomData·trait高级形态·宏卫生性·TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2(GitHub API直取);0检索;Py 245+main×5 | notify: ok |
 | 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | notify: ok |
-| 2026-09-22 06:41 | 18 | 04-移动开发/跨平台首批:Yoga·Dart事件循环·Hermes·Compose快照·Tauri IPC | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+tauri4;Py262 | notify: ok |
 | 2026-09-22 16:55 | 54 | 08-安全/供应链二批:CVSS v4.0宏向量·TUF·in-toto·可复现构建·AFL覆盖率 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss官方JS6+spec§8;0检索;Py 1021 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。

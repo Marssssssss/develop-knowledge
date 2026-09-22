@@ -1,0 +1,10 @@
+[package]
+name = "declarative-macros"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "declarative-macros"
+path = "main.rs"
+
+[dependencies]

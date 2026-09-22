@@ -63,7 +63,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-22 11:29 | 43 | 06-DevOps/07-DevSecOps首批:Semgrep匹配·PURL与VEX·DSSE与P-256·密钥熵·OPA safety重排 | S1+S3 | +5 | 575 | semgrep5+purl+CycloneDX+spdx+dsse2+cosign2+proto3+detect-secrets3+gitleaks4+opa5;Py 261 | notify: pending |
+| 2026-09-22 11:29 | 43 | 06-DevOps/07-DevSecOps首批:Semgrep匹配·PURL与VEX·DSSE与P-256·密钥熵·OPA safety重排 | S1+S3 | +5 | 575 | semgrep5+purl+CycloneDX+spdx+dsse2+cosign2+proto3+detect-secrets3+gitleaks4+opa5;Py 261 | notify: ok |
 | 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy×2+nx chordal+ihler05a+SLP3 A+hmmlearn+blei1601+sklearn lda;Py 264 | notify: ok |
 | 2026-09-22 06:41 | 18 | 04-移动开发/03-跨平台首批:Yoga布局算法·Dart事件循环与Timer·Hermes值与字节码·Compose快照系统·Tauri IPC与ACL | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+compose2+tauri4;Py 262 | notify: ok |
 | 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除与合并·分级分配器对比·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc.3+tcmalloc+mimalloc+zAddress.hpp+JEP333/439/379+mbind(2)+this_cpu_ops+mm.rst+uffd(2);Py 299 | notify: ok |

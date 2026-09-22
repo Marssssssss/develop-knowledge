@@ -42,7 +42,7 @@
 | 模式匹配 | ch19 | 进阶 | 全量模式参考 | — |
 | unsafe / 宏 / 高级 trait | ch20 | 进阶 | 裸指针、`macro_rules!`、GAT | 10 |
 
-## 三、已完成 demo(第一批 5 个 2026-09-15 · 第二批 5 个 2026-09-19)
+## 三、已完成 demo(第一批 5 个 2026-09-15 · 第二批 5 个 2026-09-19 · 第三批 5 个 2026-09-22)
 
 | # | demo | 一句话核心机制 |
 | --- | --- | --- |
@@ -56,6 +56,11 @@
 | 8 | [`async状态机/`](./async状态机/) | Future 是惰性的(std 原文 inert);Waker 驱动只需 2 次 poll vs 盲轮询 101 次;只有「最近一次 Context」的 Waker 该被唤醒;Pin 只为自引用 future 存在 |
 | 9 | [`错误处理惯用法/`](./错误处理惯用法/) | `?` 能作用于 5 种类型,但**只有 Result 系会调 `From::from`**;`Box<dyn Error>` = "any kind of error";std 明令 source() 与 Display「二者只能选一个」(写成可执行 lint) |
 | 10 | [`unsafe边界/`](./unsafe边界/) | unsafe 只解锁五件事,**借用检查照常生效**(E0502 反例);`UnsafeCell` 只解除 `&T` 不可变保证、交叠 `&mut` 永远非法;安全抽象靠一句 `assert!` 把 UB 变成 panic |
+| 11 | [`方法解析与自动解引用/`](./方法解析与自动解引用/) | 候选接收者列表 = 反复解引用 + 每个 `T` 后紧跟 `&T`/`&mut T` + 末尾未定长强转;按列表顺序三级查找(固有 > 约束 trait > 其余),命中**之后**才查可变性与 unsafe |
+| 12 | [`型变与PhantomData/`](./型变与PhantomData/) | 子类型化只在生命周期上;struct 型变 = 字段合并(冲突即不变),裸位置**逐位置各算**;`&mut T` 在 T 上不变是安全前提;PhantomData 九种写法的型变 / 自动 trait / drop check 各不相同 |
+| 13 | [`trait高级形态/`](./trait高级形态/) | 关联类型 vs 泛型参数的分水岭是「同类型能实现几次」;supertrait 闭包与环检测;GAT 把关联类型升级成类型族;dyn 兼容是六条**逐条否决**清单(GAT 与关联常量被否、`where Self: Sized` 能救) |
+| 14 | [`声明宏与卫生性/`](./声明宏与卫生性/) | `macro_rules!` 是逐 token、**不向前看**的小解析器;片段分类符 + 跟随集(组的左定界符算前一个 token);mixed-site hygiene:局部与标签走定义处、其余走调用处 |
+| 15 | [`过程宏与TokenStream/`](./过程宏与TokenStream/) | 三类过程宏必须住独立 `proc-macro` crate 且**完全不卫生**;声明宏与过程宏是**两套 token 定义**需双向转换;doc 注释即 `#[doc]` 属性 |
 
 **原理速览**(细节已下沉到各 demo 的 README):
 
@@ -82,10 +87,10 @@
 8. ✅ **async/await 状态机** — Future 是惰性的、`poll` 与 `Waker`、Pin 解决的问题、task 与 executor 的关系(demo 369)
 9. ✅ **错误处理惯用法** — `Result` + `?` + `From` 自动转换、`thiserror`/`anyhow` 的分工、`Box<dyn Error>`(demo 370)
 10. ✅ **unsafe Rust 边界** — 裸指针、`UnsafeCell` 与内部可变性的底层、`transmute` 的前提、`unsafe` 不取消借用检查(demo 371)
-11. [ ] **方法解析与 auto-deref** — 方法调用的候选集顺序、`&self`/`&mut self`/`self` 的自动引用、与 `Deref` 的交互
-12. [ ] **variance 与协变** — `&'a T`/`&'a mut T` 的协变/逆变、`PhantomData` 的作用、闭包捕获对 variance 的影响
-13. [ ] **trait 高级形态** — associated type vs 泛型参数、supertrait、GAT、trait object 上的关联类型
-14. [ ] **宏系统** — `macro_rules!` 的卫生性与片段分类、过程宏三类(derive/attribute/function-like)、与 C 预处理器的本质差异
+11. ✅ **方法解析与 auto-deref** — 候选接收者列表构造顺序、三级优先级、歧义 E0034、`Deref` 与自动引用的交互(demo 586)
+12. ✅ **variance 与协变** — `&'a T`/`&'a mut T` 的协变与不变、struct 由字段推导、`PhantomData` 的九种写法(demo 587)
+13. ✅ **trait 高级形态** — associated type vs 泛型参数、supertrait、GAT、dyn 兼容六条规则(demo 588)
+14. ✅ **宏系统** — `macro_rules!` 的片段分类与跟随集 + 卫生性(demo 589);过程宏三类与两套 token 定义(demo 590)
 
 ## 五、权威来源(本 README 实际阅读过的来源)
 
@@ -171,6 +176,14 @@
 - [Rustonomicon — Transmutes](https://doc.rust-lang.org/nomicon/transmutes.html)
   —— 尺寸是唯一限制、`&`→`&mut` 永远 UB、`repr(Rust)` 布局无保证。
 
+第三批(2026-09-22,demo 586-590)主源(逐节依据见各 demo 的 README §八):
+
+- [Rust Reference — Method call expressions](https://doc.rust-lang.org/reference/expressions/method-call-expr.html) —— 候选接收者列表的构造与查找顺序、官方 9 项 `Box<[i32;2]>` 例子。
+- [Rust Reference — Subtyping and variance](https://doc.rust-lang.org/reference/subtyping.html) —— 型变三定义、内置类型型变表、struct 由字段推导、"outside of a struct … separately"。
+- [Rust Reference — Traits](https://doc.rust-lang.org/reference/items/traits.html) —— supertrait、GAT、Dyn compatibility 六条否决规则;来源 `items/traits.md` + `items/associated-items.md`。
+- [Rust Reference — Macros By Example](https://doc.rust-lang.org/reference/macros-by-example.html) —— 片段分类符、跟随集、重复匹配、混合位点卫生性(mixed-site hygiene)。
+- [Rust Reference — Procedural Macros](https://doc.rust-lang.org/reference/procedural-macros.html) —— 三类过程宏、两套 token 定义、属性宏的四种输入拆分、不卫生性。
+
 ## 六、与已有 demo 的边界
 
 - **领域 demo 里的 Rust 实现**(如 `08-安全/01-密码学/`、`06-DevOps/01-容器化/` 后续若补 Rust):
@@ -184,5 +197,5 @@
 ## 七、进度
 
 由 [`_docs/STATE.md`](../../_docs/STATE.md)(主,≤ 5 KB)+ [`archive/`](../../_docs/archive/)(历史回溯)统一追踪。
-本子类目当前状态:**README 已建 + 第一批 5 个 demo(2026-09-15,demo 207-211)+ 第二批 5 个(2026-09-19,demo 367-371),共 10 个**;
-剩余 §四 清单 11–14(方法解析与 auto-deref / variance 与协变 / trait 高级形态 / 宏系统)。
+本子类目当前状态:**README 已建 + 第一批 5 个 demo(2026-09-15,demo 207-211)+ 第二批 5 个(2026-09-19,demo 367-371)+ 第三批 5 个(2026-09-22,demo 586-590),共 15 个**;
+§四 清单 1–14 已全部完成;第三批 Python 自检共 245 项断言(39+61+44+51+50),实跑全通过。

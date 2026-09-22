@@ -193,13 +193,8 @@ PHANTOM_TABLE["PhantomData<fn(T)>"][1]          # → CONTRA（一致）
 ## 八、参考资料（实际阅读）
 
 - [Rust Reference — Subtyping and variance](https://doc.rust-lang.org/reference/subtyping.html)
-  —— 子类型化只限于生命周期与高阶生命周期、型变三定义、内置类型型变表、
-  struct 由字段推导且冲突即不变、官方 `Variance` 结构体例子、
-  "outside of a struct … checked at each location separately" 及两个例子
-  （元组与函数指针）、`for<'a>` 的替换规则。
-- [Rustonomicon — Subtyping and Variance](https://doc.rust-lang.org/nomicon/subtyping.html)
-  —— 型变的动机与「为什么 `&mut T` 必须不变」的推导。
+  —— 只限于生命周期、型变三定义、内置类型型变表、struct 由字段推导且冲突即不变、官方 `Variance` 例子、
+  "outside of a struct … each location separately" 及两例、`for<'a>` 替换规则。
+- [Rustonomicon — Subtyping and Variance](https://doc.rust-lang.org/nomicon/subtyping.html) —— 型变动机与「`&mut T` 为何必须不变」。
 - [Rustonomicon — PhantomData](https://doc.rust-lang.org/nomicon/phantom-data.html)
-  —— 九种 `PhantomData` 写法的型变 / Send+Sync / drop glue 对照表、
-  「拥有 `T`」与 `#[may_dangle]` 的相互作用（含 std `Vec` 的真实写法）、
-  `PhantomPinned` 的 Note。
+  —— 九种写法的型变 / Send+Sync / drop glue 对照表、`#[may_dangle]` 与「拥有 T」（含 std `Vec`）、`PhantomPinned` Note。

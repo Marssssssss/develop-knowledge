@@ -53,10 +53,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 2         # 下轮消费循环[2]=03-系统编程(本轮已消费[1]=02-Web开发)
-sub_pos        : 01:7 02:4 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4 12:0  # 本轮[02]=3→索引 11;下轮[02]=4→42;02 共 6 条目(8-11,42,58)
-last_run       : 2026-09-23 04:00  # 04:00 槽占位锁(03-系统编程/04-文件系统 第二批)
-last_top       : 02-Web开发  # 索引 11 = 04-API设计 5 demo(606-610)
+top_pos        : 3         # 下轮消费循环[3]=04-移动开发(本轮已消费[2]=03-系统编程)
+sub_pos        : 01:7 02:4 03:0 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4 12:0  # 本轮[03]=3→索引 15(04-文件系统);下轮[03]=4 mod 4=0→索引 12(01-网络编程);03 共 4 条目(12-15)
+last_run       : 2026-09-23 04:54  # 04:00 槽收尾(03-系统编程/04-文件系统 第二批)
+last_top       : 03-系统编程  # 索引 15 = 04-文件系统 5 demo(611-615)
 skipped        : []
 failed_attempts: []
 ```
@@ -65,11 +65,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 09-22 22:37 | 59 | 11-性能分析/全链路性能首批:TraceContext·尾采样窗口·self-time·deadline·扇出对冲 | S1+S3 | +5 | 600 | w3c2+grpc2+otel4+spec1+tail1;Py258+main×5 | ok |
 | 09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析·型变·trait高级形态·宏卫生性·TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2;Py245+main×5 | ok |
 | 09-22 09:03 | 49 | 05-AI/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | ok |
 | 09-22 16:55 | 54 | 08-安全/供应链二批:CVSS v4.0宏向量·TUF·in-toto·可复现构建·AFL覆盖率 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss6+spec8;Py1021 | ok |
 | 09-23 03:07 | 11 | 02-Web开发/04-API设计:HATEOAS三形态·API版本化与弃用·OpenAPI3.1契约优先·Protobuf线格式与gRPC建模·WebSocket心跳与重连 | S1+S3 | +5 | 610 | hal1+siren1+jsonapi1+rfc5+oas2+pb2+grpc2+iana1;0检索;Py680 | ok |
+| 09-23 04:54 | 15 | 03-系统编程/04-文件系统第二批:XFS延迟分配·fs-verity与dm-integrity·io_uring文件IO·dcache与getdents64·文件系统冻结 | S1+S3 | +5 | 615 | xfs4+iomap1+dcache1+super1+fsverity4+man7×7+glibc2;0检索;Py372+main×5 | ok |
 
 > 更早细节见 `archive/schedule.md`。
 

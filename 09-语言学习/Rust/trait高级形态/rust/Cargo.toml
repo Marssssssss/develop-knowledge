@@ -1,0 +1,10 @@
+[package]
+name = "advanced-traits"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "advanced-traits"
+path = "main.rs"
+
+[dependencies]

@@ -18,7 +18,7 @@ from __future__ import annotations
 DISPATCHABLE_RECEIVERS = {
     "&self", "&mut self", "Box<Self>", "Rc<Self>", "Arc<Self>",
     "Pin<&Self>", "Pin<Box<Self>>", "Pin<Rc<Self>>", "Pin<Arc<Self>>",
-    "&Self+liftime",
+    "&Self+lifetime",
 }
 
 # 官方点名「不是 dyn 兼容」的异步闭包三 trait

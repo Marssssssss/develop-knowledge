@@ -101,7 +101,8 @@ the receiver, or whether a method is `unsafe`."*
 
 ```bash
 cd rust && cargo run
-cd python && python selfcheck_resolve.py
+cd python && python main.py               # 5 个反直觉场景的演示输出
+cd python && python selfcheck_resolve.py  # 39 项断言
 ```
 
 `rust/compile_fail/` 下 4 个文件**故意编译失败**：

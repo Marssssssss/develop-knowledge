@@ -124,14 +124,14 @@ let g: fn(&'static i32) -> &'static i32 = f;   // 'a := 'static
 
 ## 三、环境
 
-- Rust 2021 edition，纯标准库；`cargo run` 即可。
-- Python 3 模型（可运行、含 61 项断言）：`python selfcheck_variance.py`。
+- Rust 2021 edition，纯标准库，`cargo run` 即可；Python 3 模型含 61 项断言，实跑全绿。
 
 ## 四、运行方式
 
 ```bash
 cd rust && cargo run
-cd python && python selfcheck_variance.py
+cd python && python main.py                # 官方 Variance 结构体与 PhantomData 九种写法
+cd python && python selfcheck_variance.py  # 61 项断言
 ```
 
 `rust/compile_fail/` 下 3 个文件**故意编译失败**：

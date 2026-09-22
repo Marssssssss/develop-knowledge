@@ -115,7 +115,8 @@ macro_rules! check {
 
 ```bash
 cd rust && cargo run
-cd python && python selfcheck_macros.py
+cd python && python main.py              # 跟随集 / 匹配 / 展开 / mixed-site hygiene
+cd python && python selfcheck_macros.py  # 51 项断言
 ```
 
 `rust/compile_fail/` 下 4 个文件**故意编译失败**：

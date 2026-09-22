@@ -99,7 +99,8 @@ the output token stream was simply written inline to the code it's next to."*
 
 ```bash
 cd rust && cargo run          # 编译时会打印属性宏看到的 attr / item
-cd python && python selfcheck_procmacro.py
+cd python && python main.py   # 两套 token 定义的转换 + 属性宏四例切分
+cd python && python selfcheck_procmacro.py  # 50 项断言
 ```
 
 `rust/compile_fail/` 下 3 个文件**故意编译失败**：

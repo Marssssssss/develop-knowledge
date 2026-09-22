@@ -101,7 +101,8 @@ trait Lend {
 
 ```bash
 cd rust && cargo run
-cd python && python selfcheck_traits.py
+cd python && python main.py              # dyn 兼容逐条否决 + 关联类型 vs 泛型参数
+cd python && python selfcheck_traits.py  # 44 项断言
 ```
 
 `rust/compile_fail/` 下 4 个文件**故意编译失败**：

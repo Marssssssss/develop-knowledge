@@ -10,7 +10,7 @@
 | [04-Kubernetes/](./04-Kubernetes/) | Pod / Service / Controller / Operator |
 | [05-IaC与配置管理/](./05-IaC与配置管理/) | Terraform / Ansible / Pulumi |
 | [06-SRE与可靠性工程/](./06-SRE与可靠性工程/) | SLI / SLO / 错误预算 / 燃烧率告警 / 过载保护（首批 5 demo，ID 517-521） |
-| [07-DevSecOps/](./07-DevSecOps/) | 安全左移：SAST / SCA / SBOM / 密钥管理 / IaC 扫描 |
+| [07-DevSecOps/](./07-DevSecOps/) | 安全左移：SAST / SCA / SBOM / 密钥管理 / IaC 扫描（首批 5 demo，ID 571-575） |
 
 ## 已完成 demo 索引
 
@@ -27,6 +27,7 @@
 | 292-296 | [02-CI-CD/](./02-CI-CD/) | GitHub Actions 触发与表达式语义 / GitLab CI rules 与父子流水线 / Jenkins 声明式 Pipeline 时序 / Argo CD 同步与漂移检测 / 制品晋升与语义化版本（CI-CD 主干第二批） | Python/Go |
 | 462-466 | [05-IaC与配置管理/](./05-IaC与配置管理/) | Terraform 重构块与状态搬迁(moved/removed/import) / lifecycle 元参数与依赖图变换 / 插件协议发现与版本选择 / Ansible 集合 FQCN 解析与 runtime 元数据 / 计划期 unknown 值传播（IaC 主干第四批） | Python/Go |
 | 517-521 | [06-SRE与可靠性工程/](./06-SRE与可靠性工程/) | SLI 窗口与聚合口径(Prometheus 外推+OpenSLO rolling/calendar) / 错误预算与燃烧率(Sloth 因子+三种 budgetingMethod) / 多窗口多燃烧率告警(短窗叫停 55 分钟) / 退避与抖动(AWS 模拟器转写) / 过载保护与自适应并发(Envoy 梯度控制器稳态闭式)（SRE 主干首批） | Python/Go |
+| 571-575 | [07-DevSecOps/](./07-DevSecOps/) | Semgrep 通用匹配(`...`/`<...>`/metavar 绑定) / PURL 规范化与 CycloneDX VEX+SPDX 转译 / DSSE PAE 与 P-256(RFC6979) 制品签名 / detect-secrets 与 gitleaks 熵口径对比 / OPA Rego 编译期 safety 重排与 Unify(官方 31 条向量对拍)（DevSecOps 主干首批） | Python/Go |
 
 | 152-156 | [01-容器化/](./01-容器化/) | OverlayFS 联合挂载 / Capabilities 权限分割 / Seccomp-BPF 过滤 / veth pair 网络 / OCI Runtime Spec | C/Python/Go |
 | 237-241 | [01-容器化/](./01-容器化/) | Docker 层缓存失效(缓存键链+COPY 校验和) / 多阶段构建与镜像瘦身 / user namespace UID 映射 / rootless 容器 / cgroup v2 + eBPF 附加与 BPF token | Python/Go / Python/Go/C |

@@ -7,9 +7,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from dcache import (  # noqa: E402
     DCACHE_DIRECTORY_TYPE, DCACHE_ENTRY_TYPE, DCACHE_MISS_TYPE,
-    DCACHE_REGULAR_TYPE, DCACHE_TO_DT, DCache, DIRENT64_HEADER, DT_NAME,
-    DT_REG, Dentry, EINVAL, TYPE_NAME, d_is_negative, dentry_type,
-    dirent64_size, emit_getdents, walk,
+    DCACHE_REGULAR_TYPE, DCACHE_TO_DT, DT_NAME, DT_REG,
+    TYPE_NAME,
+    dentry_type,
+)
+from dcache_state import DCache, Dentry  # noqa: E402
+from dirent64 import (  # noqa: E402
+    DIRENT64_HEADER, EINVAL, dirent64_size, emit_getdents, walk,
 )
 
 

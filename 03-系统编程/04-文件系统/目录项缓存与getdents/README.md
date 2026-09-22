@@ -117,7 +117,9 @@ if (buf.prev_reclen) {
 
 ## 文件说明
 
-- `python/dcache.py` —— `d_flags` 位与类型字段、`d_is_*` 判定、`DCache`（引用计数 / LRU / negative / 两轮收缩）、`linux_dirent64` 打包与 `emit_getdents`
+- `python/dcache.py` —— `d_flags` 位、类型字段表、`DT_*`、`DCACHE_TO_DT` 映射、`d_is_*` 判定
+- `python/dcache_state.py` —— `Dentry` / `DCache`：引用计数、LRU、negative、两轮收缩
+- `python/dirent64.py` —— `linux_dirent64` 打包/解包与 `emit_getdents`
 - `python/selfcheck_dcache.py` —— 92 条断言（实跑全绿）
 - `python/main.py` —— 演示入口
 - `go/dcache.go` + `go/dcache_lru.go` —— Go 侧镜像

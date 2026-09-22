@@ -14,13 +14,17 @@ from dcache import (  # noqa: E402
     DCACHE_MANAGE_TRANSIT, DCACHE_NOKEY_NAME, DCACHE_OP_REAL,
     DCACHE_PAR_LOOKUP, DCACHE_PERSISTENT, DCACHE_REFERENCED,
     DCACHE_REGULAR_TYPE, DCACHE_SHRINK_LIST, DCACHE_SPECIAL_TYPE,
-    DCACHE_SYMLINK_TYPE, DCACHE_WHITEOUT_TYPE, DCACHE_TO_DT, DCache,
-    DIRENT64_FMT, DIRENT64_HEADER, DT_BLK, DT_CHR, DT_DIR, DT_FIFO, DT_LNK,
-    DT_REG, DT_SOCK, DT_UNKNOWN, DT_WHT, Dentry, EINVAL, TYPE_NAME,
+    DCACHE_SYMLINK_TYPE, DCACHE_WHITEOUT_TYPE, DCACHE_TO_DT,
+    DT_BLK, DT_CHR,
+    DT_DIR, DT_FIFO, DT_LNK, DT_REG, DT_SOCK, DT_UNKNOWN, DT_WHT, TYPE_NAME,
     d_can_lookup, d_is_autodir, d_is_directory, d_is_file, d_is_miss,
     d_is_negative, d_is_positive, d_is_reg, d_is_special, d_is_symlink,
-    d_is_whiteout, dentry_type, dirent64_record, dirent64_size,
-    emit_getdents, is_managed, unpack_dirent64, walk,
+    d_is_whiteout, dentry_type, is_managed,
+)
+from dcache_state import DCache, Dentry  # noqa: E402
+from dirent64 import (  # noqa: E402
+    DIRENT64_FMT, DIRENT64_HEADER, EINVAL, dirent64_record, dirent64_size,
+    emit_getdents, unpack_dirent64, walk,
 )
 
 PASS = 0

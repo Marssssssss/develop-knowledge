@@ -51,10 +51,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 7         # 下轮消费循环[7]=08-安全(本轮已消费[6]=07-数据存储)
-sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:3 09:2 10:3 11:3  # 本轮 sub_pos[07]=1 → 索引 28=02-NoSQL;07 共 5 条目,(1+1)%5=2 → 下轮 45=图数据库
-last_run       : 2026-09-22 16:01  # 16:00 槽占位锁(开局 16:00:29)
-last_top       : 08-安全  # 本轮;索引 54 = 03-应用安全与供应链 二批
+top_pos        : 8         # 下轮消费循环[8]=09-语言学习(本轮已消费[7]=08-安全)
+sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:2 10:3 11:3  # 本轮 sub_pos[08]=3 → 索引 54=03-应用安全与供应链;08 共 4 条目(31/32/33/54),(3+1)%4=0 → 下轮 31=01-密码学
+last_run       : 2026-09-22 16:55  # 16:00 槽收尾(开局 16:00:29)
+last_top       : 08-安全  # 本轮;索引 54 = 03-应用安全与供应链 二批(581-585)
 skipped        : []
 failed_attempts: []
 ```
@@ -63,7 +63,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-22 11:29 | 43 | 06-DevOps/07-DevSecOps首批:Semgrep匹配·PURL与VEX·DSSE与P-256·密钥熵·OPA safety重排 | S1+S3 | +5 | 575 | semgrep5+purl+CycloneDX+spdx+dsse2+cosign2+proto3+detect-secrets3+gitleaks4+opa5;Py 261 | notify: ok |
+| 2026-09-22 16:55 | 54 | 08-安全/03-应用安全与供应链二批:CVSS v4.0宏向量·TUF四角色·in-toto链路验证·可复现构建·AFL覆盖率引导 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss官方JS6+spec§8;0检索;Py 1021 | notify: pending |
 | 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy×2+nx chordal+ihler05a+SLP3 A+hmmlearn+blei1601+sklearn lda;Py 264 | notify: ok |
 | 2026-09-22 06:41 | 18 | 04-移动开发/03-跨平台首批:Yoga布局算法·Dart事件循环与Timer·Hermes值与字节码·Compose快照系统·Tauri IPC与ACL | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+compose2+tauri4;Py 262 | notify: ok |
 | 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除与合并·分级分配器对比·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc.3+tcmalloc+mimalloc+zAddress.hpp+JEP333/439/379+mbind(2)+this_cpu_ops+mm.rst+uffd(2);Py 299 | notify: ok |

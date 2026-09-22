@@ -51,9 +51,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 5         # 下轮消费循环[5]=06-DevOps(本轮已消费[4]=05-AI与机器学习)
-sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:6 07:1 08:3 09:2 10:3 11:3  # 本轮消费 sub_pos[05]=7 → 索引 49 = 08-概率图模型;05 共 9 条目,(7+1) mod 9 = 8 → 下轮 52 = RAG与向量检索
-last_run       : 2026-09-22 10:09  # 10:00 槽占位锁(开局 10:09:16)
+top_pos        : 6         # 下轮消费循环[6]=07-数据存储(本轮已消费[5]=06-DevOps)
+sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:1 08:3 09:2 10:3 11:3  # 本轮 sub_pos[06]=6 → 索引 43=07-DevSecOps;06 共 8 条目,(6+1)%8=7 → 下轮 51=平台工程
+last_run       : 2026-09-22 11:29  # 10:00 槽收尾(开局 10:09:16)
 last_top       : 06-DevOps  # 本轮;索引 43 = 07-DevSecOps(ID 571-575)
 skipped        : []
 failed_attempts: []
@@ -63,11 +63,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-22 11:29 | 43 | 06-DevOps/07-DevSecOps首批:Semgrep匹配·PURL与VEX·DSSE与P-256·密钥熵·OPA safety重排 | S1+S3 | +5 | 575 | semgrep5+purl+CycloneDX+spdx+dsse2+cosign2+proto3+detect-secrets3+gitleaks4+opa5;Py 261 | notify: pending |
 | 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy×2+nx chordal+ihler05a+SLP3 A+hmmlearn+blei1601+sklearn lda;Py 264 | notify: ok |
 | 2026-09-22 06:41 | 18 | 04-移动开发/03-跨平台首批:Yoga布局算法·Dart事件循环与Timer·Hermes值与字节码·Compose快照系统·Tauri IPC与ACL | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+compose2+tauri4;Py 262 | notify: ok |
 | 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除与合并·分级分配器对比·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc.3+tcmalloc+mimalloc+zAddress.hpp+JEP333/439/379+mbind(2)+this_cpu_ops+mm.rst+uffd(2);Py 299 | notify: ok |
 | 2026-09-22 02:00 | 10 | 02-Web开发/03-数据库:ORM工作单元·Upsert·JSONB与GIN·RLS多租户·Parquet列式 | S3 | +5 | 555 | SA源码3份+PG18四篇+SQLite+rowsecurity.c+parquet-format;Py 193 | notify: ok |
-| 2026-09-22 00:01 | 5 | 01-游戏开发/06-AI:行为树·GOAP反向规划·效用系统·JPS·层级状态机HFSM | S3 | +5 | 550 | BT.CPP+ReGoap+big-brain+JPS AAAI11+W3C SCXML;Py 210 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

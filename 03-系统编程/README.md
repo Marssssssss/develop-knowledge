@@ -10,7 +10,7 @@
 | [02-进程与线程/](./02-进程与线程/) | 进程/线程同步、信号、调度 |
 | [02-协程/](./02-协程/) | 用户态协程（C++20 / Go / Lua） |
 | [03-内存管理/](./03-内存管理/) | 虚拟内存、分配器、垃圾回收 |
-| [04-文件系统/](./04-文件系统/) | VFS 与 statx、Page Cache 与回写、稀疏文件与打洞、日志文件系统（ext4/JBD2）、CoW 文件系统（Btrfs）、O_DIRECT |
+| [04-文件系统/](./04-文件系统/) | VFS 与 statx、Page Cache 与回写、稀疏文件与打洞、日志文件系统（ext4/JBD2 / XFS 延迟分配）、CoW 文件系统（Btrfs）、O_DIRECT、完整性校验（fs-verity / dm-integrity）、io_uring 文件 IO、dcache 与 getdents、文件系统冻结 |
 
 ## 与游戏服务端的关系
 
@@ -71,3 +71,9 @@ IO 多路复用、协程等通用机制在游戏服务端也是基石。通用 d
   - per-CPU 与 NUMA 分配（`this_cpu_*` 抢占保护、`MPOL_BIND` 取最近节点、`MPOL_MF_MOVE` 只搬独占页）— [03-内存管理/分配器/percpu-numa/](03-内存管理/分配器/percpu-numa/)
   - 多级页表与缺页中断（规范地址符号扩展、5 级 → 128 PiB、COW 是 minor 而非 SIGSEGV、userfaultfd 四种模式）— [03-内存管理/虚拟内存/多级页表与TLB/](03-内存管理/虚拟内存/多级页表与TLB/)
   - C++20 协程状态机（无栈协程状态、awaiter 三件套与四种 `await_suspend` 返回、对称转移栈深 1 vs 递归 64、按引用参数悬垂）— [02-协程/C++20协程/](02-协程/C++20协程/)
+- ✅ 文件系统第二批 5 个（2026-09-23 04:00 槽）— 见 [04-文件系统/](./04-文件系统/)：
+  - XFS 延迟分配（`allocsize` 的 `ffs(size)-1` 编码与静默截断、预分配十步启发式、delalloc→unwritten→written）— [04-文件系统/XFS延迟分配/](03-系统编程/04-文件系统/XFS延迟分配/)
+  - 完整性校验（fs-verity Merkle 树 1/127 开销 + descriptor 摘要、dm-integrity tag 区几何）— [04-文件系统/完整性校验/](03-系统编程/04-文件系统/完整性校验/)
+  - io_uring 文件 IO（SQ 间接 vs CQ 直接、`READ_FIXED` 的 `addr` 是下标、CQ 溢出与 SQPOLL）— [04-文件系统/io_uring文件IO/](03-系统编程/04-文件系统/io_uring文件IO/)
+  - dcache 与 `getdents64`（19..21 位类型字段、LRU 两轮宽限、19 字节头 8 字节对齐、`d_off` 被 `ctx.pos` 覆盖）— [04-文件系统/目录项缓存与getdents/](03-系统编程/04-文件系统/目录项缓存与getdents/)
+  - 文件系统冻结（`freeze_super` 五级状态机、`may_freeze`/`may_unfreeze` 不对称、双计数与 `FREEZE_EXCL`）— [04-文件系统/文件系统冻结/](03-系统编程/04-文件系统/文件系统冻结/)

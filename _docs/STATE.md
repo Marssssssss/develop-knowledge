@@ -67,7 +67,7 @@ failed_attempts: []
 | 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy×2+nx chordal+ihler05a+SLP3 A+hmmlearn+blei1601+sklearn lda;Py 264 | notify: ok |
 | 2026-09-22 06:41 | 18 | 04-移动开发/03-跨平台首批:Yoga布局算法·Dart事件循环与Timer·Hermes值与字节码·Compose快照系统·Tauri IPC与ACL | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+compose2+tauri4;Py 262 | notify: ok |
 | 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除与合并·分级分配器对比·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc.3+tcmalloc+mimalloc+zAddress.hpp+JEP333/439/379+mbind(2)+this_cpu_ops+mm.rst+uffd(2);Py 299 | notify: ok |
-| 2026-09-22 14:44 | 28 | 07-数据存储/02-NoSQL第三批:ScyllaDB分片·DynamoDB自适应容量·MongoDB chunk·Cassandra SAI·HBase分裂 | S3 | +5 | 580 | scylladb7+ddb4+mongo2+cs3+hbase3+book;Py211 | notify: 待发送 |
+| 2026-09-22 14:44 | 28 | 07-数据存储/02-NoSQL第三批:ScyllaDB分片·DynamoDB自适应容量·MongoDB chunk·Cassandra SAI·HBase分裂 | S3 | +5 | 580 | scylladb7+ddb4+mongo2+cs3+hbase3+book;Py211 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

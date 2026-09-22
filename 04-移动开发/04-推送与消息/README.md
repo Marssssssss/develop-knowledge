@@ -1,6 +1,6 @@
 # 推送与消息
 
-> 研究移动端「服务端 → 设备」的消息投递:平台推送通道(APNs / FCM / 国内厂商通道)、设备令牌生命周期、离线排队与 TTL、静默推送与后台唤醒。2026-09-17 经自动巡检按类目拓展规则新增(登记 `STATE.md` 索引表第 55 项);**2026-09-19 首批 5 个 demo 落地**,官方源已补齐(Apple 官方文档 5 篇全文实读 + FCM 官方 Admin SDK 源码)。
+> 研究移动端「服务端 → 设备」的消息投递:平台推送通道(APNs / FCM / 国内厂商通道)、设备令牌生命周期、离线排队与 TTL、静默推送与后台唤醒。2026-09-17 经自动巡检按类目拓展规则新增(登记 `STATE.md` 索引表第 55 项);**2026-09-19 首批 5 个 demo 落地**(官方源:Apple 官方文档 5 篇全文实读 + FCM 官方 Admin SDK 源码);**2026-09-23 第二批 5 个 demo 落地**(ID 616-620),覆盖认证、端到端加密、push type、主题扇出、端侧解密五个此前空白的方向,并首次引入 IETF RFC 作为权威源。
 
 **为什么单独开一个子类目**:推送是移动端唯一"由操作系统代持长连接"的通道 —— 应用自己不持有 socket,而由系统维护一条共享的长连接,这条设计直接决定了后台存活、省电策略(Doze / iOS 后台限制)与消息可达性的全部边界。它既不是普通网络编程(连接不由应用管理),也不是普通后台任务(唤醒时机不由应用决定),故单列。
 
@@ -36,6 +36,11 @@
 | 399 | `静默推送与后台唤醒/` | `content-available=1` 且 `aps` 内不得含 alert/sound/badge、push-type=background + priority=5、三条"持有-延迟"副作用(新的顶掉旧的 / 被杀则丢弃 / 用户启动即投递)、2~3 条每小时节流(滑动窗口)、30 秒后台预算 | Python(231 行 37 断言实跑) / Swift(120 行) |
 | 400 | `设备令牌生命周期/` | token 对「设备+应用」唯一且**不可跨 App 复用**、每次启动都注册、一用户多设备多 token、APNs 4 个令牌级 reason 与 FCM `UNREGISTERED` 的失效清理、`PayloadTooLarge`/`TooManyRequests` **不是**令牌失效 | Python(231 行 35 断言实跑) / Kotlin(150 行) |
 | 401 | `FCMv1消息模型/` | 目标 fid/token/topic/condition **恰好一个**、`/topics/` 前缀剥离与字符集、**两套 priority**(AndroidConfig high·normal 原样 vs AndroidNotification min…max → `PRIORITY_*`)、visibility/proxy 小写转大写、TTL 编码 `"3s"`/`"3.500000000s"`、`remove_null_values` 保留 `False` 与 `0`、`content_available` 只认严格 `True` 且写成数值 1、analytics_label 1~50 字符 | Python(293+134 行 70 断言实跑) / Kotlin(170 行) |
+| 616 | `APNs令牌认证与连接绑定/` | provider token 只有 `alg`/`kid`/`iss`/`iat` 四个键值对(官方示例的 `iat` 是毫秒字符串且 header 缺 `alg`,**不能当模板**);刷新窗口 **[20min, 60min]**(`iat` >1h → `403 ExpiredProviderToken`;同连接换令牌快于 20min → `429 TooManyProviderUpdates`);**首推即绑定**团队/环境/钥匙(换团队 → `Forbidden`、换环境 → `BadEnvironmentKeyIdInToken`、换 key → `UnrelatedKeyIdInToken`、推未关联 topic → `TopicDisallowed`);team-scoped 每环境 2 把 / topic-specific 各环境 200 把且每把 ≤400 topic、同环境最多 1 把 related key | Python(p256 186 + jwt 98 + token 177 + main 68 + selfcheck 252 行 66 断言实跑;**RFC 6979 A.2.5 官方向量逐字节吻合**) / Go(226 行) |
+| 617 | `WebPush端到端加密/` | 两次 HKDF 拼出 CEK/NONCE(`auth_secret` 与报文 `salt` 分别是两次 Extract 的 salt);`key_info = "WebPush: info"‖0x00‖ua_pub‖as_pub` **顺序敏感**;头部 86 字节 = salt(16)+rs(4)+idlen(1)+keyid(65);**只允许单条记录** ⇒ 随机数不再与序号异或;填充分隔符必须是 `0x02`;4096-86-1-16 = **3993** 明文上限;HTTP 头**不受**该编码保护 | Python(p256 186 + aesgcm 161 + webpush 133 + main 62 + selfcheck 226 行 64 断言实跑;**RFC 8291 附录 A 全链路 144 字节 body 逐字节相同**) / Go(224 行) |
+| 618 | `APNs推送类型与Topic后缀/` | 11 个 `apns-push-type` 的 topic 后缀 / 优先级 / 平台可用性 / 认证方式四张表;`background` **只能 priority 5**(写 10 是错误);`location` **仅支持 token 认证**;`mdm` 的 topic 取自证书 subject 的 UID 而非 bundle ID;证书只支持 push type 的子集(看 `1.2.840.113635.100.6.3.6` / `...6.3.4` 两个扩展);**官方那张表里 `liveactivity` 的后缀字面量少了前导点**(ActivityKit 页明文写 `<bundleID>.push-type.liveactivity`)、`complication` 写作 `h.complication` | Python(push_type 176 + main 51 + selfcheck 193 行 71 断言实跑) / Go(190 行) |
+| 619 | `FCM主题与批量发送/` | topic 名先剥 `/topics/` 再过 `[a-zA-Z0-9-_\.~%]+`(其中 `-` 是**字面量**而非区间起点,0x3a~0x40 不匹配);订阅/退订走 **IID**(`iid.googleapis.com/iid/v1:batchAdd`,带 `access_token_auth: true`,`to` 里要**带**前缀)且是**部分成功**语义;`send_each` 是**并发扇出**不是 HTTP batch(上限 500、`max_workers = len(messages)`、单条异常不影响其它);`success` 要求 `message_id` 非空**且**无异常;TTL 编码 `"3.500000000s"` | Python(fcm_topic 160 + fcm_batch 114 + main 72 + selfcheck 235 行 98 断言实跑) / Go(187 行) |
+| 620 | `通知内容修改与端侧解密/` | 扩展只在"会显示 alert 的远程通知"上启用(四个条件:开 alert / `mutable-content: 1` / `aps.alert` 有 title·subtitle·body / 不是只有 sound 或 badge);`didReceive` 只有 **about 30 秒**;超时走 `serviceExtensionTimeWillExpire` **必须立刻交回内容**;**两个方法都没调 completion handler 就展示原始载荷**(所以官方示例把 `alert.body` 默认写成 `(Encrypted)`) | Python(service_extension 152 + main 83 + selfcheck 179 行 46 断言实跑;29.9s vs 30.0s 成对构造) / Go(180 行) |
 
 ## 待研究
 
@@ -45,14 +50,20 @@
 - [ ] 国内厂商通道接入(小米 / 华为 / OPPO / vivo)与厂商级 token 映射
 - [ ] 长连接自建方案与厂商通道的混用策略(自建 TCP + 厂商兜底)
 - [ ] Doze / App Standby 对高优先级消息的实际豁免边界
-- [ ] Notification Service Extension 与 Content Extension 的富媒体与端侧解密
+- [x] Notification Service Extension 的端侧解密与超时降级 —— **2026-09-23 已补齐**(Apple 官方《Modifying content in newly delivered notifications》全文实读,demo 620)
+- [ ] Content Extension 的富媒体与自定义通知 UI(与 Service Extension 的分工)
 - [ ] 推送链路的可观测性(到达率 / 打开率 / token 有效率)
-- [ ] Live Activity / PushToTalk / VoIP 等特殊 push type 的完整语义
+- [x] Live Activity / PushToTalk / VoIP 等特殊 push type 的完整语义 —— **2026-09-23 已补齐**(11 个 push type 全表,demo 618)
+- [ ] WebPush 的 VAPID 身份(RFC 8292)与订阅刷新/失效
+- [ ] APNs 证书认证 → token 认证的迁移路径与双轨期
+- [ ] FCM 条件表达式(condition)的语法与主题数上限(官方源不可达,SDK 侧只校验非空,未落 demo)
 
 ## 参考资料(实际读过的来源)
 
-**Apple 官方文档**(2026-09-19 通过 `developer.apple.com/tutorials/data/documentation/<path>.json` 的 DocC 接口取全文实读):
+**Apple 官方文档**(通过 `developer.apple.com/tutorials/data/documentation/<path>.json` 的 DocC 接口取全文实读):
 
+- [Establishing a token-based connection to APNs](https://developer.apple.com/documentation/usernotifications/establishing-a-token-based-connection-to-apns) — **2026-09-23 新增**:令牌四键值对、[20,60] 分钟刷新窗口、密钥作用域配额、首推绑定规则
+- [Modifying content in newly delivered notifications](https://developer.apple.com/documentation/usernotifications/modifying-content-in-newly-delivered-notifications) — **2026-09-23 新增**:扩展启用条件、30 秒预算、`serviceExtensionTimeWillExpire`、Listing 1/2
 - [Sending notification requests to APNs](https://developer.apple.com/documentation/usernotifications/sending-notification-requests-to-apns) — 请求头表、push type、HPACK 建议、载荷上限、最佳实践
 - [Handling notification responses from APNs](https://developer.apple.com/documentation/usernotifications/handling-notification-responses-from-apns) — 状态码表、`reason` 32 个取值、重试规则、GOAWAY
 - [Generating a remote notification](https://developer.apple.com/documentation/usernotifications/generating-a-remote-notification) — Table 1/2/3 全表、本地化规则、敏感数据处理
@@ -63,6 +74,15 @@
 
 - [firebase-admin-python: `_messaging_encoder.py`](https://github.com/firebase/firebase-admin-python/blob/master/firebase_admin/_messaging_encoder.py)
 - [firebase-admin-python: `messaging.py`](https://github.com/firebase/firebase-admin-python/blob/master/firebase_admin/messaging.py)
+- [firebase-admin-python: `_messaging_utils.py`](https://github.com/firebase/firebase-admin-python/blob/master/firebase_admin/_messaging_utils.py) — **2026-09-23 新增**:`AndroidConfig.collapse_key` 的"最多 4 个"docstring
+
+**IETF RFC**(2026-09-23 新增,经 `www.rfc-editor.org` 取原文实读):
+
+- [RFC 8291 — Message Encryption for Web Push](https://www.rfc-editor.org/rfc/rfc8291) — 密钥派生四步、单记录限制、附录 A 全部中间值
+- [RFC 8188 — Encrypted Content-Encoding for HTTP](https://www.rfc-editor.org/rfc/rfc8188) — 头部布局与填充分隔符
+- [RFC 5869 — HKDF](https://www.rfc-editor.org/rfc/rfc5869) — Extract/Expand 两步定义
+- [RFC 6979](https://www.rfc-editor.org/rfc/rfc6979) — 确定性 ECDSA 与 P-256 测试向量(A.2.5)
+- [RFC 7515](https://www.rfc-editor.org/rfc/rfc7515) / [RFC 7518](https://www.rfc-editor.org/rfc/rfc7518) — JWS 紧凑序列化与 ES256
 
 **厂商工程博客**(2026-09-17 建立索引时读过,仅用于架构对照,**不用于数值结论**):
 

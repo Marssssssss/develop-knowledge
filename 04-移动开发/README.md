@@ -7,7 +7,7 @@
 | [01-iOS/](./01-iOS/) | Swift / Objective-C / SwiftUI / UIKit(ARC、GCD、RunLoop、async-await+actor、Auto Layout、启动优化、Core Animation 渲染管线) |
 | [02-Android/](./02-Android/) | Kotlin / Java / Jetpack Compose(Handler·协程与 Flow·WorkManager、Fragment/Service 生命周期、OkHttp 与 Retrofit 网络、Compose 重组与快照、JNI、Room 连接池) |
 | [03-跨平台/](./03-跨平台/) | React Native / Flutter / Kotlin Multiplatform / Compose Multiplatform / WebView 容器 |
-| [04-推送与消息/](./04-推送与消息/) | APNs / FCM / 厂商通道(HTTP/2 请求与响应语义、aps 载荷字典与本地化、离线排队与 TTL、静默推送与后台唤醒、设备令牌生命周期、FCM v1 平台覆写) |
+| [04-推送与消息/](./04-推送与消息/) | APNs / FCM / 厂商通道(HTTP/2 请求与响应语义、aps 载荷字典与本地化、离线排队与 TTL、静默推送与后台唤醒、设备令牌生命周期、FCM v1 平台覆写、provider token 认证与连接绑定、WebPush 端到端加密、11 个 push type、主题订阅与批量扇出、Service Extension 端侧解密) |
 
 ## 已完成 demo
 
@@ -57,6 +57,11 @@
 | 399 | `04-推送与消息/静默推送与后台唤醒/` | `content-available=1` + push-type=background + priority=5、三条"持有-延迟"副作用(新的顶掉旧的 / 被杀则丢弃 / 启动即投递)、2~3 条每小时节流、30 秒后台预算 | Python / Swift |
 | 400 | `04-推送与消息/设备令牌生命周期/` | token 对「设备+应用」唯一且不可跨 App 复用、每次启动都注册、一用户多设备多 token、APNs 4 个令牌级 reason 与 FCM `UNREGISTERED` 的清理,`PayloadTooLarge`/`TooManyRequests` 不是令牌失效 | Python / Kotlin |
 | 401 | `04-推送与消息/FCMv1消息模型/` | 目标 fid/token/topic/condition 恰好一个、**两套 priority**(high·normal 原样 vs min…max→`PRIORITY_*`)、TTL `"3s"`/`"3.500000000s"`、`remove_null_values` 保留 `False` 与 `0`、`content_available` 只认严格 `True` 且写数值 1 | Python / Kotlin |
+| 616 | `04-推送与消息/APNs令牌认证与连接绑定/` | provider token 四键值对 + **[20,60] 分钟刷新窗口**(`iat`>1h→`ExpiredProviderToken`;同连接换令牌快于 20min→`TooManyProviderTokenUpdates`)+ **首推即绑定**团队/环境/钥匙(→`Forbidden`/`BadEnvironmentKeyIdInToken`/`UnrelatedKeyIdInToken`/`TopicDisallowed`)+ 密钥作用域配额 | Python / Go |
+| 617 | `04-推送与消息/WebPush端到端加密/` | 两次 HKDF 派生 CEK/NONCE、`key_info` 里两个公钥**顺序敏感**、头部 86 字节(salt+rs+idlen+keyid)、**单条记录**故随机数不与序号异或、填充分隔符必须 `0x02`、4096-86-1-16=**3993** 明文上限 | Python / Go |
+| 618 | `04-推送与消息/APNs推送类型与Topic后缀/` | 11 个 `apns-push-type` 的 topic 后缀/优先级/平台/认证四张表;`background` 只能 priority 5、`location` 仅 token 认证、`mdm` topic 取自证书 UID;**官方表里 liveactivity 后缀少了前导点** | Python / Go |
+| 619 | `04-推送与消息/FCM主题与批量发送/` | topic 名先剥前缀再过窄字符集(`-` 是字面量不是区间)、订阅走 **IID** 且是**部分成功**、`send_each` 是**并发扇出**非 HTTP batch(上限 500、`max_workers=len`)、`success` 要求 message_id 非空且无异常 | Python / Go |
+| 620 | `04-推送与消息/通知内容修改与端侧解密/` | Service Extension 四个启用条件、**~30 秒预算**、`serviceExtensionTimeWillExpire` 必须立刻交回、**两个方法都没调 handler 就展示原始载荷** | Python / Go |
 
 ## 待研究
 

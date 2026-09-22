@@ -24,6 +24,11 @@
 | [供应链完整性/](./供应链完整性/) | SLSA v1.0 Provenance 验证 | `subject` 摘要绑定、`builder.id` 是级别的 sole determiner、signer-builder 配对、`externalParameters` 不可信而 `internalParameters` 无需验证、扩展字段必须忽略 | Py/Go/C |
 | [密钥管理/](./密钥管理/) | 硬编码凭据检测(CWE-798) | 香农熵上限由字符集决定(十六进制 4.0 bit)→ 阈值 4.5 系统性漏报;归一化 + 结构规则 + 上下文白名单三级叠加 | Py/Go/C |
 | [CI流水线加固/](./CI流水线加固/) | 流水线四类攻击面 | 表达式拼进 shell 文本的注入、action 必须固定到完整 commit SHA(tag 可移动)、特权触发器共享主分支缓存、OIDC 短期令牌把暴露窗口从 10 年压到 780 秒 | Py/Go/C |
+| [CVSSv4评分与宏向量/](./CVSSv4评分与宏向量/) | CVSS v4.0 宏向量等价类与查表插值 | 270 条查找表 + 6 个等价类(EQ1–EQ6)把向量压成宏向量;未命中按「严重性距离/深度」插值;`E:X→A`、`CR/IR/AR:X→H`;无影响直接短路到 0.0 | Py/Go |
+| [TUF更新框架/](./TUF更新框架/) | The Update Framework 四角色与委托 | root/targets/snapshot/timestamp 四角色;阈值按**唯一 KEYID** 计数(同一把钥匙签两次不算);回滚/冻结/混搭攻击的各自防线;一致快照命名 `<ver>.<role>.json`;委托是**可终止**的、按前序 DFS 搜 | Py/Go |
+| [in-toto布局与链路验证/](./in-toto布局与链路验证/) | in-toto 供应链步骤证明 | layout 定 step 与 inspection,link 是每一步的实测物料/产物;7 条工件规则按**防火墙式顺序消费**,末尾隐式 `ALLOW *`;子布局对父布局就是一个「虚拟 link」;link 文件名取 keyid 前 6 字节 | Py/Go |
+| [可复现构建/](./可复现构建/) | 可复现构建的时间/路径/环境归一 | `SOURCE_DATE_EPOCH` 是上界(不是直接采用);ZIP 时间戳下界 1980;`-ffile-prefix-map` 消构建路径;locale/umask/TZ 三类方差中 **umask 无法靠归一化解掉** | Py/Go |
+| [覆盖率引导模糊测试/](./覆盖率引导模糊测试/) | AFL 边覆盖、分桶与语料库裁剪 | 槽位 `cur ^ prev` 且 `prev = cur >> 1`(右移打破 A→B/B→A 的对称);命中数压成 8 个 2 的幂桶当位掩码用;裁剪是贪心集合覆盖,score ∝ 延迟×大小;非 favored 按 99%/95%/75% 跳过 | Py/Go |
 
 ## 与其它子领域的分工
 
@@ -40,9 +45,10 @@
 
 - [ ] 污点分析的可判定性边界(为什么不可能零误报)
 - [ ] 传递依赖的数量增长与可达性可达性分析(哪些 CVE 真的能被触发)
-- [ ] 制品签名的信任根与验证时机(下载时 vs 部署时)
-- [ ] 可复现构建的阻力:时间戳、路径、编译器版本
+- [x] 制品签名的信任根与验证时机(下载时 vs 部署时) ✓ (TUF 四角色阈值 + in-toto link/layout 两批 demo)
+- [x] 可复现构建的阻力:时间戳、路径、编译器版本 ✓ (`SOURCE_DATE_EPOCH` 上界 + ZIP 1980 下界 + `-ffile-prefix-map`)
 - [ ] 构建缓存的投毒面(缓存键与缓存内容的一致性)
+- [ ] 模糊测试在 CI 中的落地:语料库托管、崩溃去重、回归用例回流
 
 ## 进度
 

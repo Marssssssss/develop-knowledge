@@ -102,7 +102,9 @@ targets 可以把信任**部分**委派给别的角色（按路径或路径哈�
 | 文件 | 内容 |
 | --- | --- |
 | `python/tuf.py` | 角色/元数据模型、四步工作流、委派搜索、一致快照命名 |
-| `python/selfcheck_tuf.py` | 61 条断言 |
+| `python/selfcheck_tuf.py` | 四步工作流的断言 |
+| `python/selfcheck_deleg.py` | 委派搜索与一致快照命名的断言（被上一文件调用） |
+| 合计 | 61 条断言 |
 | `python/main.py` | 演示 |
 | `go/tuf.go` `go/walk.go` `go/main.go` | 同构 Go 实现（无 Go 工具链，走人工审查 + 三项静态检查） |
 

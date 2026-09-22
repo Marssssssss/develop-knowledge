@@ -1,7 +1,7 @@
 # STATE.md — 自动化巡检主状态文件
 
 > 每轮结束追加/滚动,**永远 ≤ 5 KB**;历史全本见 `_docs/archive/`。
-> 调度(12 条定点任务,每日 00:00…22:00 整点各一次,永不漂移)、配额(5 主 + ≤2 副)、失败回退:[`SCHEDULE_QUOTA.md`](./SCHEDULE_QUOTA.md);Token:[`OPTIMIZATION.md`](./OPTIMIZATION.md)
+> 调度(12 条 DAILY 定点任务,每日整点各一次,永不漂移)、配额(5 主 + ≤2 副)、失败回退:[`SCHEDULE_QUOTA.md`](./SCHEDULE_QUOTA.md);Token:[`OPTIMIZATION.md`](./OPTIMIZATION.md)
 
 ## 一、轮询顺序(2026-09-16 起:大类严格轮转)
 
@@ -51,10 +51,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 9         # 下轮消费循环[9]=10-逆向工程(本轮已消费[8]=09-语言学习)
-sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:3 11:3  # 本轮 sub_pos[09]=2 → 索引 50=Rust;09 共 4 条目(34/44/50/53),(2+1)%4=3 → 下轮 53=TypeScript
-last_run       : 2026-09-22 20:02  # 18:00 槽收尾(本轮消费循环[8]=09-语言学习,索引 50=Rust 第三批 586-590)
-last_top       : 10-逆向工程  # 20:00 槽占位锁;本轮消费循环[9]=10-逆向工程,索引 57 = 固件与嵌入式逆向 首批(591-595);索引 50 = Rust 第三批(586-590)
+top_pos        : 10        # 下轮消费循环[10]=11-性能分析(本轮已消费[9]=10-逆向工程)
+sub_pos        : 01:6 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:3  # 本轮 sub_pos[10]=3 → 索引 57;10 共 4 条目(35/36/46/57),(3+1)%4=0
+last_run       : 2026-09-22 20:46  # 20:00 槽收尾(索引 57 = 固件与嵌入式逆向 591-595)
+last_top       : 10-逆向工程  # 本轮大类;索引 57 = 固件与嵌入式逆向 首批(591-595)
 skipped        : []
 failed_attempts: []
 ```
@@ -63,11 +63,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析候选列表·型变与PhantomData·trait高级形态·声明宏卫生性·过程宏TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2(GitHub API直取);0检索;Py 245+main×5 | notify: ok |
+| 2026-09-22 20:46 | 57 | 10-逆向工程/固件与嵌入式逆向首批:uImage与FIT·SquashFS·JFFS2与UBI·Cortex-M向量表·MCUboot | S1+S3 | +5 | 595 | u-boot+linux7+cmsis+zephyr+mcuboot3+fitspec(GitHub API);0检索;Py428+main×5 | notify: ok |
+| 2026-09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析·型变与PhantomData·trait高级形态·宏卫生性·TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2(GitHub API直取);0检索;Py 245+main×5 | notify: ok |
 | 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | notify: ok |
-| 2026-09-22 06:41 | 18 | 04-移动开发/03-跨平台首批:Yoga布局·Dart事件循环·Hermes字节码·Compose快照·Tauri IPC | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+tauri4;Py262 | notify: ok |
-| 2026-09-22 16:55 | 54 | 08-安全/03-应用安全与供应链二批:CVSS v4.0宏向量·TUF四角色·in-toto链路验证·可复现构建·AFL覆盖率引导 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss官方JS6+spec§8;0检索;Py 1021 | notify: ok |
-| 2026-09-22 14:44 | 28 | 07-数据存储/02-NoSQL第三批:ScyllaDB分片·DynamoDB自适应容量·MongoDB chunk·Cassandra SAI·HBase分裂 | S3 | +5 | 580 | scylladb7+ddb4+mongo2+cs3+hbase3+book;Py211 | notify: ok |
+| 2026-09-22 06:41 | 18 | 04-移动开发/跨平台首批:Yoga·Dart事件循环·Hermes·Compose快照·Tauri IPC | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+tauri4;Py262 | notify: ok |
+| 2026-09-22 16:55 | 54 | 08-安全/供应链二批:CVSS v4.0宏向量·TUF·in-toto·可复现构建·AFL覆盖率 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss官方JS6+spec§8;0检索;Py 1021 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

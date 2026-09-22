@@ -9,13 +9,17 @@
 | [01-二进制逆向/](./01-二进制逆向/) | 反汇编/反编译（Ghidra 等）、可执行文件格式、指令集、动态调试 |
 | [02-移动端逆向/](./02-移动端逆向/) | Android/iOS 静态分析、Frida 动态插桩、加密协议分析 |
 | [03-协议逆向/](./03-协议逆向/) | 网络协议还原（NetT/ExeT 两族）、字段边界与语义推断、加密流量指纹（JA3/JA4） |
+| [04-固件与嵌入式逆向/](./04-固件与嵌入式逆向/) | 固件镜像头（uImage/FIT）、SquashFS/JFFS2+UBI、Cortex-M 向量表与基址定位、MCUboot 验签 |
 
 ## 待拓展子类目（由自动巡检按类目拓展规则逐步补建）
 
+> 编号以「目录实际占用」为准；本表愿望清单里原写的 04-加壳与混淆 因索引表第 57 项（固件与嵌入式逆向）先落成 04，顺延为 05。
+
 - [x] 03-协议逆向（网络协议还原、私有协议与加密流量分析）→ 2026-09-14 建目录 + README（含 PRE 方法谱系与 JA3/JA3S 指纹）
-- [ ] 04-加壳与混淆（UPX / VMProtect、脱壳、去混淆）
-- [ ] 05-游戏逆向（Unity/IL2CPP、反作弊对抗，与 `01-游戏开发` 互补）
-- [ ] 06-恶意样本分析（沙箱、行为提取、家族归类）
+- [x] 04-固件与嵌入式逆向（镜像头 / 闪存文件系统 / 基址定位 / 安全启动）→ 2026-09-22 建目录 + README + 5 demo（591-595）
+- [ ] 05-加壳与混淆（UPX / VMProtect、脱壳、去混淆）
+- [ ] 06-游戏逆向（Unity/IL2CPP、反作弊对抗，与 `01-游戏开发` 互补）
+- [ ] 07-恶意样本分析（沙箱、行为提取、家族归类）
 
 ## 待研究
 
@@ -41,6 +45,7 @@
 - [x] Tupni 加权 k-Set Packing 与循环内记录边界 → 374 Tupni记录序列（03-协议逆向）
 - [x] ReFormat 加密报文相位划分与数据生命周期 → 375 ReFormat加密报文（03-协议逆向）
 - [x] bit 级字段切分（位级相关性判据与常量位能力边界）→ 376 bit级字段切分（03-协议逆向）
+- [x] 固件整包解构（镜像头 → 基址 → 文件系统 → 验签）→ 591 uImage与FIT + 592 SquashFS + 593 JFFS2与UBI + 594 Cortex-M向量表 + 595 MCUboot（04-固件与嵌入式逆向）
 - [ ] 加壳与去混淆入门（UPX 壳结构与手工脱壳边界）
 
 ## 参考资料（已读）
@@ -82,3 +87,12 @@
 - [MASTG-TEST-0046 Android 反调试检测与绕过（486）](https://mas.owasp.org/MASTG/tests/android/MASVS-RESILIENCE/MASTG-TEST-0046/)
 - [MASTG-TEST-0354 Runtime Use of Hook Detection Techniques（486）](https://mas.owasp.org/MASTG/tests/ios/MASVS-RESILIENCE/MASTG-TEST-0354/)
 - [MASTG-TEST-0240 / 0241 越狱检测的静态与运行时形态（486）](https://mas.owasp.org/MASTG/tests/ios/MASVS-RESILIENCE/MASTG-TEST-0240/)
+- [Flattened Image Tree Specification v1.0（fitspec.osfw.foundation，591）](https://fitspec.osfw.foundation/)
+- [u-boot `include/image.h` — legacy_img_hdr 与 IH_* 枚举（591）](https://github.com/u-boot/u-boot/blob/master/include/image.h)
+- [Linux `include/linux/crc32.h` — 明确 "does not invert"（591/593）](https://github.com/torvalds/linux/blob/master/include/linux/crc32.h)
+- [Linux `fs/squashfs/squashfs_fs.h`（592）](https://github.com/torvalds/linux/blob/master/fs/squashfs/squashfs_fs.h)
+- [Linux `include/uapi/linux/jffs2.h`（593）](https://github.com/torvalds/linux/blob/master/include/uapi/linux/jffs2.h)
+- [Linux `drivers/mtd/ubi/ubi-media.h`（593）](https://github.com/torvalds/linux/blob/master/drivers/mtd/ubi/ubi-media.h)
+- [CMSIS_5 `core_cm3.h` — SCB->VTOR 位域（594）](https://github.com/ARM-software/CMSIS_5/blob/master/CMSIS/Core/Include/core_cm3.h)
+- [Zephyr `arch/arm/core/cortex_m/vector_table.S`（594）](https://github.com/zephyrproject-rtos/zephyr/blob/main/arch/arm/core/cortex_m/vector_table.S)
+- [MCUboot `docs/design.md` §Image format（595）](https://github.com/mcu-tools/mcuboot/blob/main/docs/design.md)

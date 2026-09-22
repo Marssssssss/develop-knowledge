@@ -63,10 +63,10 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-22 16:55 | 54 | 08-安全/03-应用安全与供应链二批:CVSS v4.0宏向量·TUF四角色·in-toto链路验证·可复现构建·AFL覆盖率引导 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss官方JS6+spec§8;0检索;Py 1021 | notify: pending |
-| 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy×2+nx chordal+ihler05a+SLP3 A+hmmlearn+blei1601+sklearn lda;Py 264 | notify: ok |
-| 2026-09-22 06:41 | 18 | 04-移动开发/03-跨平台首批:Yoga布局算法·Dart事件循环与Timer·Hermes值与字节码·Compose快照系统·Tauri IPC与ACL | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+compose2+tauri4;Py 262 | notify: ok |
-| 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除与合并·分级分配器对比·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc.3+tcmalloc+mimalloc+zAddress.hpp+JEP333/439/379+mbind(2)+this_cpu_ops+mm.rst+uffd(2);Py 299 | notify: ok |
+| 2026-09-22 16:55 | 54 | 08-安全/03-应用安全与供应链二批:CVSS v4.0宏向量·TUF四角色·in-toto链路验证·可复现构建·AFL覆盖率引导 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss官方JS6+spec§8;0检索;Py 1021 | notify: ok |
+| 2026-09-22 09:03 | 49 | 05-AI与机器学习/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+ihler05a+SLP3A+hmmlearn+blei1601+sklearn;Py 264 | notify: ok |
+| 2026-09-22 06:41 | 18 | 04-移动开发/03-跨平台首批:Yoga布局·Dart事件循环·Hermes值与字节码·Compose快照·Tauri IPC与ACL | S1+S3 | +5 | 565 | yoga9+dart4+hermes3+compose2+tauri4;Py 262 | notify: ok |
+| 2026-09-22 04:00 | 14 | 03-系统编程/03-内存管理:标记清除·分级分配器·ZGC着色指针·perCPU与NUMA·页表与缺页 | S3 | +5 | 560 | dlmalloc+jemalloc+tcmalloc+mimalloc+zAddress+JEP333/439+mbind+mm.rst+uffd;Py 299 | notify: ok |
 | 2026-09-22 14:44 | 28 | 07-数据存储/02-NoSQL第三批:ScyllaDB分片·DynamoDB自适应容量·MongoDB chunk·Cassandra SAI·HBase分裂 | S3 | +5 | 580 | scylladb7+ddb4+mongo2+cs3+hbase3+book;Py211 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。

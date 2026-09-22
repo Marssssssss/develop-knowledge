@@ -47,7 +47,8 @@ def order_for_channels(channels):
 # ---------------------------------------------------------------- 归一化
 
 def sn3d(degree, m):
-    """SN3D（Schmidt semi-normalization），原文公式。"""
+    """SN3D（Schmidt semi-normalization），原文公式；阶 m 取其绝对值。"""
+    m = abs(m)
     delta = 1 if m == 0 else 0
     return math.sqrt((2 - delta) * math.factorial(degree - m) / math.factorial(degree + m))
 
@@ -129,11 +130,15 @@ def build_channel_map(stored_components):
     """原文语义：channel_map[i] = ACN 分量 i 所在的轨道通道下标。
 
     stored_components: 按轨道通道顺序排列的分量名，如 ["W","X","Y","Z"]。
+    非 ambisonic 分量（如 head-locked 立体声 L/R）按轨道顺序接在 4 个 ACN 分量之后，
+    这与原文「W,Y,Z,X,L,R -> 0,1,2,3,4,5」的示例一致。
     """
     acn_of = {"W": 0, "Y": 1, "Z": 2, "X": 3}
     position = {name: i for i, name in enumerate(stored_components)}
-    return [position[name] for name in sorted(acn_of, key=lambda n: acn_of[n])
-            if name in position]
+    head = [position[name] for name in ("W", "Y", "Z", "X") if name in position]
+    tail = [i for name, i in position.items() if name not in acn_of]
+    tail.sort()
+    return head + tail
 
 
 def apply_channel_map(channels, channel_map):

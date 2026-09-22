@@ -55,6 +55,11 @@
 - [x] 并行查询 worker 数（`compute_parallel_worker` log3 公式 + 4 个旋钮 + 不可并行四条件）— 见 [01-关系型/ParallelQuery/](./01-关系型/ParallelQuery/)（Python / Go）
 - [x] autovacuum 与事务 ID 回绕（`50+0.2N` 阈值与 1 亿封顶 + XID 四道防线）— 见 [01-关系型/AutovacuumXID/](./01-关系型/AutovacuumXID/)（Python / Go）
 - [x] 声明式分区与分区裁剪（RANGE/LIST/HASH 差异 + 三阶段裁剪 + DEFAULT 分区天花板）— 见 [01-关系型/PartitionPruning/](./01-关系型/PartitionPruning/)（Python / Go）
+- [x] ScyllaDB 分片感知与 shard-per-core（`zero_based_shard_of` = floor(0.token×shards) + msb 左移弃高位 + init 逐格修正 + tablet 迁移双写 + fixed_shard 16/48 位编码）— 见 [02-NoSQL/ScyllaDB分片感知与shard-per-core/](./02-NoSQL/ScyllaDB分片感知与shard-per-core/)（Python / Go）
+- [x] DynamoDB 自适应容量与热分区（3000 RCU / 1000 WCU 分区硬顶 + 20KB→5 RCU→600 QPS + 冷分区余量借用 + 写分片随机/计算后缀与读扇出）— 见 [02-NoSQL/DynamoDB自适应容量与热分区/](./02-NoSQL/DynamoDB自适应容量与热分区/)（Python / Go）
+- [x] MongoDB 分片集群与 chunk 均衡（阈值 = 3×range size = 384MB + floor(n/2) 并发 + 7 步 range 迁移 + 异步删除 + jumbo divisible/indivisible）— 见 [02-NoSQL/MongoDB分片集群与chunk均衡/](./02-NoSQL/MongoDB分片集群与chunk均衡/)（Python / Go）
+- [x] Cassandra 二级索引与 SAI（per-SSTable/per-column 两层组件 + 局部 rowID 合并陷阱 + trie/bbtree 磁盘结构 + 只支持 token 序）— 见 [02-NoSQL/Cassandra二级索引与SAI/](./02-NoSQL/Cassandra二级索引与SAI/)（Python / Go）
+- [x] HBase Region 与 HFile（IncreasingToUpperBound 阈值 initialSize×count³ + 256MB/2048MB/6912MB 曲线 + ±12.5% 抖动错峰 + HFile v3 只写不写旧版）— 见 [02-NoSQL/HBase Region与HFile/](./02-NoSQL/HBase%20Region与HFile/)（Python / Go）
 
 ## 待研究
 

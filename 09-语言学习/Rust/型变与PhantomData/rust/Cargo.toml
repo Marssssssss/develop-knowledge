@@ -1,0 +1,10 @@
+[package]
+name = "variance-phantom"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "variance-phantom"
+path = "main.rs"
+
+[dependencies]

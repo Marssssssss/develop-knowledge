@@ -9,7 +9,7 @@
 | [01-前端框架/](./01-前端框架/) | React / Vue / Signals / SSR-Hydration / 构建工具 / 状态管理 |
 | [02-后端/](./02-后端/) | Node.js / Go / Java / Python |
 | [03-数据库/](./03-数据库/) | SQL & ORM / NoSQL |
-| [04-API设计/](./04-API设计/) | REST / GraphQL / WebSocket |
+| [04-API设计/](./04-API设计/) | REST / GraphQL / WebSocket / OpenAPI / HATEOAS / gRPC |
 
 ## 已完成 demo
 
@@ -42,6 +42,11 @@
 - [x] [04-API设计/REST/成熟度模型与方法语义/](./04-API设计/REST/成熟度模型与方法语义/) — RMM 四层可观测判据 + safe/idempotent/cacheable + 代理禁止重试非幂等请求 (Python + Go)
 - [x] [04-API设计/GraphQL/N+1与DataLoader/](./04-API设计/GraphQL/N+1与DataLoader/) — N+1 往返计数 (1+N vs 1+1) + batchLoadFn 等长/对齐约束 + per-request memoization (JavaScript + Python)
 - [x] [04-API设计/幂等性与重试/](./04-API设计/幂等性与重试/) — Idempotency-Key draft-07：首次/重试/并发三态 + 400/422/409 分派 + fingerprint + 复合键隔离 (Python + Go)
+- [x] [04-API设计/HATEOAS/HAL-Siren-JSONAPI/](./04-API设计/HATEOAS/HAL-Siren-JSONAPI/) — HAL 的 `_links`/`_embedded`/CURIE/URI 模板 + Siren 的 actions/fields/EffectiveMethod + JSON:API 文档结构与 include/fields/sort 查询族 (Python + Go)
+- [x] [04-API设计/REST/API版本化与弃用/](./04-API设计/REST/API版本化与弃用/) — `Deprecation`(sf-date, RFC 9651 §3.3.7) vs `Sunset`(HTTP-date, RFC 8594) + Accept/qvalue 协商与 Vary + RFC 9110 Errata 7306 + 三种版本载体 (Python + Go)
+- [x] [04-API设计/OpenAPI/契约优先与3.1/](./04-API设计/OpenAPI/契约优先与3.1/) — OAS 3.1.1 + JSON Schema 2020-12 方言对齐 + discriminator 分支选取 + 3.0→3.1 迁移 + contentMediaType (Python + Go)
+- [x] [04-API设计/gRPC/Protobuf线格式与API建模/](./04-API设计/gRPC/Protobuf线格式与API建模/) — varint/ZigZag/tag/六种线类型 + packed 必须拼接 + group 字段号配对 + 字段号治理 + MergeFrom 合并语义 + gRPC 17 码与重试准则 (Python + Go)
+- [x] [04-API设计/WebSocket/心跳与重连/](./04-API设计/WebSocket/心跳与重连/) — 控制帧 ≤125B/不可分片/可插队 + Ping/Pong 原样回显与单向心跳 + 关闭握手状态机 + §7.4 状态码区间与 1005/1006/1015 禁写 + gRPC 官方退避算法 (Python + Go)
 
 - [x] [01-前端框架/Svelte/编译式响应性/](./01-前端框架/Svelte/编译式响应性/) — Svelte 5 runes 三层订阅 + pull 式 derived + 相等短路 + 深代理不 mutate 原对象 (Python + Go)
 - [x] [01-前端框架/React/RSC与Flight协议/](./01-前端框架/React/RSC与Flight协议/) — Flight 行状态机 + `$` 引用前缀表 + 流式 `$L` 回填 (Python + Go)

@@ -53,9 +53,9 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 1         # 本轮消费循环[1]=02-Web开发(上轮已消费[0]=01-游戏开发)
-sub_pos        : 01:7 02:3 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4 12:0  # 本轮 sub_pos[02]=3 → 索引 11;02 共 6 条目(8-11,42,58)
-last_run       : 2026-09-23 02:00  # 02:00 槽占位锁(索引 11 = 04-API设计 606-610)
+top_pos        : 2         # 下轮消费循环[2]=03-系统编程(本轮已消费[1]=02-Web开发)
+sub_pos        : 01:7 02:4 03:3 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4 12:0  # 本轮 sub_pos[02]=3 → 索引 11;下轮 [02]=4 → 索引 42(流量治理与限流);02 共 6 条目(8-11,42,58)
+last_run       : 2026-09-23 03:07  # 02:00 槽收尾(索引 11 = 04-API设计 606-610 已推送)
 last_top       : 02-Web开发  # 本轮大类;索引 11 = 04-API设计 5 demo(606-610)
 skipped        : []
 failed_attempts: []
@@ -69,7 +69,7 @@ failed_attempts: []
 | 09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析·型变·trait高级形态·宏卫生性·TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2;Py245+main×5 | ok |
 | 09-22 09:03 | 49 | 05-AI/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | ok |
 | 09-22 16:55 | 54 | 08-安全/供应链二批:CVSS v4.0宏向量·TUF·in-toto·可复现构建·AFL覆盖率 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss6+spec8;Py1021 | ok |
-| 09-23 00:54 | 6 | 01-游戏开发/07-音频:Ambisonic声场ACN-SN3D·HRTF双耳渲染SOFA·参数自动化与包络·Opus帧结构与Ogg封装·实时变调与变速 | S1+S3 | +5 | 605 | spatial1+sofa2+mysofa6+w3c1+rfc2+rb2;0检索;Py385 | ok |
+| 09-23 03:07 | 11 | 02-Web开发/04-API设计:HATEOAS三形态·API版本化与弃用·OpenAPI3.1契约优先·Protobuf线格式与gRPC建模·WebSocket心跳与重连 | S1+S3 | +5 | 610 | hal1+siren1+jsonapi1+rfc5+oas2+pb2+grpc2+iana1;0检索;Py680 | ok |
 
 > 更早细节见 `archive/schedule.md`。
 

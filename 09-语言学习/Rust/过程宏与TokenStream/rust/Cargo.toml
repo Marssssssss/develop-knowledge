@@ -1,0 +1,14 @@
+[workspace]
+members = ["mymacro"]
+
+[package]
+name = "proc-macro-demo"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "proc-macro-demo"
+path = "main.rs"
+
+[dependencies]
+mymacro = { path = "mymacro" }

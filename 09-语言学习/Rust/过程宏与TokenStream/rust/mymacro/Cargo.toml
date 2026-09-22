@@ -1,0 +1,10 @@
+[package]
+name = "mymacro"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+# 官方：过程宏必须定义在 `proc-macro` crate 类型的 crate 根部
+proc-macro = true
+
+[dependencies]

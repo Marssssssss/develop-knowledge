@@ -53,10 +53,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 3         # 下轮消费循环[3]=04-移动开发(本轮已消费[2]=03-系统编程)
-sub_pos        : 01:7 02:4 03:0 04:3 05:8 06:7 07:2 08:0 09:3 10:0 11:4 12:0  # [03] 共 4 条目(12-15);下轮 [03]=0→索引 12(01-网络编程)
-last_run       : 2026-09-23 06:03  # 06:00 槽进行中(占位锁)
-last_top       : 04-移动开发  # 索引 55 = 04-推送与消息 第二批
+top_pos        : 4         # 下轮消费循环[4]=05-AI与机器学习(本轮已消费[3]=04-移动开发)
+sub_pos        : 01:7 02:4 03:0 04:0 05:8 06:7 07:2 08:0 09:3 10:0 11:4 12:0  # [04] 共 4 条目(16/17/18/55);下轮 [04]=0→索引 16(01-iOS)
+last_run       : 2026-09-23 06:50  # 06:00 槽收尾
+last_top       : 04-移动开发  # 索引 55 = 04-推送与消息 第二批 5 demo(616-620)
 skipped        : []
 failed_attempts: []
 ```
@@ -65,11 +65,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 09-22 19:08 | 50 | 09-语言学习/Rust第三批:方法解析·型变·trait高级形态·宏卫生性·TokenStream | S1+S3 | +5 | 590 | reference5+nomicon2+book2;Py245+main×5 | ok |
 | 09-22 09:03 | 49 | 05-AI/08-概率图模型首批:变量消除·连接树·循环BP·HMM·变分推断 | S1+S3 | +5 | 570 | pgmpy2+nx+SLP3A+hmmlearn+blei1601;Py264 | ok |
 | 09-22 16:55 | 54 | 08-安全/供应链二批:CVSS v4.0宏向量·TUF·in-toto·可复现构建·AFL覆盖率 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss6+spec8;Py1021 | ok |
 | 09-23 03:07 | 11 | 02-Web开发/04-API设计:HATEOAS三形态·API版本化与弃用·OpenAPI3.1契约优先·Protobuf线格式与gRPC建模·WebSocket心跳与重连 | S1+S3 | +5 | 610 | hal1+siren1+jsonapi1+rfc5+oas2+pb2+grpc2+iana1;0检索;Py680 | ok |
 | 09-23 04:54 | 15 | 03-系统编程/04-文件系统第二批:XFS延迟分配·fs-verity与dm-integrity·io_uring文件IO·dcache与getdents64·文件系统冻结 | S1+S3 | +5 | 615 | xfs4+iomap1+dcache1+super1+fsverity4+man7×7+glibc2;0检索;Py372+main×5 | ok |
+| 09-23 06:50 | 55 | 04-移动开发/推送与消息第二批:APNs令牌认证·WebPush端到端加密·push type与topic后缀·FCM主题与批量·端侧解密 | S3 | +5 | 620 | apple docc 5+activitykit 1+clockkit 1+rfc 7+fa-python 3;0检索;Py345+main×5 | ok |
 
 > 更早细节见 `archive/schedule.md`。
 

@@ -5,11 +5,14 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from delalloc import (
+    DELALLOC, UNWRITTEN, WRITTEN, DelallocFile,
+)
 from xfsalloc import (  # noqa: E402
-    BMBT_BLOCKCOUNT_BITLEN, BMBT_STARTOFF_BITLEN, DELALLOC, Extent, Inode,
-    NULLFSBLOCK, UNWRITTEN, WRITTEN, XFS_DEFAULT_ALLOCSIZE_LOG,
+    BMBT_BLOCKCOUNT_BITLEN, BMBT_STARTOFF_BITLEN, Extent, Inode,
+    NULLFSBLOCK, XFS_DEFAULT_ALLOCSIZE_LOG,
     XFS_MAX_BMBT_EXTLEN, XFS_MAX_FILEOFF, XFS_MAX_IO_LOG, XFS_MIN_IO_LOG,
-    DelallocFile, allocsize_blocks, ffs, iomap_freesp, iomap_prealloc_size,
+    allocsize_blocks, ffs, iomap_freesp, iomap_prealloc_size,
     parse_allocsize, rounddown_pow_of_two, roundup_pow_of_two,
     set_low_space_thresholds,
 )

@@ -5,8 +5,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from delalloc import DelallocFile  # noqa: E402
 from xfsalloc import (  # noqa: E402
-    Extent, Inode, XFS_MAX_BMBT_EXTLEN, DelallocFile, allocsize_blocks,
+    Extent, Inode, XFS_MAX_BMBT_EXTLEN, allocsize_blocks,
     iomap_freesp, iomap_prealloc_size, parse_allocsize,
     set_low_space_thresholds,
 )

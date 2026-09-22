@@ -86,7 +86,8 @@ release/inode reclaim ─► xfs_free_eofblocks 砍掉 EOF 之外的投机预分
 
 ## 文件说明
 
-- `python/xfsalloc.py` —— 常量、`parse_allocsize`、`set_low_space_thresholds`、`iomap_freesp`、`iomap_prealloc_size` 逐行转写，以及 `DelallocFile` 生命周期状态机
+- `python/xfsalloc.py` —— 常量、`parse_allocsize`、`set_low_space_thresholds`、`iomap_freesp`、`iomap_prealloc_size` 逐行转写
+- `python/delalloc.py` —— `DelallocFile` 生命周期状态机（delalloc → unwritten → written → release）
 - `python/selfcheck_xfsalloc.py` —— 59 条断言（实跑全绿）
 - `python/main.py` —— 演示入口
 - `go/xfsalloc.go` —— Go 侧镜像（常量、解析、节流、主算法）

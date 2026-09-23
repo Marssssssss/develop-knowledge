@@ -34,7 +34,12 @@
 | 428 | [DWARF调试信息解析/](./DWARF调试信息解析/) | 三层嵌套压缩结构:.debug_info CU 头 → .debug_abbrev 缩写表(属性/形式对)→ DIE 树,外加 .debug_line 行号程序(special opcode = 地址/行双增量, 含 opcode_base/line_base/line_range 与 end_sequence 语义) | Go / Python |
 | 429 | [栈回溯与CFI展开/](./栈回溯与CFI展开/) | .eh_frame 的 CIE/FDE(CIE 的 code_alignment_factor·data_alignment_factor·return_address_register)+ DW_CFA 程序逐条执行(def_cfa/offset/advance_loc 形成按 pc 查表的规则行)+ 三帧逐帧回溯(CFA → 上一帧 rbp → 返回地址 → 上一 pc) | C / Python |
 | 430 | [线程局部存储TLS/](./线程局部存储TLS/) | 四种访问模型 GD/LD/IE/LE(模块号+块内偏移二元组 + 每线程 DTV 两级表)+ dlopen 的模块号在运行时才定 ⇒ 四种模型算出的**必须是同一个地址**(静态可执行文件 LE 可省去 DTV 一跳) | C / Python |
-| 431 | [ItaniumC++名字改编/](./ItaniumC++名字改编/) | Itanium C++ ABI §5.1 最小解 mangler:`_Z`+`<encoding>`、`<nested-name>` 的 N...E 与 `[r][V][K]`/R|O、21 个内建类型码、42 个操作符码(一元/二元同符号不同码)、base-36 `<seq-id>` 替换(`S_` 是第 1 个而非 `S0_`)、7 个 `Sx` 缩写与 `St` 的 N...E 例外 | Python / Go |
+| 431 | [ItaniumC++名字改编/](./ItaniumC++名字改编/) | Itanium C++ ABI §5.1 最小解 mangler:`_Z`+`<encoding>`、`<nested-name>` 的 N...E 与 `[r][V][K]`/`R`/`O`、21 个内建类型码、42 个操作符码(一元/二元同符号不同码)、base-36 `<seq-id>` 替换(`S_` 是第 1 个而非 `S0_`)、7 个 `Sx` 缩写与 `St` 的 N...E 例外 | Python / Go |
+| 650 | [ELF符号哈希查找/](./ELF符号哈希查找/) | DT_HASH 与 DT_GNU_HASH 对照:SysV `h=(h<<4)+c; hi=h&0xf0000000; h^=hi>>24; h&=0x0fffffff`(恒 28 位)vs GNU `h=5381; h=h*33+c`;表头 4 字(nbuckets/symbias/bitmask_nwords/shift,`bitmask_nwords` 必须 2 的幂);bloom 字下标是 **`(h/64)&(nwords-1)`** 而非 `h&...`;判据 `(w>>h1)&(w>>h2)&1`;chain 项 `((hv^h)>>1)==0` **只比高 31 位**(最低位让给链终止位);`l_gnu_chain_zero = hash32 - symbias` 使下标即符号索引;SysV 的 `STN_UNDEF==0` 同时是空桶与链尾哨兵 ⇒ 符号 0 永远查不到 | Python / Go |
+| 651 | [WindowsX64展开数据/](./WindowsX64展开数据/) | `.pdata` 的 RUNTIME_FUNCTION(3×ULONG)指向 `.xdata` 的 UNWIND_INFO:`UBYTE:3 version`+`UBYTE:5 flags`+prolog size+count+`UBYTE:4`×2(frame reg/offset scaled);`count` 数的是**槽**不是操作码;数组按偏移**降序**且补齐到偶数项;chained info 落在 `UnwindCode[(CountOfCodes+1)&~1]`;9 个 UWOP 的槽数与撤销式(ALLOC_SMALL=info*8+8、ALLOC_LARGE 两种、SAVE_XMM128 缩放 **16**);`SAVE_*` 基准在无 FP 时是 RSP、否则是 `FP-16*scaled`;prolog 内只撤销 `offset<=rip偏移` 的节点;最小展开数据 8 字节 | Python / Go |
+| 652 | [控制流平坦化与反平坦化/](./控制流平坦化与反平坦化/) | OLLVM `Flattening.cpp`:含 invoke 或块数 ≤1 直接放弃;入口以条件分支结尾先 split 并插到最前;`switchVar` 初值 = `scramble32(0,key)`;第 i 块的 case = `scramble32(i,key)`;0 后继不动、1 后继存常量、2 后继变 `select`;**`findCaseDest` 落空时用 `scramble32(块数-1)` 兜底,该值恰好等于最后一块的 case**;case 值由四轮 AES T 表混合生成(`TE1=ROTR8(TE0)` 等,末尾 XOR `LOAD32H(key)`)故每次编译都不同;反平坦化靠 case→块的逆查表还原边 | Python / Go |
+| 653 | [符号执行与约束求解/](./符号执行与约束求解/) | claripy 位序 **`a[31]` 是最左位**;`chop` 首个元素是最高段;`get_byte` 是大端序号(0 = 最高字节);`concat` 里 self 在最高位;整数被**静默截断到左操作数位宽**(`BVV(1,8)+300` = 45)、`True`→`BVV(1,like.length)`;angr 侧 `_integral_stashes` 七项、`ALL="_ALL"`/`DROP="_DROP"`、`explore` 第一行 `num_find += len(found)`、avoid 先于 find 搬移、5 层二分后 active=32 | Python / Go |
+| 654 | [SLEIGH处理器规范/](./SLEIGH处理器规范/) | `define endian` 必须第一条;token 位宽须 8 的倍数、字段区间闭且**最低位标 0**、可重叠;**>1 字节的 token 位编号受字节序影响**(先按字节序拼整数再编号);属性默认十六进制显示、`signed` 影响取值与显示;`attach variables` 两侧**不要求等长**,每个字段都变成同一张查表(索引从 0);构造函数五段,空标识符 = 根表;**约束比的是原始整数编码,不认 attach 后的含义**;`...` 引入下一个 token 处理变长 | Python / Go |
 
 ## 待研究
 
@@ -58,8 +63,18 @@
 - [x] CFI / .eh_frame 栈回溯（DW_CFA 程序与逐帧展开）→ 429 栈回溯与CFI展开
 - [x] 线程局部存储四种访问模型（GD/LD/IE/LE）→ 430 线程局部存储TLS
 - [x] C++ 符号改编（Itanium ABI mangling 与 substitution）→ 431 ItaniumC++名字改编
+- [x] ELF 动态符号哈希查找（DT_HASH / DT_GNU_HASH 的 bloom 与 chain 扫描）→ 650 ELF符号哈希查找
+- [x] Windows x64 表驱动展开（.pdata / .xdata 的 RUNTIME_FUNCTION 与 UNWIND_INFO）→ 651 WindowsX64展开数据
+- [x] 控制流平坦化与反平坦化（OLLVM 的 case 值生成与状态机对拍）→ 652 控制流平坦化与反平坦化
+- [x] 符号执行与约束求解（claripy 位向量语义 + angr stash 状态机）→ 653 符号执行与约束求解
+- [x] Ghidra SLEIGH 处理器规范语言（token / 字段 / 构造函数位模式）→ 654 SLEIGH处理器规范
 - [ ] 增量式重新分析对已有用户命名的保留边界（重跑分析会不会动 USER_DEFINED）
 - [ ] 二进制差分工具工程化对比（BinDiff / Diaphora / BinDiffNG 的相似度口径差异）
+- [ ] MIPS XHASH 与 DT_GNU_HASH 的差异（`ELF_MACHINE_XHASH_SETUP`）
+- [ ] Windows ARM64 展开数据与 x64 的对照（opcode 集合与寄存器编号差异）
+- [ ] 反平坦化的工程实现（符号执行 + 支配关系重建真实块顺序）
+- [ ] Z3 层位向量操作与 claripy 语义的对应（验证本 demo 暴力求解的适用边界）
+- [ ] SLEIGH 语义段（p-code）与反编译流水线的衔接（接 258 Ghidra反编译流水线）
 
 ## 参考资料（已读）
 

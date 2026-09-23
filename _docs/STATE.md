@@ -65,7 +65,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 09-24 00:44 | 35 | 10-逆向/01-二进制逆向四批:ELF符号哈希·WindowsX64展开·控制流平坦化·符号执行约束求解·SLEIGH规范 | S3 | +5 | 654 | glibc5+ms1+mingw1+ollvm3+angr3+ghidra6;0检索;Py780 | pending |
+| 09-24 00:44 | 35 | 10-逆向/01-二进制逆向四批:ELF符号哈希·WindowsX64展开·控制流平坦化·符号执行约束求解·SLEIGH规范 | S3 | +5 | 654 | glibc5+ms1+mingw1+ollvm3+angr3+ghidra6;0检索;Py780 | notify: ok |
 | 09-23 12:41 | 51 | 06-DevOps/08-平台工程首批:软件目录实体模型·权限框架与条件策略·Scaffolder黄金路径·Crossplane XRD·KubeVela OAM | S3 | +5 | 630 | bs-doc6+bs-src3+perm-dts1+cp4+kv4;0检索;Py256 | ok |
 | 09-23 15:24 | 29 | 07-数据存储/03-缓存三批:Redis跳表ZSet·Sentinel故障转移·布隆与Cuckoo·ae事件循环与多线程IO·CDN一致性哈希 | S3 | +5 | 635 | redis8+bloom5+ketama1+ngx3;0检索;Py491 | ok |
 | 09-23 20:40 | 31 | 08-安全/01-密码学五批:SPAKE2·Shamir三套·JOSE_JWS_JWE·恒定时间与侧信道·CT_Merkle审计(续18:00中断轮) | S1+S3 | +5 | 644 | rfc7+bearssl1+ossl1+go-subtle1+vault1+slip39+merkle2;0检索;Py2205 | ok |

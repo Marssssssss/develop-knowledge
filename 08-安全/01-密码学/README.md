@@ -32,6 +32,15 @@
 | [BLS聚合签名/](./BLS聚合签名/) | **419** BLS 聚合签名(draft-irtf-cfrg-bls-signature-05,Miller 循环 + 扭映射 + 最终幂 + 恶意公钥攻击与三道防线) | Go + Python |
 | [后量子MLKEM/](./后量子MLKEM/) | **420** ML-KEM 后量子 KEM(FIPS 203,不完全 NTT + Montgomery 因子 + basemul + CBD 采样 + 有损压缩 + FO 隐式拒绝) | Python |
 | [Groth16零知识证明/](./Groth16零知识证明/) | **421** Groth16 zk-SNARK(R1CS→QAP 整除判定 + 可信设置 + 3 群元素证明 + 3 配对验证 + 有毒废料伪造) | Python + Go |
+| [MLDSA后量子签名/](./MLDSA后量子签名/) | **636** ML-DSA 后量子签名(FIPS 204):`Q = 8380417` 的取整与 **hint 提示位**机制 | Python + Go |
+| [FROST门限签名/](./FROST门限签名/) | **637** FROST 两轮门限签名(RFC 9591):Shamir 分片 + **绑定因子** + 可识别中止 | Python + Go |
+| [HPKE混合公钥加密/](./HPKE混合公钥加密/) | **638** HPKE(RFC 9180):DHKEM + 两个 `suite_id` + 由序号 XOR 出的 nonce,对齐附录 A.1 向量 | Python + Go |
+| [AES密钥包装/](./AES密钥包装/) | **639** AES 密钥包装:RFC 3394 的 6n 步 Feistel 与 RFC 5649 的 `A65959A6 ‖ MLI` | Python + Go |
+| [SPAKE2口令认证密钥交换/](./SPAKE2口令认证密钥交换/) | **640** SPAKE2 PAKE(RFC 9382):转录 TT 的 8 字节小端长度 + `w` 定长编码 + 确认密钥 KcA/KcB | Python + Go |
+| [Shamir秘密共享与阈值恢复/](./Shamir秘密共享与阈值恢复/) | **641** Shamir 秘密共享三套对照:素数域 / Vault GF(2^8) / SLIP-0039(秘密在 x=255) | Python + Go |
+| [JOSE令牌JWS与JWE/](./JOSE令牌JWS与JWE/) | **642** JOSE JWS/JWE(RFC 7515/7516/7518):AAD 是 Protected 的 b64、A128KW + A128CBC-HS256 | Python(含从零 AES) + Go |
+| [恒定时间与侧信道防护/](./恒定时间与侧信道防护/) | **643** 常量时间原语与侧信道(OpenSSL `constant_time.h` + BearSSL 执行模型 + `value_barrier`) | Python + Go |
+| [证书透明化Merkle审计/](./证书透明化Merkle审计/) | **644** CT Merkle 审计与 SCT/STH 编码(RFC 6962 §2.1/§3.2/§3.5) | Python + Go |
 
 ## 待研究
 
@@ -42,7 +51,12 @@
 - [x] BLS 签名(聚合签名,适用 PoS) ✓ (2026-09-19,419)
 - [x] 零知识证明(zk-SNARK/Groth16 入门) ✓ (2026-09-19,421)
 - [x] Post-quantum(CRYSTALS-Kyber/Dilithium) ✓ (2026-09-19,420,ML-KEM;ML-DSA 待后续)
-- [ ] ML-DSA / CRYSTALS-Dilithium 后量子签名(FIPS 204)
-- [ ] 门限签名与分布式密钥生成(Shamir + FROST)
+- [x] ML-DSA / CRYSTALS-Dilithium 后量子签名(FIPS 204) ✓ (2026-09-23,636)
+- [x] 门限签名与分布式密钥生成(Shamir + FROST) ✓ (2026-09-23,637)
+- [x] 证书链与 PKI 的密码学侧(CT Merkle 审计 + SCT/STH) ✓ (2026-09-23,644;X.509 ASN.1 解析与 OCSP/CRL 待后续)
 - [ ] 可搜索加密与同态加密(BFV/CKKS 入门)
-- [ ] 证书链与 PKI(X.509 解析 + 吊销 OCSP/CRL)
+- [ ] PAKE 族补全(OPAQUE / Augmented PAKE;SPAKE2 已见 640)
+- [ ] 后量子混合密钥交换(X25519MLKEM768;ML-KEM 见 420、ML-DSA 见 636)
+- [ ] 可验证随机函数 VRF(RFC 9381)与随机信标
+- [ ] 密钥管理与 HSM / KMS 抽象(PKCS#11)
+- [ ] 抗量子签名聚合与 MuSig2(BIP 340 / draft-irtf-cfrg-musig2)

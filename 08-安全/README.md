@@ -69,6 +69,15 @@
 | `02-网络安全/证书透明度Merkle审计/` | CT Merkle 审计:包含性证明与 append-only 一致性证明(RFC 9162) |
 | `02-网络安全/SSH传输层与密钥交换/` | SSH 二进制包协议 + KEX 协商 + 密钥派生(RFC 4253 + RFC 8308) |
 | `02-网络安全/IPv6隐私地址与SLAAC/` | IPv6 临时地址两代生成算法与生命周期(RFC 4941 + RFC 8981) |
+| `01-密码学/MLDSA后量子签名/` | **636** ML-DSA 后量子签名(FIPS 204):模数 `Q=8380417` 的取整 + hint 提示位 |
+| `01-密码学/FROST门限签名/` | **637** FROST 两轮门限签名(RFC 9591):绑定因子 + 可识别中止 |
+| `01-密码学/HPKE混合公钥加密/` | **638** HPKE(RFC 9180):DHKEM + 双 `suite_id` + 序号 XOR 出的 nonce |
+| `01-密码学/AES密钥包装/` | **639** AES 密钥包装:RFC 3394 的 6n 步 Feistel 与 RFC 5649 的 `A65959A6 ‖ MLI` |
+| `01-密码学/SPAKE2口令认证密钥交换/` | **640** SPAKE2 PAKE(RFC 9382):转录 TT 的 8 字节小端长度 + 确认密钥 KcA/KcB |
+| `01-密码学/Shamir秘密共享与阈值恢复/` | **641** Shamir 秘密共享三套对照:素数域 / Vault GF(2^8) / SLIP-0039 |
+| `01-密码学/JOSE令牌JWS与JWE/` | **642** JOSE JWS/JWE(RFC 7515/7516/7518):AAD 规则 + A128KW + A128CBC-HS256 |
+| `01-密码学/恒定时间与侧信道防护/` | **643** 常量时间原语与侧信道:OpenSSL 掩码原语 + BearSSL 执行模型 + `value_barrier` |
+| `01-密码学/证书透明化Merkle审计/` | **644** CT Merkle 审计与 SCT/STH 编码(RFC 6962) |
 
 ## 待研究
 
@@ -79,7 +88,8 @@
 - [x] 传输层协议安全整批 ✓ (02-网络安全 两批共 10 个:SYN Cookie / XDP / IKEv2 / DNSSEC / WireGuard / QUIC / RPKI / SAE / ECH)
 - [x] 密码学深水区整批 ✓ (01-密码学 第 14-18 个:TLS1.3 密钥调度 / 国密 SM2-SM3-SM4 / BLS 聚合签名 / 后量子 ML-KEM / Groth16)
 - [x] 网络安全第三批:传输与命名基础设施 ✓ (02-网络安全 第三批 5 个:TCP 盲注入与 RFC 5961 / DNS 缓存投毒与 RFC 5452 / 证书透明度 Merkle 审计 / SSH 传输层 / IPv6 隐私地址)
-- [ ] ML-DSA 后量子签名(FIPS 204)
+- [x] 密码学第四/五批:后量子与协议侧 ✓ (01-密码学 636-644 共 9 个:ML-DSA / FROST / HPKE / AES-KW / SPAKE2 / Shamir / JOSE / 恒定时间 / CT Merkle)
+- [ ] 后量子迁移与混合模式的**工程**侧(协商与回滚;算法本身见 636/420)
 - [ ] MACsec (IEEE 802.1AE)
 - [x] 供应链与制品安全 ✓ (03-应用安全与供应链 首批 5 个:污点分析精度阶梯 / 依赖可达性+SPDX / SLSA provenance 验证 / CWE-798 熵判据 / CI 加固)
 - [x] 供应链第二批:度量与验证机制 ✓ (03-应用安全与供应链 第二批 5 个:CVSS v4.0 宏向量 / TUF 四角色 / in-toto link 验证 / 可复现构建 / AFL 覆盖率引导)

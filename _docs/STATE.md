@@ -53,10 +53,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 6         # 下轮消费循环[6]=07-数据存储(本轮已消费[5]=06-DevOps)
-sub_pos        : 01:7 02:4 03:0 04:0 05:0 06:0 07:2 08:0 09:3 10:0 11:4 12:0  # [06] 共 8 条目(23/24/25/26/41/42/43/51);本轮消费 [06]=7→索引 51,下轮 [06]=0→索引 23(01-容器化)
-last_run       : 2026-09-23 14:03  # 14:00 槽占位锁(开局写,防重入)
-last_top       : 06-DevOps  # 索引 51 = 平台工程 首批(5 demo:626-630)
+top_pos        : 7         # 下轮消费循环[7]=08-安全(本轮已消费[6]=07-数据存储)
+sub_pos        : 01:7 02:4 03:0 04:0 05:0 06:0 07:3 08:0 09:3 10:0 11:4 12:0  # [07] 共 5 条目(27/28/29/30/45);本轮消费 [07]=2→索引 29,下轮 [07]=3→索引 30(04-搜索引擎)
+last_run       : 2026-09-23 15:24  # 14:00 槽收尾时刻
+last_top       : 07-数据存储  # 索引 29 = 03-缓存 第三批(5 demo:631-635)
 skipped        : []
 failed_attempts: []
 ```
@@ -65,11 +65,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 09-22 16:55 | 54 | 08-安全/供应链二批:CVSS v4.0宏向量·TUF·in-toto·可复现构建·AFL覆盖 | S1+S3 | +5 | 585 | afl4+tuf1+intoto1+rb4+cvss6+spec8;Py1021 | ok |
 | 09-23 03:07 | 11 | 02-Web开发/04-API设计:HATEOAS三形态·版本化弃用·OpenAPI3.1契约优先·Protobuf线格式·WebSocket心跳 | S1+S3 | +5 | 610 | rfc5+oas2+pb2+grpc2+hal1+siren1+jsonapi1;0检索;Py680 | ok |
 | 09-23 04:54 | 15 | 03-系统编程/04-文件系统二批:XFS延迟分配·fs-verity·io_uring文件IO·dcache·冻结 | S1+S3 | +5 | 615 | xfs4+iomap1+dcache1+super1+fsverity4+man7×7+glibc2;Py372 | ok |
 | 09-23 09:22 | 52 | 05-AI/09-RAG与向量检索首批:HNSW分层图·乘积量化IVFPQ·向量度量归一化·检索评估指标·混合检索RRF | S1+S3 | +5 | 625 | hnswlib4+faiss5+sklearn1+trec5+lucene1+rrf1;0检索;Py250 | ok |
 | 09-23 12:41 | 51 | 06-DevOps/08-平台工程首批:软件目录实体模型与关系·权限框架与条件策略·Scaffolder黄金路径·Crossplane XRD组合·KubeVela OAM定义修订 | S3 | +5 | 630 | bs-doc6+bs-src3+perm-dts1+cp4+kv4;0检索;Py256 | ok |
+| 09-23 15:24 | 29 | 07-数据存储/03-缓存三批:Redis跳表ZSet·Sentinel故障转移·布隆与Cuckoo·ae事件循环与多线程IO·CDN一致性哈希 | S3 | +5 | 635 | redis8+bloom5+ketama1+ngx3;0检索;Py491 | ok |
 
 > 更早细节见 `archive/schedule.md`。
 

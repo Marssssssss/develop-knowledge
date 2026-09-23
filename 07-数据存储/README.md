@@ -76,4 +76,9 @@
 - [x] Neo4j 搜索性能索引（Range/Text/Point/Token 四类谓词可解性 + trigram 索引 "developer" + planner 选择与 USING 提示 + 复合索引收录条件）— 见 [05-图数据库/SearchIndexes/](./05-图数据库/SearchIndexes/)（Python / Go）
 - [x] Neo4j 约束（唯一性 / 存在性 / 类型 / Key，Key = 存在性+唯一性，`LIST<STRING NOT NULL>` 与联合类型，约束名与索引共享命名空间）— 见 [05-图数据库/SchemaConstraints/](./05-图数据库/SchemaConstraints/)（Python / Go）
 - [x] Louvain 与模块度（式(1) Q 与式(2) ΔQ 增量、两阶段聚合、自环 A_ii=2s 的聚合不变性、ring of 30 cliques 30→15）— 见 [05-图数据库/LouvainModularity/](./05-图数据库/LouvainModularity/)（Python / Go）
+- [x] Redis 跳表与有序集合（zskiplist 32 层 / P=0.25 + `level[0].span` 复用为 NodeInfo + listpack 互转阈值 128/64）— 见 [03-缓存/Redis跳表与有序集合/](./03-缓存/Redis跳表与有序集合/)（Python / Go）
+- [x] Redis Sentinel 故障转移（SDOWN/ODOWN 仲裁含自身票 + epoch 单调领头选举 + 7 态状态机 + parallel_syncs）— 见 [03-缓存/RedisSentinel故障转移/](./03-缓存/RedisSentinel故障转移/)（Python / Go）
+- [x] 布隆过滤器与缓存穿透防护（RedisBloom `bpe=-ln(err)/ln(2)²` + 可扩容链 ERROR_TIGHTENING_RATIO=0.5 + Cuckoo 指纹与踢出）— 见 [03-缓存/布隆过滤器与缓存穿透/](./03-缓存/布隆过滤器与缓存穿透/)（Python / Go）
+- [x] Redis 事件循环与多线程 I/O（ae.c 派发顺序 / AE_BARRIER 反转 / 时间事件 refcount + io-threads 与拷贝规避阈值）— 见 [03-缓存/Redis事件循环与多线程IO/](./03-缓存/Redis事件循环与多线程IO/)（Python / Go）
+- [x] CDN 一致性哈希（libketama md5 环 vs nginx chash crc32 链 + 单精度 ks 陷阱 + 扩缩容重迁移实测）— 见 [03-缓存/CDN一致性哈希/](./03-缓存/CDN一致性哈希/)（Python / Go）
 - [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

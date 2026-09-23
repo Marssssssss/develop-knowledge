@@ -53,10 +53,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 7         # 本轮消费循环[7]=08-安全(下轮[8]=09-语言学习)
-sub_pos        : 01:7 02:4 03:0 04:0 05:0 06:0 07:3 08:0 09:3 10:0 11:4 12:0  # [08] 共 4 条目(31/32/33/54);本轮消费 [08]=0→索引 31
-last_run       : 2026-09-23 20:05  # 占位锁(20:00 槽,未预推进指针)
-last_top       : 08-安全  # 索引 31 = 01-密码学 第五批(续 18:00 中断轮:636-639 已提交未收尾)
+top_pos        : 8         # 本轮消费循环[8]=09-语言学习(下轮[9]=10-逆向工程)
+sub_pos        : 01:7 02:4 03:0 04:0 05:0 06:0 07:3 08:1 09:3 10:0 11:4 12:0  # [08] 共 4 条目(31/32/33/54);本轮消费 [08]=0→索引 31
+last_run       : 2026-09-23 20:40
+last_top       : 08-安全  # 索引 31 = 01-密码学 第五批(续 18:00 中断轮:636-639 已提交未收尾,本轮补齐归档)
 skipped        : []
 failed_attempts: []
 ```
@@ -65,11 +65,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 09-23 03:07 | 11 | 02-Web开发/04-API设计:HATEOAS三形态·版本化弃用·OpenAPI3.1契约优先·Protobuf线格式·WebSocket心跳 | S1+S3 | +5 | 610 | rfc5+oas2+pb2+grpc2+hal1+siren1+jsonapi1;0检索;Py680 | ok |
 | 09-23 04:54 | 15 | 03-系统编程/04-文件系统二批:XFS延迟分配·fs-verity·io_uring文件IO·dcache·冻结 | S1+S3 | +5 | 615 | xfs4+iomap1+dcache1+super1+fsverity4+man7×7+glibc2;Py372 | ok |
 | 09-23 09:22 | 52 | 05-AI/09-RAG与向量检索首批:HNSW分层图·乘积量化IVFPQ·向量度量归一化·检索评估指标·混合检索RRF | S1+S3 | +5 | 625 | hnswlib4+faiss5+sklearn1+trec5+lucene1+rrf1;0检索;Py250 | ok |
 | 09-23 12:41 | 51 | 06-DevOps/08-平台工程首批:软件目录实体模型与关系·权限框架与条件策略·Scaffolder黄金路径·Crossplane XRD组合·KubeVela OAM定义修订 | S3 | +5 | 630 | bs-doc6+bs-src3+perm-dts1+cp4+kv4;0检索;Py256 | ok |
 | 09-23 15:24 | 29 | 07-数据存储/03-缓存三批:Redis跳表ZSet·Sentinel故障转移·布隆与Cuckoo·ae事件循环与多线程IO·CDN一致性哈希 | S3 | +5 | 635 | redis8+bloom5+ketama1+ngx3;0检索;Py491 | ok |
+| 09-23 20:40 | 31 | 08-安全/01-密码学五批:SPAKE2·Shamir三套·JOSE_JWS_JWE·恒定时间与侧信道·CT_Merkle审计(续18:00中断轮) | S1+S3 | +5 | 644 | rfc7+bearssl1+ossl1+go-subtle1+vault1+slip39+merkle2;0检索;Py2205 | ok |
 
 > 更早细节见 `archive/schedule.md`。
 

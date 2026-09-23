@@ -97,6 +97,12 @@ for t in (0.0, 0.25, 0.5, 0.75, 1.0):
     v = pp.interpolate(t)
     ok(0.0 - 1e-9 <= v <= 10.0 + 1e-9, f"PINGPONG t={t} 的结果应落在 [0,10], 实得 {v}")
 ok(close(pp.interpolate(0.5), 10.0), "PINGPONG 在末帧处取到 10")
+# 关键帧覆盖 [0, length] 的常规配置：pingpong 才呈现折返（两点配置会退化成平顶）
+k3 = [Key(0.0, 0.0), Key(0.5, 10.0), Key(1.0, 20.0)]
+pp3 = Track(k3, length=1.0, loop_mode=Track.LOOP_PINGPONG)
+ok(close(pp3.interpolate(0.75), 15.0), f"PINGPONG t=0.75 应在 10 与 20 之间取 15, 实得 {pp3.interpolate(0.75)}")
+ok(close(pp3.interpolate(0.9), 18.0), f"PINGPONG t=0.9 → c=0.8 → 18, 实得 {pp3.interpolate(0.9)}")
+ok(close(pp3.interpolate(0.1), 2.0), f"PINGPONG t=0.1 → 2, 实得 {pp3.interpolate(0.1)}")
 
 # ---------------------------------------------------------------- 插值方式
 k3 = [Key(0.0, 0.0), Key(1.0, 100.0)]

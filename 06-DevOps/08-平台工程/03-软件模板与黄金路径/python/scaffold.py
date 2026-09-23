@@ -1,20 +1,15 @@
 """Backstage Scaffolder：软件模板（黄金路径）的校验、表达式求值与步骤执行。
 
-事实来源（本轮实读）：
-- backstage.io《Writing Templates》：spec.parameters / spec.steps / spec.type / spec.owner 的
-  要求；`${{ }}` 与 `{{ }}` 两套语法的分工；`steps.$stepId.output.$property` 取值；
-  output.links / output.text 支持 `if`；`backstage.io/time-saved` 是 ISO 8601 时长；
-  presentation 可改按钮文案。
-- backstage.io《descriptor-format》Kind: Template 小节：apiVersion 有
-  `backstage.io/v1beta2` 与（文档示例中出现的）`scaffolder.backstage.io/v1beta3` 两种写法。
-- backstage/backstage `plugins/scaffolder-backend/src/scaffolder/tasks/NunjucksWorkflowRunner.ts`：
-  步骤按序执行；`each` 会注入 `each.key` / `each.value`；dry-run 时若 action 不支持
-  dry run，则按该 action 的 output schema **生成示例输出**（无 schema 则空对象）；
-  每步结果写入 `context.steps[step.id].output`。
+事实来源（本轮实读）：backstage.io《Writing Templates》（spec.parameters/steps/type 要求；
+`${{ }}` 与 `{{ }}` 的分工；`steps.$id.output.$prop`；output.links/text 的 `if`；
+`backstage.io/time-saved` 是 ISO 8601 时长）；descriptor-format 的 Kind: Template 小节
+（apiVersion 有 `backstage.io/v1beta2` 与 `scaffolder.backstage.io/v1beta3` 两种写法）；
+`plugins/scaffolder-backend/.../NunjucksWorkflowRunner.ts`（步骤按序执行；`each` 注入
+`each.key`/`each.value`；dry-run 且 action 不支持时按 output schema **生成示例输出**，无
+schema 则空对象；结果写入 `context.steps[step.id].output`）。
 
-口径说明（官方未给定量处，本 demo 自行定义并在 README 标注）：
-- `generate_example_output` 按 JSON Schema 的 type 生成占位值，官方实现未读。
-- 未定义变量按**报错**处理（模板作者写错变量名应当失败，而不是静默变空串）。
+口径（官方未给定量处，本 demo 自行定义并在 README 标注）：`generate_example_output` 按 JSON
+Schema 的 type 生成占位值（官方实现未读）；未定义变量按**报错**处理。
 """
 
 from __future__ import annotations
@@ -101,9 +96,7 @@ def _stringify(value: Any) -> str:
         return "True"
     if value is False:
         return "False"
-    if value is None:
-        return ""
-    return str(value)
+    return "" if value is None else str(value)
 
 
 def render_input(node: Any, ctx: Dict[str, Any]) -> Any:
@@ -230,7 +223,6 @@ def execute(tpl: Template, parameters: Dict[str, Any], actions: Dict[str, Action
             raise TemplateError(f"unknown action {step['action']!r}")
 
         if "if" in step:
-            ctx["steps"] = ctx["steps"]
             if not _truthy(render_typed(step["if"], ctx)):
                 ctx["steps"][step["id"]] = {"output": {}}
                 results.append(StepResult(step["id"], "skipped", {}))
@@ -271,9 +263,8 @@ def _run_or_dryrun(action: Action, inputs: Dict[str, Any], dry_run: bool) -> Dic
 
 
 def _truthy(value: Any) -> bool:
-    if isinstance(value, str):
-        return value.strip().lower() in ("true", "yes", "1")
-    return bool(value)
+    return (value.strip().lower() in ("true", "yes", "1")
+            if isinstance(value, str) else bool(value))
 
 
 def _apply_defaults(parameters_spec: List[Dict[str, Any]],

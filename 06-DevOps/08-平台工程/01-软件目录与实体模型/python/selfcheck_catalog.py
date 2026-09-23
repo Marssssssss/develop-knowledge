@@ -6,10 +6,17 @@
 
 from catalog import (
     Entity, EntityRef, RefError, WELL_KNOWN_RELATIONS,
-    check_envelope, deduce_relations, is_reserved_key, kinds_of,
+    check_envelope, deduce_relations, is_reserved_key,
     parse_entity_ref, valid_annotation_value, valid_key, valid_label_value,
     valid_name, valid_namespace, valid_tag,
 )
+
+
+def kinds_of(entities):
+    counts = {}
+    for e in entities:
+        counts[e.kind] = counts.get(e.kind, 0) + 1
+    return counts
 
 PASS = 0
 FAIL = []

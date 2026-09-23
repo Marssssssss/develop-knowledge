@@ -1,16 +1,12 @@
 """Backstage 软件目录实体模型：信封/元数据校验、实体引用解析、关系推导。
 
-事实来源（本轮实读）：
-- backstage.io《Descriptor Format of Catalog Entities》正文（name/namespace/tags/labels/
-  annotations/links 的长度与字符集、relations 与 status 为只读、各 kind 的默认 kind 与
-  生成的正向/反向关系类型）
-- backstage/backstage `packages/catalog-model/src/kinds/relations.ts`（8 组 well-known
-  关系对及其 fromKind/toKind 约束）
-- backstage/backstage `packages/catalog-model/src/schema/EntityMeta.schema.json`（uid/etag
-  只读、name 必填、links.url 必填、tags 元素 minLength 1）
+事实来源（本轮实读）：backstage.io《Descriptor Format of Catalog Entities》正文（name/
+namespace/tags/labels/annotations/links 的长度与字符集、relations 与 status 只读、各 kind 的
+默认 kind 与生成的正/反向关系）；`packages/catalog-model/src/kinds/relations.ts`（8 组 well-known
+关系对的 fromKind/toKind 约束）；`packages/catalog-model/src/schema/EntityMeta.schema.json`
+（uid/etag 只读、name 必填、links.url 必填、tags 元素 minLength 1）。
 
-口径说明：官方 JSON Schema 只约束了 minLength，不写字符集正则；字符集来自文档正文，
-本 demo 依正文实现并保留 `strict=False` 的宽松通道以对照。
+口径：官方 JSON Schema 只约束 minLength、不写字符集正则，字符集依文档正文实现。
 """
 
 from __future__ import annotations
@@ -188,8 +184,8 @@ WELL_KNOWN_RELATIONS: Dict[str, RelationPair] = {
     ),
 }
 
-# spec 字段 → (默认 kind, 关系对主键, 方向)。方向为 reverse 时，本字段在实体一侧写出的是
-# 反向关系（例如 spec.dependencyOf 写出的是 `dependsOn` 对的反向 `dependencyOf`）。
+# spec 字段 → (默认 kind, 关系对主键, 方向)。reverse 表示本字段写出的是反向那一半
+#（例如 spec.dependencyOf 写出的是 `dependsOn` 对的反向 `dependencyOf`）。
 SPEC_FIELDS: Dict[str, Tuple[str, str, str]] = {
     "owner": ("Group", "ownedBy", "forward"),
     "system": ("System", "partOf", "forward"),
@@ -228,10 +224,9 @@ def _spec_refs(spec_value: object) -> List[str]:
 
 
 def deduce_relations(entity: Entity) -> List[Tuple[EntityRef, str, EntityRef]]:
-    """按 spec 字段推导关系，正向与反向成对产出。
+    """按 spec 字段推导关系，正向与反向成对产出（三元组 `(source, type, target)`）。
 
-    返回三元组 `(source, type, target)` 列表；反向关系挂在**目标实体**身上（真实 catalog
-    由处理循环写入，这里按同一口径成对给出，便于验证对称性）。
+    反向关系挂在目标实体身上——真实 catalog 由处理循环写入，这里按同一口径成对给出。
     """
     out: List[Tuple[EntityRef, str, EntityRef]] = []
     for field_name, (default_kind, pair_key, direction) in SPEC_FIELDS.items():
@@ -299,11 +294,3 @@ def check_envelope(envelope: Dict[str, object]) -> List[str]:
             errors.append("every link requires a url")
 
     return errors
-
-
-def kinds_of(entities: Iterable[Entity]) -> Dict[str, int]:
-    """统计各 kind 的实体数量（用于目录容量与孤儿检测的输入）。"""
-    counts: Dict[str, int] = {}
-    for e in entities:
-        counts[e.kind] = counts.get(e.kind, 0) + 1
-    return counts

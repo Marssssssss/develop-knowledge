@@ -53,10 +53,12 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 8         # 本轮消费循环[8]=09-语言学习(下轮[9]=10-逆向工程)
-sub_pos        : 01:7 02:4 03:0 04:0 05:0 06:0 07:3 08:1 09:3 10:0 11:4 12:0  # [09] 共 4 条目(34/44/50/53);本轮消费 [09]=3→索引 53 TypeScript 第二批
-last_run       : 2026-09-23 22:01
-last_top       : 09-语言学习  # 索引 53 = TypeScript 第二批(645-649;上轮 08-安全)
+top_pos        : 9         # 本轮已消费循环[8]=09-语言学习(下轮[9]=10-逆向工程)
+sub_pos        : 01:7 02:4 03:0 04:0 05:0 06:0 07:3 08:1 09:0 10:0 11:4 12:0  # [09] 共 4 条目(34/44/50/53);本轮已消费 [09]=3→索引 53
+last_run       : 2026-09-23 22:55
+last_top       : 09-语言学习  # 索引 53 = TypeScript 第二批(645-649;下轮 10-逆向工程)
+skipped        : []
+failed_attempts: []
 skipped        : []
 failed_attempts: []
 ```
@@ -65,11 +67,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 09-23 04:54 | 15 | 03-系统编程/04-文件系统二批:XFS延迟分配·fs-verity·io_uring文件IO·dcache·冻结 | S1+S3 | +5 | 615 | xfs4+iomap1+dcache1+super1+fsverity4+man7×7+glibc2;Py372 | ok |
 | 09-23 09:22 | 52 | 05-AI/09-RAG与向量检索首批:HNSW分层图·乘积量化IVFPQ·向量度量归一化·检索评估指标·混合检索RRF | S1+S3 | +5 | 625 | hnswlib4+faiss5+sklearn1+trec5+lucene1+rrf1;0检索;Py250 | ok |
 | 09-23 12:41 | 51 | 06-DevOps/08-平台工程首批:软件目录实体模型与关系·权限框架与条件策略·Scaffolder黄金路径·Crossplane XRD组合·KubeVela OAM定义修订 | S3 | +5 | 630 | bs-doc6+bs-src3+perm-dts1+cp4+kv4;0检索;Py256 | ok |
 | 09-23 15:24 | 29 | 07-数据存储/03-缓存三批:Redis跳表ZSet·Sentinel故障转移·布隆与Cuckoo·ae事件循环与多线程IO·CDN一致性哈希 | S3 | +5 | 635 | redis8+bloom5+ketama1+ngx3;0检索;Py491 | ok |
 | 09-23 20:40 | 31 | 08-安全/01-密码学五批:SPAKE2·Shamir三套·JOSE_JWS_JWE·恒定时间与侧信道·CT_Merkle审计(续18:00中断轮) | S1+S3 | +5 | 644 | rfc7+bearssl1+ossl1+go-subtle1+vault1+slip39+merkle2;0检索;Py2205 | ok |
+| 09-23 22:55 | 53 | 09-语言学习/TypeScript二批:satisfies·模板字面量与类型级解析·实例化深度与上限·声明合并与模块增强·装饰器与元数据 | S1+S3 | +5 | 649 | tsdoc6+tscjs(2589/2590/2427/1038/1206源码);0检索;Py60 | ok |
 
 > 更早细节见 `archive/schedule.md`。
 

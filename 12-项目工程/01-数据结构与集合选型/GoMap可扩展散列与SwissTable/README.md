@@ -6,8 +6,10 @@
 > 以及**每组 8 槽 + 控制字节 + 三角探测**（swiss table）。
 > 本 demo 把这两条主线**逐函数复刻**，重点回答"为什么大 map 的扩容不再是线性翻倍的尖峰"。
 
-代码：`python/go_swissmap.py`（模型）、`python/selfcheck_go_swissmap.py`（1003 条断言，实跑全绿）、
-`python/main.py`、`go/`（3 个文件，四项静态检查通过）。
+代码：`python/go_swiss_table.py`（常量 / 容量推导 / 探测序列 / 单表）、
+`python/go_swiss_map.py`（目录与 split）、`python/go_swissmap.py`（两者名字的兼容入口）、
+`python/selfcheck_go_swissmap.py`（1003 条断言，实跑全绿）、`python/main.py`、
+`go/`（3 个文件，四项静态检查通过）。
 
 ## 一、常量与哈希切分
 

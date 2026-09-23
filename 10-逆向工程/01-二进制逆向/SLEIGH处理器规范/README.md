@@ -72,7 +72,8 @@ A9 99 -> lda（长度 2 字节，操作数 ['0x99']）
 
 | 文件 | 内容 |
 | --- | --- |
-| `python/sleigh.py` | `Token`（区间/bits/字节序/signed/显示）、`Spec`（定义与构造函数表）、位模式解析与求值、`decode` |
+| `python/sleigh.py` | `Token`（区间/bits/字节序/signed/显示）、`Spec`（定义与构造函数表）、`decode` |
+| `python/sleigh_pattern.py` | 位模式的解析（`&` / `|` / 括号 / `...`）与求值 |
 | `python/selfcheck_sleigh.py` | **67 条断言实跑全绿** |
 | `python/main.py` | 玩具 ISA 的逐步演示 |
 | `go/sleigh.go` + `go/main.go` | Go 侧同题实现（四项静态检查全过） |

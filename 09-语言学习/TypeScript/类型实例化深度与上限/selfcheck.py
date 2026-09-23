@@ -11,6 +11,7 @@
 用法：python selfcheck.py        （可选环境变量 NODE_BIN / TSC_JS）
 """
 
+import glob
 import os
 import re
 import shutil
@@ -100,8 +101,18 @@ def _probe(src, label):
         os.remove(probe)
 
 
+def cleanup_probes():
+    """清掉上一次被中断留下的探针；否则它们会污染工作区并可能被误提交。"""
+    for p in glob.glob(os.path.join(HERE, ".probe_*.ts")):
+        try:
+            os.remove(p)
+        except OSError:
+            pass
+
+
 def check_thresholds():
     """把三道护栏的精确阈值钉死：紧贴阈值的两侧各跑一次。"""
+    cleanup_probes()
     # ① 非尾递归 GetChars：48 放行 / 49 报警
     got48, _ = _probe(NONTAIL_SRC.format(lit='"' + "a" * 48 + '"'), "nt48")
     got49, _ = _probe(NONTAIL_SRC.format(lit='"' + "a" * 49 + '"'), "nt49")

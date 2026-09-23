@@ -1,17 +1,17 @@
 # STATE.md — 自动化巡检主状态文件
 
-> 每轮结束追加/滚动,**永远 ≤ 5 KB**;历史全本见 `_docs/archive/`。
+> 每轮滚动,**永远 ≤ 5 KB**;历史全本见 `_docs/archive/`。
 > 调度/配额/回退见 [`SCHEDULE_QUOTA.md`];Token 见 [`OPTIMIZATION.md`](./OPTIMIZATION.md)
 
 ## 一、轮询顺序(2026-09-16 起:大类严格轮转)
 
-**旧机制已废**:禁止按 priority_score/偏好挑领域(A→B→A 横跳,表尾被系统性多抓)。
+**旧机制已废**:禁止按 priority_score/偏好挑领域(A→B→A 横跳)。
 
 **大类循环**(固定顺序,取后指针 +1,回绕):
 `01-游戏开发 → 02-Web开发 → 03-系统编程 → 04-移动开发 → 05-AI与机器学习 → 06-DevOps → 07-数据存储 → 08-安全 → 09-语言学习 → 10-逆向工程 → 11-性能分析 → 12-项目工程`
-每轮大类 = 循环[§二 `top_pos`],**12 大类各占 1/12 轮次,与子类目数量无关**。
+每轮大类 = 循环[§二 `top_pos`],**12 大类各占 1/12 轮次**。
 
-**类内轮转**:该大类在索引表的全部条目(表序)第 `sub_pos[大类]` 个;完成后 +1 mod 条目数,新子类目只追加表尾。
+**类内轮转**:该大类在索引表全部条目(表序)第 `sub_pos[大类]` 个;完成后 +1 mod 条目数。
 
 ```text
 轮询索引表(组内顺序即轮转顺序):
@@ -49,7 +49,7 @@
 67-70 12-项目工程: 依赖治理与耦合控制|可测试性设计|代码质量度量与架构守护|演进式设计与遗留系统重构
 ```
 
-> 39-62 类目拓展补登记;63-70 = 2026-09-22 新增顶层 12-项目工程(8 子类目);新子类目顺延 71 起。
+> 39-62 拓展补登记;63-70 = 09-22 新增 12-项目工程(8 子类);新子类顺延 71 起。
 ## 二、本轮状态
 
 ```
@@ -68,13 +68,13 @@ failed_attempts: []
 | 09-24 04:58 | 63 | 12-项目工程/01-数据结构与集合选型首批:CPython dict紧凑布局·Java HashMap树化与拆分·Go map瑞士表·SwissTable控制字节·动态数组增长因子 | S3 | +5 | 664 | cpython2+jdk1+go3+absl1+hb2+stl3+libcxx1+msvc1+rust1;0检索;Py2340 | notify: ok |
 | 09-24 06:52 | 7 | 01-游戏开发/08-动画 动画专题:glTF蒙皮与骨骼动画·动画采样与四元数插值(STEP/LINEAR/SLERP/CUBIC)·Godot轨道插值与循环模式·Godot混合空间1D2D·Godot状态机与交叉淡入 | S3 | +5 | 669 | gltf1(adoc)+godot8(animation/blendtree/mixer/statemachine/bs1d/bs2d/mathdefs/mathfuncs);0检索;Py282 | notify: ok |
 | 09-24 02:33 | 60 | 11-性能分析/05-容量规划首批:Little定律与事件仿真·MMc与ErlangC·USL拟合与峰值·扩展律三式·过载保护与自适应并发 | S3 | +5 | 659 | wiki5+hb1+usl4+vegas2+envoy1+sre2+hpc101+cornell+uva;0检索;Py656 | notify: ok |
-| 09-23 15:24 | 29 | 07-数据存储/03-缓存三批:Redis跳表ZSet·Sentinel故障转移·布隆与Cuckoo·ae事件循环与多线程IO·CDN一致性哈希 | S3 | +5 | 635 | redis8+bloom5+ketama1+ngx3;0检索;Py491 | ok |
-| 09-23 22:55 | 53 | 09-语言学习/TypeScript二批:satisfies·模板字面量与类型级解析·实例化深度与上限·声明合并与模块增强·装饰器与元数据 | S1+S3 | +5 | 649 | tsdoc6+tscjs(2589/2590/2427/1038/1206源码);0检索;Py60 | ok |
+| 09-23 15:24 | 29 | 07-数据存储/03-缓存三批:Redis跳表ZSet·Sentinel故障转移·布隆与Cuckoo·ae事件循环·CDN一致性哈希 | S3 | +5 | 635 | redis8+bloom5+ketama1+ngx3;0检索;Py491 | ok |
+| 09-23 22:55 | 53 | 09-语言学习/TypeScript二批:satisfies·模板字面量解析·实例化深度上限·声明合并·装饰器与元数据 | S1+S3 | +5 | 649 | tsdoc6+tscjs源码;0检索;Py60 | ok |
 
 > 更早细节见 `archive/schedule.md`。
 
 ## 四、rotate 与查找
 
-- rotate(副任务):completed >100 / schedule >30 → 截最近 100/30,丢弃部分查 `git log -p _docs/archive/`
-- 查.demo/资料:Grep `completed.md` / `schedule.md`;总数 = completed.md 行数
+- rotate:completed >100 / schedule >30 → 截最近 100/30;丢弃部分查 `git log -p _docs/archive/`
+- 查 demo:Grep `completed.md`/`schedule.md`;总数 = completed.md 行数
 - 每轮只动 §三,超 5 KB 压缩旧行。

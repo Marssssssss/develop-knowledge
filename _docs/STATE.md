@@ -54,10 +54,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 10        # 下轮消费[10]=11-性能分析(再下轮[11]=12-项目工程)
-sub_pos        : 01:0 02:5 03:1 04:1 05:1 06:1 07:4 08:2 09:1 10:2 11:5 12:1  # 10 共 4 条目(35,36,46,57);下轮[10]=2→索引 46=03-协议逆向
+top_pos        : 11        # 下轮消费[11]=12-项目工程(再下轮[0]=01-游戏开发)
+sub_pos        : 01:0 02:5 03:1 04:1 05:1 06:1 07:4 08:2 09:1 10:2 11:6 12:1  # 11 共 7 条目(37,38,47,59-62);下轮[11]=6→索引 62=07-网络与传输性能
 last_run       : 2026-09-25 06:00
-last_top       : 10-逆向工程  # 索引 36 = 02-移动端逆向(713-717)
+last_top       : 11-性能分析  # 索引 61 = 06-数据库性能(718-722)
 skipped        : []
 failed_attempts: []
 ```
@@ -69,6 +69,7 @@ failed_attempts: []
 | 09-25 00:42 | 32 | 08-安全/01-Web安全 第四批:请求走私CL.TE与TE.CL·FetchMetadata·DOMClobbering·账户安全与凭据填充·JWT aud校验 | S3 | +5 | 707 | rfc9112加rfc9068加fm加html加nist;0检索;Py265 | notify: ok |
 | 09-25 02:00 | 34 | 09-语言学习/01-Python 第五批:pickle六元组与memo·contextvars快照与两个拷贝时机·enum与dataclasses运行时·属性查找四级优先级复刻·PEP3118缓冲协议与memoryview | S3 | +5 | 712 | peps5加docs8;0检索;Py103;单实体12槽恢复后首槽 | notify: ok |
 | 09-25 04:00 | 36 | 10-逆向工程/02-移动端逆向 第四批:class-dump与ObjC运行时·smali↔jadx偏差·JNI与RegisterNatives·加固壳与脱壳·AXML Manifest | S3 | +5 | 717 | jni2加objc4加classdump加smali加jadx加aosp5加resourcetypes;0检索;Py44 | notify: ok |
+| 09-25 06:00 | 61 | 11-性能分析/06-数据库性能 首批:选择率五公式·IndexOnlyScan与VM·等待事件归因·连接池非单调·泛化计划翻转 | S3 | +5 | 722 | pg5加pgb2;0检索;Py33 | notify: pending |
 
 > 更早细节见 `archive/schedule.md`。
 

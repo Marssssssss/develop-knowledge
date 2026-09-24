@@ -10,6 +10,7 @@
 | [02-后端/](./02-后端/) | Node.js / Go / Java / Python |
 | [03-数据库/](./03-数据库/) | SQL & ORM / NoSQL |
 | [04-API设计/](./04-API设计/) | REST / GraphQL / WebSocket / OpenAPI / HATEOAS / gRPC |
+| [05-流量治理与限流/](./05-流量治理与限流/) | GCRA 与漏桶计量 / RateLimit 响应头部 / 令牌桶与预热 / 滑动窗口计数 / 描述符匹配与分布式配额 |
 
 ## 已完成 demo
 
@@ -63,6 +64,11 @@
 - [x] [03-数据库/NoSQL/JSONB半结构化与索引/](./03-数据库/NoSQL/JSONB半结构化与索引/) — json/jsonb 规范化差异 + @> 越级不算 + GIN 两个操作符类与 pending list (Python + Go)
 - [x] [03-数据库/SQL与ORM/行级安全与多租户/](./03-数据库/SQL与ORM/行级安全与多租户/) — USING/WITH CHECK 双向 + default-deny + 属主绕过与 FORCE + permissive OR / restrictive AND (Python + Go)
 - [x] [03-数据库/列式存储与Parquet/](./03-数据库/列式存储与Parquet/) — Dremel def/rep levels 切分与装配 + RLE/Bit-Packing 混合编码逐字节对拍 (Python + Go)
+- [x] [05-流量治理与限流/01-GCRA与漏桶计量/](./05-流量治理与限流/01-GCRA与漏桶计量/) — I.371 虚拟调度 GCRA(TAT/T/τ) 与连续状态漏桶等价 + 时间桶边界双倍突发 + 被拒不推进 TAT (Python + Go)
+- [x] [05-流量治理与限流/02-RateLimit响应头部/](./05-流量治理与限流/02-RateLimit响应头部/) — draft-11 的 q/qu/w/pk 与 r/t/pk 校验 + Retry-After 优先级链 + 三种 problem type (Python + Go)
+- [x] [05-流量治理与限流/03-令牌桶与预热限流/](./05-流量治理与限流/03-令牌桶与预热限流/) — Guava storedPermits 折算 + WarmingUp 梯形积分与 coldFactor=3.0 + 两种相反的初态 (Python + Go)
+- [x] [05-流量治理与限流/04-滑动窗口计数/](./05-流量治理与限流/04-滑动窗口计数/) — Sentinel LeapArray 环形四分支 + 严格大于的过期判据 + 边界突发压到 1× (Python + Go)
+- [x] [05-流量治理与限流/05-描述符匹配与分布式配额/](./05-流量治理与限流/05-描述符匹配与分布式配额/) — envoyproxy/ratelimit 三条候选匹配 + 深度必须相等 + hits_addend 与 shadow_mode + 确定性缓存键 (Python + Go)
 
 ## 状态
 

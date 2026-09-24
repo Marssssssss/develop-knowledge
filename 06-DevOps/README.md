@@ -4,7 +4,7 @@
 
 | 子目录 | 说明 |
 | --- | --- |
-| [01-容器化/](./01-容器化/) | Docker、镜像、OCI |
+| [01-容器化/](./01-容器化/) | Docker、镜像、OCI（含 CNI 网络控制面 / OCI 分发协议 / runc 创建流程 / 切根与传播 / cgroup 线程模式，ID 690-694） |
 | [02-CI-CD/](./02-CI-CD/) | GitHub Actions / GitLab CI / Jenkins |
 | [03-监控与可观测性/](./03-监控与可观测性/) | Prometheus / Grafana / OpenTelemetry |
 | [04-Kubernetes/](./04-Kubernetes/) | Pod / Service / Controller / Operator |
@@ -33,6 +33,7 @@
 
 | 152-156 | [01-容器化/](./01-容器化/) | OverlayFS 联合挂载 / Capabilities 权限分割 / Seccomp-BPF 过滤 / veth pair 网络 / OCI Runtime Spec | C/Python/Go |
 | 237-241 | [01-容器化/](./01-容器化/) | Docker 层缓存失效(缓存键链+COPY 校验和) / 多阶段构建与镜像瘦身 / user namespace UID 映射 / rootless 容器 / cgroup v2 + eBPF 附加与 BPF token | Python/Go / Python/Go/C |
+| 690-694 | [01-容器化/](./01-容器化/) | CNI 插件模型与 host-local IPAM 轮询(链式 prevResult+Range 规范化) / OCI 分发协议(14 端点+分块上传 416+标签分页+referrers) / runc 双进程同步协议(9 常量+seccomp 两个插入点+exec fifo) / pivot_root 六条限制与 shared subtree 传播 / cgroup v2 线程模式与 cpuset 分区(local·remote·三条件)（容器化第四批） | Python/Go |
 
 ## 待研究
 
@@ -46,3 +47,7 @@
 - [ ] Backstage TechDocs 与插件后端 wiring
 - [ ] 平台工程度量（DORA / SPACE / DevEx）与 Team Topologies
 - [ ] Crossplane composition functions 协议与 KubeVela CUE 求值
+- [x] 容器网络 CNI 插件模型（IPAM / 链式插件）→ 已建于 `01-容器化/CNI插件模型与IPAM/`（ID 690）
+- [x] OCI 分发协议（registry 端点 / 分块上传 / 标签分页）→ 已建于 `01-容器化/OCI分发协议与镜像拉取/`（ID 691）
+- [ ] 镜像签名与供应链在分发层的落地（referrers + cosign）
+- [ ] 容器运行时监控（cadvisor / containerd metrics）与运行时类 RuntimeClass

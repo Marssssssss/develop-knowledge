@@ -179,11 +179,10 @@ return vector;
 | `n>=3` 不支持 / `numTransitions` 取 min | `unsupported`；`min(2n+1, |alphabet|)` |
 | 特征向量"先左移后置位" | `X(a,0,3) = 100` |
 
-> **建模口径与限制**：真正的 DFA 转移表（`toStates*` / `offsetIncrs*` 打包数组）**未还原**，
-> 本 demo 断言的是参数化描述的**骨架**与 FuzzyQuery 的参数语义，均可逐行对上源码。
-> `Lev2TParametricDescription` 本轮未取到源码（jsDelivr 超时），故 n=2 一律用 `Lev2` 的骨架，
-> n=2 且开启 transpositions 时状态数/接受判据只对非 T 变体严格成立。
-> 距离函数只作对照，不是 Lucene 的判定路径（Lucene 走自动机，不逐条算距离）。
+> **建模口径与限制**：真正的 DFA 转移表（`toStates*` / `offsetIncrs*` 打包数组）**未还原**，本 demo
+> 断言的是参数化描述的**骨架**与 FuzzyQuery 的参数语义，均可逐行对上源码；`Lev2TParametricDescription`
+> 本轮未取到源码（jsDelivr 超时），故 n=2 一律用 `Lev2` 骨架，n=2 且开启 transpositions 时只对非 T
+> 变体严格成立；距离函数只作对照，不是 Lucene 的判定路径（Lucene 走自动机，不逐条算距离）。
 
 ## 八、参考资料（实际读过）
 

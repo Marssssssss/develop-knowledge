@@ -77,3 +77,9 @@ IO 多路复用、协程等通用机制在游戏服务端也是基石。通用 d
   - io_uring 文件 IO（SQ 间接 vs CQ 直接、`READ_FIXED` 的 `addr` 是下标、CQ 溢出与 SQPOLL）— [04-文件系统/io_uring文件IO/](03-系统编程/04-文件系统/io_uring文件IO/)
   - dcache 与 `getdents64`（19..21 位类型字段、LRU 两轮宽限、19 字节头 8 字节对齐、`d_off` 被 `ctx.pos` 覆盖）— [04-文件系统/目录项缓存与getdents/](03-系统编程/04-文件系统/目录项缓存与getdents/)
   - 文件系统冻结（`freeze_super` 五级状态机、`may_freeze`/`may_unfreeze` 不对称、双计数与 `FREEZE_EXCL`）— [04-文件系统/文件系统冻结/](03-系统编程/04-文件系统/文件系统冻结/)
+- ✅ 网络编程第五批 5 个（2026-09-24 10:00 槽）— 见 [01-网络编程/](./01-网络编程/)：
+  - TCP_QUICKACK 与 TCP_USER_TIMEOUT（quickack 配额 `rcv_wnd/(2*rcv_mss)` 上限 16、ato 递推不动点是 2m−1、`tcp_retries2=15` 的默认超时 924.6 s、零窗口探测被 user timeout 变成有界）— [01-网络编程/传输层/TCP-QUICKACK与USER-TIMEOUT/](01-网络编程/传输层/TCP-QUICKACK与USER-TIMEOUT/)
+  - MSG_ZEROCOPY 与 vmsplice（counter 按调用计数、通知区间 `[ee_info, ee_data]` 闭区间并会合并、loopback 必定退化成拷贝、`SPLICE_F_GIFT` 要求基址与长度都页对齐）— [01-网络编程/零拷贝/MSG-ZEROCOPY与vmsplice/](01-网络编程/零拷贝/MSG-ZEROCOPY与vmsplice/)
+  - MSG_OOB 紧急数据与 SIGURG（BSD 解释下 urg_ptr 减 1、`urg_data` 低 8 位就是那个字节、`SIOCATMARK` 判据、`SIOCINQ` 被截断到标记处）— [01-网络编程/IO模型/MSG-OOB紧急数据/](01-网络编程/IO模型/MSG-OOB紧急数据/)
+  - BBR 拥塞控制（定点增益 `high_gain=739`/`drain_gain=88`、8 相增益循环起始相位永不为 1、`bbr_bdp` 向上取整、pacing 留 1% 余量）— [01-网络编程/传输层/BBR拥塞控制/](01-网络编程/传输层/BBR拥塞控制/)
+  - QUIC 变长整数与帧（`length = 1 << prefix`、帧类型必须最短编码、空负载 = PROTOCOL_VIOLATION、ACK Range 的 `largest = previous_smallest − gap − 2`）— [01-网络编程/协议解析/QUIC变长整数与帧/](01-网络编程/协议解析/QUIC变长整数与帧/)

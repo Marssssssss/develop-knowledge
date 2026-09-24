@@ -40,6 +40,17 @@ class Passage(object):
         self.match_terms.append(term)
         self.match_freqs.append(term_freq_in_doc)
 
+    def set_start_offset(self, start_offset):
+        self.start_offset = start_offset
+
+    def set_end_offset(self, end_offset):
+        assert self.start_offset <= end_offset, \
+            "setEndOffset 断言：start(%d) <= end(%d)" % (self.start_offset, end_offset)
+        self.end_offset = end_offset
+
+    def set_score(self, score):
+        self.score = score
+
     def reset(self):
         self.start_offset = self.end_offset = -1
         self.score = 0.0

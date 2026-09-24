@@ -53,10 +53,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 5         # 下轮消费[5]=06-DevOps(再下轮[6]=07-数据存储)
-sub_pos        : 01:0 02:5 03:1 04:1 05:1 06:0 07:3 08:1 09:0 10:1 11:5 12:1  # 05 共 9 条目(19,20,21,22,39,40,48,49,52);本轮消费[05]=0→索引 19;下轮[05]=1→索引 20 = 02-强化学习
-last_run       : 2026-09-24 18:02
-last_top       : 05-AI与机器学习  # 索引 19 = 01-深度学习(本轮 685-689)
+top_pos        : 6         # 下轮消费[6]=07-数据存储(再下轮[7]=08-安全)
+sub_pos        : 01:0 02:5 03:1 04:1 05:1 06:1 07:3 08:1 09:0 10:1 11:5 12:1  # 06 共 8 条目(23-26,41-43,51);下轮[06]=1→索引 24=02-CI-CD
+last_run       : 2026-09-24 18:51
+last_top       : 06-DevOps  # 索引 23 = 01-容器化(本轮 690-694)
 skipped        : []
 failed_attempts: []
 ```
@@ -69,7 +69,7 @@ failed_attempts: []
 | 09-24 13:18 | 16 | 04-移动开发/01-iOS第五批:dyld链式修正·NanoV2分配器·宏展开编排·参数包·objc4类布局与脏内存 | S3 | +5 | 684 | dyld3加lmalloc5加swiftsyntax5加se4加objc4三3;0检索;Py425 | notify: ok |
 | 09-24 10:04 | 12 | 03-系统编程/01-网络编程第五批:延迟确认与QUICKACK·MSG_ZEROCOPY·MSG_OOB与sockatmark·BBR定点·QUIC变长整数 | S1 | +5 | 679 | rfc4加bbr草案加man7七篇加linux10篇;0检索;Py380 | notify: ok |
 | 09-24 09:13 | 56 | 02-Web开发/05-流量治理首批:GCRA漏桶·RateLimit头部·令牌桶预热·滑动窗口·描述符匹配与配额 | S1+S3 | +5 | 674 | ietf11+rfc6585+wiki3+brandur1+guava2+sentinel2+envoyrl5;0检索;Py194 | notify: ok |
-| 09-24 06:52 | 7 | 01-游戏开发/08-动画专题:glTF蒙皮·四元数插值·Godot轨道插值·混合空间1D2D·状态机与交叉淡入 | S3 | +5 | 669 | gltf1+godot8;Py282 | notify: ok |
+| 09-24 18:02 | 23 | 06-DevOps/01-容器化第四批:CNI插件模型与host-local IPAM轮询·OCI分发协议端点与分块上传·runc双进程同步协议与seccomp两插入点·pivotRoot六条限制与shared subtree·cgroup v2线程模式与cpuset分区 | S1+S3 | +5 | 694 | cni4加dist1加runc4加man2加cg2;0检索;Py279 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

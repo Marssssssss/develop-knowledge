@@ -68,7 +68,7 @@ failed_attempts: []
 | --- | --- | --- | --- | --- | --- | --- |
 | 09-24 22:04 | 30 | 07-数据存储/04-搜索引擎第四批:高亮片段生成·FST suggester·模糊查询与 Levenshtein 自动机·索引排序·FST TopN 零输出补全 | S1+S3 | +5 | 702 | lucene 高亮6加suggester8加fst4加模糊5加sort3;0检索;Py360(补跑 695-697 共 10347 全绿) | notify: ok |
 | 09-25 00:42 | 32 | 08-安全/01-Web安全 第四批:请求走私CL.TE与TE.CL·FetchMetadata·DOMClobbering·账户安全与凭据填充·JWT aud校验 | S3 | +5 | 707 | rfc9112加rfc9068加fm加html加nist;0检索;Py265 | notify: ok |
-| 09-25 02:00 | 34 | 09-语言学习/01-Python 第五批:pickle六元组与memo·contextvars快照与两个拷贝时机·enum与dataclasses运行时·属性查找四级优先级复刻·PEP3118缓冲协议与memoryview | S3 | +5 | 712 | peps5加docs8;0检索;Py103;单实体12槽恢复后首槽 | notify: pending |
+| 09-25 02:00 | 34 | 09-语言学习/01-Python 第五批:pickle六元组与memo·contextvars快照与两个拷贝时机·enum与dataclasses运行时·属性查找四级优先级复刻·PEP3118缓冲协议与memoryview | S3 | +5 | 712 | peps5加docs8;0检索;Py103;单实体12槽恢复后首槽 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

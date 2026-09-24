@@ -24,6 +24,11 @@
 | [FridaStalker指令级跟踪/](./FridaStalker指令级跟踪/) | GumEvent 结构体大小与事件位掩码、transform 迭代器与 keep() 语义、exclude / trustThreshold / 队列 / call probe |
 | [iOS砸壳与加密镜像/](./iOS砸壳与加密镜像/) | LC_ENCRYPTION_INFO(_64) 三字段、cryptoff 到 vmaddr 的段内换算、整页 dump、patch cryptid、MH_DYLIB_IN_CACHE |
 | [反调试与越狱检测对抗/](./反调试与越狱检测对抗/) | java/native/syscall 三层检测、any/all/threshold 组合、patch vs 改环境、同根因非独立信号 |
+| [class-dump与ObjC运行时还原/](./class-dump与ObjC运行时还原/) | __objc_classlist 遍历、data 指针低位标志(bit0=Swift/&~7)、RO_META 元类、entsize &~3、ivar ~0 对齐特例、catlist/protolist 字段序 |
+| [smali与jadx反编译偏差/](./smali与jadx反编译偏差/) | 访问标志官方位值、汇编无损 vs 反编译尽力、fallback 留痕、desugar 覆盖面(MethodHandle 排除) |
+| [JNI与RegisterNatives还原/](./JNI与RegisterNatives还原/) | mangling 四转义(小写 hex)、长短名解析序(Cls1/Cls2)、JNINativeMethod 24 字节、表索引 215、Unregister 回退 |
+| [Android加固壳与脱壳/](./Android加固壳与脱壳/) | dex 头三段验收(checksum 含 signature 的顺序)、dexElements 顺序与 suppressed、addDexPath 尾部追加、三段 loader 序 |
+| [AXML二进制Manifest解析/](./AXML二进制Manifest解析/) | chunk 链与 size 跳距、双编码字符串池(stringsStart 相对偏移)、typed value 四类分派、1-based 三索引 |
 
 ## 待研究
 
@@ -37,6 +42,11 @@
 - [x] Frida Stalker 指令级跟踪（与 Interceptor 的边界）→ 484 FridaStalker指令级跟踪
 - [x] iOS 砸壳原理（加密段、cryptid、dyld 共享缓存）→ 485 iOS砸壳与加密镜像
 - [x] 反调试 / Root / 越狱检测与其绕过 → 486 反调试与越狱检测对抗
+- [x] iOS class-dump 与 Objective-C 运行时结构还原 → 713 class-dump与ObjC运行时还原
+- [x] jadx / apktool 输出与 smali 的对照（反编译器偏差）→ 714 smali与jadx反编译偏差
+- [x] native 层 JNI 与 RegisterNatives 动态注册还原 → 715 JNI与RegisterNatives还原
+- [x] Android 加固壳（加壳/脱壳、DexClassLoader 抽离）→ 716 Android加固壳与脱壳
+- [x] Android 二进制 AXML 与 Manifest 解析 → 717 AXML二进制Manifest解析（本批新增登记）
 - [ ] iOS class-dump 与 Objective-C 运行时结构还原
 - [ ] jadx / apktool 输出与 smali 的对照（反编译器偏差）
 - [ ] native 层 JNI 与 RegisterNatives 动态注册还原

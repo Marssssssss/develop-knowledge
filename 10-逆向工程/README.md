@@ -27,6 +27,7 @@
 - [x] Frida hook 原理（QuickJS 注入 + 双向通信通道）→ 312 Frida-Java层hook + 313 Frida-Interceptor-native-hook + 316 Objection与Frida（02-移动端逆向）
 - [x] DEX/Dalvik 指令与 Stalker 跟踪 → 482 DEX文件格式解析 + 483 smali与Dalvik指令编码 + 484 FridaStalker指令级跟踪（02-移动端逆向）
 - [x] iOS 砸壳与移动端反调试对抗 → 485 iOS砸壳与加密镜像 + 486 反调试与越狱检测对抗（02-移动端逆向）
+- [x] 移动端第四批（class-dump/ObjC 运行时还原 · smali↔jadx 偏差 · JNI 与 RegisterNatives · 加固壳与脱壳 · AXML Manifest）→ 713-717（02-移动端逆向，2026-09-25 04:00 槽）
 - [x] ELF 与 PE 文件格式对比 → 087 ELF文件解析 / 088 PE文件解析（对比表见 165 Mach-O README §对比）
 - [x] ARM64 指令集速览 → 257 ARM64指令集与调用约定（01-二进制逆向）
 - [x] Mach-O 文件格式（macOS 侧）→ 165 Mach-O文件解析

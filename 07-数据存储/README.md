@@ -81,4 +81,12 @@
 - [x] 布隆过滤器与缓存穿透防护（RedisBloom `bpe=-ln(err)/ln(2)²` + 可扩容链 ERROR_TIGHTENING_RATIO=0.5 + Cuckoo 指纹与踢出）— 见 [03-缓存/布隆过滤器与缓存穿透/](./03-缓存/布隆过滤器与缓存穿透/)（Python / Go）
 - [x] Redis 事件循环与多线程 I/O（ae.c 派发顺序 / AE_BARRIER 反转 / 时间事件 refcount + io-threads 与拷贝规避阈值）— 见 [03-缓存/Redis事件循环与多线程IO/](./03-缓存/Redis事件循环与多线程IO/)（Python / Go）
 - [x] CDN 一致性哈希（libketama md5 环 vs nginx chash crc32 链 + 单精度 ks 陷阱 + 扩缩容重迁移实测）— 见 [03-缓存/CDN一致性哈希/](./03-缓存/CDN一致性哈希/)（Python / Go）
+- [x] 倒排表压缩与跳表（Lucene 104 postings：256 值一块 d-gap 后 PForDelta；token 一字节高 3 位 numExceptions 上限 7、低 5 位 bitsPerValue；多级跳表支撑 advance）— 见 [04-搜索引擎/倒排表压缩与跳表/](./04-搜索引擎/倒排表压缩与跳表/)（Python / Go）
+- [x] BlockMaxWAND 与动态剪枝（MaxScoreBulkScorer：impacts 上界切窗、`INNER_WINDOW_SIZE=1<<12` bitset 收集、`maxWindowScore/cost` 排序划 essential/non-essential）— 见 [04-搜索引擎/BlockMaxWAND与动态剪枝/](./04-搜索引擎/BlockMaxWAND与动态剪枝/)（Python / Go）
+- [x] BKD 树多维点索引（`numLeaves=ceil(pointCount/512)` 与分布无关故可 one-pass 打包；内节点包围盒不落盘靠 pushBounds 推出；多余维度只存不索引）— 见 [04-搜索引擎/BKD树多维点索引/](./04-搜索引擎/BKD树多维点索引/)（Python / Go）
+- [x] 高亮器与摘要片段生成（UnifiedHighlighter 的 OffsetSource 五态与升降级；PassageScorer 迷你 BM25 k1=1.2/b=0.75/pivot=87；LengthGoalBreakIterator 两种断点；top-N 有界小堆）— 见 [04-搜索引擎/高亮器与摘要片段生成/](./04-搜索引擎/高亮器与摘要片段生成/)（Python / Go）
+- [x] FST 与前缀补全 suggester（`encode(w)=Integer.MAX_VALUE-w` 升序即权重降序；payload = surface + 分隔符 + vint(docId)；`MAX_TOP_N_QUEUE_SIZE=5000` 上界启发式）— 见 [04-搜索引擎/FST与前缀补全suggester/](./04-搜索引擎/FST与前缀补全suggester/)（Python / Go）
+- [x] 模糊查询与编辑距离自动机（`MAXIMUM_SUPPORTED_DISTANCE=2`；`floatToEdits` 三分支与二进制浮点陷阱；OSA vs 真 DL；`ParametricDescription.size=minErrors.length×(w+1)`）— 见 [04-搜索引擎/模糊查询与编辑距离自动机/](./04-搜索引擎/模糊查询与编辑距离自动机/)（Python / Go）
+- [x] 索引排序与提前终止（`getIndexSorter()` 仅五类类型非 null；`setIndexSort` 全有或全无；`getPrimarySortField` 三条跳过规则）— 见 [04-搜索引擎/索引排序与提前终止/](./04-搜索引擎/索引排序与提前终止/)（Python / Go）
+- [x] FST 的 TopN 搜索与零输出补全（`Util.TopNSearcher` 有界队列与 maxQueueDepth；0 output completion 与 `assert foundZero`；`isComplete=rejectCount+topN<=maxQueueDepth`）— 见 [04-搜索引擎/FST的TopN搜索与零输出补全/](./04-搜索引擎/FST的TopN搜索与零输出补全/)（Python / Go）
 - [ ] 时序数据库 InfluxDB / TDengine（03-时序数据库，2026-09-12 起不在巡检范围）

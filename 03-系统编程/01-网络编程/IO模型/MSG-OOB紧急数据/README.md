@@ -58,20 +58,12 @@ sk_send_sigurg(sk);
 
 ## 三、那个著名的 "Double Dutch" 注释
 
-```c
-/* We may be adding urgent data when the last byte read was urgent. ...
- * NOTE. Double Dutch. Rendering to plain English: author of comment
- * above did something sort of   send("A", MSG_OOB); send("B", MSG_OOB);
- * and expect that both A and B disappear from stream. This is _wrong_.
- * Though this happens in BSD with high probability, this is occasional.
- * Any application relying on this is buggy. ...
- */
-if (tp->urg_seq == tp->copied_seq && tp->urg_data &&
-    !sock_flag(sk, SOCK_URGINLINE) && tp->copied_seq != tp->rcv_nxt) {
-        ...
-        tp->copied_seq++;
-}
-```
+源码注释原文(节选):「author of comment above did something sort of
+`send("A", MSG_OOB); send("B", MSG_OOB);` and expect that both A and B
+disappear from stream. This is _wrong_. ... Any application relying on
+this is buggy.」判据是 `urg_seq == copied_seq && urg_data &&
+!SOCK_URGINLINE && copied_seq != rcv_nxt`,命中则 `copied_seq++`
+(完整代码块见 `NOTES.md` §1)。
 
 即:**连续两次 `send(MSG_OOB)`,内核不会让两个字节都从流里消失**。
 非 `SO_OOBINLINE` 时它会偷偷把 `copied_seq` 前推一格,以免破坏
@@ -137,22 +129,11 @@ case SIOCATMARK:
 ### 2. `SO_OOBINLINE` 并不会解除普通读的截断
 
 `tcp_recvmsg()` 里 `used = urg_offset` 的截断在判断 `SOCK_URGINLINE`
-**之前**:
+**之前**(完整代码块见 `NOTES.md` §2):
 
 ```c
-if (unlikely(tp->urg_data)) {
-        u32 urg_offset = tp->urg_seq - *seq;
-        if (urg_offset < used) {
-                if (!urg_offset) {
-                        if (!sock_flag(sk, SOCK_URGINLINE)) {
-                                WRITE_ONCE(*seq, *seq + 1);
-                                urg_hole++; offset++; used--;
-                                goto skip_copy;
-                        }
-                } else
-                        used = urg_offset;
-        }
-}
+u32 urg_offset = tp->urg_seq - *seq;
+if (urg_offset < used) { if (!urg_offset) { if (!SOCK_URGINLINE) {...} } else used = urg_offset; }
 ```
 
 `SO_OOBINLINE` 唯一的区别在 `urg_offset == 0` 那一格:内联时把该字节当普通
@@ -162,8 +143,7 @@ if (unlikely(tp->urg_data)) {
 
 ```c
 /* No URG data to read. */
-if (sock_flag(sk, SOCK_URGINLINE) || !tp->urg_data ||
-    tp->urg_data == TCP_URG_READ)
+if (sock_flag(sk, SOCK_URGINLINE) || !tp->urg_data || tp->urg_data == TCP_URG_READ)
         return -EINVAL;      /* Yes this is right ! */
 ```
 

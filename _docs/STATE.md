@@ -1,7 +1,7 @@
 # STATE.md — 自动化巡检主状态文件
 
 > 每轮滚动,**永远 ≤ 5 KB**;历史全本见 `_docs/archive/`。
-> 调度/配额/回退见 [`SCHEDULE_QUOTA.md`];Token 见 [`OPTIMIZATION.md`](./OPTIMIZATION.md)
+> 调度/配额/回退见 SCHEDULE_QUOTA.md;Token 见 OPTIMIZATION.md
 
 ## 一、轮询顺序(2026-09-16 起:大类严格轮转)
 
@@ -53,10 +53,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 6         # 下轮消费[6]=07-数据存储(再下轮[7]=08-安全)
-sub_pos        : 01:0 02:5 03:1 04:1 05:1 06:1 07:3 08:1 09:0 10:1 11:5 12:1  # 06 共 8 条目(23-26,41-43,51);下轮[06]=1→索引 24=02-CI-CD
-last_run       : 2026-09-24 22:04
-last_top       : 06-DevOps  # 索引 23 = 01-容器化(690-694);本轮[6]=07-数据存储/04-搜索引擎 第四批
+top_pos        : 7         # 下轮消费[7]=08-安全(再下轮[8]=09-语言学习)
+sub_pos        : 01:0 02:5 03:1 04:1 05:1 06:1 07:4 08:1 09:0 10:1 11:5 12:1  # 07 共 5 条目(27-30,45);下轮[07]=4→索引 45=05-图数据库
+last_run       : 2026-09-24 23:16
+last_top       : 07-数据存储  # 索引 30 = 04-搜索引擎(698-702);另补记 20:00 中断轮 695-697
 skipped        : []
 failed_attempts: []
 ```
@@ -68,13 +68,13 @@ failed_attempts: []
 | 09-24 16:39 | 19 | 05-AI与机器学习/01-深度学习第五批:RoPE·GRU门控·卷积变体·量化校准·FlashAttention在线softmax | S3 | +5 | 689 | rope6加rnn76加conv79加observer80加fakequant23加utils29加flashtriton41;0检索;Py305 | notify: ok |
 | 09-24 13:18 | 16 | 04-移动开发/01-iOS第五批:dyld链式修正·NanoV2分配器·宏展开编排·参数包·objc4类布局与脏内存 | S3 | +5 | 684 | dyld3加lmalloc5加swiftsyntax5加se4加objc4三3;0检索;Py425 | notify: ok |
 | 09-24 10:04 | 12 | 03-系统编程/01-网络编程第五批:延迟确认与QUICKACK·MSG_ZEROCOPY·MSG_OOB与sockatmark·BBR定点·QUIC变长整数 | S1 | +5 | 679 | rfc4加bbr草案加man7七篇加linux10篇;0检索;Py380 | notify: ok |
-| 09-24 09:13 | 56 | 02-Web开发/05-流量治理首批:GCRA漏桶·RateLimit头部·令牌桶预热·滑动窗口·描述符匹配与配额 | S1+S3 | +5 | 674 | ietf11+rfc6585+wiki3+brandur1+guava2+sentinel2+envoyrl5;0检索;Py194 | notify: ok |
+| 09-24 22:04 | 30 | 07-数据存储/04-搜索引擎第四批:高亮片段生成·FST suggester·模糊查询与 Levenshtein 自动机·索引排序·FST TopN 零输出补全 | S1+S3 | +5 | 702 | lucene 高亮6加suggester8加fst4加模糊5加sort3;0检索;Py360(补跑 695-697 共 10347 全绿) | notify: pending |
 | 09-24 18:02 | 23 | 06-DevOps/01-容器化第四批:CNI插件模型与host-local IPAM轮询·OCI分发协议端点与分块上传·runc双进程同步协议与seccomp两插入点·pivotRoot六条限制与shared subtree·cgroup v2线程模式与cpuset分区 | S1+S3 | +5 | 694 | cni4加dist1加runc4加man2加cg2;0检索;Py279 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 
 ## 四、rotate 与查找
 
-- rotate:completed >100 / schedule >30 → 截最近 100/30;丢弃部分查 `git log -p _docs/archive/`
-- 查 demo:Grep `completed.md`/`schedule.md`;总数 = completed.md 行数
+- rotate:completed >100 / schedule >30 → 截最近 100/30;丢弃查 `git log -p _docs/archive/`
+- 查 demo:Grep 两表;总数 = completed.md 行数
 - 每轮只动 §三,超 5 KB 压缩旧行。

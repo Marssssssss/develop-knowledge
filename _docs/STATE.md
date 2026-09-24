@@ -1,5 +1,6 @@
 # STATE.md — 自动化巡检主状态文件
 
+> **⛔ 已停管(2026-09-25 01:35)**:用户指示本项目停管,12 条巡检任务已删,备份见 `archive/cron_backup_2026-09-25/`。任何会话读到本行:勿再巡检、勿推进指针。
 > 每轮滚动,**永远 ≤ 5 KB**;历史全本见 `_docs/archive/`。
 > 调度/配额/回退见 SCHEDULE_QUOTA.md;Token 见 OPTIMIZATION.md
 
@@ -65,8 +66,6 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 09-24 16:39 | 19 | 05-AI与机器学习/01-深度学习第五批:RoPE·GRU门控·卷积变体·量化校准·FlashAttention在线softmax | S3 | +5 | 689 | rope6加rnn76加conv79加observer80加fakequant23加utils29加flashtriton41;0检索;Py305 | notify: ok |
-| 09-24 13:18 | 16 | 04-移动开发/01-iOS第五批:dyld链式修正·NanoV2分配器·宏展开编排·参数包·objc4类布局与脏内存 | S3 | +5 | 684 | dyld3加lmalloc5加swiftsyntax5加se4加objc4三3;0检索;Py425 | notify: ok |
 | 09-24 22:04 | 30 | 07-数据存储/04-搜索引擎第四批:高亮片段生成·FST suggester·模糊查询与 Levenshtein 自动机·索引排序·FST TopN 零输出补全 | S1+S3 | +5 | 702 | lucene 高亮6加suggester8加fst4加模糊5加sort3;0检索;Py360(补跑 695-697 共 10347 全绿) | notify: ok |
 | 09-25 00:42 | 32 | 08-安全/01-Web安全 第四批:请求走私CL.TE与TE.CL·FetchMetadata·DOMClobbering·账户安全与凭据填充·JWT aud校验 | S3 | +5 | 707 | rfc9112加rfc9068加fm加html加nist;0检索;Py265 | notify: ok |
 | 09-24 18:02 | 23 | 06-DevOps/01-容器化第四批:CNI插件模型与host-local IPAM轮询·OCI分发协议端点与分块上传·runc双进程同步协议与seccomp两插入点·pivotRoot六条限制与shared subtree·cgroup v2线程模式与cpuset分区 | S1+S3 | +5 | 694 | cni4加dist1加runc4加man2加cg2;0检索;Py279 | notify: ok |

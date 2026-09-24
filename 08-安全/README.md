@@ -78,6 +78,11 @@
 | `01-密码学/JOSE令牌JWS与JWE/` | **642** JOSE JWS/JWE(RFC 7515/7516/7518):AAD 规则 + A128KW + A128CBC-HS256 |
 | `01-密码学/恒定时间与侧信道防护/` | **643** 常量时间原语与侧信道:OpenSSL 掩码原语 + BearSSL 执行模型 + `value_barrier` |
 | `01-密码学/证书透明化Merkle审计/` | **644** CT Merkle 审计与 SCT/STH 编码(RFC 6962) |
+| `01-Web安全/HTTP请求走私CL.TE与TE.CL/` | **703** RFC 9112 §6.3 消息体长度八条判定的优先级 + §7.1.3 chunked 解码 + CL.TE 与 TE.CL 两跳走私 |
+| `01-Web安全/FetchMetadata与资源隔离策略/` | **704** W3C Fetch Metadata §2.3 Sec-Fetch-Site 判定算法 + §4.1 重定向链记住最坏一环 + §4.2 Sec- 前缀不可伪造 |
+| `01-Web安全/DOMClobbering与命名属性访问/` | **705** HTML §7.2.2.3 supported property names 三部分并集 + property set 两段循环 + 取值优先级 |
+| `01-Web安全/账户安全与凭据填充防护/` | **706** NIST SP 800-63B 长度门槛与四个 SHALL NOT + 码点计数与 NFC + 黑名单整串比对 + 连续失败上限 100 |
+| `01-Web安全/JWT访问令牌profile与受众校验/` | **707** RFC 9068 typ 必须是 at+jwt + 七个 REQUIRED 声明 + §4 六步校验 + §5 跨 JWT 混淆 |
 
 ## 待研究
 
@@ -94,6 +99,7 @@
 - [x] 供应链与制品安全 ✓ (03-应用安全与供应链 首批 5 个:污点分析精度阶梯 / 依赖可达性+SPDX / SLSA provenance 验证 / CWE-798 熵判据 / CI 加固)
 - [x] 供应链第二批:度量与验证机制 ✓ (03-应用安全与供应链 第二批 5 个:CVSS v4.0 宏向量 / TUF 四角色 / in-toto link 验证 / 可复现构建 / AFL 覆盖率引导)
 - [x] Web 安全第三批:浏览器侧纵深防御 ✓ (01-Web安全 第三批 5 个:DPoP 发送方约束 / Trusted Types / CSP strict-dynamic 与报告 / SRI 与 Integrity-Policy / COOP-COEP-CORP 跨源隔离)
+- [x] Web 安全第四批:协议分帧分歧 · 请求上下文 · 账户与令牌 ✓ (01-Web安全 第四批 5 个,ID 703-707:HTTP 请求走私 CL.TE/TE.CL / Fetch Metadata 与资源隔离 / DOM Clobbering / 账户安全与凭据填充 / JWT 访问令牌 profile 与 aud 校验)
 - [ ] 密钥管理与 HSM/KMS 抽象
 - [ ] 后量子迁移与混合模式(X25519MLKEM768 混合密钥交换;ML-KEM 单算法已见 420,ML-DSA 待补)
 

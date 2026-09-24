@@ -68,7 +68,7 @@ failed_attempts: []
 | 09-24 16:39 | 19 | 05-AI与机器学习/01-深度学习第五批:RoPE·GRU门控·卷积变体·量化校准·FlashAttention在线softmax | S3 | +5 | 689 | rope6加rnn76加conv79加observer80加fakequant23加utils29加flashtriton41;0检索;Py305 | notify: ok |
 | 09-24 13:18 | 16 | 04-移动开发/01-iOS第五批:dyld链式修正·NanoV2分配器·宏展开编排·参数包·objc4类布局与脏内存 | S3 | +5 | 684 | dyld3加lmalloc5加swiftsyntax5加se4加objc4三3;0检索;Py425 | notify: ok |
 | 09-24 10:04 | 12 | 03-系统编程/01-网络编程第五批:延迟确认与QUICKACK·MSG_ZEROCOPY·MSG_OOB与sockatmark·BBR定点·QUIC变长整数 | S1 | +5 | 679 | rfc4加bbr草案加man7七篇加linux10篇;0检索;Py380 | notify: ok |
-| 09-24 22:04 | 30 | 07-数据存储/04-搜索引擎第四批:高亮片段生成·FST suggester·模糊查询与 Levenshtein 自动机·索引排序·FST TopN 零输出补全 | S1+S3 | +5 | 702 | lucene 高亮6加suggester8加fst4加模糊5加sort3;0检索;Py360(补跑 695-697 共 10347 全绿) | notify: pending |
+| 09-24 22:04 | 30 | 07-数据存储/04-搜索引擎第四批:高亮片段生成·FST suggester·模糊查询与 Levenshtein 自动机·索引排序·FST TopN 零输出补全 | S1+S3 | +5 | 702 | lucene 高亮6加suggester8加fst4加模糊5加sort3;0检索;Py360(补跑 695-697 共 10347 全绿) | notify: ok |
 | 09-24 18:02 | 23 | 06-DevOps/01-容器化第四批:CNI插件模型与host-local IPAM轮询·OCI分发协议端点与分块上传·runc双进程同步协议与seccomp两插入点·pivotRoot六条限制与shared subtree·cgroup v2线程模式与cpuset分区 | S1+S3 | +5 | 694 | cni4加dist1加runc4加man2加cg2;0检索;Py279 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。

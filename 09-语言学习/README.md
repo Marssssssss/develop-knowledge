@@ -14,7 +14,7 @@
 
 | 语言 | 状态 | 路径 | 主线(与其他语言的分工) | demo |
 | --- | --- | --- | --- | --- |
-| Python | ✅ 已开线 | [Python/](./Python/) | 动态类型 + 引用计数 GC + 语法糖(PEP) | 21 |
+| Python | ✅ 已开线 | [Python/](./Python/) | 动态类型 + 引用计数 GC + 语法糖(PEP) | 26 |
 | Golang | ✅ 已开线 | [Golang/](./Golang/) | GC + CSP 并发(GPM 调度、channel) | 20 |
 | Rust | ✅ 已开线 | [Rust/](./Rust/) | **无 GC 的内存安全**:所有权 / 借用检查 / trait 静态分发 | 15 |
 | TypeScript | ✅ 已开线 | [TypeScript/](./TypeScript/) | **纯编译期**:结构化类型系统 + 类型级编程(约束在运行时被擦除) | 10 |
@@ -56,6 +56,15 @@
 > 与 `__mro__` 对拍)、实参怎么填进形参(手写绑定算法与 `inspect` 对拍)、`NotImplemented` 触发的
 > 回退链(含「设成 None 是阻断而非促成回退」这一反直觉点)、以及名字在编译期就被判定为局部
 > 而引发的 `UnboundLocalError` 与类作用域对推导式不可见的静默陷阱。
+> Python 第五批 5 个 demo(2026-09-25 02:00 槽):`pickle与对象序列化/`、`contextvars与异步上下文/`、
+> `enum与dataclasses运行时/`、`属性查找全链路/`、`缓冲协议与memoryview/` —— 主题是
+> 「**协议与管线的运行时语义**」:pickle 的 `__reduce__` 六元组与 memo 身份保持(实测
+> `__getnewargs_ex__` 的 kwargs 在默认 `object.__new__` 下被整条静默丢弃)、contextvars 的
+> 快照隔离与 asyncio 两个拷贝时机(Task 创建时/Handle 调度时,对照本机源码)、装饰器与元类的
+> 改写时序差(`__init_subclass__` 里看不到 dataclass 字段)、四级属性优先级链的纯 Python 复刻
+> 对拍、以及 PEP 3118 的 resize 闸门与只读视图哈希;五份共 103 条断言全部实跑通过
+> (含多处 3.12/3.13+ 版本边界标注:DEFAULT_PROTOCOL=4、`1 in Enum` 按值包含、
+> 可写 memoryview 哈希抛 ValueError 等)。
 > Golang 第四批 5 个 demo(2026-09-21 18:00 槽):`定时器与四叉堆/`、`netpoll与网络轮询器/`、
 > `栈增长与连续栈/`、`字符串与UTF8rune/`、`方法集与嵌入提升/` —— 两个「运行时如何调度/唤醒」
 > (per-P 四叉定时器堆、`pollDesc` 的 rg/wg 信号量)、两个「内存与编码的基本盘」(连续栈的

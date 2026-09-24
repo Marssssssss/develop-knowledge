@@ -67,6 +67,11 @@
 | 参数绑定与调用约定(PEP 570 / 3102) | [参数绑定与调用约定/](./参数绑定与调用约定/) |
 | 运算符与特殊方法分派 | [运算符与特殊方法分派/](./运算符与特殊方法分派/) |
 | 作用域、闭包与单元变量 | [作用域闭包与单元变量/](./作用域闭包与单元变量/) |
+| `pickle` 与对象序列化协议(`__reduce__` 六元组 / memo / PEP 574 带外缓冲) | [pickle与对象序列化/](./pickle与对象序列化/) |
+| `contextvars` 与异步上下文传播(PEP 567) | [contextvars与异步上下文/](./contextvars与异步上下文/) |
+| `enum` / `dataclasses` 运行时行为与 `__init_subclass__` 时序 | [enum与dataclasses运行时/](./enum与dataclasses运行时/) |
+| 属性查找全链路(数据描述符 > 实例 dict > 非数据描述符 > `__getattr__`) | [属性查找全链路/](./属性查找全链路/) |
+| 缓冲协议(PEP 3118)与 `memoryview` | [缓冲协议与memoryview/](./缓冲协议与memoryview/) |
 
 ## 四、待研究清单(按"教学价值"排序)
 
@@ -90,9 +95,13 @@
 18. ~~函数参数绑定(位置限定 `/`、关键字限定 `*`)~~ ✅
 19. ~~运算符与特殊方法分派(`NotImplemented` / 反射 / in-place)~~ ✅
 20. ~~作用域、闭包与单元变量(cell)~~ ✅
-21. `pickle` / `copyreg` 与对象序列化协议(`__reduce__` / `__getstate__`)
-22. `contextvars` 与异步上下文传播
-23. `enum` / `dataclasses` 的运行时行为与 `__init_subclass__`
+21. ~~`pickle` / `copyreg` 与对象序列化协议(`__reduce__` / `__getstate__`)~~ ✅
+22. ~~`contextvars` 与异步上下文传播~~ ✅
+23. ~~`enum` / `dataclasses` 的运行时行为与 `__init_subclass__`~~ ✅
+24. ~~属性查找全链路(`__getattribute__` 优先级链 / `__getattr__` 兜底)~~ ✅
+25. ~~缓冲协议(PEP 3118)与 `memoryview` 生命周期~~ ✅
+26. `weakref` 语义边界与 `__weakref__` 槽
+27. `functools` 缓存族(`lru_cache` 链表语义 / `cached_property`)
 
 ## 五、参考资料
 

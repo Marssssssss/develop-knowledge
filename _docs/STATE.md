@@ -68,7 +68,7 @@ failed_attempts: []
 | --- | --- | --- | --- | --- | --- | --- |
 | 09-25 02:00 | 34 | 09-语言学习/01-Python 第五批:pickle六元组与memo·contextvars快照与两个拷贝时机·enum与dataclasses运行时·属性查找四级优先级复刻·PEP3118缓冲协议与memoryview | S3 | +5 | 712 | peps5加docs8;0检索;Py103;单实体12槽恢复后首槽 | notify: ok |
 | 09-25 04:00 | 36 | 10-逆向工程/02-移动端逆向 第四批:class-dump与ObjC运行时·smali↔jadx偏差·JNI与RegisterNatives·加固壳与脱壳·AXML Manifest | S3 | +5 | 717 | jni2加objc4加classdump加smali加jadx加aosp5加resourcetypes;0检索;Py44 | notify: ok |
-| 09-25 06:00 | 61 | 11-性能分析/06-数据库性能 首批:选择率五公式·IndexOnlyScan与VM·等待事件归因·连接池非单调·泛化计划翻转 | S3 | +5 | 722 | pg5加pgb2;0检索;Py33 | notify: pending |
+| 09-25 06:00 | 61 | 11-性能分析/06-数据库性能 首批:选择率五公式·IndexOnlyScan与VM·等待事件归因·连接池非单调·泛化计划翻转 | S3 | +5 | 722 | pg5加pgb2;0检索;Py33 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

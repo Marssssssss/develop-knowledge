@@ -53,10 +53,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 2         # 本轮消费[2]=03-系统编程(下轮[3]=04-移动开发)
-sub_pos        : 01:0 02:5 03:0 04:0 05:0 06:0 07:3 08:1 09:0 10:1 11:5 12:1  # 03 共 4 条目(12-15);本轮消费[03]=0→索引 12
-last_run       : 2026-09-24 10:04
-last_top       : 03-系统编程  # 索引 12 = 01-网络编程(675-679 待产出)
+top_pos        : 3         # 下轮消费[3]=04-移动开发(再下轮[4]=05-AI与机器学习)
+sub_pos        : 01:0 02:5 03:1 04:0 05:0 06:0 07:3 08:1 09:0 10:1 11:5 12:1  # 03 共 4 条目(12-15);上轮消费[03]=0→索引 12;下轮[03]=1→索引 13 = 02-进程线程协程
+last_run       : 2026-09-24 10:53
+last_top       : 03-系统编程  # 索引 12 = 01-网络编程(675-679 已产出)
 skipped        : []
 failed_attempts: []
 ```
@@ -65,11 +65,11 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
+| 09-24 10:04 | 12 | 03-系统编程/01-网络编程第五批:TCP延迟确认与QUICKACK及USER_TIMEOUT·MSG_ZEROCOPY通知计费与vmsplice·MSG_OOB紧急数据与sockatmark·BBR定点拥塞控制·QUIC变长整数与帧层 | S1 | +5 | 679 | rfc4加bbr草案加man7七篇加linux10篇;0检索;Py380 | notify: pending |
 | 09-24 09:13 | 56 | 02-Web开发/05-流量治理与限流首批:GCRA与漏桶计量·RateLimit响应头部·令牌桶与预热·滑动窗口计数·描述符匹配与分布式配额 | S1+S3 | +5 | 674 | ietf11+rfc6585+wiki3+brandur1+guava2+sentinel2+envoyrl5;0检索;Py194 | notify: ok |
 | 09-24 06:52 | 7 | 01-游戏开发/08-动画专题:glTF蒙皮·动画采样与四元数插值·Godot轨道插值·混合空间1D2D·状态机与交叉淡入 | S3 | +5 | 669 | gltf1+godot8;0检索;Py282 | notify: ok |
 | 09-24 04:58 | 63 | 12-项目工程/01-数据结构与集合选型首批:CPython dict紧凑布局·Java HashMap树化与拆分·Go map瑞士表·SwissTable控制字节·动态数组增长因子 | S3 | +5 | 664 | cpython2+jdk1+go3+absl1+hb2+stl3+libcxx1+msvc1+rust1;0检索;Py2340 | notify: ok |
-| 09-24 02:33 | 60 | 11-性能分析/05-容量规划首批:Little定律与事件仿真·MMc与ErlangC·USL拟合与峰值·扩展律三式·过载保护与自适应并发 | S3 | +5 | 659 | wiki5+hb1+usl4+vegas2+envoy1+sre2+hpc101+cornell+uva;0检索;Py656 | notify: ok |
-| 09-23 15:24 | 29 | 07-数据存储/03-缓存三批:Redis跳表ZSet·Sentinel故障转移·布隆与Cuckoo·ae事件循环·CDN一致性哈希 | S3 | +5 | 635 | redis8+bloom5+ketama1+ngx3;0检索;Py491 | ok |
+| 09-24 02:33 | 60 | 11-性能分析/05-容量规划首批:Little定律·MMc与ErlangC·USL拟合·扩展律三式·过载保护 | S3 | +5 | 659 | wiki5+hb1+usl4+vegas2+envoy1+sre2+hpc101+cornell+uva;0检索;Py656 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

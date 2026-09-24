@@ -65,7 +65,7 @@ failed_attempts: []
 
 | 时间 | 索引 | 主题摘要 | 推进 | 累计 | 来源与质量 | notify |
 | --- | --- | --- | --- | --- | --- | --- |
-| 09-24 13:18 | 16 | 04-移动开发/01-iOS第五批:dyld链式修正·NanoV2分配器·宏展开编排·参数包·objc4类布局与脏内存 | S3 | +5 | 684 | dyld3加lmalloc5加swiftsyntax5加se4加objc4三3;0检索;Py425 | notify: pending |
+| 09-24 13:18 | 16 | 04-移动开发/01-iOS第五批:dyld链式修正·NanoV2分配器·宏展开编排·参数包·objc4类布局与脏内存 | S3 | +5 | 684 | dyld3加lmalloc5加swiftsyntax5加se4加objc4三3;0检索;Py425 | notify: ok(HTTP 200,errcode=0 errmsg=ok;UTF-8 payload 经 urllib 单次 POST 未重试,发送前已确认本轮行是 pending) |
 | 09-24 10:04 | 12 | 03-系统编程/01-网络编程第五批:TCP延迟确认与QUICKACK及USER_TIMEOUT·MSG_ZEROCOPY通知计费与vmsplice·MSG_OOB紧急数据与sockatmark·BBR定点拥塞控制·QUIC变长整数与帧层 | S1 | +5 | 679 | rfc4加bbr草案加man7七篇加linux10篇;0检索;Py380 | notify: ok |
 | 09-24 09:13 | 56 | 02-Web开发/05-流量治理与限流首批:GCRA与漏桶计量·RateLimit响应头部·令牌桶与预热·滑动窗口计数·描述符匹配与分布式配额 | S1+S3 | +5 | 674 | ietf11+rfc6585+wiki3+brandur1+guava2+sentinel2+envoyrl5;0检索;Py194 | notify: ok |
 | 09-24 06:52 | 7 | 01-游戏开发/08-动画专题:glTF蒙皮·四元数插值·Godot轨道插值·混合空间1D2D·状态机与交叉淡入 | S3 | +5 | 669 | gltf1+godot8;Py282 | notify: ok |

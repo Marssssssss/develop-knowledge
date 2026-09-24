@@ -59,11 +59,9 @@ public static int floatToEdits(float minimumSimilarity, int termLen) {
 
 | similarity | termLen | maxEdits |
 | --- | --- | --- |
-| 0.0 | 10 | **0**（精确） |
-| 0.5 | 10 | 2 |
+| 0.0 | 10 | **0**（精确，不是无限） |
 | 0.7 | 10 | 2 |
 | 0.8 | 10 | **1**（浮点截断） |
-| 0.9 | 5 | 0 |
 | 1.0 | 10 | 1 |
 | 5.0 | 10 | 2（被夹到上限） |
 
@@ -173,28 +171,21 @@ return vector;
 | --- | --- |
 | 编辑距离硬上限 2 | `MAXIMUM_SUPPORTED_DISTANCE == 2`，`maxEdits=3` 抛异常 |
 | `maxEdits=0` 不建自动机 | `terms_enum_kind == "SingleTermsEnum"` |
-| `similarity=0` 是精确不是无限 | `float_to_edits(0.0, 10) == 0` |
-| 浮点截断：`0.8/10 → 1` | 见上表 |
-| OSA 与真 DL 的差别 | `ca→abc`：OSA=3 |
+| `similarity=0` 是精确不是无限 | `float_to_edits(0.0, 10) == 0`；浮点截断见 §二 |
+| OSA 与真 DL 的差别 | `ca→abc`：OSA=3（真 DL=2） |
 | transpositions 只影响交换 | `ab→ba`：1 vs 2 |
-| 字母表去重排序 + 补集两段 | `abca` → `[97,98,99]`，补集 `[0,96]`/`[100,1114111]` |
-| `alphaMax` 越界抛异常 | 含 `alphaMax exceeded` |
+| 字母表去重排序 + 补集两段 + `alphaMax` 越界 | `abca` → `[97,98,99]`，补集 `[0,96]`/`[100,1114111]` |
 | 状态数 = 表长 ×(w+1) | 5/6/30 × 5 |
-| `n>=3` 不支持 | `to_automaton_plan(3)` → `unsupported` |
-| `numTransitions` 取 min | `min(2n+1, |alphabet|)` |
+| `n>=3` 不支持 / `numTransitions` 取 min | `unsupported`；`min(2n+1, |alphabet|)` |
 | 特征向量"先左移后置位" | `X(a,0,3) = 100` |
 
-## 八、建模口径与限制
+> **建模口径与限制**：真正的 DFA 转移表（`toStates*` / `offsetIncrs*` 打包数组）**未还原**，
+> 本 demo 断言的是参数化描述的**骨架**与 FuzzyQuery 的参数语义，均可逐行对上源码。
+> `Lev2TParametricDescription` 本轮未取到源码（jsDelivr 超时），故 n=2 一律用 `Lev2` 的骨架，
+> n=2 且开启 transpositions 时状态数/接受判据只对非 T 变体严格成立。
+> 距离函数只作对照，不是 Lucene 的判定路径（Lucene 走自动机，不逐条算距离）。
 
-- 真正的 DFA 转移表（`toStates*` / `offsetIncrs*` 打包数组）**未还原**；
-  本 demo 断言的是参数化描述的**骨架**（状态数、接受判据、位置函数、特征向量）
-  与 FuzzyQuery 的参数语义，这些都能逐行对上源码。
-- `Lev2TParametricDescription` 本轮未取到源码（jsDelivr 超时），
-  因此 **n=2 一律用 `Lev2ParametricDescription` 的骨架**；
-  n=2 且开启 transpositions 时，状态数/接受判据只对非 T 变体严格成立。
-- 距离函数只做对照用，不是 Lucene 的判定路径（Lucene 走自动机，不逐条算距离）。
-
-## 九、参考资料（实际读过）
+## 八、参考资料（实际读过）
 
 - `apache/lucene@main` — `lucene/core/src/java/org/apache/lucene/search/FuzzyQuery.java`（10929 B）
 - `lucene/core/src/java/org/apache/lucene/util/automaton/LevenshteinAutomata.java`（11921 B）
@@ -203,16 +194,8 @@ return vector;
 - `lucene/core/src/java/org/apache/lucene/util/automaton/Lev1TParametricDescription.java`（4117 B）
 - `lucene/core/src/java/org/apache/lucene/util/automaton/Operations.java`（`DEFAULT_DETERMINIZE_WORK_LIMIT = 10000`）
 
-## 十、文件
+## 九、文件
 
-| 文件 | 行数 | 说明 |
-| --- | --- | --- |
-| `python/fuzzy.py` | 213 | FuzzyQuery 校验 / floatToEdits / 参数化描述 / 自动机骨架 |
-| `python/editdist.py` | 60 | 经典 Levenshtein 与 OSA 对照 |
-| `python/selfcheck_fuzzy.py` | 190 | 111 条断言，实跑全绿 |
-| `python/main.py` | 92 | 演示入口 |
-| `go/fuzzy.go` | 253 | 同上的 Go 实现 |
-| `go/editdist.go` | 92 | 距离对照 |
-| `go/main.go` | 74 | 演示入口 |
+`python/fuzzy.py`(213) 校验/floatToEdits/参数化描述/自动机骨架 · `python/editdist.py`(60) 与 `go/editdist.go`(92) 距离对照 · `python/selfcheck_fuzzy.py`(204) **111 条断言实跑全绿** · `python/main.py`(92) · `go/fuzzy.go`(253) · `go/main.go`(74)。
 
 > Go 侧无本机工具链，走 `bracket_check` / `go_sanity` / `go_crossref` 三项静态检查，全过。

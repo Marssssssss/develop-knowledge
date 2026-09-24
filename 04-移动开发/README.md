@@ -62,6 +62,11 @@
 | 618 | `04-推送与消息/APNs推送类型与Topic后缀/` | 11 个 `apns-push-type` 的 topic 后缀/优先级/平台/认证四张表;`background` 只能 priority 5、`location` 仅 token 认证、`mdm` topic 取自证书 UID;**官方表里 liveactivity 后缀少了前导点** | Python / Go |
 | 619 | `04-推送与消息/FCM主题与批量发送/` | topic 名先剥前缀再过窄字符集(`-` 是字面量不是区间)、订阅走 **IID** 且是**部分成功**、`send_each` 是**并发扇出**非 HTTP batch(上限 500、`max_workers=len`)、`success` 要求 message_id 非空且无异常 | Python / Go |
 | 620 | `04-推送与消息/通知内容修改与端侧解密/` | Service Extension 四个启用条件、**~30 秒预算**、`serviceExtensionTimeWillExpire` 必须立刻交回、**两个方法都没调 handler 就展示原始载荷** | Python / Go |
+| 680 | `01-iOS/启动优化/链式修正/` | dyld chained fixups 位域与链遍历(真机/非真机 FAST 位域同族的指针打包思路;回写校验须读回位域) | Python / Go |
+| 681 | `01-iOS/内存管理/nanov2分配器/` | libmalloc NanoV2:256B 分界、free_count 口径、next_slot 七个特殊值、块号↔元数据下标对合 | Python / Go |
+| 682 | `01-iOS/Swift语言特性/宏展开/` | swift-syntax 宏展开编排:角色分派、collapse 分隔符规则、独立宏三态、按实现类型的递归检测 | Python / Go |
+| 683 | `01-iOS/Swift语言特性/参数包/` | Swift 变长泛型:捕获集、同形状推断的两处位置、单包限制、for-in repeat 惰性求值 | Python / Go |
+| 684 | `01-iOS/运行时/类布局与脏内存/` | objc4 class_data_bits_t 的 FAST 位域与 class_rw_t/class_rw_ext_t 脏内存分离、extAlloc 深拷贝只对方法生效 | Python / Go |
 
 ## 待研究
 

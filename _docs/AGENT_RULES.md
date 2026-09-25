@@ -33,10 +33,10 @@ Agent（包括自动化巡检、手动对话）在 `D:\开发研究\` 下操作�
 
 ## 四、自动化执行规则
 
-由 `automation_update` 创建的**12 条定点任务**（每条 `FREQ=DAILY;INTERVAL=1;BYHOUR=<H>;BYMINUTE=0`，覆盖全天 `00:00 02:00 … 22:00`，每天各触发一次、锁定整点、不漂移）。**完整流程以 [`AUTOMATION_PROMPT.md`](./AUTOMATION_PROMPT.md) 为唯一权威**（含调度模型说明、轮间保险 45 分钟、配额、归档、通知、自检），定量规范见 `SCHEDULE_QUOTA.md`：
+由调度环境创建的**单条 cron 巡检任务**（`0 */8 * * *`，每 8 小时，全天 3 槽 `03:00 11:00 19:00`，整点触发、不漂移；2026-09-25 起，演变史见 [`AUTOMATION_PROMPT.md`](./AUTOMATION_PROMPT.md) §〇）。**完整流程以 [`AUTOMATION_PROMPT.md`](./AUTOMATION_PROMPT.md) 为唯一权威**（含调度模型说明、轮间保险 45 分钟、配额、归档、通知、自检），定量规范见 `SCHEDULE_QUOTA.md`：
 
 1. **轮询领域**:按 [`STATE.md`](./STATE.md) §一 大类循环 + §二 `top_pos`/`sub_pos` **严格轮转**(12 大类各 1/12 轮次,大类内子类目轮转;禁止按 priority_score/done_count/临时偏好挑领域;状态文件 ≤ 5 KB,默认 always-read 即可)。
-2. **单次最多产出 5 个新 demo**:与 `SCHEDULE_QUOTA.md`「5 主/轮」配额对齐;叠加副任务单轮 ≤ 7 动作。
+2. **单次最多产出 1 个新 demo**:与 `SCHEDULE_QUOTA.md`「1 主/轮」配额对齐(2026-09-25 起,原 5);叠加副任务单轮 ≤ 3 动作。
 3. **不主动执行 demo**:README 里只写"如何运行",Agent 不实际跑代码。
 4. **失败重试上限 2 次**:连续失败则跳过本轮,记入 STATE.md 的 `failed_attempts` 字段(见 STATE.md §2 + §4)。
 5. **进度日志**:每轮结束

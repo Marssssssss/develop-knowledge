@@ -38,3 +38,22 @@
 - [ ] 布隆过滤器的假阳率公式与位数组 sizing；何时该换成 cuckoo filter（支持删除）
 - [ ] 持久化数据结构的结构共享在 GC 语言 vs 手动内存语言下的收益差
 - [ ] 并发队列的 false sharing 与 padding 代价
+- [ ] `deque` 分块实现对比：CPython `deque` 的 `BLOCKLEN=64` 双向块链表（源码注释明言完全避开 realloc、随机访问走块链）vs libstdc++ `std::deque` 的每块 `512/sizeof(T)` + 中央 map 指针数组——两端 push/pop 与随机索引基准复测
+- [ ] 文本编辑器缓冲区选型：gap buffer（Emacs）/ rope / piece tree（VS Code：旧 line array 存 35MB/1370 万行文件约 600MB 内存，piece tree 接近文件大小）——同一组 1000 次随机编辑 + 顺序插入复测
+- [ ] Roaring bitmap 的 65536 分块三容器自适应（稀疏 array / 稠密 bitmap / 连续段 run），对比 `HashSet<Integer>` 与朴素 `long[]` 位集的内存占用与 AND/OR 耗时；Lucene/ClickHouse 落地判据
+- [ ] 哈希碰撞 DoS 与 keyed hash：Python 3.4 按 PEP 456 改用 SipHash-2/4（128-bit 密钥）并否决 MurmurHash/CityHash（种子可恢复），复现开/关 `PYTHONHASHSEED` 下碰撞键集的 dict 插入耗时差
+- [ ] `ConcurrentHashMap` 锁策略演进：JDK7 Segment（ReentrantLock 分段锁）→ JDK8 空桶 CAS + 桶首节点 `synchronized`，JMH 对比不同线程数与冲突分布下的写吞吐
+- [ ] Eytzinger 布局二分查找：BFS 序重排 + branchless `k = 2*k + (t[k] < x)` + `t+16k` 预取覆盖 4 层，Algorithmica 实测大数组约 2x 于 `std::lower_bound`（最好约 4x）；代价是只能整树重建
+- [ ] 有序静态数组查找布局家族实测（Khuong & Morin "Array Layouts for Comparison-Based Searching"）：sorted / Eytzinger / van Emde Boas / b-tree 布局的吞吐与构建成本，何时值得整体重排
+- [ ] `std::string` SSO 跨实现差异：libc++ 24 字节对象内联 22 字符 vs libstdc++/MSVC 内联 15 字符（Abseil 注释：无条件写 22 字节在 libstdc++ 触发堆分配）——同一基准跨 STL 对比分配次数与短串拼接耗时
+- [ ] folly `MPMCQueue` 发号式无锁设计：`fetch_add` 取 ticket（注释称比 CAS 循环更抗争用）+ 与容量互素的素数 stride 散布 cache line + 每槽 TurnSequencer 单次 CAS 交接——复测其对 TBB 的声称优势
+- [ ] ART 自适应基数树：Node4/16/48/256 按实际子节点数升降级 + path compression + lazy expansion（Leis ICDE 2013，DuckDB/HyPer 在用）——与 `unordered_map`/`std::map` 对比点查与前缀范围查询
+
+## 参考资料（已读）
+
+- [PEP 456 — Secure and interchangeable hash algorithm（Python 3.4 采用 SipHash-2/4 的完整论证；旧 FNV 种子可被恢复；MurmurHash/CityHash 因碰撞攻击被否决；24 字节 `_Py_HashSecret` 密钥隔离）](https://peps.python.org/pep-0456/)
+- [Text Buffer Reimplementation — VS Code Blog（piece tree 取代 line array：35MB/1370 万行文件旧结构约 600MB 内存、新结构接近文件大小；基准为 1000 次随机编辑/顺序插入）](https://code.visualstudio.com/blogs/2018/03/23/text-buffer-reimplementation)
+- [Binary Search — Algorithmica（Eytzinger 构造与热元素前移；branchless 下降与 `__builtin_ffs` 还原；`t+k*16` 预取覆盖 4 层；Zen 2 实测约 2x、最好约 4x；无法增量插入）](https://en.algorithmica.org/hpc/data-structures/binary-search/)
+- [Roaring Bitmaps（65536 分块、array/bitmap/run 三容器按块自适应；密集块位运算「常比 RLE 快数百倍」的声明；Lucene/Spark/ClickHouse 使用方清单）](https://roaringbitmap.org/)
+- [CPython `_collectionsmodule.c`（`BLOCKLEN 64` 定义与注释：更大块减少分配、加快索引与旋转、2 的幂加速取模；双向块链结构与不变量；完全避开 realloc 的论证）](https://github.com/python/cpython/blob/main/Modules/_collectionsmodule.c)
+- [folly `MPMCQueue.h`（ticket 原子自增而非 CAS 循环；素数 stride 散布相邻 ticket 避免同 cache line 竞争；TurnSequencer 奇偶轮次 + 自适应自旋后回退 futex；header 声称全线程拓扑击败 TBB）](https://github.com/facebook/folly/blob/main/folly/MPMCQueue.h)

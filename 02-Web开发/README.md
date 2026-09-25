@@ -11,6 +11,7 @@
 | [03-数据库/](./03-数据库/) | SQL & ORM / NoSQL |
 | [04-API设计/](./04-API设计/) | REST / GraphQL / WebSocket / OpenAPI / HATEOAS / gRPC |
 | [05-流量治理与限流/](./05-流量治理与限流/) | GCRA 与漏桶计量 / RateLimit 响应头部 / 令牌桶与预热 / 滑动窗口计数 / 描述符匹配与分布式配额 |
+| [06-WebAssembly/](./06-WebAssembly/) | 最小模块手工解码(magic/段/LEB128/栈机);待:JS API / 验证阶段 / 组件模型(2026-09-25 19:00 槽开线,索引表第 58 项) |
 
 ## 已完成 demo
 

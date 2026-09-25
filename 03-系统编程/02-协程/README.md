@@ -28,7 +28,15 @@
   - `await_suspend` 四种返回（void / true / false / handle）；对称转移栈深恒 1，写成 `resume()` 递归则线性增长
   - `await_resume` 无论是否挂起都会调用；`await_suspend` 期间协程已完全挂起，句柄可交给别的线程
 
+## 已完成 demo(补)
+
+- ✅ Rust async/await 状态机与 Pin/!Unpin —— 见 [Rust-async状态机与Pin/](Rust-async状态机与Pin/)（2026-09-26 03:00 槽）
+  - await 即挂起点：跨点存活局部入状态变体（async 体积膨胀的精确来源）
+  - Pin 三句话：钉在原地/Unpin 是默认零约束/交互看 pointee（Pin<Box<T>> 由 T 决定）
+  - PhantomPinned 零大小标记；自引用移动即悬垂；Pin::new 只对 Unpin 安全，Box::pin 上堆
+  - Drop 保证：ManuallyDrop 抑制析构违反 guarantee（官方 unsound 反例）
+
 ## 待研究
 
-- [ ] Rust async/await 状态机与 Pin/!Unpin
+- [x] Rust async/await 状态机与 Pin/!Unpin → 734 Rust-async状态机与Pin
 - [ ] Lua 协程（对称 vs 非对称）

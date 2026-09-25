@@ -21,22 +21,15 @@ func (a *Add) Accept(v Visitor) int { return v.VisitAdd(a) }
 
 type EvalVisitor struct{}
 
-func (EvalVisitor) VisitNum(n *Num) int { return n.Value }
-func (EvalVisitor) VisitAdd(a *Add) int { return a.L.Accept(a.rv) + a.R.Accept(a.rv) }
-
-// Go 无方法内引用接收者的捷径,这里以字段承载同一访问者实例(示意)。
-type Add2 struct {
-	L, R Node
-	rv   EvalVisitor
-}
+// 命名接收者让同一访问者实例能递归传下去。
+func (v EvalVisitor) VisitNum(n *Num) int { return n.Value }
+func (v EvalVisitor) VisitAdd(a *Add) int { return a.L.Accept(v) + a.R.Accept(v) }
 
 type DoubleVisitor struct{}
 
 // 加操作 = 新访问者,元素层级零改动。
-func (DoubleVisitor) VisitNum(n *Num) int { return n.Value * 2 }
-func (DoubleVisitor) VisitAdd(a *Add) int {
-	return a.L.Accept(DoubleVisitor{}) + a.R.Accept(DoubleVisitor{})
-}
+func (v DoubleVisitor) VisitNum(n *Num) int { return n.Value * 2 }
+func (v DoubleVisitor) VisitAdd(a *Add) int { return a.L.Accept(v) + a.R.Accept(v) }
 
 func main() {
 	expr := &Add{&Num{1}, &Num{2}}

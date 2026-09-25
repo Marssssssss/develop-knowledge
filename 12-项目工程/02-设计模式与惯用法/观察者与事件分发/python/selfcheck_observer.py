@@ -66,8 +66,8 @@ def main():
     d.on("order.paid", c2)
     d.emit("order.created", Event("order.created", "A1"))
     assert c1.calls and not c2.calls
-    ok("分发器按主题名路由:发布方与订阅方互不认识(发布订阅);
-       发布者自持列表是观察者,拆出中间人就是 pub/sub——同一机制的两个刻度")
+    ok("分发器按主题名路由:发布方与订阅方互不认识;发布者自持列表是观察者,"
+       "拆出中间人就是 pub/sub——同一机制的两个刻度")
 
     print("5. 解耦的代价")
     ok("控制流变成隐式:谁在听、几个在听、抛异常会怎样,从调用点看不出来——"

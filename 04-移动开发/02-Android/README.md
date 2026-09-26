@@ -28,6 +28,7 @@
 | 509 | `网络编程/Retrofit动态代理与适配器/` | Retrofit 动态代理与适配器(`create()` 接口校验 + InvocationHandler 三分支 + RequestFactory 注解规则 + suspend 的 Call 改写 + `nextCallAdapter` skipPast 与 Platform 分支) | Python / Kotlin |
 | 510 | `数据持久化/Room连接池与ORM映射/` | Room 连接池与打开流程(Single/Multiple 配置、选池四路分支、500ms 退避与破坏性恢复、`journal_mode`/`synchronous` 与迁移事务、AOSP 连接池主连接与 30s 阈值) | Python / Kotlin |
 | 511 | `UI框架/Compose快照与LazyColumn复用/` | Compose 快照与 LazyColumn 复用(StateRecord 多版本链 + 碰撞写定义 + `innerApplyLocked` 三分支合并 + `PreexistingSnapshotId` 豁免 + 空集/钳位/beyondBounds + key 驱动的位置修正) | Python / Kotlin |
+| 735 | `网络编程/HTTP2多路复用与流控/` | RFC 9113 多路复用与流控(流 ID 奇偶与单调、交错不乱序、双窗口同减与 min 闸门、只补一边陷阱、2^31-1 上限 FLOW_CONTROL_ERROR、SETTINGS 按 delta 作用于已开流) | Python / Go |
 
 ## 待研究
 
@@ -41,7 +42,7 @@
 - [x] Retrofit 动态代理与 CallAdapter / Converter 解析 → demo 509
 - [x] Room 的 ORM 与连接池 → demo 510
 - [x] Compose 快照系统与 `LazyColumn` 复用 → demo 511
-- [ ] HTTP/2 多路复用与流控
+- [x] HTTP/2 多路复用与流控 → demo 735
 - [ ] `GetPrimitiveArrayCritical` 的 critical section 与 pin 开销
 - [ ] DataStore 与 SharedPreferences 的事务语义对比
 - [ ] Room 编译期 DAO 校验与 `EntityUpsertAdapter`

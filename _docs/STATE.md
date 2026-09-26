@@ -69,7 +69,7 @@ failed_attempts: []
 | 09-25 10:00 | 0 | 01-游戏开发/01-服务端/数据库与缓存 首批:ZSET排行榜同分决胜·SET NX幂等·淘汰策略与近似LRU·Mongo背包操作符·Stream邮件队列 | S3 | +5 | 732 | redis9加conf1加mdb3;0检索;Py22 | notify: ok |
 | 09-25 19:00 | 58 | 02-Web开发/06-WebAssembly 开线:最小模块手工解码(magic/段/LEB128/四操作码栈机/i32回绕) | S2+S3 | +1 | 733 | w3c4;0检索;Py5;新调度3槽首轮·配额1主 | notify: ok |
 | 09-26 03:00 | 13 | 03-系统编程/02-协程:Rust-async状态机与Pin(await即挂起点·Pin三句话·pointee规则·自引用悬垂·Drop保证) | S3 | +1 | 734 | pin1加phantom1加rfc1加abook1;0检索;Py6 | notify: ok |
-| 09-26 11:00 | 17 | 04-移动开发/02-Android:HTTP2多路复用与流控(双窗口min闸门·只补一边陷阱·SETTINGS按delta作用于已开流) | S3 | +1 | 735 | rfc9113;0检索;Py6;Android待研究清零 | notify: pending |
+| 09-26 11:00 | 17 | 04-移动开发/02-Android:HTTP2多路复用与流控(双窗口min闸门·只补一边陷阱·SETTINGS按delta作用于已开流) | S3 | +1 | 735 | rfc9113;0检索;Py6;Android待研究清零 | notify: ok |
 
 > 更早细节见 `archive/schedule.md`。
 

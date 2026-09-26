@@ -54,10 +54,10 @@
 ## 二、本轮状态
 
 ```
-top_pos        : 5         # 下轮消费[5]=06-DevOps(再下轮[6]=07-数据存储)
-sub_pos        : 01:1 02:0 03:2 04:2 05:2 06:1 07:4 08:2 09:1 10:2 11:6 12:2  # 05 共 9 条目(19-22,39,40,48,49,52);下轮[05]=2→索引 21=03-LLM
+top_pos        : 6         # 下轮消费[6]=07-数据存储(再下轮[7]=08-安全)
+sub_pos        : 01:1 02:0 03:2 04:2 05:2 06:2 07:4 08:2 09:1 10:2 11:6 12:2  # 06 共 8 条目(23-26,41-43,51);下轮[06]=2→索引 25=03-监控与可观测性
 last_run       : 2026-09-27 03:00
-last_top       : 05-AI与机器学习  # 索引 20 = 02-强化学习(736)
+last_top       : 06-DevOps  # 索引 24 = 02-CI-CD(737)
 skipped        : []
 failed_attempts: []
 ```
@@ -70,6 +70,7 @@ failed_attempts: []
 | 09-26 03:00 | 13 | 03-系统编程/02-协程:Rust-async状态机与Pin(await即挂起点·Pin三句话·pointee规则·自引用悬垂·Drop保证) | S3 | +1 | 734 | pin1加phantom1加rfc1加abook1;0检索;Py6 | notify: ok |
 | 09-26 11:00 | 17 | 04-移动开发/02-Android:HTTP2多路复用与流控(双窗口min闸门·只补一边陷阱·SETTINGS按delta作用于已开流) | S3 | +1 | 735 | rfc9113;0检索;Py6;Android待研究清零 | notify: ok |
 | 09-26 19:00 | 20 | 05-AI与机器学习/02-强化学习:TRPO信赖域与共轭梯度(Theorem1单调改进·MM视角·三替换·CG与β步长·线搜索双条件) | S3 | +1 | 736 | trpo论文ar5iv;0检索;Py6 | notify: ok |
+| 09-27 03:00 | 24 | 06-DevOps/02-CI-CD:制品签名与构建溯源(in-toto四层·SLSA provenance与L1-L3·验签三段拒绝链·keyless与Rekor) | S3 | +1 | 737 | intoto1加slsa3加cosign1;0检索;Py5 | notify: pending |
 
 > 更早细节见 `archive/schedule.md`。
 

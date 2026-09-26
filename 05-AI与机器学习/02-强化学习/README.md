@@ -25,6 +25,7 @@
 | [资格迹TDLambda/](./资格迹TDLambda/) | 289 资格迹 TD(λ)（n 步回报 + λ-回报前向视图与迹后向视图离线等价 + 累积迹/替换迹 + λ 与 γ 的分工） |
 | [ActorCritic与GAE/](./ActorCritic与GAE/) | 290 Actor-Critic 与 GAE（策略梯度基线合法性 EGLP 引理 + k 步优势 + GAE 两种等价形式 + Critic 误差变成 Actor 偏差） |
 | [SAC最大熵与温度自调节/](./SAC最大熵与温度自调节/) | 291 SAC 最大熵与温度自调节（软 Bellman backup 的 log-sum-exp + Boltzmann 策略 + 熵约束对偶导出温度梯度 + α→0 退化误差 O(α)） |
+| [TRPO信赖域与共轭梯度/](./TRPO信赖域与共轭梯度/) | 736 TRPO 信赖域与共轭梯度（Theorem 1 单调改进界 + MM 视角 + 惩罚→硬约束/max-KL→均值/二阶→CG 三替换 + β=√(2δ/sᵀAs) 步长 + 线搜索双条件 + 与 PPO 谱系） |
 
 ## 待研究
 
@@ -32,7 +33,7 @@
 - [x] Actor-Critic（→ [ActorCritic与GAE/](./ActorCritic与GAE/)，2026-09-17，ID 290）
 - [ ] A2C / A3C（同步/异步并行 actor-learner）
 - [x] SAC（Soft Actor-Critic）（→ [SAC最大熵与温度自调节/](./SAC最大熵与温度自调节/)，2026-09-17，ID 291）
-- [ ] TRPO（信赖域约束的单调改进保证 + 共轭梯度求方向）
+- [x] TRPO（信赖域约束的单调改进保证 + 共轭梯度求方向）→ demo 736
 - [ ] 离线 RL / CQL（保守 Q 学习，分布外动作的过估计抑制）
 - [ ] 多智能体 RL（MADDPG / QMIX 的信用分配）
 - [ ] 基于模型的 RL（Dyna 框架 + MuZero 的隐式模型学习）

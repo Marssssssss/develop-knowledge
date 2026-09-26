@@ -14,6 +14,7 @@
 | 294 | [Jenkins声明式流水线/](./Jenkins声明式流水线/) | `post` 十条件固定执行顺序（`cleanup` 恒最后）+ agent timeout 是否计分配时间的区间差异 + `beforeOptions>beforeInput>beforeAgent` + matrix 两段式求值 | Python / Go |
 | 295 | [ArgoCD同步与漂移检测/](./ArgoCD同步与漂移检测/) | `automated` 三态（null 等同开启）+ `(commit, 参数)` 唯一尝试键 + `prune`/`allowEmpty` 默认安全阀 + `ignoreDifferences` 去噪（**core 组 group 是空串**） | Python / Go |
 | 296 | [制品晋升与语义化版本/](./制品晋升与语义化版本/) | SemVer 2.0.0 优先级全序（构建元数据不参与）+ OCI digest 语法（小写十六进制）与内容寻址 + tag 可变/digest 不可变 + referrers 回退 tag 方案 | Python / Go |
+| 737 | [制品签名与构建溯源/](./制品签名与构建溯源/) | in-toto 四层（Predicate/Statement/Envelope/Bundle）+ SLSA provenance L1 REQUIRED 字段 + 验签三段拒绝链（签名/摘要/谓词）+ 防偷换 subject + cosign keyless（Fulcio 短期证书/Rekor 透明日志/私钥销毁） | Python / Go |
 
 ## 待研究
 
@@ -23,4 +24,4 @@
 - [x] Argo CD 声明式部署与 GitOps 同步（reconcile/drift/self-heal）→ demo 295
 - [x] 制品管理与语义化版本（artifact registry / 发布晋升通道）→ demo 296
 - [ ] Argo Rollouts 渐进式交付（分析模板 AnalysisTemplate / 指标门控与自动回滚）
-- [ ] 制品签名与构建溯源（cosign / SLSA provenance / in-toto 证明链）
+- [x] 制品签名与构建溯源（cosign / SLSA provenance / in-toto 证明链）→ demo 737
